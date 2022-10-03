@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import BlackCatKEY
 
 class ViewController: UIViewController {
 
@@ -13,6 +14,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .red
+        
+        KKEETT().testKey
     }
     
 }
