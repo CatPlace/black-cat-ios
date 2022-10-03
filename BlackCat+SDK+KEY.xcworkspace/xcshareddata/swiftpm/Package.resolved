@@ -1,6 +1,24 @@
 {
   "pins" : [
     {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire.git",
+      "state" : {
+        "revision" : "8dd85aee02e39dd280c75eef88ffdb86eed4b07b",
+        "version" : "5.6.2"
+      }
+    },
+    {
+      "identity" : "moya",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Moya/Moya",
+      "state" : {
+        "branch" : "master",
+        "revision" : "77e67c0b25ebd785c6fe56cad544885f67c8c2c4"
+      }
+    },
+    {
       "identity" : "nuke",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kean/Nuke",
@@ -10,12 +28,39 @@
       }
     },
     {
+      "identity" : "reactiveswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ReactiveCocoa/ReactiveSwift.git",
+      "state" : {
+        "revision" : "c43bae3dac73fdd3cb906bd5a1914686ca71ed3c",
+        "version" : "6.7.0"
+      }
+    },
+    {
       "identity" : "reactorkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ReactorKit/ReactorKit.git",
       "state" : {
         "revision" : "8fa33f09c6f6621a2aa536d739956d53b84dd139",
         "version" : "3.2.0"
+      }
+    },
+    {
+      "identity" : "realm-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/realm/realm-core",
+      "state" : {
+        "revision" : "18abbb4e9dc268620fa499923a92921bf26db8c6",
+        "version" : "12.7.0"
+      }
+    },
+    {
+      "identity" : "realm-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/realm/realm-swift",
+      "state" : {
+        "branch" : "master",
+        "revision" : "578cc23be6bca3fc87cd6167f21249a03a82300b"
       }
     },
     {
