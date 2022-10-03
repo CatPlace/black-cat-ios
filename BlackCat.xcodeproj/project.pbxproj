@@ -7,16 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		780EF43E28EB1C9500257FB8 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 780EF43D28EB1C9500257FB8 /* Moya */; };
+		780EF44128EB1CD700257FB8 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 780EF44028EB1CD700257FB8 /* RealmSwift */; };
 		B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */; };
 		B1D79CAD28EB0EF9008487D0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */; };
 		B1D79CAF28EB0EF9008487D0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAE28EB0EF9008487D0 /* ViewController.swift */; };
 		B1D79CB428EB0EFB008487D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1D79CB328EB0EFB008487D0 /* Assets.xcassets */; };
 		B1D79CB728EB0EFB008487D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1D79CB528EB0EFB008487D0 /* LaunchScreen.storyboard */; };
-		B1EDD50528EB149B00FBB722 /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = B1EDD50428EB149B00FBB722 /* RxBlocking */; };
-		B1EDD50728EB149B00FBB722 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = B1EDD50628EB149B00FBB722 /* RxCocoa */; };
-		B1EDD50928EB149B00FBB722 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = B1EDD50828EB149B00FBB722 /* RxRelay */; };
-		B1EDD50B28EB149B00FBB722 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B1EDD50A28EB149B00FBB722 /* RxSwift */; };
-		B1EDD50D28EB149B00FBB722 /* RxTest in Frameworks */ = {isa = PBXBuildFile; productRef = B1EDD50C28EB149B00FBB722 /* RxTest */; };
 		B1EDD51028EB14B800FBB722 /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = B1EDD50F28EB14B800FBB722 /* Nuke */; };
 		B1EDD51328EB14D700FBB722 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B1EDD51228EB14D700FBB722 /* SnapKit */; };
 		B1EDD51628EB14F200FBB722 /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = B1EDD51528EB14F200FBB722 /* ReactorKit */; };
@@ -54,11 +51,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B1EDD50D28EB149B00FBB722 /* RxTest in Frameworks */,
-				B1EDD50928EB149B00FBB722 /* RxRelay in Frameworks */,
 				B1EDD51628EB14F200FBB722 /* ReactorKit in Frameworks */,
-				B1EDD50728EB149B00FBB722 /* RxCocoa in Frameworks */,
 				B1EDD51328EB14D700FBB722 /* SnapKit in Frameworks */,
+				780EF43E28EB1C9500257FB8 /* Moya in Frameworks */,
+				780EF44128EB1CD700257FB8 /* RealmSwift in Frameworks */,
 				B1EDD51028EB14B800FBB722 /* Nuke in Frameworks */,
 				B1EDD51928EB1CA400FBB722 /* BlackCatKEY.framework in Frameworks */,
 				B1EDD50B28EB149B00FBB722 /* RxSwift in Frameworks */,
@@ -125,14 +121,11 @@
 			);
 			name = BlackCat;
 			packageProductDependencies = (
-				B1EDD50428EB149B00FBB722 /* RxBlocking */,
-				B1EDD50628EB149B00FBB722 /* RxCocoa */,
-				B1EDD50828EB149B00FBB722 /* RxRelay */,
-				B1EDD50A28EB149B00FBB722 /* RxSwift */,
-				B1EDD50C28EB149B00FBB722 /* RxTest */,
 				B1EDD50F28EB14B800FBB722 /* Nuke */,
 				B1EDD51228EB14D700FBB722 /* SnapKit */,
 				B1EDD51528EB14F200FBB722 /* ReactorKit */,
+				780EF43D28EB1C9500257FB8 /* Moya */,
+				780EF44028EB1CD700257FB8 /* RealmSwift */,
 			);
 			productName = BlackCat;
 			productReference = B1D79CA728EB0EF9008487D0 /* BlackCat.app */;
@@ -163,10 +156,11 @@
 			);
 			mainGroup = B1D79C9E28EB0EF8008487D0;
 			packageReferences = (
-				B1EDD50328EB149B00FBB722 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				B1EDD50E28EB14B800FBB722 /* XCRemoteSwiftPackageReference "Nuke" */,
 				B1EDD51128EB14D700FBB722 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				B1EDD51428EB14F200FBB722 /* XCRemoteSwiftPackageReference "ReactorKit" */,
+				780EF43C28EB1C9500257FB8 /* XCRemoteSwiftPackageReference "Moya" */,
+				780EF43F28EB1CD700257FB8 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = B1D79CA828EB0EF9008487D0 /* Products */;
 			projectDirPath = "";
@@ -264,7 +258,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -318,7 +312,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -404,12 +398,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B1EDD50328EB149B00FBB722 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+		780EF43C28EB1C9500257FB8 /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			repositoryURL = "https://github.com/Moya/Moya";
 			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 6.5.0;
+				branch = master;
+				kind = branch;
+			};
+		};
+		780EF43F28EB1CD700257FB8 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
 			};
 		};
 		B1EDD50E28EB14B800FBB722 /* XCRemoteSwiftPackageReference "Nuke" */ = {
@@ -439,30 +441,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B1EDD50428EB149B00FBB722 /* RxBlocking */ = {
+		780EF43D28EB1C9500257FB8 /* Moya */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B1EDD50328EB149B00FBB722 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxBlocking;
+			package = 780EF43C28EB1C9500257FB8 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
 		};
-		B1EDD50628EB149B00FBB722 /* RxCocoa */ = {
+		780EF44028EB1CD700257FB8 /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B1EDD50328EB149B00FBB722 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxCocoa;
-		};
-		B1EDD50828EB149B00FBB722 /* RxRelay */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B1EDD50328EB149B00FBB722 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxRelay;
-		};
-		B1EDD50A28EB149B00FBB722 /* RxSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B1EDD50328EB149B00FBB722 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxSwift;
-		};
-		B1EDD50C28EB149B00FBB722 /* RxTest */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B1EDD50328EB149B00FBB722 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxTest;
+			package = 780EF43F28EB1CD700257FB8 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		B1EDD50F28EB14B800FBB722 /* Nuke */ = {
 			isa = XCSwiftPackageProductDependency;
