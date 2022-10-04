@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		780EF43E28EB1C9500257FB8 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 780EF43D28EB1C9500257FB8 /* Moya */; };
 		780EF44128EB1CD700257FB8 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 780EF44028EB1CD700257FB8 /* RealmSwift */; };
+		7812680E28EC822000131AD8 /* MagazineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7812680D28EC822000131AD8 /* MagazineViewController.swift */; };
+		7812681028EC82AE00131AD8 /* MagazinePreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7812680F28EC82AE00131AD8 /* MagazinePreviewCell.swift */; };
+		7812681428EC83A300131AD8 /* MagazineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7812681328EC83A300131AD8 /* MagazineViewModel.swift */; };
 		B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */; };
 		B1D79CAD28EB0EF9008487D0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */; };
 		B1D79CAF28EB0EF9008487D0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAE28EB0EF9008487D0 /* ViewController.swift */; };
@@ -36,6 +39,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7812680D28EC822000131AD8 /* MagazineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineViewController.swift; sourceTree = "<group>"; };
+		7812680F28EC82AE00131AD8 /* MagazinePreviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazinePreviewCell.swift; sourceTree = "<group>"; };
+		7812681328EC83A300131AD8 /* MagazineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineViewModel.swift; sourceTree = "<group>"; };
 		B1D79CA728EB0EF9008487D0 /* BlackCat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlackCat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -57,14 +63,38 @@
 				780EF44128EB1CD700257FB8 /* RealmSwift in Frameworks */,
 				B1EDD51028EB14B800FBB722 /* Nuke in Frameworks */,
 				B1EDD51928EB1CA400FBB722 /* BlackCatKEY.framework in Frameworks */,
-				B1EDD50B28EB149B00FBB722 /* RxSwift in Frameworks */,
-				B1EDD50528EB149B00FBB722 /* RxBlocking in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7812680C28EC819400131AD8 /* Magazine */ = {
+			isa = PBXGroup;
+			children = (
+				7812680D28EC822000131AD8 /* MagazineViewController.swift */,
+				7812681328EC83A300131AD8 /* MagazineViewModel.swift */,
+				7812681228EC82B600131AD8 /* Views */,
+				7812681128EC82B100131AD8 /* Cells */,
+			);
+			path = Magazine;
+			sourceTree = "<group>";
+		};
+		7812681128EC82B100131AD8 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				7812680F28EC82AE00131AD8 /* MagazinePreviewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		7812681228EC82B600131AD8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		B1D79C9E28EB0EF8008487D0 = {
 			isa = PBXGroup;
 			children = (
@@ -88,6 +118,7 @@
 				B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */,
 				B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */,
 				B1D79CAE28EB0EF9008487D0 /* ViewController.swift */,
+				7812680C28EC819400131AD8 /* Magazine */,
 				B1D79CB328EB0EFB008487D0 /* Assets.xcassets */,
 				B1D79CB528EB0EFB008487D0 /* LaunchScreen.storyboard */,
 				B1D79CB828EB0EFB008487D0 /* Info.plist */,
@@ -190,7 +221,10 @@
 			files = (
 				B1D79CAF28EB0EF9008487D0 /* ViewController.swift in Sources */,
 				B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */,
+				7812681428EC83A300131AD8 /* MagazineViewModel.swift in Sources */,
+				7812680E28EC822000131AD8 /* MagazineViewController.swift in Sources */,
 				B1D79CAD28EB0EF9008487D0 /* SceneDelegate.swift in Sources */,
+				7812681028EC82AE00131AD8 /* MagazinePreviewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
