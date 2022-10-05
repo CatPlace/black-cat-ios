@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import BlackCatKEY
 
 class ViewController: UIViewController {
 
@@ -15,5 +14,5 @@ class ViewController: UIViewController {
         
         view.backgroundColor = .red
     }
-    
+
 }
