@@ -38,14 +38,3 @@ extension MagazineDetailTextCell {
         }
     }
 }
-
-final class MagazineDetailTextCellReactor: Reactor {
-
-    typealias Action = NoAction
-
-    var initialState: MagazineDetailModel
-
-    init(initialState: MagazineDetailModel) {
-        self.initialState = initialState
-    }
-}
