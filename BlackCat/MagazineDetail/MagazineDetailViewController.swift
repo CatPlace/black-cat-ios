@@ -32,7 +32,30 @@ final class MagazineDetailViewController: UIViewController, View {
     
     // MARK: - Binding
     func bind(reactor: Reactor) {
-        //
+        print("bind did called")
+        dispatch(reactor: reactor)
+        render(reactor: reactor)
+    }
+    
+    private func dispatch(reactor: Reactor) { }
+    
+    private func render(reactor: Reactor) {
+        reactor.state.map { $0.sections }
+            .asObservable()
+            .bind(to: self.tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+    }
+    
+    // MARK: - Initialize
+    init(reactor: Reactor) {
+        super.init(nibName: nil, bundle: nil)
+        self.reactor = reactor
+        
+        setUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: UIComponents
@@ -46,6 +69,12 @@ final class MagazineDetailViewController: UIViewController, View {
 }
 
 extension MagazineDetailViewController {
-    func setUI() { }
+    func setUI() {
+        [tableView].forEach { view.addSubview($0) }
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+    }
     
 }
