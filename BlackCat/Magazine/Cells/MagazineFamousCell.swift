@@ -20,7 +20,6 @@ class MagazineFamousCell: UITableViewCell {
     var disposeBag = DisposeBag()
     var viewModel = MagazineFamousCellViewModel()
     
-    
     // MARK: - Binding
     func bind() {
         

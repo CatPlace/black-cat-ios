@@ -25,9 +25,9 @@ class MagazineViewController: UIViewController {
     let disposeBag = DisposeBag()
     let viewModel = MagazineViewModel()
     var magazineTableViewTopInset = PublishSubject<CGFloat>()
-    
+    let famousSectionHeight = UIScreen.main.bounds.width * (500 / 375.0) * 1.05
     // 섹션마다 다른셀을 주기 위해 rxDataSource사용
-    lazy var dataSource = RxTableViewSectionedReloadDataSource<MagazineSection> { dataSource, tableView, indexPath, item in
+    lazy var dataSource = RxTableViewSectionedReloadDataSource<MagazineSection> { [unowned self] dataSource, tableView, indexPath, item in
         
         switch item {
             
@@ -37,7 +37,7 @@ class MagazineViewController: UIViewController {
             cell.bind()
             cell.viewModel.fetchedImageUrls.accept(datas.map { $0.imageUrl })
             cell.setUI()
-            cell.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * (500 / 375.0) * 1.05)
+            cell.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: self.famousSectionHeight)
             cell.layoutIfNeeded()
             return cell
             
@@ -64,6 +64,7 @@ class MagazineViewController: UIViewController {
             .observe(on: MainScheduler.instance)
             .subscribe { owner, inset in
                 owner.magazineTableView.contentInset = .init(top: inset, left: 0, bottom: 0, right: 0)
+                owner.headerMarginView.isHidden = inset == 0
             }.disposed(by: disposeBag)
         
         magazineTableView.rx.contentOffset
@@ -71,9 +72,12 @@ class MagazineViewController: UIViewController {
             .subscribe { [weak self] point in
                 guard let self else { return }
                 
+                // 96(디자이너 요청 픽셀) - 70(두번째 섹션 헤더 크기)
+                let inset: CGFloat = 96 - 70
+                
                 // 기본 tableView section header로 스크롤시 header 고정은 시켰지만 좀더 아래에 고정시키고 싶어서 사용
-                if point.y > 200 {
-                    self.magazineTableViewTopInset.onNext(26)
+                if point.y > self.famousSectionHeight  - inset {
+                    self.magazineTableViewTopInset.onNext(inset)
                 } else {
                     self.magazineTableViewTopInset.onNext(0)
                 }
@@ -114,12 +118,15 @@ class MagazineViewController: UIViewController {
         tableView.estimatedRowHeight = 500
         return tableView
     }()
+    let headerMarginView = UIView()
 }
 
 extension MagazineViewController {
     
     func setUI() {
-        view.addSubview(magazineTableView)
+        [magazineTableView, headerMarginView].forEach {
+            view.addSubview($0)
+        }
         
         magazineTableView.contentInsetAdjustmentBehavior = .never
         magazineTableView.separatorStyle = .none
@@ -134,6 +141,13 @@ extension MagazineViewController {
         
         magazineTableView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+        
+        headerMarginView.backgroundColor = .systemBackground
+        
+        headerMarginView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(26)
         }
     }
 }
