@@ -37,7 +37,6 @@ extension MagazineDetailTextCell {
         addSubview(contentTextLabel)
         
         contentTextLabel.numberOfLines = 0
-        contentTextLabel.text = "도라에몽"
         contentTextLabel.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(10)
         }
