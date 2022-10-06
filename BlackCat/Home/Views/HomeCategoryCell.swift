@@ -57,6 +57,6 @@ extension HomeCategoryCell {
 
         categoryTitleLabel.textAlignment = .center
         categoryTitleLabel.numberOfLines = 0
-        categoryTitleLabel.font = .systemFont(ofSize: 12, weight: .regular)
+        categoryTitleLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 12)
     }
 }

@@ -8,5 +8,6 @@
 import Foundation
 
 public enum Pallete: String {
-    case dummy
+    case BackgroundPrimary
+    case BackgroundSecondary
 }

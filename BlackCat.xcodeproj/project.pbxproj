@@ -27,6 +27,7 @@
 		8EB75CBD28ED778100F5AFEB /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB75CB128ED778100F5AFEB /* UIColor+.swift */; };
 		8EB75CBE28ED778100F5AFEB /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB75CB328ED778100F5AFEB /* UIFont+.swift */; };
 		8EB75CBF28ED778100F5AFEB /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB75CB428ED778100F5AFEB /* Font.swift */; };
+		8EB75CC428EEEB7A00F5AFEB /* HomeSection1Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB75CC328EEEB7A00F5AFEB /* HomeSection1Cell.swift */; };
 		B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */; };
 		B1D79CAD28EB0EF9008487D0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */; };
 		B1D79CAF28EB0EF9008487D0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAE28EB0EF9008487D0 /* ViewController.swift */; };
@@ -84,6 +85,7 @@
 		8EB75CB128ED778100F5AFEB /* UIColor+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		8EB75CB328ED778100F5AFEB /* UIFont+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		8EB75CB428ED778100F5AFEB /* Font.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		8EB75CC328EEEB7A00F5AFEB /* HomeSection1Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSection1Cell.swift; sourceTree = "<group>"; };
 		B1D79CA728EB0EF9008487D0 /* BlackCat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlackCat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 			children = (
 				8EB75C9228ED168900F5AFEB /* HomeCategoryCell.swift */,
 				8EB75C9828ED1F8700F5AFEB /* HomeCategoryCellViewModel.swift */,
+				8EB75CC328EEEB7A00F5AFEB /* HomeSection1Cell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -363,6 +366,7 @@
 				8EB75CBD28ED778100F5AFEB /* UIColor+.swift in Sources */,
 				B1D79CAF28EB0EF9008487D0 /* ViewController.swift in Sources */,
 				8EB75CBF28ED778100F5AFEB /* Font.swift in Sources */,
+				8EB75CC428EEEB7A00F5AFEB /* HomeSection1Cell.swift in Sources */,
 				B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */,
 				B1D79CAD28EB0EF9008487D0 /* SceneDelegate.swift in Sources */,
 				8EB75CBB28ED778100F5AFEB /* UIImage+.swift in Sources */,
