@@ -13,7 +13,7 @@ import RxRelay
 import SnapKit
 import Nuke
 struct MagazinePreviewCellViewModel {
-    let fetchedMagazinePreviewDatas = PublishRelay<[PreviewMagazineData]>()
+    let fetchedMagazinePreviewDatas = PublishRelay<[PreviewMagazine]>()
 }
 
 class MagazinePreviewCell: UITableViewCell {
@@ -25,7 +25,7 @@ class MagazinePreviewCell: UITableViewCell {
             .asDriver(onErrorJustReturn: [])
             .drive(magazinePreviewCollectionView.rx.items) { collectionView, row, data in
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MagazinePreviewItemCell.self.description(), for: IndexPath(row: row, section: 0)) as? MagazinePreviewItemCell else { return UICollectionViewCell() }
-                print(data)
+//                print(data)
                 if cell.viewModel == nil {
                     cell.viewModel = .init(
                         imageUrl: data.imageUrl,

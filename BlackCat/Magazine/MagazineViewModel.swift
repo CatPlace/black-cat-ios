@@ -6,14 +6,13 @@
 //
 
 import Foundation
+
 import RxSwift
 import RxRelay
 import RxCocoa
 
-// example Model
 struct FamousMagazine {
     let imageUrl: String
-    //... 등등
 }
 
 struct PreviewMagazine {
@@ -21,18 +20,52 @@ struct PreviewMagazine {
     let title: String
     let writer: String
     let date: String
-    //... 등등
+}
+
+struct MagazineSection {
+    var items: [Item]
+}
+
+enum MagazineItem {
+    case MagazineFamousCellItem([FamousMagazine])
+    case MagazinePreviewCellItem([PreviewMagazine])
 }
 
 struct MagazineViewModel {
 
-    //output
-    var magazineFamousCellItems = PublishRelay<[FamousMagazine]>()
-    var magazinePreviewCellItems = BehaviorRelay<[PreviewMagazine]>(value: [])
+    var useCase: MagazineTestUseCase
     
+    //input
+    var updateTrigger = BehaviorRelay<Int>(value: 0)
+    
+    //output
+    var magazineFamousCellItems: Observable<[FamousMagazine]>
+    var magazinePreviewCellItems: Observable<[PreviewMagazine]>
+    var combinedMagazinePreviewCellItems: Observable<[PreviewMagazine]>
     var fetchedMagazineItems: Observable<[MagazineSection]>
-    init() {
-        fetchedMagazineItems = Observable.combineLatest(magazineFamousCellItems, magazinePreviewCellItems) { famouseCell, previewCell in
+    
+    init(useCase: MagazineTestUseCase = MagazineTestUseCase()) {
+        self.useCase = useCase
+        
+        // 첫 섹션 fetch
+        magazineFamousCellItems = updateTrigger
+            .filter { page in page == 0 }
+            .flatMap { _ in useCase.loadFamousMagazine() }
+        
+        // 두번째 섹션 page fetch
+        magazinePreviewCellItems = updateTrigger
+            .scan(0, accumulator: { prePage, one in
+                return prePage + one
+            }).flatMap { page in useCase.loadMoreMagazine(page: page ) }
+        
+        // 두번째 섹션의 기존 아이템들과 새로운 page의 아이템을 합친다.
+        combinedMagazinePreviewCellItems = magazinePreviewCellItems.scan(into: [PreviewMagazine]()) { feeds, item in
+            feeds.append(contentsOf: item)
+        }
+        
+        // 각 섹션에 업데이트가 발생하면 이벤트 생성
+        // return 값: 각 섹션의 dataSource
+        fetchedMagazineItems = Observable.combineLatest(magazineFamousCellItems, combinedMagazinePreviewCellItems) { famouseCell, previewCell in
             [
                 MagazineSection(items: [MagazineItem.MagazineFamousCellItem(famouseCell.map {
                     .init(imageUrl: $0.imageUrl)
