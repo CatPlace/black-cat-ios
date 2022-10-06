@@ -33,12 +33,8 @@ final class MagazineDetailViewReactor: Reactor {
     
     var initialState: State
     
-    init(
-        factory: MagazineDetailSectionFactory = MagazineDetailSectionFactory()
-    ) {
+    init() {
         self.initialState = State(sections: MagazineDetailViewReactor.confugurationSections())
-        
-        self.factory = factory
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
