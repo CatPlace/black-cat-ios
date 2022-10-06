@@ -9,7 +9,7 @@ import UIKit
 import ReactorKit
 import SnapKit
 
-class MagazineDetailTextCell: MagazineDetailBaseCell, View {
+final class MagazineDetailTextCell: MagazineDetailBaseCell, View {
     static let identifier = String(describing: MagazineDetailTextCell.self)
     typealias Reactor = MagazineDetailTextCellReactor
     
@@ -18,7 +18,17 @@ class MagazineDetailTextCell: MagazineDetailBaseCell, View {
         
     }
     
-    override func setUI() {
+    // MARK: - Initalizing
+    override func initialize() {
+        self.setUI()
+    }
+   
+    // MARK: - UIComponents
+    private let contentTextLabel = UILabel()
+}
+
+extension MagazineDetailTextCell {
+    func setUI() {
         addSubview(contentTextLabel)
         
         contentTextLabel.numberOfLines = 0
@@ -27,20 +37,15 @@ class MagazineDetailTextCell: MagazineDetailBaseCell, View {
             $0.edges.equalToSuperview().inset(10)
         }
     }
-    
-    // MARK: - UIComponents
-    private let contentTextLabel = UILabel()
 }
 
-class MagazineDetailTextCellReactor: Reactor {
+final class MagazineDetailTextCellReactor: Reactor {
 
     typealias Action = NoAction
 
-    struct State { }
+    var initialState: MagazineDetailModel
 
-    var initialState = State()
-
-    init(initialState: State = State()) {
+    init(initialState: MagazineDetailModel) {
         self.initialState = initialState
     }
 }

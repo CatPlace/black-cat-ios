@@ -22,9 +22,5 @@ class MagazineDetailBaseCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func initialize() {
-        self.setUI()
-    }
-    
-    func setUI() { /* override setUI */ }
+    func initialize() { /* override point */ }
 }
