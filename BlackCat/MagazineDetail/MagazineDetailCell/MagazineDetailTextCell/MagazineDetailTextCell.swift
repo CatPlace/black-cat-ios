@@ -15,7 +15,12 @@ final class MagazineDetailTextCell: MagazineDetailBaseCell, View {
     
     // MARK: - Binding
     func bind(reactor: Reactor) {
-        
+        reactor.state.compactMap { $0 }
+            .withUnretained(self)
+            .bind { owner, item in
+                owner.contentTextLabel.text = item.text
+            }
+            .disposed(by: self.disposeBag)
     }
     
     // MARK: - Initalizing
