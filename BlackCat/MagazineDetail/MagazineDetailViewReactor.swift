@@ -33,10 +33,12 @@ final class MagazineDetailViewReactor: Reactor {
     
     var initialState: State
     
-    init() {
-        self.initialState = State(
-            sections: MagazineDetailViewReactor.confugurationSections()
-        )
+    init(
+        factory: MagazineDetailSectionFactory = MagazineDetailSectionFactory()
+    ) {
+        self.initialState = State(sections: MagazineDetailViewReactor.confugurationSections())
+        
+        self.factory = factory
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -58,7 +60,10 @@ final class MagazineDetailViewReactor: Reactor {
 
 extension MagazineDetailViewReactor {
     
+    // static으로 만든 이유는 useCase를 factory가 알아야함.
+    // 나중에 서버 통신이 전부 완성되면 그 때 static 없애는 방향으로 리팩토링해보자.
     static func confugurationSections() -> [MagazineDetailCellSection] {
+        
         let textCell2 = MagazineDetailSectionFactory.makeTextCell(
             MagazineDetailModel(
                 text: "",
