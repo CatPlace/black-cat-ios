@@ -28,16 +28,16 @@ struct MagazineViewModel {
 
     //output
     var magazineFamousCellItems = PublishRelay<[FamousMagazine]>()
-    var magazinePreviewCellItems = PublishRelay<[PreviewMagazine]>()
+    var magazinePreviewCellItems = BehaviorRelay<[PreviewMagazine]>(value: [])
     
     var fetchedMagazineItems: Observable<[MagazineSection]>
     init() {
         fetchedMagazineItems = Observable.combineLatest(magazineFamousCellItems, magazinePreviewCellItems) { famouseCell, previewCell in
             [
-                MagazineSection(items: [MagazineItem.MagazineFamousCell(famouseCell.map {
+                MagazineSection(items: [MagazineItem.MagazineFamousCellItem(famouseCell.map {
                     .init(imageUrl: $0.imageUrl)
                 })]),
-                MagazineSection(items: [MagazineItem.MagazinePreviewCell(previewCell.map{
+                MagazineSection(items: [MagazineItem.MagazinePreviewCellItem(previewCell.map{
                     .init(imageUrl: $0.imageUrl, title: $0.title, writer: $0.writer, date: $0.date)
                 })])
             ]

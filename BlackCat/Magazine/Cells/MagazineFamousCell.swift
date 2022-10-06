@@ -13,7 +13,7 @@ import RxRelay
 import SnapKit
 import Nuke
 struct MagazineFamousCellViewModel {
-    let fetchedImageUrls: PublishRelay<[String]> = PublishRelay<[String]>()
+    let fetchedImageUrls = PublishRelay<[String]>()
     
 }
 
@@ -28,9 +28,9 @@ class MagazineFamousCell: UITableViewCell {
             .asDriver(onErrorJustReturn: [])
             .drive(magazineFamousCollectionView.rx.items) { collectionView, row, data in
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MagazineFamousItemCell.self.description(), for: IndexPath(row: row, section: 0)) as? MagazineFamousItemCell else { return UICollectionViewCell() }
+                
                 cell.viewModel = .init(imageUrl: data)
-                cell.backgroundColor = .red
-                cell.layoutIfNeeded()
+//                cell.layoutIfNeeded()
                 return cell
             }.disposed(by: disposeBag)
     }
@@ -41,6 +41,7 @@ class MagazineFamousCell: UITableViewCell {
     // MARK: - Life Cycle
     override func prepareForReuse() {
         disposeBag = DisposeBag()
+        layoutIfNeeded()
     }
     
     // MARK: - UIComponents
@@ -59,8 +60,7 @@ class MagazineFamousCell: UITableViewCell {
 extension MagazineFamousCell {
     func setUI() {
         contentView.addSubview(magazineFamousCollectionView)
-        magazineFamousCollectionView.layoutIfNeeded()
-        print(contentView.frame.height)
+
         magazineFamousCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }

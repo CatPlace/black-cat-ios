@@ -32,6 +32,10 @@ extension PreviewMagazine {
         .init(imageUrl: "https://cdn.imweb.me/upload/S202105077ffaf93577a35/c4381adc8b9d2.png", title: "제목", writer: "김타투", date: "2022.10.30"),
         .init(imageUrl: "https://cdn.imweb.me/upload/S202105077ffaf93577a35/c4381adc8b9d2.png", title: "제목", writer: "김타투", date: "2022.10.29"),
         .init(imageUrl: "https://cdn.imweb.me/upload/S202105077ffaf93577a35/c4381adc8b9d2.png", title: "제목", writer: "김타투", date: "2022.10.28"),
+
+    ]
+    static let dummy2: [PreviewMagazine] = [
+        .init(imageUrl: "https://cdn.imweb.me/upload/S202105077ffaf93577a35/c4381adc8b9d2.png", title: "제목", writer: "김타투", date: "2022.10.28"),
         .init(imageUrl: "https://cdn.imweb.me/upload/S202105077ffaf93577a35/c4381adc8b9d2.png", title: "제목", writer: "김타투", date: "2022.10.27"),
         .init(imageUrl: "https://cdn.imweb.me/upload/S202105077ffaf93577a35/c4381adc8b9d2.png", title: "제목", writer: "김타투", date: "2022.10.26"),
         .init(imageUrl: "https://cdn.imweb.me/upload/S202105077ffaf93577a35/c4381adc8b9d2.png", title: "제목", writer: "김타투", date: "2022.10.25"),
@@ -67,6 +71,6 @@ extension PreviewMagazine {
         .init(imageUrl: "https://cdn.imweb.me/upload/S202105077ffaf93577a35/c4381adc8b9d2.png", title: "제목", writer: "김타투", date: "2022.9.25"),
         .init(imageUrl: "https://cdn.imweb.me/upload/S202105077ffaf93577a35/c4381adc8b9d2.png", title: "제목", writer: "김타투", date: "2022.9.24"),
         .init(imageUrl: "https://cdn.imweb.me/upload/S202105077ffaf93577a35/c4381adc8b9d2.png", title: "제목", writer: "김타투", date: "2022.9.23"),
-        .init(imageUrl: "https://cdn.imweb.me/upload/S202105077ffaf93577a35/c4381adc8b9d2.png", title: "제목", writer: "김타투", date: "2022.9.22"),
-    ]
+        .init(imageUrl: "https://cdn.imweb.me/upload/S202105077ffaf93577a35/c4381adc8b9d2.png", title: "제목", writer: "김타투", date: "2022.9.22")
+        ]
 }

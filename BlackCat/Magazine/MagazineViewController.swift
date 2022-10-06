@@ -25,8 +25,8 @@ struct MagazineSection {
     var items: [Item]
 }
 enum MagazineItem {
-    case MagazineFamousCell([FamousMagazineData])
-    case MagazinePreviewCell([PreviewMagazine])
+    case MagazineFamousCellItem([FamousMagazineData])
+    case MagazinePreviewCellItem([PreviewMagazineData])
 }
 //}
 extension MagazineSection: SectionModelType {
@@ -43,24 +43,28 @@ class MagazineViewController: UIViewController {
     let disposeBag = DisposeBag()
     let viewModel = MagazineViewModel()
     
-    let dataSource = RxTableViewSectionedReloadDataSource<MagazineSection> { dataSource, tableView, indexPath, item in
+    lazy var dataSource = RxTableViewSectionedReloadDataSource<MagazineSection> { dataSource, tableView, indexPath, item in
         switch item {
             
-        case .MagazineFamousCell(let datas):
+        case .MagazineFamousCellItem(let datas):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MagazineFamousCell.self.description(), for: indexPath) as? MagazineFamousCell
             else { return UITableViewCell() }
             cell.bind()
+            cell.viewModel.fetchedImageUrls.accept(datas.map { $0.imageUrl })
             cell.setUI()
+            print(cell.magazineFamousCollectionView.contentSize)
             cell.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * (500 / 375.0))
             cell.layoutIfNeeded()
-            cell.viewModel.fetchedImageUrls.accept(datas.map { $0.imageUrl })
-            
             return cell
             
-        case .MagazinePreviewCell(let datas):
+        case .MagazinePreviewCellItem(let datas):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MagazinePreviewCell.self.description(), for: indexPath) as? MagazinePreviewCell else { return UITableViewCell() }
-//            cell.bind()
+            cell.bind()
+            cell.setUI()
+            cell.viewModel.fetchedMagazinePreviewDatas.accept(datas)
             
+            print(cell.magazinePreviewCollectionView.contentSize, "Asd")
+            cell.layoutIfNeeded()
             return cell
         }
         
@@ -71,10 +75,6 @@ class MagazineViewController: UIViewController {
         viewModel.fetchedMagazineItems.bind(to: magazineTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
-    // function
-    
-    // MARK: - Initializing
-    
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -86,11 +86,16 @@ class MagazineViewController: UIViewController {
         //test
         viewModel.magazineFamousCellItems.accept(FamousMagazine.dummy)
         viewModel.magazinePreviewCellItems.accept(PreviewMagazine.dummy)
-        tempButton.rx.tap.bind { _ in
+        testButton1.rx.tap.bind { _ in
+            self.viewModel.magazinePreviewCellItems.accept(PreviewMagazine.dummy2)
             self.viewModel.magazineFamousCellItems.accept(FamousMagazine.dummy2)
         }.disposed(by: disposeBag)
+        
+        
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+//        self.viewModel.magazinePreviewCellItems.accept(PreviewMagazine.dummy2)
+    }
     // MARK: - UIComponents
     let magazineTableView: UITableView = {
         let tableView = UITableView()
@@ -101,7 +106,8 @@ class MagazineViewController: UIViewController {
         return tableView
     }()
     
-    let tempButton = UIButton()
+    let testButton1 = UIButton()
+    let testButton2 = UIButton()
 }
 
 
@@ -115,11 +121,12 @@ extension MagazineViewController {
             $0.edges.equalToSuperview()
         }
         
-        view.addSubview(tempButton)
-        tempButton.setTitle("asdasdasd", for: .normal)
-        tempButton.snp.makeConstraints {
+        view.addSubview(testButton1)
+        testButton1.setTitle("테스트 버튼입니다.", for: .normal)
+        testButton1.backgroundColor = .black
+        testButton1.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
-
+        
     }
 }
