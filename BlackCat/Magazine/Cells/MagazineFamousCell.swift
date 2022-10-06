@@ -10,11 +10,9 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxRelay
-import SnapKit
-import Nuke
+
 struct MagazineFamousCellViewModel {
     let fetchedImageUrls = PublishRelay<[String]>()
-    
 }
 
 class MagazineFamousCell: UITableViewCell {
@@ -25,6 +23,7 @@ class MagazineFamousCell: UITableViewCell {
     
     // MARK: - Binding
     func bind() {
+        
         viewModel.fetchedImageUrls
             .asDriver(onErrorJustReturn: [])
             .drive(magazineFamousCollectionView.rx.items) { collectionView, row, data in
@@ -40,14 +39,13 @@ class MagazineFamousCell: UITableViewCell {
                 let page = Int(targetOffset.pointee.x / UIScreen.main.bounds.width)
                 self.magazineFamouspageControl.set(progress: page, animated: true)
             }.disposed(by: disposeBag)
+        
         viewModel.fetchedImageUrls
             .map { $0.count }
             .bind(to: magazineFamouspageControl.rx.numberOfPages)
             .disposed(by: disposeBag)
+        
     }
-    // function
-
-    // MARK: - Initializing
     
     // MARK: - Life Cycle
     override func prepareForReuse() {
@@ -92,59 +90,5 @@ extension MagazineFamousCell {
             $0.bottom.equalTo(magazineFamouspageControl.snp.top)
         }
         
-
-        
     }
-}
-
-
-struct MagazineFamousItemCellViewModel {
-    let imageUrl: String
-}
-
-class MagazineFamousItemCell: UICollectionViewCell {
-    // MARK: - Properties
-    private var disposeBag = DisposeBag()
-    var viewModel: MagazineFamousItemCellViewModel? {
-        didSet {
-            setImage()
-            setUI()
-        }
-    }
-
-    // MARK: - UIComponents
-    let famouseMagazineImageView = UIImageView()
-}
-
-extension MagazineFamousItemCell {
-    
-    func setImage() {
-        guard let viewModel, let url = URL(string: viewModel.imageUrl) else { return }
-        let request = ImageRequest(url: url,priority: .high)
-        Nuke.loadImage(with: request, into: famouseMagazineImageView)
-    }
-    
-    func setUI() {
-        contentView.addSubview(famouseMagazineImageView)
-        
-        famouseMagazineImageView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-    }
-    
-}
-
-class DynamicHeightCollectionView: UICollectionView {
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        if bounds.size != intrinsicContentSize {
-            self.invalidateIntrinsicContentSize()
-        }
-    }
-    
-    override var intrinsicContentSize: CGSize {
-        return collectionViewLayout.collectionViewContentSize
-    }
-    
 }

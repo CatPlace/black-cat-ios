@@ -8,7 +8,6 @@
 import UIKit
 
 import RxSwift
-import SnapKit
 import RxDataSources
 
 extension MagazineSection: SectionModelType {
@@ -118,6 +117,7 @@ class MagazineViewController: UIViewController {
 }
 
 extension MagazineViewController {
+    
     func setUI() {
         view.addSubview(magazineTableView)
         
@@ -143,7 +143,7 @@ extension MagazineViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section != 1 { return UIView(frame: CGRect(x: .zero, y: .zero, width: .zero, height: CGFloat.leastNonzeroMagnitude)) }
         let headerView = UIView()
-        headerView.backgroundColor = .white
+        headerView.backgroundColor = .systemBackground
         
         let titleLabel = UILabel()
         headerView.addSubview(titleLabel)

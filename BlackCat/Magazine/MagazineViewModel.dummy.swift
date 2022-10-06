@@ -7,11 +7,13 @@
 
 import Foundation
 extension FamousMagazine {
+    
     static let dummy: [FamousMagazine] = [
         .init(imageUrl: "https://src.hidoc.co.kr/image/lib/2022/5/12/1652337370806_0.jpg"),
         .init(imageUrl: "https://cdn.britannica.com/25/7125-050-67ACEC3C/Abyssinian-sorrel.jpg"),
         .init(imageUrl: "https://www.thesprucepets.com/thmb/LN7GAkpdhvHmEcadeU2PYuzTi9g=/3611x3611/smart/filters:no_upscale()/maine-coon-kitten-on-scratching-post-1085283872-6a3f9172048c45f8989dee24e1943614.jpg")
     ]
+    
     static let dummy2: [FamousMagazine] = [
         .init(imageUrl: "https://src.hidoc.co.kr/image/lib/2022/5/12/1652337370806_0.jpg"),
         .init(imageUrl: "https://cdn.britannica.com/25/7125-050-67ACEC3C/Abyssinian-sorrel.jpg"),
@@ -24,9 +26,11 @@ extension FamousMagazine {
         .init(imageUrl: "https://www.thesprucepets.com/thmb/LN7GAkpdhvHmEcadeU2PYuzTi9g=/3611x3611/smart/filters:no_upscale()/maine-coon-kitten-on-scratching-post-1085283872-6a3f9172048c45f8989dee24e1943614.jpg"),
         
     ]
+    
 }
 
 extension PreviewMagazine {
+    
     static let dummy: [PreviewMagazine] = [
         .init(imageUrl: "https://cdn.imweb.me/upload/S202105077ffaf93577a35/c4381adc8b9d2.png", title: "제목", writer: "김타투", date: "2022.10.31"),
         .init(imageUrl: "https://cdn.imweb.me/upload/S202105077ffaf93577a35/c4381adc8b9d2.png", title: "제목", writer: "김타투", date: "2022.10.30"),
@@ -34,6 +38,7 @@ extension PreviewMagazine {
         .init(imageUrl: "https://cdn.imweb.me/upload/S202105077ffaf93577a35/c4381adc8b9d2.png", title: "제목", writer: "김타투", date: "2022.10.28"),
 
     ]
+    
     static let dummy2: [PreviewMagazine] = [
         .init(imageUrl: "https://cdn.imweb.me/upload/S202105077ffaf93577a35/c4381adc8b9d2.png", title: "제목", writer: "김타투", date: "2022.10.28"),
         .init(imageUrl: "https://cdn.imweb.me/upload/S202105077ffaf93577a35/c4381adc8b9d2.png", title: "제목", writer: "김타투", date: "2022.10.27"),
@@ -73,4 +78,5 @@ extension PreviewMagazine {
         .init(imageUrl: "https://cdn.imweb.me/upload/S202105077ffaf93577a35/c4381adc8b9d2.png", title: "제목", writer: "김타투", date: "2022.9.23"),
         .init(imageUrl: "https://cdn.imweb.me/upload/S202105077ffaf93577a35/c4381adc8b9d2.png", title: "제목", writer: "김타투", date: "2022.9.22")
         ]
+    
 }

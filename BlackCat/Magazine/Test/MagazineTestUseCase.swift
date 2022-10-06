@@ -6,7 +6,9 @@
 //
 
 import Foundation
+
 import RxSwift
+
 class MagazineTestUseCase {
     
     func loadMoreMagazine(page: Int) -> Observable<[PreviewMagazine]> {
@@ -17,4 +19,5 @@ class MagazineTestUseCase {
     func loadFamousMagazine() -> Observable<[FamousMagazine]> {
         return .just(FamousMagazine.dummy)
     }
+    
 }
