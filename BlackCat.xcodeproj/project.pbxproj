@@ -13,6 +13,7 @@
 		B1D79CAF28EB0EF9008487D0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAE28EB0EF9008487D0 /* ViewController.swift */; };
 		B1D79CB428EB0EFB008487D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1D79CB328EB0EFB008487D0 /* Assets.xcassets */; };
 		B1D79CB728EB0EFB008487D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1D79CB528EB0EFB008487D0 /* LaunchScreen.storyboard */; };
+		B1DD25DD28EF0BC800103FF1 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DD25DC28EF0BC800103FF1 /* UIColor+.swift */; };
 		B1E4983828EE838700B469AC /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B1E4983728EE838700B469AC /* SnapKit */; };
 		B1E4984628EE83BD00B469AC /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = B1E4984528EE83BD00B469AC /* Realm */; };
 		B1E4984828EE83BD00B469AC /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B1E4984728EE83BD00B469AC /* RealmSwift */; };
@@ -51,6 +52,7 @@
 		B1D79CB328EB0EFB008487D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B1D79CB628EB0EFB008487D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B1D79CB828EB0EFB008487D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B1DD25DC28EF0BC800103FF1 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		B1E4985728EE85A800B469AC /* MagazineDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailViewController.swift; sourceTree = "<group>"; };
 		B1EDD51828EB1CA400FBB722 /* BlackCatKEY.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BlackCatKEY.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -81,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				B12C1DC628ED219C0089964E /* UIVIewController+Rx.swift */,
+				B1DD25DC28EF0BC800103FF1 /* UIColor+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -229,6 +232,7 @@
 				B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */,
 				B12C1DC728ED219C0089964E /* UIVIewController+Rx.swift in Sources */,
 				B1D79CAD28EB0EF9008487D0 /* SceneDelegate.swift in Sources */,
+				B1DD25DD28EF0BC800103FF1 /* UIColor+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
