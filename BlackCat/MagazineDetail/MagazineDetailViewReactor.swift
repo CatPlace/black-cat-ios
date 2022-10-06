@@ -73,7 +73,7 @@ extension MagazineDetailViewReactor {
         
         let textCell2 = MagazineDetailSectionFactory.makeTextCell(
             MagazineDetailModel(
-                text: "안녕하세요.",
+                text: "안녕하세요.  ㄴㅁㅇㄹ ㅁㄴㅇㄹ ㅁㄴㅇㄹ ㅁㄴㅇㄹ ㅁㄴㅇㄹ ㅁㄴㅇㄹ ㅁㄴㅇㄹ ㅁㄴㅇㄹ ㅁㄴㅇㄹ ",
                 fontSize: 0,
                 textColor: .black,
                 textAlignment: .left,
