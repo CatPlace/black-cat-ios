@@ -129,9 +129,9 @@
 		B1E4985628EE859600B469AC /* MagazineDetail */ = {
 			isa = PBXGroup;
 			children = (
-				B1E4986328EE956F00B469AC /* MagazineDetailModel */,
 				B1E4985728EE85A800B469AC /* MagazineDetailViewController.swift */,
 				B1E4985E28EE886900B469AC /* MagazineDetailSection.swift */,
+				B1E4986328EE956F00B469AC /* MagazineDetailModel */,
 				B1E4986028EE8BAE00B469AC /* MagazineDetailCell */,
 			);
 			path = MagazineDetail;
