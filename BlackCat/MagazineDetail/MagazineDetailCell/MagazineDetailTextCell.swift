@@ -9,27 +9,6 @@ import UIKit
 import ReactorKit
 import SnapKit
 
-class MagazineDetailBaseCell: UITableViewCell {
-    var disposeBag: DisposeBag = DisposeBag()
-    
-    // MARK: - Initializing
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        initialize()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func initialize() {
-        self.setUI()
-    }
-    
-    func setUI() { /* override setUI */ }
-}
-
 class MagazineDetailTextCell: MagazineDetailBaseCell, View {
     static let identifier = String(describing: MagazineDetailTextCell.self)
     typealias Reactor = MagazineDetailTextCellReactor
