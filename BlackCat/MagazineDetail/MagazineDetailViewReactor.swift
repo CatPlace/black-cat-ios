@@ -59,10 +59,9 @@ extension MagazineDetailViewReactor {
     // static으로 만든 이유는 useCase를 factory가 알아야함.
     // 나중에 서버 통신이 전부 완성되면 그 때 static 없애는 방향으로 리팩토링해보자.
     static func confugurationSections() -> [MagazineDetailCellSection] {
-        
-        let textCell2 = MagazineDetailSectionFactory.makeTextCell(
+        let textCell = MagazineDetailSectionFactory.makeTextCell(
             MagazineDetailModel(
-                text: "",
+                text: "안녕하세요.",
                 fontSize: 0,
                 textColor: .black,
                 textAlignment: .left,
@@ -72,7 +71,19 @@ extension MagazineDetailViewReactor {
             )
         )
         
-        let textCellSection = MagazineDetailCellSection.textCell([textCell2])
+        let textCell2 = MagazineDetailSectionFactory.makeTextCell(
+            MagazineDetailModel(
+                text: "안녕하세요.",
+                fontSize: 0,
+                textColor: .black,
+                textAlignment: .left,
+                fontWeight: .black,
+                imageUrlString: "",
+                imageCornerRadius: 0
+            )
+        )
+        
+        let textCellSection = MagazineDetailCellSection.textCell([textCell, textCell2])
         
         return [textCellSection]
     }

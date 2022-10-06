@@ -37,7 +37,9 @@ final class MagazineDetailViewController: UIViewController, View {
         render(reactor: reactor)
     }
     
-    private func dispatch(reactor: Reactor) { }
+    private func dispatch(reactor: Reactor) {
+        
+    }
     
     private func render(reactor: Reactor) {
         reactor.state.map { $0.sections }
