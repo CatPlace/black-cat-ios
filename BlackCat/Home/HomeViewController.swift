@@ -100,6 +100,8 @@ class HomeViewController: UIViewController {
         return layout
     }()
 
+    let dividerView = UIView()
+
     private func categoryCellHeight() -> CGFloat {
         let spacing: CGFloat = 12
         let topInset: CGFloat = 30
@@ -141,7 +143,7 @@ extension HomeViewController {
             $0.edges.equalToSuperview()
         }
 
-        [categoryCollectionView, section1View].forEach { VStackView.addArrangedSubview($0) }
+        [categoryCollectionView, section1View, dividerView].forEach { VStackView.addArrangedSubview($0) }
 
         VStackView.axis = .vertical
         VStackView.spacing = 0
@@ -180,8 +182,11 @@ extension HomeViewController {
             HomeSection1Cell.self,
             forCellWithReuseIdentifier: HomeSection1Cell.identifier
         )
-        section1CollectionView.isScrollEnabled = true
-        section1CollectionView.isPagingEnabled = false
+        section1CollectionView.showsHorizontalScrollIndicator = false
+
+        dividerView.snp.makeConstraints {
+            $0.height.equalTo(20)
+        }
+        dividerView.backgroundColor = .designSystem(.BackgroundSecondary)
     }
 }
-
