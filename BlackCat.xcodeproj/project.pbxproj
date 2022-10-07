@@ -11,6 +11,7 @@
 		780EF44128EB1CD700257FB8 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 780EF44028EB1CD700257FB8 /* RealmSwift */; };
 		8E0C8EF528EFD0390020E76E /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C8EF428EFD0390020E76E /* HomeHeaderView.swift */; };
 		8E0C8EF728EFD6960020E76E /* HomeSection2Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C8EF628EFD6960020E76E /* HomeSection2Cell.swift */; };
+		8E8EDD2328F00607006A72ED /* HomeSectionBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8EDD2228F00607006A72ED /* HomeSectionBackgroundView.swift */; };
 		8EB75C8728ED151300F5AFEB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB75C8628ED151300F5AFEB /* HomeViewController.swift */; };
 		8EB75C8A28ED157400F5AFEB /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = 8EB75C8928ED157300F5AFEB /* RxBlocking */; };
 		8EB75C8C28ED157400F5AFEB /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 8EB75C8B28ED157400F5AFEB /* RxCocoa */; };
@@ -74,6 +75,7 @@
 /* Begin PBXFileReference section */
 		8E0C8EF428EFD0390020E76E /* HomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderView.swift; sourceTree = "<group>"; };
 		8E0C8EF628EFD6960020E76E /* HomeSection2Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSection2Cell.swift; sourceTree = "<group>"; };
+		8E8EDD2228F00607006A72ED /* HomeSectionBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSectionBackgroundView.swift; sourceTree = "<group>"; };
 		8EB75C8628ED151300F5AFEB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8EB75C9228ED168900F5AFEB /* HomeCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCategoryCell.swift; sourceTree = "<group>"; };
 		8EB75C9628ED1C0F00F5AFEB /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				8E0C8EF428EFD0390020E76E /* HomeHeaderView.swift */,
+				8E8EDD2228F00607006A72ED /* HomeSectionBackgroundView.swift */,
 				8EB75C9228ED168900F5AFEB /* HomeCategoryCell.swift */,
 				8EB75C9828ED1F8700F5AFEB /* HomeCategoryCellViewModel.swift */,
 				8EB75CC328EEEB7A00F5AFEB /* HomeSection1Cell.swift */,
@@ -372,6 +375,7 @@
 				8EB75C9728ED1C0F00F5AFEB /* HomeViewModel.swift in Sources */,
 				8EB75CBC28ED778100F5AFEB /* Pallete.swift in Sources */,
 				8EB75CBE28ED778100F5AFEB /* UIFont+.swift in Sources */,
+				8E8EDD2328F00607006A72ED /* HomeSectionBackgroundView.swift in Sources */,
 				8EB75CBD28ED778100F5AFEB /* UIColor+.swift in Sources */,
 				B1D79CAF28EB0EF9008487D0 /* ViewController.swift in Sources */,
 				8EB75CBF28ED778100F5AFEB /* Font.swift in Sources */,

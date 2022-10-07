@@ -137,6 +137,7 @@ class HomeCompositionalViewController: UIViewController {
                 let section = NSCollectionLayoutSection(group: group)
                 section.interGroupSpacing = itemInset
                 section.contentInsets = NSDirectionalEdgeInsets(top: 30, leading: 14, bottom: 30, trailing: 14)
+                section.decorationItems = [NSCollectionLayoutDecorationItem(layoutSize: <#T##NSCollectionLayoutSize#>, supplementaryItems: <#T##[NSCollectionLayoutSupplementaryItem]#>)]
 
                 return section
             case 1:
@@ -151,7 +152,6 @@ class HomeCompositionalViewController: UIViewController {
                     heightDimension: .absolute(210)
                 )
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-//                group.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20)
 
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .continuous
@@ -182,13 +182,14 @@ class HomeCompositionalViewController: UIViewController {
 
                 let section = NSCollectionLayoutSection(group: group)
                 section.interGroupSpacing = 1
-                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0.5, bottom: 0, trailing: 0.5)
+                section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0.5, bottom: 0, trailing: 0.5)
 
                 let headerSize = NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),
                     heightDimension: .estimated(43)
                 )
                 let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                header.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 0)
                 section.boundarySupplementaryItems = [header]
 
                 return section
