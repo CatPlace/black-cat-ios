@@ -20,24 +20,24 @@ class HomeViewController: UIViewController {
     // MARK: - Binding
 
     private func bind(to viewModel: HomeViewModel) {
-        viewModel.categoryItems
-            .drive(categoryCollectionView.rx.items(
-                cellIdentifier: HomeCategoryCell.identifier,
-                cellType: HomeCategoryCell.self)
-            ) { index, title, cell in
-                cell.categoryTitleLabel.text = title
-                //            cell.bind(to: viewModel)
-            }
-            .disposed(by: disposeBag)
-
-        viewModel.categoryItems
-            .drive(section1CollectionView.rx.items(
-                cellIdentifier: HomeSection1Cell.identifier,
-                cellType: HomeSection1Cell.self)
-            ) { index, title, cell in
-                cell.producerLabel.text = title
-            }
-            .disposed(by: disposeBag)
+//        viewModel.categoryItems
+//            .drive(categoryCollectionView.rx.items(
+//                cellIdentifier: HomeCategoryCell.identifier,
+//                cellType: HomeCategoryCell.self)
+//            ) { index, title, cell in
+//                cell.categoryTitleLabel.text = title
+//                //            cell.bind(to: viewModel)
+//            }
+//            .disposed(by: disposeBag)
+//
+//        viewModel.categoryItems
+//            .drive(section1CollectionView.rx.items(
+//                cellIdentifier: HomeSection1Cell.identifier,
+//                cellType: HomeSection1Cell.self)
+//            ) { index, title, cell in
+//                cell.producerLabel.text = title
+//            }
+//            .disposed(by: disposeBag)
     }
 
     // MARK: - Life Cycle

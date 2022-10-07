@@ -7,7 +7,9 @@
 
 import UIKit
 
+import RxCocoa
 import RxDataSources
+import RxSwift
 import SnapKit
 
 extension HomeSection: SectionModelType {
@@ -21,112 +23,202 @@ extension HomeSection: SectionModelType {
 
 class HomeCompositionalViewController: UIViewController {
 
-    var dataSource: UICollectionViewDiffableDataSource<Section, String>!
+//    var dataSource: UICollectionViewDiffableDataSource<Section, String>!
     let categories: [String] = [
         "전체보기", "레터링", "미니 타투", "감성 타투", "이레즈미", "블랙&그레이", "라인워크", "헤나",
         "커버업", "뉴스쿨", "올드스쿨", "잉크 스플래쉬", "치카노", "컬러", "캐릭터"
     ]
+    let viewModel = HomeViewModel()
+    let disposeBag = DisposeBag()
+    private let sectionSubject = BehaviorRelay(value: [HomeSection]())
 
-    lazy var dataSource2 = RxCollectionViewSectionedReloadDataSource<HomeSection> { dataSource, collectionView, indexPath, item in
-        switch item {
-        case .HomeCategoryCellItem(let categories):
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCategoryCell.identifier, for: indexPath) as! HomeCategoryCell
-            cell.categoryTitleLabel.text = categories[indexPath.row].title
+    private var dataSource2: RxCollectionViewSectionedReloadDataSource<HomeSection>!
 
-            return cell
-
-        case .Section1(let section1s):
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeSection1Cell.identifier, for: indexPath) as! HomeSection1Cell
-
-            return cell
-
-        case .Empty(let empty):
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeEmptyCell.identifier, for: indexPath) as! HomeEmptyCell
-
-            return cell
-
-        case .Section2(let section2s):
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeSection2Cell.identifer, for: indexPath) as! HomeSection2Cell
-
-            return cell
-        }
-    }
-
-    enum Section {
-        case category
-        case section1
-        case empty
-        case section2
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        dataSource = UICollectionViewDiffableDataSource<Section, String>(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
-            switch indexPath.section {
-            case 0:
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCategoryCell.identifier, for: indexPath) as?
-                        HomeCategoryCell else { return UICollectionViewCell() }
-                cell.categoryTitleLabel.text = itemIdentifier
+    private func configureCollectionViewDataSource() {
+        dataSource2 = RxCollectionViewSectionedReloadDataSource(configureCell: { dataSource, collectionView, indexPath, item in
+            print(indexPath)
+            switch item {
+            case .HomeCategoryCellItem(let categories):
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCategoryCell.identifier, for: indexPath) as! HomeCategoryCell
+                cell.categoryTitleLabel.text = categories.title
 
                 return cell
 
-            case 1:
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeSection1Cell.identifier, for: indexPath) as?
-                        HomeSection1Cell else { return UICollectionViewCell() }
-                cell.priceLabel.text = itemIdentifier
+            case .Section1(let section1s):
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeSection1Cell.identifier, for: indexPath) as! HomeSection1Cell
 
                 return cell
 
-            case 2:
-                guard let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: HomeEmptyCell.identifier,
-                    for: indexPath) as? HomeEmptyCell else { return UICollectionViewCell() }
+            case .Empty(let empty):
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeEmptyCell.identifier, for: indexPath) as! HomeEmptyCell
                 cell.backgroundColor = .designSystem(.BackgroundSecondary)
 
                 return cell
 
-            default:
-                guard let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: HomeSection2Cell.identifer,
-                    for: indexPath
-                ) as? HomeSection2Cell else { return UICollectionViewCell() }
+            case .Section2(let section2s):
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeSection2Cell.identifer, for: indexPath) as! HomeSection2Cell
 
                 return cell
             }
+        }, configureSupplementaryView: { dataSource, collectionView, kind, indexPath -> UICollectionReusableView in
+            guard kind == UICollectionView.elementKindSectionHeader,
+                  indexPath.section == 1 || indexPath.section == 3 else { return UICollectionReusableView() }
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HomeHeaderView.identifer, for: indexPath) as! HomeHeaderView
+            let headerTitle = dataSource.sectionModels[indexPath.section].header
+            headerView.titleLabel.text = headerTitle
+
+            return headerView
         })
+    }
 
-        dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
-            guard let homeHeaderView = collectionView.dequeueReusableSupplementaryView(
-                ofKind: UICollectionView.elementKindSectionHeader,
-                withReuseIdentifier: HomeHeaderView.identifer,
-                for: indexPath) as? HomeHeaderView else { return  UICollectionReusableView() }
-            switch indexPath.section {
-            case 1:
-                homeHeaderView.titleLabel.text = "항목 1"
-            case 3:
-                homeHeaderView.titleLabel.text = "항목 2"
-            default:
-                return homeHeaderView
-            }
+//    lazy var dataSource2 = RxCollectionViewSectionedReloadDataSource<HomeSection> { dataSource, collectionView, indexPath, item in
+//        print("dataSource", dataSource)
+//        switch item {
+//        case .HomeCategoryCellItem(let categories):
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCategoryCell.identifier, for: indexPath) as! HomeCategoryCell
+//            cell.categoryTitleLabel.text = categories[indexPath.row].title
+//
+//            return cell
+//
+//        case .Section1(let section1s):
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeSection1Cell.identifier, for: indexPath) as! HomeSection1Cell
+//
+//            return cell
+//
+//        case .Empty(let empty):
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeEmptyCell.identifier, for: indexPath) as! HomeEmptyCell
+//
+//            return cell
+//
+//        case .Section2(let section2s):
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeSection2Cell.identifer, for: indexPath) as! HomeSection2Cell
+//
+//            return cell
+//        }
+//    }
 
-            return homeHeaderView
-        }
+//    enum Section {
+//        case category
+//        case section1
+//        case empty
+//        case section2
+//    }
 
-        var snapShot = NSDiffableDataSourceSnapshot<Section, String>()
-        snapShot.appendSections([.category, .section1, .empty, .section2])
-        snapShot.appendItems(categories, toSection: .category)
-        snapShot.appendItems(["안녕", "바보", "짱구는", "못말려", "아니야", "말릴 수 ", "있어"], toSection: .section1)
-        snapShot.appendItems(["엠티"], toSection: .empty)
-        snapShot.appendItems(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"])
-        dataSource.apply(snapShot)
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
+//        dataSource2
+//        dataSource = UICollectionViewDiffableDataSource<Section, String>(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+//            switch indexPath.section {
+//            case 0:
+//                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCategoryCell.identifier, for: indexPath) as?
+//                        HomeCategoryCell else { return UICollectionViewCell() }
+//                cell.categoryTitleLabel.text = itemIdentifier
+//
+//                return cell
+//
+//            case 1:
+//                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeSection1Cell.identifier, for: indexPath) as?
+//                        HomeSection1Cell else { return UICollectionViewCell() }
+//                cell.priceLabel.text = itemIdentifier
+//
+//                return cell
+//
+//            case 2:
+//                guard let cell = collectionView.dequeueReusableCell(
+//                    withReuseIdentifier: HomeEmptyCell.identifier,
+//                    for: indexPath) as? HomeEmptyCell else { return UICollectionViewCell() }
+//                cell.backgroundColor = .designSystem(.BackgroundSecondary)
+//
+//                return cell
+//
+//            default:
+//                guard let cell = collectionView.dequeueReusableCell(
+//                    withReuseIdentifier: HomeSection2Cell.identifer,
+//                    for: indexPath
+//                ) as? HomeSection2Cell else { return UICollectionViewCell() }
+//
+//                return cell
+//            }
+//        })
+//
+//        dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
+//            guard let homeHeaderView = collectionView.dequeueReusableSupplementaryView(
+//                ofKind: UICollectionView.elementKindSectionHeader,
+//                withReuseIdentifier: HomeHeaderView.identifer,
+//                for: indexPath) as? HomeHeaderView else { return  UICollectionReusableView() }
+//            switch indexPath.section {
+//            case 1:
+//                homeHeaderView.titleLabel.text = "항목 1"
+//            case 3:
+//                homeHeaderView.titleLabel.text = "항목 2"
+//            default:
+//                return homeHeaderView
+//            }
+//
+//            return homeHeaderView
+//        }
+//
+//        var snapShot = NSDiffableDataSourceSnapshot<Section, String>()
+//        snapShot.appendSections([.category, .section1, .empty, .section2])
+//        snapShot.appendItems(categories, toSection: .category)
+//        snapShot.appendItems(["안녕", "바보", "짱구는", "못말려", "아니야", "말릴 수 ", "있어"], toSection: .section1)
+//        snapShot.appendItems(["엠티"], toSection: .empty)
+//        snapShot.appendItems(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"])
+//        dataSource.apply(snapShot)
         setUI()
+        configureCollectionViewDataSource()
+        bind()
+
+        sectionSubject.accept([
+            HomeSection(header: "", items: [
+                .HomeCategoryCellItem(HomeCategory(title: "전체보기")),
+                .HomeCategoryCellItem(HomeCategory(title: "레터링")),
+                .HomeCategoryCellItem(HomeCategory(title: "미니 타투")),
+                .HomeCategoryCellItem(HomeCategory(title: "감성 타투")),
+                .HomeCategoryCellItem(HomeCategory(title: "이레즈미")),
+                .HomeCategoryCellItem(HomeCategory(title: "블랙&그레이")),
+                .HomeCategoryCellItem(HomeCategory(title: "라인워크")),
+                .HomeCategoryCellItem(HomeCategory(title: "헤나")),
+                .HomeCategoryCellItem(HomeCategory(title: "커버업")),
+                .HomeCategoryCellItem(HomeCategory(title: "뉴스쿨")),
+                .HomeCategoryCellItem(HomeCategory(title: "올드스쿨")),
+                .HomeCategoryCellItem(HomeCategory(title: "잉크 스플래쉬")),
+                .HomeCategoryCellItem(HomeCategory(title: "치카노")),
+                .HomeCategoryCellItem(HomeCategory(title: "컬러")),
+                .HomeCategoryCellItem(HomeCategory(title: "캐릭터"))
+            ]),
+            HomeSection(header: "항목 1", items: [
+                .Section1(Section1(imageURLString: "", price: "10000", producer: "김타투")),
+                .Section1(Section1(imageURLString: "", price: "20000", producer: "김타투")),
+                .Section1(Section1(imageURLString: "", price: "30000", producer: "김타투")),
+                .Section1(Section1(imageURLString: "", price: "40000", producer: "김타투"))
+            ]),
+            HomeSection(header: "", items: [
+                .Empty(Empty())
+            ]),
+            HomeSection(header: "항목 2", items: [
+                .Section2(Section2(imaeURLString: "")),
+                .Section2(Section2(imaeURLString: "")),
+                .Section2(Section2(imaeURLString: "")),
+                .Section2(Section2(imaeURLString: "")),
+                .Section2(Section2(imaeURLString: "")),
+                .Section2(Section2(imaeURLString: "")),
+                .Section2(Section2(imaeURLString: "")),
+                .Section2(Section2(imaeURLString: ""))
+            ])
+        ])
+    }
+
+    func bind() {
+        sectionSubject
+            .bind(to: homeCollectionView.rx.items(dataSource: dataSource2))
+            .disposed(by: disposeBag)
     }
 
     // MARK: - UIComponents
 
-    lazy var collectionView: UICollectionView = {
+    lazy var homeCollectionView: UICollectionView = {
         let collectionView = UICollectionView(
             frame: .zero,
             collectionViewLayout: compositionalLayout
@@ -265,15 +357,16 @@ class HomeCompositionalViewController: UIViewController {
             }
         }
         layout.register(HomeSectionBackgroundView.self, forDecorationViewOfKind: HomeSectionBackgroundView.identifier)
+
         return layout
     }()
 }
 
 extension HomeCompositionalViewController {
     private func setUI() {
-        view.addSubview(collectionView)
+        view.addSubview(homeCollectionView)
 
-        collectionView.snp.makeConstraints {
+        homeCollectionView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.bottom.equalToSuperview()
         }
