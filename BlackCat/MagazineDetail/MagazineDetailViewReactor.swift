@@ -85,9 +85,30 @@ extension MagazineDetailViewReactor {
         
         let textCellSection = MagazineDetailCellSection.textCell([textCell, textCell2])
         
-//        let imageCell1 =
+        let imageCell = MagazineDetailSectionFactory.makeImageCell(
+            MagazineDetailModel(
+                imageUrlString: "Rect",
+                imageCornerRadius: 0
+            )
+        )
         
-        return [textCellSection]
+        let imageCell2 = MagazineDetailSectionFactory.makeImageCell(
+            MagazineDetailModel(
+                imageUrlString: "Rect2",
+                imageCornerRadius: 10
+            )
+        )
+        
+        let imageCell3 = MagazineDetailSectionFactory.makeImageCell(
+            MagazineDetailModel(
+                imageUrlString: "Rect3",
+                imageCornerRadius: 13
+            )
+        )
+        
+        let imageCellSection = MagazineDetailCellSection.textCell([imageCell, imageCell2, imageCell3])
+        
+        return [textCellSection, textCellSection]
     }
 }
 

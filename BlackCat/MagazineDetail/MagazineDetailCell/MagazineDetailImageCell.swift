@@ -18,7 +18,7 @@ final class MagazineDetailImageCell: MagazineDetailBaseCell, View {
         reactor.state.compactMap { $0 }
             .withUnretained(self)
             .bind { owner, item in
-//                owner.contentTextLabelBuilder(owner.contentTextLabel, item)
+                owner.contentImageViewBuilder(owner.contentImageView, item)
             }
             .disposed(by: self.disposeBag)
     }

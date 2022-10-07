@@ -24,11 +24,18 @@ class MagazineDetailBaseCell: UITableViewCell {
     
     func initialize() { /* override point */ }
     
+    // MARK: - textBuilder
     func contentTextLabelBuilder(_ sender: UILabel, _ item: MagazineDetailModel) {
         sender.textColor = item.textColor.toUIColor()
         sender.text = item.text
         sender.textAlignment = item.textAlignment.toNSTextAlignment()
         sender.font = .systemFont(ofSize: CGFloat(item.fontSize),
                                   weight: item.fontWeight.toFontWeight())
+    }
+    
+    // MARK: - imageBuilder
+    func contentImageViewBuilder(_ sender: UIImageView, _ item: MagazineDetailModel) {
+        sender.image = UIImage(named: item.imageUrlString!)
+        sender.layer.cornerRadius = CGFloat(item.imageCornerRadius)
     }
 }
