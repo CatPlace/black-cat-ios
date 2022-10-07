@@ -20,6 +20,7 @@ class HomeCompositionalViewController: UIViewController {
     enum Section {
         case category
         case section1
+        case section2
     }
 
     override func viewDidLoad() {
@@ -33,12 +34,15 @@ class HomeCompositionalViewController: UIViewController {
 
                 return cell
 
-            default:
+            case 1:
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeSection1Cell.identifier, for: indexPath) as?
                         HomeSection1Cell else { return UICollectionViewCell() }
                 cell.priceLabel.text = itemIdentifier
 
                 return cell
+
+            default:
+                print("")
             }
         })
 
@@ -116,7 +120,7 @@ class HomeCompositionalViewController: UIViewController {
                 section.contentInsets = NSDirectionalEdgeInsets(top: 30, leading: 14, bottom: 30, trailing: 14)
 
                 return section
-            default:
+            case 1:
                 let itemSize = NSCollectionLayoutSize(
                     widthDimension: .estimated(140),
                     heightDimension: .fractionalHeight(1)
@@ -137,6 +141,22 @@ class HomeCompositionalViewController: UIViewController {
                 section.boundarySupplementaryItems = [header]
 
                 return section
+
+            default:
+                let itemWidth = (UIScreen.main.bounds.width - 3) / 3
+
+                let itemSize = NSCollectionLayoutSize(
+                    widthDimension: itemWidth,
+                    heightDimension: itemWidth
+                )
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(itemWidth))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+                group.interItemSpacing = .fixed(1)
+
+                let section = NSCollectionLayoutSection(group: group)
+                section.interGroupSpacing = .fixed(1)
             }
         }
 
