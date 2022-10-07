@@ -43,9 +43,10 @@ extension MagazineDetailBulletedCell {
         }
         
         contentTextLabel.snp.makeConstraints {
+            $0.top.equalTo(bulletImageView.snp.top)
+            $0.bottom.equalToSuperview()
             $0.leading.equalTo(bulletImageView.snp.trailing).offset(24)
             $0.trailing.equalToSuperview().inset(24)
-            $0.top.equalTo(bulletImageView.snp.top)
         }
     }
 }
