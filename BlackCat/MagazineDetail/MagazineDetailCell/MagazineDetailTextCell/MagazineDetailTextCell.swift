@@ -31,13 +31,6 @@ final class MagazineDetailTextCell: MagazineDetailBaseCell, View {
     // MARK: - UIComponents
     private let contentTextLabel = UILabel()
     
-    func contentTextLabelBuilder(_ sender: UILabel, _ item: MagazineDetailModel) {
-        sender.textColor = item.textColor.toUIColor()
-        sender.text = item.text
-        sender.textAlignment = item.textAlignment.toNSTextAlignment()
-        sender.font = .systemFont(ofSize: CGFloat(item.fontSize),
-                                  weight: item.fontWeight.toFontWeight())
-    }
 }
 
 extension MagazineDetailTextCell {
