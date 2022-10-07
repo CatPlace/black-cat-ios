@@ -55,7 +55,6 @@ class MagazinePreviewCell: UITableViewCell {
         
         collectionView.register(MagazinePreviewItemCell.self, forCellWithReuseIdentifier: MagazinePreviewItemCell.self.description())
         collectionView.isScrollEnabled = false
-        collectionView.backgroundColor = .red
         return collectionView
     }()
 }

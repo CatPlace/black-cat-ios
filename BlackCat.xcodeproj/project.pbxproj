@@ -100,12 +100,11 @@
 		7812680C28EC819400131AD8 /* Magazine */ = {
 			isa = PBXGroup;
 			children = (
-				78E94A4428EF601C00DBBF5C /* Test */,
-				78E94A4128EF5FC500DBBF5C /* Commons */,
 				7812680D28EC822000131AD8 /* MagazineViewController.swift */,
 				7812681328EC83A300131AD8 /* MagazineViewModel.swift */,
-				784BD0E528EDF05800CA86F0 /* MagazineViewModel.dummy.swift */,
 				7812681128EC82B100131AD8 /* Cells */,
+				78E94A4428EF601C00DBBF5C /* Test */,
+				78E94A4128EF5FC500DBBF5C /* Commons */,
 			);
 			path = Magazine;
 			sourceTree = "<group>";
@@ -114,8 +113,8 @@
 			isa = PBXGroup;
 			children = (
 				7812681828EC917B00131AD8 /* MagazineFamousCell.swift */,
-				7812680F28EC82AE00131AD8 /* MagazinePreviewCell.swift */,
 				78E94A3F28EF5F6C00DBBF5C /* MagazineFamousItemCell.swift */,
+				7812680F28EC82AE00131AD8 /* MagazinePreviewCell.swift */,
 				78E94A4528EF605B00DBBF5C /* MagazinePreviewItemCell.swift */,
 			);
 			path = Cells;
@@ -153,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				7867D2DD28EEC24300373464 /* MagazineTestUseCase.swift */,
+				784BD0E528EDF05800CA86F0 /* MagazineViewModel.dummy.swift */,
 			);
 			path = Test;
 			sourceTree = "<group>";
