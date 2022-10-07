@@ -56,7 +56,7 @@ class MagazineFamousCell: UITableViewCell {
     let magazineFamousCollectionView: DynamicHeightCollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = .init(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * (500 / 375.0))
-        layout.minimumLineSpacing = 1
+        layout.minimumLineSpacing = 0
         layout.scrollDirection = .horizontal
         let collectionView = DynamicHeightCollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.isPagingEnabled = true

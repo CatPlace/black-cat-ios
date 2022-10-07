@@ -35,6 +35,13 @@ class MagazinePreviewCell: UITableViewCell {
                 
                 return cell
             }.disposed(by: disposeBag)
+        
+        magazinePreviewCollectionView.rx.itemSelected
+            .withUnretained(self)
+            .bind { owner, indexPath in
+                guard let cell = owner.magazinePreviewCollectionView.cellForItem(at: indexPath) as? MagazinePreviewItemCell else { return }
+                print(cell.viewModel)
+            }.disposed(by: disposeBag)
     }
     
     // MARK: - Life Cycle

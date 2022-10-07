@@ -66,24 +66,23 @@ class MagazineViewController: UIViewController {
                 owner.magazineTableView.contentInset = .init(top: inset, left: 0, bottom: 0, right: 0)
                 owner.headerMarginView.isHidden = inset == 0
             }.disposed(by: disposeBag)
-        
         magazineTableView.rx.contentOffset
             .observe(on: MainScheduler.instance)
-            .subscribe { [weak self] point in
+            .subscribe { [weak self] contentOffset in
                 guard let self else { return }
                 
                 // 96(디자이너 요청 픽셀) - 70(두번째 섹션 헤더 크기)
                 let inset: CGFloat = 96 - 70
                 
                 // 기본 tableView section header로 스크롤시 header 고정은 시켰지만 좀더 아래에 고정시키고 싶어서 사용
-                if point.y > self.famousSectionHeight  - inset {
+                if contentOffset.y > self.famousSectionHeight  - inset {
                     self.magazineTableViewTopInset.onNext(inset)
                 } else {
                     self.magazineTableViewTopInset.onNext(0)
                 }
                 
                 // 페이지 네이션
-                if point.y > self.magazineTableView.contentSize.height - self.view.frame.height - 200 {
+                if contentOffset.y > self.magazineTableView.contentSize.height - self.view.frame.height - 200 {
                     self.viewModel.updateTrigger.accept(1)
                 }
                 
@@ -92,6 +91,17 @@ class MagazineViewController: UIViewController {
         
         magazineTableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
+        
+    }
+    
+    //function
+    @objc
+    func didTapHeartButton() {
+        
+    }
+    
+    @objc
+    func didTapSearchButton() {
         
     }
     
@@ -104,8 +114,23 @@ class MagazineViewController: UIViewController {
         magazineTableView.layoutIfNeeded()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        navigationController?.navigationBar.isHidden = true
+    override func viewDidAppear(_ animated: Bool) {
+        
+        navigationController?.navigationBar.isHidden = false
+        
+        let navigationAppearance = UINavigationBarAppearance()
+        navigationAppearance.configureWithTransparentBackground()
+//        navigationAppearance.
+        navigationController?.navigationBar.standardAppearance = navigationAppearance
+        navigationController?.navigationBar.tintColor = .white
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(didTapHeartButton)),
+            UIBarButtonItem(image: UIImage(systemName: "chevron.right"), style: .plain, target: self, action: #selector(didTapSearchButton))
+        ]
+    
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.navigationBar.isHidden = false
     }
     
     // MARK: - UIComponents
@@ -116,6 +141,8 @@ class MagazineViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.decelerationRate = .fast
         tableView.estimatedRowHeight = 500
+        tableView.showsVerticalScrollIndicator = false
+        tableView.clipsToBounds = false
         return tableView
     }()
     let headerMarginView = UIView()
