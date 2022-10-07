@@ -15,6 +15,7 @@ enum MagazineDetailSectionItem: Equatable, IdentifiableType {
     
     case textCell(MagazineDetailTextCellReactor)
     case imageCell(MagazineDetailImageCellReactor)
+    case bulletedCell(MagazineDetailBulletedCellReactor)
     
     static func == (lhs: MagazineDetailSectionItem, rhs: MagazineDetailSectionItem) -> Bool {
         lhs.identity == rhs.identity
@@ -26,6 +27,7 @@ enum MagazineDetailSectionItem: Equatable, IdentifiableType {
 enum MagazineDetailCellSection {
     case textCell([MagazineDetailSectionItem])
     case imageCell([MagazineDetailSectionItem])
+    case bulletedCell([MagazineDetailSectionItem])
 }
 
 extension MagazineDetailCellSection: AnimatableSectionModelType {
@@ -39,6 +41,8 @@ extension MagazineDetailCellSection: AnimatableSectionModelType {
             return items
         case .imageCell(let items):
             return items
+        case .bulletedCell(let items):
+            return items
         }
     }
     
@@ -48,6 +52,8 @@ extension MagazineDetailCellSection: AnimatableSectionModelType {
             self = .textCell(items)
         case .imageCell:
             self = .imageCell(items)
+        case .bulletedCell:
+            self = .bulletedCell(items)
         }
     }
 }

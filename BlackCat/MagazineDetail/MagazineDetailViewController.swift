@@ -36,6 +36,14 @@ final class MagazineDetailViewController: UIViewController, View {
             
             cell.reactor = reactor
             return cell
+        case .bulletedCell(let reactor):
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: MagazineDetailBulletedCell.identifier,
+                for: indexPath
+            ) as? MagazineDetailBulletedCell else { return UITableViewCell() }
+            
+            cell.reactor = reactor
+            return cell
         }
     }
     
@@ -73,6 +81,7 @@ final class MagazineDetailViewController: UIViewController, View {
         var tv = UITableView(frame: .zero, style: .plain)
         tv.register(MagazineDetailTextCell.self, forCellReuseIdentifier: MagazineDetailTextCell.identifier)
         tv.register(MagazineDetailImageCell.self, forCellReuseIdentifier: MagazineDetailImageCell.identifier)
+        tv.register(MagazineDetailBulletedCell.self, forCellReuseIdentifier: MagazineDetailBulletedCell.identifier)
         tv.rowHeight = UITableView.automaticDimension
         tv.estimatedRowHeight = 70
         return tv
