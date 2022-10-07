@@ -18,12 +18,21 @@ final class MagazineDetailViewController: UIViewController, View {
     // MARK: - Properties
     var disposeBag: DisposeBag = DisposeBag()
     let dataSource: ManageMentDataSource = ManageMentDataSource { _, tableView, indexPath, items in
+        
         switch items {
         case .textCell(let reactor):
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: MagazineDetailTextCell.identifier,
                 for: indexPath
             ) as? MagazineDetailTextCell else { return UITableViewCell() }
+            
+            cell.reactor = reactor
+            return cell
+        case .imageCell(let reactor):
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: MagazineDetailImageCell.identifier,
+                for: indexPath
+            ) as? MagazineDetailImageCell else { return UITableViewCell() }
             
             cell.reactor = reactor
             return cell

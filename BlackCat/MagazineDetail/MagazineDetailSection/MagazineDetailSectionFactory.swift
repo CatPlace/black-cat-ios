@@ -18,6 +18,15 @@ struct MagazineDetailSectionFactory {
         )
     }
     
+    static func makeImageCell(_ item: MagazineDetailModel) -> MagazineDetailSectionItem {
+        
+        return MagazineDetailSectionItem.imageCell(
+            MagazineDetailImageCellReactor(
+                initialState: item
+            )
+        )
+    }
+    
     
     // ✅ NOTE: - 서버 연결이 끝난 후에 리팩토링할 부분의 코드 흔적을 미리 남겨둡니다.
     func confugurationSections() -> [MagazineDetailCellSection] {

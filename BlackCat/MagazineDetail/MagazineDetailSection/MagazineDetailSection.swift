@@ -14,6 +14,7 @@ enum MagazineDetailSectionItem: Equatable, IdentifiableType {
     var identity: some Hashable { UUID().uuidString }
     
     case textCell(MagazineDetailTextCellReactor)
+    case imageCell(MagazineDetailImageCellReactor)
     
     static func == (lhs: MagazineDetailSectionItem, rhs: MagazineDetailSectionItem) -> Bool {
         lhs.identity == rhs.identity
@@ -24,6 +25,7 @@ enum MagazineDetailSectionItem: Equatable, IdentifiableType {
 // MARK: - 섹션들을 정의합니다.
 enum MagazineDetailCellSection {
     case textCell([MagazineDetailSectionItem])
+    case imageCell([MagazineDetailSectionItem])
 }
 
 extension MagazineDetailCellSection: AnimatableSectionModelType {
@@ -35,6 +37,8 @@ extension MagazineDetailCellSection: AnimatableSectionModelType {
         switch self {
         case .textCell(let items):
             return items
+        case .imageCell(let items):
+            return items
         }
     }
     
@@ -42,6 +46,8 @@ extension MagazineDetailCellSection: AnimatableSectionModelType {
         switch original {
         case .textCell:
             self = .textCell(items)
+        case .imageCell:
+            self = .imageCell(items)
         }
     }
 }

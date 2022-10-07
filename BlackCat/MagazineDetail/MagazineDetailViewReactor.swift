@@ -62,10 +62,10 @@ extension MagazineDetailViewReactor {
         let textCell = MagazineDetailSectionFactory.makeTextCell(
             MagazineDetailModel(
                 text: "안녕하세요.",
-                fontSize: 0,
+                fontSize: 11,
                 textColor: .black,
                 textAlignment: .left,
-                fontWeight: .black,
+                fontWeight: .heavy,
                 imageUrlString: "",
                 imageCornerRadius: 0
             )
@@ -74,16 +74,18 @@ extension MagazineDetailViewReactor {
         let textCell2 = MagazineDetailSectionFactory.makeTextCell(
             MagazineDetailModel(
                 text: "안녕하세요.  ㄴㅁㅇㄹ ㅁㄴㅇㄹ ㅁㄴㅇㄹ ㅁㄴㅇㄹ ㅁㄴㅇㄹ ㅁㄴㅇㄹ ㅁㄴㅇㄹ ㅁㄴㅇㄹ ㅁㄴㅇㄹ ",
-                fontSize: 0,
+                fontSize: 14,
                 textColor: .black,
                 textAlignment: .left,
-                fontWeight: .black,
+                fontWeight: .regular,
                 imageUrlString: "",
                 imageCornerRadius: 0
             )
         )
         
         let textCellSection = MagazineDetailCellSection.textCell([textCell, textCell2])
+        
+//        let imageCell1 =
         
         return [textCellSection]
     }
