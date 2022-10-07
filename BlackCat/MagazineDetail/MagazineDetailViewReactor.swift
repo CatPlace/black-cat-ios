@@ -108,7 +108,7 @@ extension MagazineDetailViewReactor {
         
         let imageCellSection = MagazineDetailCellSection.textCell([imageCell, imageCell2, imageCell3])
         
-        return [textCellSection, textCellSection]
+        return [textCellSection, imageCellSection]
     }
 }
 

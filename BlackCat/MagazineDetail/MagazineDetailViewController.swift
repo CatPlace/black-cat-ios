@@ -73,6 +73,7 @@ final class MagazineDetailViewController: UIViewController, View {
     lazy var tableView: UITableView = {
         var tv = UITableView(frame: .zero, style: .plain)
         tv.register(MagazineDetailTextCell.self, forCellReuseIdentifier: MagazineDetailTextCell.identifier)
+        tv.register(MagazineDetailImageCell.self, forCellReuseIdentifier: MagazineDetailImageCell.identifier)
         tv.rowHeight = UITableView.automaticDimension
         tv.estimatedRowHeight = 70
         return tv
