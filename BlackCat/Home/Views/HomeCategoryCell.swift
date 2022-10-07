@@ -47,7 +47,7 @@ extension HomeCategoryCell {
         layer.masksToBounds = true
 
         contentView.addSubview(categoryTitleLabel)
-        contentView.backgroundColor = .blue
+        contentView.backgroundColor = .white
 
         categoryTitleLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(9)

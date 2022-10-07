@@ -11,7 +11,7 @@ import SnapKit
 
 class HomeSection2Cell: UICollectionViewCell {
 
-    static let identifer = String(describing: self)
+    static let identifer = String(describing: HomeSection2Cell.self)
 
     override init(frame: CGRect) {
         super.init(frame: frame)

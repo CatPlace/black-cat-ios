@@ -9,12 +9,12 @@ import UIKit
 
 class HomeSectionBackgroundView: UICollectionReusableView {
 
-    static let identifier = String(describing: self)
+    static let identifier = String(describing: HomeSectionBackgroundView.self)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = .lightGray
+        backgroundColor = .designSystem(.BackgroundSecondary)
     }
 
     required init?(coder: NSCoder) {

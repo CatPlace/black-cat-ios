@@ -8,12 +8,10 @@
 import UIKit
 
 class HomeEmptyCell: UICollectionViewCell {
-    static let identifier = String(describing: self)
+    static let identifier = String(describing: HomeEmptyCell.self)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
-        backgroundColor = .lightGray
     }
 
     required init?(coder: NSCoder) {

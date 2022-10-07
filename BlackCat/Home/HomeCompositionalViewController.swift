@@ -20,6 +20,7 @@ class HomeCompositionalViewController: UIViewController {
     enum Section {
         case category
         case section1
+        case empty
         case section2
     }
 
@@ -42,6 +43,14 @@ class HomeCompositionalViewController: UIViewController {
 
                 return cell
 
+            case 2:
+                guard let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: HomeEmptyCell.identifier,
+                    for: indexPath) as? HomeEmptyCell else { return UICollectionViewCell() }
+                cell.backgroundColor = .designSystem(.BackgroundSecondary)
+
+                return cell
+
             default:
                 guard let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: HomeSection2Cell.identifer,
@@ -60,7 +69,7 @@ class HomeCompositionalViewController: UIViewController {
             switch indexPath.section {
             case 1:
                 homeHeaderView.titleLabel.text = "항목 1"
-            case 2:
+            case 3:
                 homeHeaderView.titleLabel.text = "항목 2"
             default:
                 return homeHeaderView
@@ -70,10 +79,11 @@ class HomeCompositionalViewController: UIViewController {
         }
 
         var snapShot = NSDiffableDataSourceSnapshot<Section, String>()
-        snapShot.appendSections([.category, .section1, .section2])
+        snapShot.appendSections([.category, .section1, .empty, .section2])
         snapShot.appendItems(categories, toSection: .category)
         snapShot.appendItems(["안녕", "바보", "짱구는", "못말려", "아니야", "말릴 수 ", "있어"], toSection: .section1)
-        snapShot.appendItems(["1", "2", "3", "4", "5", "6", "7", "8"])
+        snapShot.appendItems(["엠티"], toSection: .empty)
+        snapShot.appendItems(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"])
         dataSource.apply(snapShot)
 
         setUI()
@@ -163,7 +173,7 @@ class HomeCompositionalViewController: UIViewController {
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .continuous
                 section.interGroupSpacing = 20
-                section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 30)
+                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 30)
 
                 let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(43))
                 let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
@@ -171,11 +181,28 @@ class HomeCompositionalViewController: UIViewController {
 
                 return section
 
+            case 2:
+                let itemSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .fractionalHeight(1)
+                )
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+                let groupSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(20)
+                )
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
+                let section = NSCollectionLayoutSection(group: group)
+
+                return section
+
             default:
-                let itemWidth: CGFloat = (UIScreen.main.bounds.width - 3) / 3
+                let itemWidth: CGFloat = (UIScreen.main.bounds.width - 4) / 3
 
                 let itemSize = NSCollectionLayoutSize(
-                    widthDimension: .estimated(itemWidth),
+                    widthDimension: .absolute(itemWidth),
                     heightDimension: .absolute(itemWidth)
                 )
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -185,7 +212,7 @@ class HomeCompositionalViewController: UIViewController {
                     heightDimension: .absolute(itemWidth)
                 )
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-                group.interItemSpacing = NSCollectionLayoutSpacing.fixed(1)
+                group.interItemSpacing = .fixed(1)
 
                 let section = NSCollectionLayoutSection(group: group)
                 section.interGroupSpacing = 1
