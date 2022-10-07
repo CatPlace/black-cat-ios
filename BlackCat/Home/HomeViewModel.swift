@@ -75,7 +75,22 @@ class HomeViewModel {
                 HomeSection(header: "", items: categories.map { .HomeCategoryCellItem($0) }),
                 HomeSection(header: "항목 1", items: [.Section1(Section1(imageURLString: "", price: "", producer: ""))]),
                 HomeSection(header: "", items: [.Empty(Empty())]),
-                HomeSection(header: "항목 2", items: [.Section2(Section2(imageURLString: ""))])
+                HomeSection(header: "항목 2", items: [
+                    .Section2(Section2(imageURLString: "")),
+                    .Section2(Section2(imageURLString: "")),
+                    .Section2(Section2(imageURLString: "")),
+                    .Section2(Section2(imageURLString: "")),
+                    .Section2(Section2(imageURLString: "")),
+                    .Section2(Section2(imageURLString: "")),
+                    .Section2(Section2(imageURLString: "")),
+                    .Section2(Section2(imageURLString: "")),
+                    .Section2(Section2(imageURLString: "")),
+                    .Section2(Section2(imageURLString: "")),
+                    .Section2(Section2(imageURLString: "")),
+                    .Section2(Section2(imageURLString: "")),
+                    .Section2(Section2(imageURLString: "")),
+                    .Section2(Section2(imageURLString: ""))
+                ])
             ]
         }
         .asDriver(onErrorJustReturn: [])

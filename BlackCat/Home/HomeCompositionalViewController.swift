@@ -184,16 +184,16 @@ class HomeCompositionalViewController: UIViewController {
                 let itemWidth: CGFloat = (UIScreen.main.bounds.width - 4) / 3
 
                 let itemSize = NSCollectionLayoutSize(
-                    widthDimension: .absolute(itemWidth),
-                    heightDimension: .absolute(itemWidth)
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .fractionalHeight(1)
                 )
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
                 let groupSize = NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .absolute(itemWidth)
+                    heightDimension: .fractionalWidth(1 / 3)
                 )
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 3)
                 group.interItemSpacing = .fixed(1)
 
                 let section = NSCollectionLayoutSection(group: group)
