@@ -42,7 +42,12 @@ class HomeCompositionalViewController: UIViewController {
                 return cell
 
             default:
-                print("")
+                guard let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: HomeSection2Cell.identifer,
+                    for: indexPath
+                ) as? HomeSection2Cell else { return UICollectionViewCell() }
+
+                return cell
             }
         })
 
@@ -51,15 +56,23 @@ class HomeCompositionalViewController: UIViewController {
                 ofKind: UICollectionView.elementKindSectionHeader,
                 withReuseIdentifier: HomeHeaderView.identifer,
                 for: indexPath) as? HomeHeaderView else { return  UICollectionReusableView() }
-            homeHeaderView.titleLabel.text = "항목 1"
+            switch indexPath.section {
+            case 1:
+                homeHeaderView.titleLabel.text = "항목 1"
+            case 2:
+                homeHeaderView.titleLabel.text = "항목 2"
+            default:
+                return homeHeaderView
+            }
 
             return homeHeaderView
         }
 
         var snapShot = NSDiffableDataSourceSnapshot<Section, String>()
-        snapShot.appendSections([.category, .section1])
+        snapShot.appendSections([.category, .section1, .section2])
         snapShot.appendItems(categories, toSection: .category)
-        snapShot.appendItems(["안녕", "바보"], toSection: .section1)
+        snapShot.appendItems(["안녕", "바보", "짱구는", "못말려", "아니야", "말릴 수 ", "있어"], toSection: .section1)
+        snapShot.appendItems(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18"])
         dataSource.apply(snapShot)
 
         setUI()
@@ -82,10 +95,16 @@ class HomeCompositionalViewController: UIViewController {
             forCellWithReuseIdentifier: HomeSection1Cell.identifier
         )
         collectionView.register(
+            HomeSection2Cell.self,
+            forCellWithReuseIdentifier: HomeSection2Cell.identifer
+        )
+        collectionView.register(
             HomeHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: HomeHeaderView.identifer
         )
+
+        collectionView.showsVerticalScrollIndicator = false
 
         return collectionView
     }()
@@ -122,19 +141,22 @@ class HomeCompositionalViewController: UIViewController {
                 return section
             case 1:
                 let itemSize = NSCollectionLayoutSize(
-                    widthDimension: .estimated(140),
+                    widthDimension: .fractionalWidth(1),
                     heightDimension: .fractionalHeight(1)
                 )
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
                 let groupSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .estimated(210)
+                    widthDimension: .absolute(140),
+                    heightDimension: .absolute(210)
                 )
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-                group.interItemSpacing = NSCollectionLayoutSpacing.fixed(20)
+//                group.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20)
 
                 let section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .continuous
+                section.interGroupSpacing = 20
+                section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 30)
 
                 let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(43))
                 let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
@@ -143,73 +165,38 @@ class HomeCompositionalViewController: UIViewController {
                 return section
 
             default:
-                let itemWidth = (UIScreen.main.bounds.width - 3) / 3
+                let itemWidth: CGFloat = (UIScreen.main.bounds.width - 3) / 3
 
                 let itemSize = NSCollectionLayoutSize(
-                    widthDimension: itemWidth,
-                    heightDimension: itemWidth
+                    widthDimension: .estimated(itemWidth),
+                    heightDimension: .absolute(itemWidth)
                 )
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(itemWidth))
+                let groupSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(itemWidth)
+                )
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-                group.interItemSpacing = .fixed(1)
+                group.interItemSpacing = NSCollectionLayoutSpacing.fixed(1)
 
                 let section = NSCollectionLayoutSection(group: group)
-                section.interGroupSpacing = .fixed(1)
+                section.interGroupSpacing = 1
+                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0.5, bottom: 0, trailing: 0.5)
+
+                let headerSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .estimated(43)
+                )
+                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                section.boundarySupplementaryItems = [header]
+
+                return section
             }
         }
 
         return layout
     }()
-
-    private func categoryLayoutSection() -> NSCollectionLayoutSection {
-        let itemInset: CGFloat = 12
-        let sectionLeadingInset: CGFloat = 14
-        let sectionTrailinginset: CGFloat = 14
-        let itemWidth: CGFloat = (UIScreen.main.bounds.width - (itemInset * 4) - (sectionLeadingInset + sectionTrailinginset)) / 5
-
-        // Item
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .absolute(itemWidth),
-            heightDimension: .absolute(itemWidth)
-        )
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-        // Group
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .absolute(itemWidth)
-        )
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.interItemSpacing = NSCollectionLayoutSpacing.fixed(itemInset)
-
-        // Section
-        let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = itemInset
-        section.contentInsets = NSDirectionalEdgeInsets(top: 30, leading: 14, bottom: 30, trailing: 14)
-
-        return section
-    }
-
-    private func section1LayoutSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .estimated(140),
-            heightDimension: .fractionalHeight(1)
-        )
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(210)
-        )
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.interItemSpacing = NSCollectionLayoutSpacing.fixed(20)
-
-        let section = NSCollectionLayoutSection(group: group)
-
-        return section
-    }
 }
 
 extension HomeCompositionalViewController {
