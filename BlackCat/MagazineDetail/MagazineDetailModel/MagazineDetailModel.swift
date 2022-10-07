@@ -5,7 +5,7 @@
 //  Created by Hamlit Jason on 2022/10/06.
 //
 
-import Foundation
+import UIKit
 
 // ✅ NOTE: - 이거 DTO가 아니라 Model임!! 명심할 것
 class MagazineDetailModel {
@@ -42,14 +42,32 @@ class MagazineDetailModel {
         case black = "#FFFFFF"
         case white = "#111111"
         case gray = "#D9D9D9"
+        
+        func toUIColor() -> UIColor {
+            switch self {
+            case .black: return UIColor(hex: self.rawValue) ?? UIColor.black
+            case .white: return UIColor(hex: self.rawValue) ?? UIColor.white
+            case .gray: return UIColor(hex: self.rawValue) ?? UIColor.gray
+            }
+        }
     }
     
     enum TextAlignmentType {
-        case center
-        case justified
         case left
-        case natural
+        case center
         case right
+        case justified
+        case natural
+        
+        func toNSTextAlignment() -> NSTextAlignment {
+            switch self {
+            case .left: return .left
+            case .center: return .center
+            case .right: return .right
+            case .justified: return .justified
+            case .natural: return .natural
+            }
+        }
     }
     
     enum FontWeightType {

@@ -31,10 +31,10 @@ final class MagazineDetailTextCell: MagazineDetailBaseCell, View {
     // MARK: - UIComponents
     private let contentTextLabel = UILabel()
     
-    func contentTextBuilder(_ sender: UILabel, _ item: MagazineDetailModel) {
-        switch item.textColor {
-        case .black: sender.textColor = UIColor.init(he)
-        }
+    func contentLabelBuilder(_ sender: UILabel, _ item: MagazineDetailModel) {
+        sender.textColor = item.textColor.toUIColor()
+        sender.text = item.text
+        sender.textAlignment = item.textAlignment.toNSTextAlignment()
     }
 }
 
