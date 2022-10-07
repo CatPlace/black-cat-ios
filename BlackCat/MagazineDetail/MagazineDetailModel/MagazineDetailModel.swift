@@ -80,5 +80,19 @@ class MagazineDetailModel {
         case semibold
         case thin
         case ultraLight
+        
+        func toFontWeight() -> UIFont.Weight {
+            switch self {
+            case .bold: return .bold
+            case .black: return .black
+            case .medium: return .medium
+            case .heavy: return .heavy
+            case .light: return .light
+            case .regular: return .regular
+            case .semibold: return .semibold
+            case .thin: return .thin
+            case .ultraLight: return .ultraLight
+            }
+        }
     }
 }

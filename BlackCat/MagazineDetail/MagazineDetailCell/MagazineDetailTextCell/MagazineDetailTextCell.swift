@@ -18,7 +18,7 @@ final class MagazineDetailTextCell: MagazineDetailBaseCell, View {
         reactor.state.compactMap { $0 }
             .withUnretained(self)
             .bind { owner, item in
-                owner.contentTextLabel.text = item.text
+                owner.contentTextLabelBuilder(owner.contentTextLabel, item)
             }
             .disposed(by: self.disposeBag)
     }
@@ -31,10 +31,12 @@ final class MagazineDetailTextCell: MagazineDetailBaseCell, View {
     // MARK: - UIComponents
     private let contentTextLabel = UILabel()
     
-    func contentLabelBuilder(_ sender: UILabel, _ item: MagazineDetailModel) {
+    func contentTextLabelBuilder(_ sender: UILabel, _ item: MagazineDetailModel) {
         sender.textColor = item.textColor.toUIColor()
         sender.text = item.text
         sender.textAlignment = item.textAlignment.toNSTextAlignment()
+        sender.font = .systemFont(ofSize: CGFloat(item.fontSize),
+                                  weight: item.fontWeight.toFontWeight())
     }
 }
 
