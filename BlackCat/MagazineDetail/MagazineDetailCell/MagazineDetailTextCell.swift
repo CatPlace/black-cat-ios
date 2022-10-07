@@ -37,8 +37,6 @@ extension MagazineDetailTextCell {
     func setUI() {
         addSubview(contentTextLabel)
         
-        contentTextLabel.numberOfLines = 0
-        contentTextLabel.lineBreakMode = .byWordWrapping
         contentTextLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.top.bottom.equalToSuperview()

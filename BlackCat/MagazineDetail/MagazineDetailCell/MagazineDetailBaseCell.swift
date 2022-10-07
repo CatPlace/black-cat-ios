@@ -26,6 +26,9 @@ class MagazineDetailBaseCell: UITableViewCell {
     
     // MARK: - textBuilder
     func contentTextLabelBuilder(_ sender: UILabel, _ item: MagazineDetailModel) {
+        sender.numberOfLines = 0
+        sender.lineBreakMode = .byWordWrapping
+        
         sender.textColor = item.textColor.toUIColor()
         sender.text = item.text
         sender.textAlignment = item.textAlignment.toNSTextAlignment()
