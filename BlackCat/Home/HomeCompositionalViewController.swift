@@ -19,23 +19,33 @@ class HomeCompositionalViewController: UIViewController {
 
     enum Section {
         case category
+        case section1
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         dataSource = UICollectionViewDiffableDataSource<Section, String>(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCategoryCell.identifier, for: indexPath) as? HomeCategoryCell else { return UICollectionViewCell() }
+            switch indexPath.section {
+            case 0:
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCategoryCell.identifier, for: indexPath) as? HomeCategoryCell else { return UICollectionViewCell() }
+                cell.categoryTitleLabel.text = itemIdentifier
 
-            cell.categoryTitleLabel.text = itemIdentifier
+                return cell
 
+            default:
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeSection1Cell.identifier, for: indexPath) as?
+                        HomeSection1Cell else { return UICollectionViewCell() }
+                cell.priceLabel.text = itemIdentifier
 
-            return cell
+                return cell
+            }
         })
 
         var snapShot = NSDiffableDataSourceSnapshot<Section, String>()
-        snapShot.appendSections([.category])
+        snapShot.appendSections([.category, .section1])
         snapShot.appendItems(categories, toSection: .category)
+        snapShot.appendItems(["안녕", "바보"], toSection: .section1)
         dataSource.apply(snapShot)
 
         setUI()
@@ -53,18 +63,22 @@ class HomeCompositionalViewController: UIViewController {
             HomeCategoryCell.self,
             forCellWithReuseIdentifier: HomeCategoryCell.identifier
         )
+        collectionView.register(
+            HomeSection1Cell.self,
+            forCellWithReuseIdentifier: HomeSection1Cell.identifier
+        )
 
         return collectionView
     }()
 
     let compositionalLayout: UICollectionViewLayout = {
-        let layout = UICollectionViewCompositionalLayout { (section, env) -> NSCollectionLayoutSection? in
+        let layout = UICollectionViewCompositionalLayout { (section: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             switch section {
             case 0:
                 let itemInset: CGFloat = 12
-                let sectionLeadingInset = 14
-                let sectionTrailinginset = 14
-                let itemWidth = (UIScreen.main.bounds.width - (itemInset * 4) - (sectionLeadingInset + sectionTrailinginset)) / 5
+                let sectionLeadingInset: CGFloat = 14
+                let sectionTrailinginset: CGFloat = 14
+                let itemWidth: CGFloat = (UIScreen.main.bounds.width - (itemInset * 4) - (sectionLeadingInset + sectionTrailinginset)) / 5
 
                 // Item
                 let itemSize = NSCollectionLayoutSize(
@@ -79,7 +93,7 @@ class HomeCompositionalViewController: UIViewController {
                     heightDimension: .absolute(itemWidth)
                 )
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-                group.interItemSpacing = .fixed(itemInset)
+                group.interItemSpacing = NSCollectionLayoutSpacing.fixed(itemInset)
 
                 // Section
                 let section = NSCollectionLayoutSection(group: group)
@@ -87,54 +101,21 @@ class HomeCompositionalViewController: UIViewController {
                 section.contentInsets = NSDirectionalEdgeInsets(top: 30, leading: 14, bottom: 30, trailing: 14)
 
                 return section
-            case 1:
-                let itemFractionalWidthFraction = 1.0 / 5.0 // horizontal 5개의 셀
-                let groupFractionalHeightFraction = 1.0 / 4.0 // vertical 4개의 셀
-                let itemInset: CGFloat = 2.5
-
-                // Item
-                let itemSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(itemFractionalWidthFraction),
-                    heightDimension: .fractionalHeight(1)
-                )
-                let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = NSDirectionalEdgeInsets(top: itemInset, leading: itemInset, bottom: itemInset, trailing: itemInset)
-
-                // Group
-                let groupSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .fractionalHeight(groupFractionalHeightFraction)
-                )
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
-                // Section
-                let section = NSCollectionLayoutSection(group: group)
-                section.contentInsets = NSDirectionalEdgeInsets(top: itemInset, leading: itemInset, bottom: itemInset, trailing: itemInset)
-
-                return section
             default:
-                let itemFractionalWidthFraction = 1.0 / 5.0 // horizontal 5개의 셀
-                let groupFractionalHeightFraction = 1.0 / 4.0 // vertical 4개의 셀
-                let itemInset: CGFloat = 2.5
-
-                // Item
                 let itemSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(itemFractionalWidthFraction),
+                    widthDimension: .estimated(140),
                     heightDimension: .fractionalHeight(1)
                 )
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = NSDirectionalEdgeInsets(top: itemInset, leading: itemInset, bottom: itemInset, trailing: itemInset)
 
-                // Group
                 let groupSize = NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .fractionalHeight(groupFractionalHeightFraction)
+                    heightDimension: .estimated(210)
                 )
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+                group.interItemSpacing = NSCollectionLayoutSpacing.fixed(20)
 
-                // Section
                 let section = NSCollectionLayoutSection(group: group)
-                section.contentInsets = NSDirectionalEdgeInsets(top: itemInset, leading: itemInset, bottom: itemInset, trailing: itemInset)
 
                 return section
             }
@@ -142,6 +123,54 @@ class HomeCompositionalViewController: UIViewController {
 
         return layout
     }()
+
+    private func categoryLayoutSection() -> NSCollectionLayoutSection {
+        let itemInset: CGFloat = 12
+        let sectionLeadingInset: CGFloat = 14
+        let sectionTrailinginset: CGFloat = 14
+        let itemWidth: CGFloat = (UIScreen.main.bounds.width - (itemInset * 4) - (sectionLeadingInset + sectionTrailinginset)) / 5
+
+        // Item
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .absolute(itemWidth),
+            heightDimension: .absolute(itemWidth)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        // Group
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(itemWidth)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.interItemSpacing = NSCollectionLayoutSpacing.fixed(itemInset)
+
+        // Section
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = itemInset
+        section.contentInsets = NSDirectionalEdgeInsets(top: 30, leading: 14, bottom: 30, trailing: 14)
+
+        return section
+    }
+
+    private func section1LayoutSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .estimated(140),
+            heightDimension: .fractionalHeight(1)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(210)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.interItemSpacing = NSCollectionLayoutSpacing.fixed(20)
+
+        let section = NSCollectionLayoutSection(group: group)
+
+        return section
+    }
 }
 
 extension HomeCompositionalViewController {
