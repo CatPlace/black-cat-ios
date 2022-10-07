@@ -8,7 +8,35 @@
 import Foundation
 
 import RxCocoa
+import RxDataSources
 import RxSwift
+
+struct HomeCategory {
+    let title: String
+}
+
+struct Section1 {
+    let imageURLString: String
+    let price: String
+    let producer: String
+}
+
+struct Empty { }
+
+struct Section2 {
+    let imaeURLString: String
+}
+
+struct HomeSection {
+    var items: [Item]
+}
+
+enum HomeItem {
+    case HomeCategoryCellItem([HomeCategory])
+    case Section1([Section1])
+    case Empty([Empty])
+    case Section2([Section2])
+}
 
 class HomeViewModel {
     let categoryItemTitles = Observable<[String]>.of([

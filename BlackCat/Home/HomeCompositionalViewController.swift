@@ -7,7 +7,17 @@
 
 import UIKit
 
+import RxDataSources
 import SnapKit
+
+extension HomeSection: SectionModelType {
+    typealias Item = HomeItem
+
+    init(original: HomeSection, items: [Item] = []) {
+        self = original
+        self.items = items
+    }
+}
 
 class HomeCompositionalViewController: UIViewController {
 
@@ -16,6 +26,31 @@ class HomeCompositionalViewController: UIViewController {
         "전체보기", "레터링", "미니 타투", "감성 타투", "이레즈미", "블랙&그레이", "라인워크", "헤나",
         "커버업", "뉴스쿨", "올드스쿨", "잉크 스플래쉬", "치카노", "컬러", "캐릭터"
     ]
+
+    lazy var dataSource2 = RxCollectionViewSectionedReloadDataSource<HomeSection> { dataSource, collectionView, indexPath, item in
+        switch item {
+        case .HomeCategoryCellItem(let categories):
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCategoryCell.identifier, for: indexPath) as! HomeCategoryCell
+            cell.categoryTitleLabel.text = categories[indexPath.row].title
+
+            return cell
+
+        case .Section1(let section1s):
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeSection1Cell.identifier, for: indexPath) as! HomeSection1Cell
+
+            return cell
+
+        case .Empty(let empty):
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeEmptyCell.identifier, for: indexPath) as! HomeEmptyCell
+
+            return cell
+
+        case .Section2(let section2s):
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeSection2Cell.identifer, for: indexPath) as! HomeSection2Cell
+
+            return cell
+        }
+    }
 
     enum Section {
         case category

@@ -11,6 +11,7 @@
 		780EF44128EB1CD700257FB8 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 780EF44028EB1CD700257FB8 /* RealmSwift */; };
 		8E0C8EF528EFD0390020E76E /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C8EF428EFD0390020E76E /* HomeHeaderView.swift */; };
 		8E0C8EF728EFD6960020E76E /* HomeSection2Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0C8EF628EFD6960020E76E /* HomeSection2Cell.swift */; };
+		8E8C214A28F01F7F00981A01 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 8E8C214928F01F7F00981A01 /* RxDataSources */; };
 		8E8EDD2328F00607006A72ED /* HomeSectionBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8EDD2228F00607006A72ED /* HomeSectionBackgroundView.swift */; };
 		8E8EDD2528F00D0F006A72ED /* HomeEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8EDD2428F00D0F006A72ED /* HomeEmptyCell.swift */; };
 		8EB75C8728ED151300F5AFEB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB75C8628ED151300F5AFEB /* HomeViewController.swift */; };
@@ -116,6 +117,7 @@
 				780EF43E28EB1C9500257FB8 /* Moya in Frameworks */,
 				780EF44128EB1CD700257FB8 /* RealmSwift in Frameworks */,
 				B1EDD51028EB14B800FBB722 /* Nuke in Frameworks */,
+				8E8C214A28F01F7F00981A01 /* RxDataSources in Frameworks */,
 				8EB75C8C28ED157400F5AFEB /* RxCocoa in Frameworks */,
 				8EB75C8A28ED157400F5AFEB /* RxBlocking in Frameworks */,
 			);
@@ -282,6 +284,7 @@
 				8EB75C8928ED157300F5AFEB /* RxBlocking */,
 				8EB75C8B28ED157400F5AFEB /* RxCocoa */,
 				8EB75C8D28ED157400F5AFEB /* RxRelay */,
+				8E8C214928F01F7F00981A01 /* RxDataSources */,
 			);
 			productName = BlackCat;
 			productReference = B1D79CA728EB0EF9008487D0 /* BlackCat.app */;
@@ -318,6 +321,7 @@
 				780EF43C28EB1C9500257FB8 /* XCRemoteSwiftPackageReference "Moya" */,
 				780EF43F28EB1CD700257FB8 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				8EB75C8828ED157300F5AFEB /* XCRemoteSwiftPackageReference "RxSwift" */,
+				8E8C214828F01F7F00981A01 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 			);
 			productRefGroup = B1D79CA828EB0EF9008487D0 /* Products */;
 			projectDirPath = "";
@@ -615,6 +619,14 @@
 				kind = branch;
 			};
 		};
+		8E8C214828F01F7F00981A01 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		8EB75C8828ED157300F5AFEB /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
@@ -659,6 +671,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 780EF43F28EB1CD700257FB8 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		8E8C214928F01F7F00981A01 /* RxDataSources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8E8C214828F01F7F00981A01 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = RxDataSources;
 		};
 		8EB75C8928ED157300F5AFEB /* RxBlocking */ = {
 			isa = XCSwiftPackageProductDependency;
