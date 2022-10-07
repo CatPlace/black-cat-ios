@@ -37,7 +37,8 @@ final class MagazineDetailBulletedCell: MagazineDetailBaseCell, View {
         
         // 부모먼저 호출해서 초기화
         super.contentImageViewBuilder(sender, item)
-        print("override init")
+        
+        contentImageView.backgroundColor = .darkGray
         contentImageView.layer.cornerRadius = 6
     }
 }
@@ -56,7 +57,7 @@ extension MagazineDetailBulletedCell {
         contentTextLabel.snp.makeConstraints {
             $0.top.equalTo(contentImageView.snp.top)
             $0.bottom.equalToSuperview()
-            $0.leading.equalTo(contentImageView.snp.trailing).offset(24)
+            $0.leading.equalTo(contentImageView.snp.trailing).offset(12)
             $0.trailing.equalToSuperview().inset(24)
         }
     }
