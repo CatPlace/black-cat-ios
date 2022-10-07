@@ -42,6 +42,16 @@ class HomeCompositionalViewController: UIViewController {
             }
         })
 
+        dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
+            guard let homeHeaderView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: UICollectionView.elementKindSectionHeader,
+                withReuseIdentifier: HomeHeaderView.identifer,
+                for: indexPath) as? HomeHeaderView else { return  UICollectionReusableView() }
+            homeHeaderView.titleLabel.text = "항목 1"
+
+            return homeHeaderView
+        }
+
         var snapShot = NSDiffableDataSourceSnapshot<Section, String>()
         snapShot.appendSections([.category, .section1])
         snapShot.appendItems(categories, toSection: .category)
@@ -66,6 +76,11 @@ class HomeCompositionalViewController: UIViewController {
         collectionView.register(
             HomeSection1Cell.self,
             forCellWithReuseIdentifier: HomeSection1Cell.identifier
+        )
+        collectionView.register(
+            HomeHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: HomeHeaderView.identifer
         )
 
         return collectionView
@@ -116,6 +131,10 @@ class HomeCompositionalViewController: UIViewController {
                 group.interItemSpacing = NSCollectionLayoutSpacing.fixed(20)
 
                 let section = NSCollectionLayoutSection(group: group)
+
+                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(43))
+                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                section.boundarySupplementaryItems = [header]
 
                 return section
             }
