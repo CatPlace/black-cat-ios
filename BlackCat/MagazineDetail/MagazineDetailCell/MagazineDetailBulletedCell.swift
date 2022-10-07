@@ -19,6 +19,7 @@ final class MagazineDetailBulletedCell: MagazineDetailBaseCell, View {
             .withUnretained(self)
             .bind { owner, item in
                 owner.contentTextLabelBuilder(owner.contentTextLabel, item)
+                owner.contentImageViewBuilder(owner.contentImageView, item)
             }
             .disposed(by: self.disposeBag)
     }
@@ -29,23 +30,33 @@ final class MagazineDetailBulletedCell: MagazineDetailBaseCell, View {
     }
    
     // MARK: - UIComponents
-    private let bulletImageView = UIImageView()
+    private let contentImageView = UIImageView()
     private let contentTextLabel = UILabel()
+    
+    override func contentImageViewBuilder(_ sender: UIImageView, _ item: MagazineDetailModel) {
+        
+        // 부모먼저 호출해서 초기화
+        super.contentImageViewBuilder(sender, item)
+        print("override init")
+        contentImageView.layer.cornerRadius = 6
+    }
 }
 
 extension MagazineDetailBulletedCell {
     func setUI() {
-        [bulletImageView, contentTextLabel].forEach { addSubview($0) }
+        [contentImageView, contentTextLabel].forEach { addSubview($0) }
         
-        bulletImageView.snp.makeConstraints {
-            $0.width.height.equalTo(24)
+        contentImageView.snp.makeConstraints {
+            $0.width.height.equalTo(12)
+            $0.top.equalToSuperview().offset(10)
             $0.leading.equalToSuperview().offset(24)
+            $0.bottom.lessThanOrEqualToSuperview().inset(10)
         }
         
         contentTextLabel.snp.makeConstraints {
-            $0.top.equalTo(bulletImageView.snp.top)
+            $0.top.equalTo(contentImageView.snp.top)
             $0.bottom.equalToSuperview()
-            $0.leading.equalTo(bulletImageView.snp.trailing).offset(24)
+            $0.leading.equalTo(contentImageView.snp.trailing).offset(24)
             $0.trailing.equalToSuperview().inset(24)
         }
     }

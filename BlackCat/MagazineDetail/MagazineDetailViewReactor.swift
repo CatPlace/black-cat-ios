@@ -114,12 +114,20 @@ extension MagazineDetailViewReactor {
         )
         
         let bulletedCell2 = MagazineDetailSectionFactory.makeBulletedCell(
-            MagazineDetailModel(text: "ㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹ불렛셂ㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹ")
+            MagazineDetailModel(
+                text: "ㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹ불렛셂ㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹ",
+                fontSize: 24,
+                fontWeight: .heavy
+            )
         )
         
         let bulletedCellSection = MagazineDetailCellSection.bulletedCell([bulletedCell, bulletedCell2])
         
-        return [bulletedCellSection, textCellSection, imageCellSection]
+        return [
+            bulletedCellSection,
+            textCellSection,
+//            imageCellSection
+        ]
     }
 }
 
