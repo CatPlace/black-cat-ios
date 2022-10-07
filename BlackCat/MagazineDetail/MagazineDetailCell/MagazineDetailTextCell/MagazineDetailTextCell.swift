@@ -30,6 +30,12 @@ final class MagazineDetailTextCell: MagazineDetailBaseCell, View {
    
     // MARK: - UIComponents
     private let contentTextLabel = UILabel()
+    
+    func contentTextBuilder(_ sender: UILabel, _ item: MagazineDetailModel) {
+        switch item.textColor {
+        case .black: sender.textColor = UIColor.init(he)
+        }
+    }
 }
 
 extension MagazineDetailTextCell {
