@@ -41,7 +41,6 @@ final class MagazineDetailViewController: UIViewController, View {
     
     // MARK: - Binding
     func bind(reactor: Reactor) {
-        print("bind did called")
         dispatch(reactor: reactor)
         render(reactor: reactor)
     }

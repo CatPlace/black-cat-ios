@@ -37,8 +37,6 @@ extension MagazineDetailImageCell {
     func setUI() {
         addSubview(contentImageView)
         
-//        contentTextLabel.numberOfLines = 0
-//        contentTextLabel.lineBreakMode = .byWordWrapping
         contentImageView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.top.bottom.equalToSuperview()
