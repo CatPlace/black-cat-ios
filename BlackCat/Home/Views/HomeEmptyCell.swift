@@ -1,5 +1,5 @@
 //
-//  HomeSectionBackgroundView.swift
+//  HomeEmptyCell.swift
 //  BlackCat
 //
 //  Created by SeYeong on 2022/10/07.
@@ -7,8 +7,7 @@
 
 import UIKit
 
-class HomeSectionBackgroundView: UICollectionReusableView {
-
+class HomeEmptyCell: UICollectionViewCell {
     static let identifier = String(describing: self)
 
     override init(frame: CGRect) {

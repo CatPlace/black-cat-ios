@@ -29,7 +29,8 @@ class HomeCompositionalViewController: UIViewController {
         dataSource = UICollectionViewDiffableDataSource<Section, String>(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
             switch indexPath.section {
             case 0:
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCategoryCell.identifier, for: indexPath) as? HomeCategoryCell else { return UICollectionViewCell() }
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCategoryCell.identifier, for: indexPath) as?
+                        HomeCategoryCell else { return UICollectionViewCell() }
                 cell.categoryTitleLabel.text = itemIdentifier
 
                 return cell
@@ -72,7 +73,7 @@ class HomeCompositionalViewController: UIViewController {
         snapShot.appendSections([.category, .section1, .section2])
         snapShot.appendItems(categories, toSection: .category)
         snapShot.appendItems(["안녕", "바보", "짱구는", "못말려", "아니야", "말릴 수 ", "있어"], toSection: .section1)
-        snapShot.appendItems(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18"])
+        snapShot.appendItems(["1", "2", "3", "4", "5", "6", "7", "8"])
         dataSource.apply(snapShot)
 
         setUI()
@@ -95,6 +96,10 @@ class HomeCompositionalViewController: UIViewController {
             forCellWithReuseIdentifier: HomeSection1Cell.identifier
         )
         collectionView.register(
+            HomeEmptyCell.self,
+            forCellWithReuseIdentifier: HomeEmptyCell.identifier
+        )
+        collectionView.register(
             HomeSection2Cell.self,
             forCellWithReuseIdentifier: HomeSection2Cell.identifer
         )
@@ -103,7 +108,7 @@ class HomeCompositionalViewController: UIViewController {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: HomeHeaderView.identifer
         )
-
+//        collectionView.backgroundColor = .red
         collectionView.showsVerticalScrollIndicator = false
 
         return collectionView
@@ -137,7 +142,9 @@ class HomeCompositionalViewController: UIViewController {
                 let section = NSCollectionLayoutSection(group: group)
                 section.interGroupSpacing = itemInset
                 section.contentInsets = NSDirectionalEdgeInsets(top: 30, leading: 14, bottom: 30, trailing: 14)
-                section.decorationItems = [NSCollectionLayoutDecorationItem(layoutSize: <#T##NSCollectionLayoutSize#>, supplementaryItems: <#T##[NSCollectionLayoutSupplementaryItem]#>)]
+
+                let sectionBackgroundView = NSCollectionLayoutDecorationItem.background(elementKind: HomeSectionBackgroundView.identifier)
+                section.decorationItems = [sectionBackgroundView]
 
                 return section
             case 1:
@@ -148,8 +155,8 @@ class HomeCompositionalViewController: UIViewController {
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
                 let groupSize = NSCollectionLayoutSize(
-                    widthDimension: .absolute(140),
-                    heightDimension: .absolute(210)
+                    widthDimension: .estimated(140),
+                    heightDimension: .estimated(210)
                 )
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
@@ -195,7 +202,7 @@ class HomeCompositionalViewController: UIViewController {
                 return section
             }
         }
-
+        layout.register(HomeSectionBackgroundView.self, forDecorationViewOfKind: HomeSectionBackgroundView.identifier)
         return layout
     }()
 }
