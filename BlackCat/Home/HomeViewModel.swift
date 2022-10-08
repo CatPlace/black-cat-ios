@@ -39,7 +39,7 @@ struct Section1 {
     let tattooistName: String
 }
 
-struct Empty { }
+struct Empty {}
 
 struct Section2 {
     let imageURLString: String
@@ -58,55 +58,47 @@ enum HomeItem {
 }
 
 class HomeViewModel {
+
+    // MARK: - Properties
+
     private let categoryItemTitles = Observable<[HomeCategory]>.just(HomeCategory.default)
-    private let emptyCell = Observable<[Empty]>.just([Empty()])
 
     // View -> ViewModel
 
+    let viewDidLoad = PublishRelay<Void>()
+
     // ViewModel -> View
-    let categoryItems: Driver<[HomeCategory]>
+
     let homeItems: Driver<[HomeSection]>
 
     init() {
-        categoryItems = categoryItemTitles
-            .asDriver(onErrorJustReturn: [])
+        let startFetchItems = viewDidLoad.share()
 
-        homeItems = categoryItemTitles.map{ categories -> [HomeSection] in
-            [
-                HomeSection(header: "", items: categories.map { .HomeCategoryCellItem($0) }),
-                HomeSection(header: "항목 1", items: [
-                    .Section1(Section1(imageURLString: "", priceString: "19,500원", tattooistName: "김타투")),
-                    .Section1(Section1(imageURLString: "", priceString: "19,500원", tattooistName: "김타투")),
-                    .Section1(Section1(imageURLString: "", priceString: "19,500원", tattooistName: "김타투")),
-                    .Section1(Section1(imageURLString: "", priceString: "19,500원", tattooistName: "김타투")),
-                    .Section1(Section1(imageURLString: "", priceString: "19,500원", tattooistName: "김타투")),
-                    .Section1(Section1(imageURLString: "", priceString: "19,500원", tattooistName: "김타투")),
-                    .Section1(Section1(imageURLString: "", priceString: "19,500원", tattooistName: "김타투")),
-                    .Section1(Section1(imageURLString: "", priceString: "19,500원", tattooistName: "김타투")),
-                    .Section1(Section1(imageURLString: "", priceString: "19,500원", tattooistName: "김타투")),
-                    .Section1(Section1(imageURLString: "", priceString: "19,500원", tattooistName: "김타투")),
-                    .Section1(Section1(imageURLString: "", priceString: "19,500원", tattooistName: "김타투")),
-                ]),
-                HomeSection(header: "", items: [.Empty(Empty())]),
-                HomeSection(header: "항목 2", items: [
-                    .Section2(Section2(imageURLString: "")),
-                    .Section2(Section2(imageURLString: "")),
-                    .Section2(Section2(imageURLString: "")),
-                    .Section2(Section2(imageURLString: "")),
-                    .Section2(Section2(imageURLString: "")),
-                    .Section2(Section2(imageURLString: "")),
-                    .Section2(Section2(imageURLString: "")),
-                    .Section2(Section2(imageURLString: "")),
-                    .Section2(Section2(imageURLString: "")),
-                    .Section2(Section2(imageURLString: "")),
-                    .Section2(Section2(imageURLString: "")),
-                    .Section2(Section2(imageURLString: "")),
-                    .Section2(Section2(imageURLString: "")),
-                    .Section2(Section2(imageURLString: ""))
-                ])
-            ]
-        }
-        .asDriver(onErrorJustReturn: [])
+        let fetchedSection1Items = startFetchItems
+            .map { () -> [Section1] in
+                [
+                    Section1(imageURLString: "", priceString: "", tattooistName: "")
+                ]
+            }
+
+        let fetchedSection2Items = startFetchItems
+            .map { () -> [Section2] in
+                [
+                    Section2(imageURLString: "")
+                ]
+            }
+
+        homeItems = Observable
+            .combineLatest(
+                categoryItemTitles, fetchedSection1Items, fetchedSection2Items
+            ) { categoryItems, section1Items, section2Items -> [HomeSection] in
+                [
+                    HomeSection(items: categoryItems.map { .HomeCategoryCellItem($0) }),
+                    HomeSection(header: "항목 1", items: section1Items.map { .Section1($0) }),
+                    HomeSection(items: [.Empty(Empty())]),
+                    HomeSection(header: "항목 2", items: section2Items.map { .Section2($0) })
+                ]
+            }.asDriver(onErrorJustReturn: [])
     }
 
 }
