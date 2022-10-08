@@ -35,6 +35,7 @@ class HomeCompositionalViewController: UIViewController {
 
         case .Section1(let section1):
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeSection1Cell.identifier, for: indexPath) as! HomeSection1Cell
+            cell.bind(to: HomeSection1CellViewModel(section1: section1))
 
             return cell
 
@@ -45,6 +46,7 @@ class HomeCompositionalViewController: UIViewController {
 
         case .Section2(let section2):
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeSection2Cell.identifer, for: indexPath) as! HomeSection2Cell
+            
 
             return cell
         }
@@ -157,7 +159,7 @@ class HomeCompositionalViewController: UIViewController {
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .continuous
                 section.interGroupSpacing = 20
-                section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20)
+                section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 0, trailing: 20)
 
                 let headerSize = NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),

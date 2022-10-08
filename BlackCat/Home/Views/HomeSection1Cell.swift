@@ -32,7 +32,9 @@ class HomeSection1Cell: UICollectionViewCell {
 
         // TODO: - Nuke 조사 필요합니다..
 
-        Nuke.loadImage(with: URL(string: viewModel.imageURLString)!, into: thumbnailImageView)
+        if let url = URL(string: viewModel.imageURLString) {
+            Nuke.loadImage(with: url, into: thumbnailImageView)
+        }
         priceLabel.text = viewModel.price
         producerLabel.text = viewModel.producerName
     }
