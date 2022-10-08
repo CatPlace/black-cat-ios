@@ -10,7 +10,6 @@ import ReactorKit
 import SnapKit
 
 final class MagazineDetailEmptyCell: MagazineDetailBaseCell, View {
-    static let identifier = String(describing: MagazineDetailEmptyCell.self)
     typealias Reactor = MagazineDetailEmptyCellReactor
     
     // MARK: - Binding

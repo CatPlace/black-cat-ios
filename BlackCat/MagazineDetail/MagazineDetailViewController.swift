@@ -18,6 +18,9 @@ final class MagazineDetailViewController: UIViewController, View {
     
     enum Reuable {
         static let textCell = ReusableCell<MagazineDetailTextCell>()
+        static let imageCell = ReusableCell<MagazineDetailImageCell>()
+        static let bulletedCell = ReusableCell<MagazineDetailBulletedCell>()
+        static let emptyCell = ReusableCell<MagazineDetailEmptyCell>()
     }
     
     // MARK: - Properties
@@ -31,30 +34,20 @@ final class MagazineDetailViewController: UIViewController, View {
             cell.reactor = reactor
             return cell
         case .imageCell(let reactor):
-            guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: MagazineDetailImageCell.identifier,
-                for: indexPath
-            ) as? MagazineDetailImageCell else { return UITableViewCell() }
+            let cell = tableView.dequeue(Reuable.imageCell, for: indexPath)
             
             cell.reactor = reactor
             return cell
         case .bulletedCell(let reactor):
-            guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: MagazineDetailBulletedCell.identifier,
-                for: indexPath
-            ) as? MagazineDetailBulletedCell else { return UITableViewCell() }
+            let cell = tableView.dequeue(Reuable.bulletedCell, for: indexPath)
             
             cell.reactor = reactor
             return cell
         case .emptyCell(let reactor):
-            guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: MagazineDetailEmptyCell.identifier,
-                for: indexPath
-            ) as? MagazineDetailEmptyCell else { return UITableViewCell() }
+            let cell = tableView.dequeue(Reuable.emptyCell, for: indexPath)
             
             cell.reactor = reactor
-            
-            tableView.layoutIfNeeded()
+//            tableView.layoutIfNeeded()
             return cell
         }
     }
@@ -92,9 +85,10 @@ final class MagazineDetailViewController: UIViewController, View {
     lazy var tableView: UITableView = {
         var tv = UITableView(frame: .zero, style: .plain)
         tv.register(Reuable.textCell)
-        tv.register(MagazineDetailImageCell.self, forCellReuseIdentifier: MagazineDetailImageCell.identifier)
-        tv.register(MagazineDetailBulletedCell.self, forCellReuseIdentifier: MagazineDetailBulletedCell.identifier)
-        tv.register(MagazineDetailEmptyCell.self, forCellReuseIdentifier: MagazineDetailEmptyCell.identifier)
+        tv.register(Reuable.imageCell)
+        tv.register(Reuable.bulletedCell)
+        tv.register(Reuable.emptyCell)
+        
         tv.rowHeight = UITableView.automaticDimension
         tv.estimatedRowHeight = 70
         return tv
