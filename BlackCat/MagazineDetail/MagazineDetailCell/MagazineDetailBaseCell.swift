@@ -38,7 +38,8 @@ class MagazineDetailBaseCell: UITableViewCell {
     
     // MARK: - imageBuilder
     func contentImageViewBuilder(_ sender: UIImageView, _ item: MagazineDetailModel) {
-        sender.image = UIImage(named: item.imageUrlString ?? "Rect")
+        if let imageUrlString = item.imageUrlString { sender.image = UIImage(named: imageUrlString) }
+        
         sender.layer.cornerRadius = CGFloat(item.imageCornerRadius)
         sender.clipsToBounds = true
     }

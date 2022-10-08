@@ -39,7 +39,7 @@ final class MagazineDetailBulletedCell: MagazineDetailBaseCell, View {
         super.contentImageViewBuilder(sender, item)
         
         contentImageView.backgroundColor = .darkGray
-        contentImageView.layer.cornerRadius = 6
+        contentImageView.layer.cornerRadius = 5
     }
 }
 
@@ -48,14 +48,14 @@ extension MagazineDetailBulletedCell {
         [contentImageView, contentTextLabel].forEach { addSubview($0) }
         
         contentImageView.snp.makeConstraints {
-            $0.width.height.equalTo(12)
+            $0.width.height.equalTo(10)
             $0.top.equalToSuperview().offset(10)
             $0.leading.equalToSuperview().offset(24)
             $0.bottom.lessThanOrEqualToSuperview().inset(10)
         }
         
         contentTextLabel.snp.makeConstraints {
-            $0.top.equalTo(contentImageView.snp.top)
+            $0.top.equalToSuperview()
             $0.bottom.equalToSuperview()
             $0.leading.equalTo(contentImageView.snp.trailing).offset(12)
             $0.trailing.equalToSuperview().inset(24)
