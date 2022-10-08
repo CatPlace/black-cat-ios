@@ -11,6 +11,7 @@ import SnapKit
 import Nuke
 
 struct MagazinePreviewItemCellViewModel {
+    let id: Int
     let imageUrl: String
     let title: String
     let writer: String
@@ -25,8 +26,18 @@ class MagazinePreviewItemCell: UICollectionViewCell {
             titleLabel.text = viewModel?.title
             writerLabel.text = viewModel?.writer
             dateLabel.text = viewModel?.date
-            setUI()
         }
+    }
+    
+    // MARK: - Life Cycle
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        setUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
     
     // MARK: - UIComponents

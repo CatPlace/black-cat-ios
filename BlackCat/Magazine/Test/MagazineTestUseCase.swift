@@ -18,9 +18,15 @@ class MagazineTestUseCase {
     
     func loadMoreMagazine(page: Int) -> Observable<[PreviewMagazine]> {
         print("request page: \(page)")
-        return .just(PreviewMagazine.dummy)
+        return .just(PreviewMagazine.dummy.map { magazine in
+            PreviewMagazine(
+                id: magazine.id + (page * PreviewMagazine.dummy.count),
+                imageUrl: magazine.imageUrl,
+                title: magazine.title,
+                writer: magazine.writer,
+                date: magazine.date
+            )
+        })
     }
-    
-
     
 }

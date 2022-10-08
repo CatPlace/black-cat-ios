@@ -12,10 +12,12 @@ import RxRelay
 import RxCocoa
 
 struct FamousMagazine {
+    let id: Int
     let imageUrl: String
 }
 
 struct PreviewMagazine {
+    let id: Int
     let imageUrl: String
     let title: String
     let writer: String
@@ -68,10 +70,10 @@ struct MagazineViewModel {
         fetchedMagazineItems = Observable.combineLatest(magazineFamousCellItems, combinedMagazinePreviewCellItems) { famouseCell, previewCell in
             [
                 MagazineSection(items: [MagazineItem.MagazineFamousCellItem(famouseCell.map {
-                    .init(imageUrl: $0.imageUrl)
+                    .init(id: $0.id, imageUrl: $0.imageUrl)
                 })]),
                 MagazineSection(items: [MagazineItem.MagazinePreviewCellItem(previewCell.map{
-                    .init(imageUrl: $0.imageUrl, title: $0.title, writer: $0.writer, date: $0.date)
+                    .init(id: $0.id, imageUrl: $0.imageUrl, title: $0.title, writer: $0.writer, date: $0.date)
                 })])
             ]
         }

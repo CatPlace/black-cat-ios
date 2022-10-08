@@ -27,6 +27,7 @@ class MagazinePreviewCell: UITableViewCell {
             .drive(magazinePreviewCollectionView.rx.items) { collectionView, row, data in
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MagazinePreviewItemCell.self.description(), for: IndexPath(row: row, section: 0)) as? MagazinePreviewItemCell else { return UICollectionViewCell() }
                 cell.viewModel = .init(
+                    id: data.id,
                     imageUrl: data.imageUrl,
                     title: data.title,
                     writer: data.writer,
@@ -39,15 +40,15 @@ class MagazinePreviewCell: UITableViewCell {
         magazinePreviewCollectionView.rx.itemSelected
             .withUnretained(self)
             .bind { owner, indexPath in
-                guard let cell = owner.magazinePreviewCollectionView.cellForItem(at: indexPath) as? MagazinePreviewItemCell else { return }
                 // TODO: - 화면 전환
+//                guard let cell = owner.magazinePreviewCollectionView.cellForItem(at: indexPath) as? MagazinePreviewItemCell else { return }
+//                print(cell.viewModel?.id)
             }.disposed(by: disposeBag)
     }
     
     // MARK: - Life Cycle
     override func prepareForReuse() {
         disposeBag = DisposeBag()
-        layoutIfNeeded()
     }
     
     // MARK: - UIComponents
@@ -75,5 +76,3 @@ extension MagazinePreviewCell {
         }
     }
 }
-
-
