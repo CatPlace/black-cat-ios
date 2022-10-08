@@ -17,8 +17,8 @@ struct HomeCategory {
 
 struct Section1 {
     let imageURLString: String
-    let price: String
-    let producer: String
+    let priceString: String
+    let producerName: String
 }
 
 struct Empty { }
@@ -40,7 +40,7 @@ enum HomeItem {
 }
 
 class HomeViewModel {
-    private let categoryItemTitles = Observable<[HomeCategory]>.of([
+    private let categoryItemTitles = Observable<[HomeCategory]>.just([
         HomeCategory(title: "전체보기"),
         HomeCategory(title: "레터링"),
         HomeCategory(title: "미니 타투"),
@@ -57,7 +57,7 @@ class HomeViewModel {
         HomeCategory(title: "컬러"),
         HomeCategory(title: "캐릭터")
     ])
-    private let emptyCell = Observable<[Empty]>.of([Empty()])
+    private let emptyCell = Observable<[Empty]>.just([Empty()])
 
     // View -> ViewModel
 
@@ -73,7 +73,19 @@ class HomeViewModel {
         homeItems = categoryItemTitles.map{ categories -> [HomeSection] in
             [
                 HomeSection(header: "", items: categories.map { .HomeCategoryCellItem($0) }),
-                HomeSection(header: "항목 1", items: [.Section1(Section1(imageURLString: "", price: "", producer: ""))]),
+                HomeSection(header: "항목 1", items: [
+                    .Section1(Section1(imageURLString: "", priceString: "", producerName: "")),
+                    .Section1(Section1(imageURLString: "", priceString: "", producerName: "")),
+                    .Section1(Section1(imageURLString: "", priceString: "", producerName: "")),
+                    .Section1(Section1(imageURLString: "", priceString: "", producerName: "")),
+                    .Section1(Section1(imageURLString: "", priceString: "", producerName: "")),
+                    .Section1(Section1(imageURLString: "", priceString: "", producerName: "")),
+                    .Section1(Section1(imageURLString: "", priceString: "", producerName: "")),
+                    .Section1(Section1(imageURLString: "", priceString: "", producerName: "")),
+                    .Section1(Section1(imageURLString: "", priceString: "", producerName: "")),
+                    .Section1(Section1(imageURLString: "", priceString: "", producerName: "")),
+                    .Section1(Section1(imageURLString: "", priceString: "", producerName: ""))
+                ]),
                 HomeSection(header: "", items: [.Empty(Empty())]),
                 HomeSection(header: "항목 2", items: [
                     .Section2(Section2(imageURLString: "")),
