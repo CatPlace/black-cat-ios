@@ -13,7 +13,7 @@ import RxCocoa
 class ViewController: UIViewController {
 
     let aview = UIView()
-    let btn = UIButton()
+//    let btn = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,12 +23,12 @@ class ViewController: UIViewController {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
-        aview.addSubview(btn)
-        btn.backgroundColor = .blue
-        btn.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(40)
-        }
+//        aview.addSubview(btn)
+//        btn.backgroundColor = .blue
+//        btn.snp.makeConstraints {
+//            $0.leading.trailing.equalToSuperview()
+//            $0.height.equalTo(40)
+//        }
         
 //        btn.rx.tap
 //            .bind {

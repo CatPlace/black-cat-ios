@@ -11,53 +11,42 @@ import ReactorKit
 final class TabBarViewController: UITabBarController {
     
     // MARK: - Properties
-//    let seyeongViewController: UIViewController = {
-//        let viewController = MagazineDetailViewController(nibName: nil, bundle: nil)
-//
-//        viewController.tabBarItem = UITabBarItem(title: "se0",
-//                                                 image: UIImage(),
-//                                                 tag: 0)
-//        return viewController
-//    }()
+    let vc = TabBarFactory.create(viewController: ViewController(),
+                                                title: "dd",
+                                                image: .ic_board,
+                                                selectedImage: .ic_board_fill)
     
-    lazy var vc = tabBarFactory(viewController: ViewController(), title: "dd", image: UIImage(.ic_board)!, selectedImage: UIImage(.ic_board_fill)!)
-    
-    lazy var vc2 = tabBarFactory(viewController: ViewController(), title: "dd", image: UIImage(.ic_board)!, selectedImage: UIImage(.ic_board_fill)!)
+    let vc2 = TabBarFactory.create(viewController: MagazineDetailViewController(reactor: MagazineDetailViewController.Reactor()),
+                                                title: "디테일",
+                                                image: .ic_board,
+                                                selectedImage: .ic_board_fill)
 
-    var homeViewController: UINavigationController?
+//    var homeViewController: UINavigationController
 //    var magazineViewController: UINavigationController
 //    var chatViewController: UINavigationController
 //    var boardViewController: UINavigationController
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
-//        homeViewController = tabBarFactory(viewController: ViewController(),
-//                                           title: "dd",
-//                                           image: UIImage(.ic_board) ?? UIImage(),
-//                                           selectedImage: UIImage(.ic_board_fill) ?? UIImage())
-        
-        tabBar.tintColor = .blue
-        
+        tabBar.backgroundColor = .brown
+        tabBar.tintColor = .darkGray
         tabBar.layer.cornerRadius = tabBar.frame.height * 0.41
-        tabBar.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMinYCorner]
+        tabBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
         viewControllers = [vc, vc2]
     }
-    
-    private func tabBarFactory(
-        viewController : UIViewController,
-        title: String,
-        image: UIImage,
-        selectedImage: UIImage
-    ) -> UINavigationController {
-        
-        vc.tabBarItem = UITabBarItem(
-            title: title,
-            image: image,
-            selectedImage: selectedImage
-        )
-        let ro = UINavigationController(rootViewController: vc)
-        return ro
-    }
 }
 
+struct TabBarFactory {
+    static func create(viewController: UIViewController,
+                              title: String,
+                              image: Asset,
+                              selectedImage: Asset) -> UINavigationController {
+        
+        viewController.tabBarItem = UITabBarItem(title: title,
+                                                 image: UIImage(image) ?? UIImage(),
+                                                 selectedImage: UIImage(selectedImage) ?? UIImage())
+        
+        return UINavigationController(rootViewController: viewController)
+    }
+}
