@@ -15,6 +15,7 @@
 		8E8C215028F06AF500981A01 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 8E8C214F28F06AF500981A01 /* RxDataSources */; };
 		8E8C215728F11B9700981A01 /* HomeSection1CellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8C215628F11B9700981A01 /* HomeSection1CellViewModel.swift */; };
 		8E8C215928F11DFF00981A01 /* HomeSection2CellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8C215828F11DFF00981A01 /* HomeSection2CellViewModel.swift */; };
+		8E8C215C28F1241500981A01 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8C215B28F1241500981A01 /* UIViewController+Rx.swift */; };
 		8E8EDD2328F00607006A72ED /* HomeCategorySectionBackgroundReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8EDD2228F00607006A72ED /* HomeCategorySectionBackgroundReusableView.swift */; };
 		8E8EDD2528F00D0F006A72ED /* HomeEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8EDD2428F00D0F006A72ED /* HomeEmptyCell.swift */; };
 		8EB75C8728ED151300F5AFEB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB75C8628ED151300F5AFEB /* HomeViewController.swift */; };
@@ -82,6 +83,7 @@
 		8E0C8EF628EFD6960020E76E /* HomeSection2Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSection2Cell.swift; sourceTree = "<group>"; };
 		8E8C215628F11B9700981A01 /* HomeSection1CellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSection1CellViewModel.swift; sourceTree = "<group>"; };
 		8E8C215828F11DFF00981A01 /* HomeSection2CellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSection2CellViewModel.swift; sourceTree = "<group>"; };
+		8E8C215B28F1241500981A01 /* UIViewController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx.swift"; sourceTree = "<group>"; };
 		8E8EDD2228F00607006A72ED /* HomeCategorySectionBackgroundReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCategorySectionBackgroundReusableView.swift; sourceTree = "<group>"; };
 		8E8EDD2428F00D0F006A72ED /* HomeEmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEmptyCell.swift; sourceTree = "<group>"; };
 		8EB75C8628ED151300F5AFEB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -137,6 +139,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8E8C215A28F1240300981A01 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				8E8C215B28F1241500981A01 /* UIViewController+Rx.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		8EB75C8528ED14FD00F5AFEB /* Home */ = {
@@ -261,6 +271,7 @@
 		B1D79CA928EB0EF9008487D0 /* BlackCat */ = {
 			isa = PBXGroup;
 			children = (
+				8E8C215A28F1240300981A01 /* Extension */,
 				8EB75CA328ED778100F5AFEB /* DesignSystem */,
 				B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */,
 				B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */,
@@ -414,6 +425,7 @@
 				8EB75CBA28ED778100F5AFEB /* Asset.swift in Sources */,
 				8EB75C8728ED151300F5AFEB /* HomeViewController.swift in Sources */,
 				8EC0914A28EF24190043EC5C /* HomeCompositionalViewController.swift in Sources */,
+				8E8C215C28F1241500981A01 /* UIViewController+Rx.swift in Sources */,
 				8E0C8EF728EFD6960020E76E /* HomeSection2Cell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

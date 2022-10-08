@@ -36,19 +36,19 @@ class HomeSection1Cell: UICollectionViewCell {
             Nuke.loadImage(with: url, into: thumbnailImageView)
         }
         priceLabel.text = viewModel.price
-        producerLabel.text = viewModel.producerName
+        tattooistNameLabel.text = viewModel.tattooistName
     }
 
     // MARK: - UIComponents
 
     let thumbnailImageView = UIImageView()
     let priceLabel = UILabel()
-    let producerLabel = UILabel()
+    let tattooistNameLabel = UILabel()
 }
 
 extension HomeSection1Cell {
     func setUI() {
-        [thumbnailImageView, priceLabel, producerLabel].forEach { contentView.addSubview($0) }
+        [thumbnailImageView, priceLabel, tattooistNameLabel].forEach { contentView.addSubview($0) }
 
         thumbnailImageView.snp.makeConstraints {
             $0.leading.equalToSuperview()
@@ -63,16 +63,13 @@ extension HomeSection1Cell {
             $0.top.equalTo(thumbnailImageView.snp.bottom).offset(10)
         }
 
-        priceLabel.text = "19500원"
         priceLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 16)
 
-        producerLabel.snp.makeConstraints {
+        tattooistNameLabel.snp.makeConstraints {
             $0.leading.equalToSuperview()
             $0.top.equalTo(priceLabel.snp.bottom).offset(2)
-//            $0.bottom.equalToSuperview()
         }
 
-        producerLabel.text = "김타투"
-        producerLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 16)
+        tattooistNameLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 16)
     }
 }
