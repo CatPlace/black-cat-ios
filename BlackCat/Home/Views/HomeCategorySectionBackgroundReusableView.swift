@@ -7,9 +7,9 @@
 
 import UIKit
 
-class HomeSectionBackgroundView: UICollectionReusableView {
+class HomeCategorySectionBackgroundReusableView: UICollectionReusableView {
 
-    static let identifier = String(describing: HomeSectionBackgroundView.self)
+    static let identifier = String(describing: HomeCategorySectionBackgroundReusableView.self)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
