@@ -24,7 +24,7 @@ class HomeCategoryCell: UICollectionViewCell {
         categoryTitleLabel.text = viewModel.title
     }
 
-    // MARK: - Life Cycle
+    // MARK: - Initializing
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -42,7 +42,7 @@ class HomeCategoryCell: UICollectionViewCell {
 }
 
 extension HomeCategoryCell {
-    func setUI() {
+    private func setUI() {
         layer.cornerRadius = 12
         layer.masksToBounds = true
 

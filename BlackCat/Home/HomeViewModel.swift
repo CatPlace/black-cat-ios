@@ -12,18 +12,16 @@ import RxDataSources
 import RxSwift
 
 class HomeViewModel {
-
-    // MARK: - Properties
-
     private let categoryItemTitles = Observable<[HomeCategory]>.just(HomeCategory.default)
 
-    // View -> ViewModel
+    // MARK: - View -> ViewModel
 
     let viewDidLoad = PublishRelay<Void>()
     let didTapSearchBarButtonItem = PublishRelay<Void>()
     let didTapHeartBarButtonItem = PublishRelay<Void>()
+    let didTapCollectionViewItem = PublishRelay<IndexPath>()
 
-    // ViewModel -> View
+    // MARK: - ViewModel -> View
 
     let homeItems: Driver<[HomeSection]>
 
@@ -32,14 +30,27 @@ class HomeViewModel {
 
         let fetchedSection1Items = startFetchItems
             .map { () -> [Section1] in
+                // Dummy 모델
                 [
-                    Section1(imageURLString: "", priceString: "", tattooistName: "")
+                    Section1(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
+                    Section1(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
+                    Section1(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
+                    Section1(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
+                    Section1(imageURLString: "", priceString: "15,900원", tattooistName: "김타투")
                 ]
             }
 
         let fetchedSection2Items = startFetchItems
             .map { () -> [Section2] in
+                // Dummy 모델
                 [
+                    Section2(imageURLString: ""),
+                    Section2(imageURLString: ""),
+                    Section2(imageURLString: ""),
+                    Section2(imageURLString: ""),
+                    Section2(imageURLString: ""),
+                    Section2(imageURLString: ""),
+                    Section2(imageURLString: ""),
                     Section2(imageURLString: "")
                 ]
             }
@@ -54,21 +65,9 @@ class HomeViewModel {
                     HomeSection(items: [.Empty(Empty())]),
                     HomeSection(header: "항목 2", items: section2Items.map { .Section2($0) })
                 ]
-            }.asDriver(onErrorJustReturn: [])
-
-        didTapHeartBarButtonItem
-            .subscribe(onNext: {
-                print("DidTapHeartBarButtonItem")
-            })
-            .dispose()
-
-        didTapSearchBarButtonItem
-            .subscribe(onNext: {
-                print("DidTapSearchBarButtonItem")
-            })
-            .dispose()
+            }
+            .asDriver(onErrorJustReturn: [])
     }
-
 }
 
 struct HomeSection {

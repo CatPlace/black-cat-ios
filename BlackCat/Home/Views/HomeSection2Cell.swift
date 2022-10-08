@@ -12,7 +12,20 @@ import SnapKit
 
 class HomeSection2Cell: UICollectionViewCell {
 
+    // MARK: - Properties
+
     static let identifer = String(describing: HomeSection2Cell.self)
+
+    // MARK: - Binding
+
+    func bind(to viewModel: HomeSection2CellViewModel) {
+        if let url = URL(string: viewModel.imageURLString) {
+            Nuke.loadImage(with: url, into: thumbnailImageView)
+        }
+    }
+
+
+    // MARK: - Initializing
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,11 +37,7 @@ class HomeSection2Cell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(to viewModel: HomeSection2CellViewModel) {
-        if let url = URL(string: viewModel.imageURLString) {
-            Nuke.loadImage(with: url, into: thumbnailImageView)
-        }
-    }
+    // MARK: - UIComponents
 
     let thumbnailImageView = UIImageView()
 }

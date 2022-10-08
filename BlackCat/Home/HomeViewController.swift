@@ -89,8 +89,12 @@ class HomeViewController: UIViewController {
             .bind(to: viewModel.didTapHeartBarButtonItem)
             .disposed(by: disposeBag)
 
+        collectionView.rx.itemSelected
+            .bind(to: viewModel.didTapCollectionViewItem)
+            .disposed(by: disposeBag)
+
         viewModel.homeItems
-            .drive(homeCollectionView.rx.items(dataSource: dataSource))
+            .drive(collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
 
@@ -140,7 +144,7 @@ class HomeViewController: UIViewController {
         return UIBarButtonItem(image: image, style: .plain, target: self, action: nil)
     }()
 
-    lazy var homeCollectionView: UICollectionView = {
+    lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(
             frame: .zero,
             collectionViewLayout: compositionalLayout
@@ -196,7 +200,6 @@ class HomeViewController: UIViewController {
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 5)
                 group.interItemSpacing = .fixed(itemSpacing)
 
-                // Section
                 let section = NSCollectionLayoutSection(group: group)
                 section.interGroupSpacing = itemSpacing
                 section.contentInsets = NSDirectionalEdgeInsets(top: 30, leading: 14, bottom: 30, trailing: 14)
@@ -311,9 +314,9 @@ extension HomeViewController {
     }
 
     private func setUI() {
-        view.addSubview(homeCollectionView)
+        view.addSubview(collectionView)
 
-        homeCollectionView.snp.makeConstraints {
+        collectionView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.bottom.equalToSuperview()
         }

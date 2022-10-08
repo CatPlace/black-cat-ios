@@ -16,17 +16,7 @@ class HomeSection1Cell: UICollectionViewCell {
 
     static let identifier = String(describing: HomeSection1Cell.self)
 
-    // MARK: - Life Cycle
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        setUI()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    // MARK: - Binding
 
     func bind(to viewModel: HomeSection1CellViewModel) {
 
@@ -37,6 +27,18 @@ class HomeSection1Cell: UICollectionViewCell {
         }
         priceLabel.text = viewModel.price
         tattooistNameLabel.text = viewModel.tattooistName
+    }
+
+    // MARK: - Initializing
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        setUI()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - UIComponents

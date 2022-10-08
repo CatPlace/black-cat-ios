@@ -8,7 +8,12 @@
 import UIKit
 
 class HomeEmptyCell: UICollectionViewCell {
+
+    // MARK: - Properties
+
     static let identifier = String(describing: HomeEmptyCell.self)
+
+    // MARK: - Initializing
 
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -11,7 +11,11 @@ import SnapKit
 
 class HomeHeaderView: UICollectionReusableView {
 
+    // MARK: - Properties
+
     static let identifer = String(describing: self)
+
+    // MARK: - Initializing
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,6 +26,8 @@ class HomeHeaderView: UICollectionReusableView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - UIComponents
 
     let titleLabel = UILabel()
 }
