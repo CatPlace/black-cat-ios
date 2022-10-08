@@ -11,6 +11,8 @@
 		B1D127DD28F08DCA007E3667 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D127DC28F08DCA007E3667 /* TabBarViewController.swift */; };
 		B1D127DF28F09200007E3667 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D127DE28F09200007E3667 /* UIImage+.swift */; };
 		B1D127E228F0923C007E3667 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D127E128F0923C007E3667 /* Asset.swift */; };
+		B1D3362528F142A400826636 /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3362428F142A400826636 /* CALayer+.swift */; };
+		B1D3362728F1457700826636 /* UITabBar+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3362628F1457700826636 /* UITabBar+.swift */; };
 		B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */; };
 		B1D79CAD28EB0EF9008487D0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */; };
 		B1D79CAF28EB0EF9008487D0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAE28EB0EF9008487D0 /* ViewController.swift */; };
@@ -58,6 +60,8 @@
 		B1D127DC28F08DCA007E3667 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		B1D127DE28F09200007E3667 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		B1D127E128F0923C007E3667 /* Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
+		B1D3362428F142A400826636 /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
+		B1D3362628F1457700826636 /* UITabBar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBar+.swift"; sourceTree = "<group>"; };
 		B1D79CA728EB0EF9008487D0 /* BlackCat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlackCat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +109,8 @@
 				B12C1DC628ED219C0089964E /* UIVIewController+Rx.swift */,
 				B1DD25DC28EF0BC800103FF1 /* UIColor+.swift */,
 				B1D127DE28F09200007E3667 /* UIImage+.swift */,
+				B1D3362428F142A400826636 /* CALayer+.swift */,
+				B1D3362628F1457700826636 /* UITabBar+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -307,12 +313,14 @@
 				B1E4986528EE957E00B469AC /* MagazineDetailModel.swift in Sources */,
 				B1E4986728EE9BE800B469AC /* MagazineDetailBaseCell.swift in Sources */,
 				B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */,
+				B1D3362528F142A400826636 /* CALayer+.swift in Sources */,
 				B1E4986E28EEABBE00B469AC /* MagazineDetailTextCellReactor.swift in Sources */,
 				B1D127DF28F09200007E3667 /* UIImage+.swift in Sources */,
 				B1E4986928EE9E3500B469AC /* MagazineDetailViewReactor.swift in Sources */,
 				B12C1DC728ED219C0089964E /* UIVIewController+Rx.swift in Sources */,
 				B1D79CAD28EB0EF9008487D0 /* SceneDelegate.swift in Sources */,
 				B1DD25DD28EF0BC800103FF1 /* UIColor+.swift in Sources */,
+				B1D3362728F1457700826636 /* UITabBar+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
