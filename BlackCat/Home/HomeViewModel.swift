@@ -66,6 +66,8 @@ class HomeViewModel {
     // View -> ViewModel
 
     let viewDidLoad = PublishRelay<Void>()
+    let didTapSearchBarButtonItem = PublishRelay<Void>()
+    let didTapHeartBarButtonItem = PublishRelay<Void>()
 
     // ViewModel -> View
 
@@ -99,6 +101,18 @@ class HomeViewModel {
                     HomeSection(header: "항목 2", items: section2Items.map { .Section2($0) })
                 ]
             }.asDriver(onErrorJustReturn: [])
+
+        didTapHeartBarButtonItem
+            .subscribe(onNext: {
+                print("DidTapHeartBarButtonItem")
+            })
+            .dispose()
+
+        didTapSearchBarButtonItem
+            .subscribe(onNext: {
+                print("DidTapSearchBarButtonItem")
+            })
+            .dispose()
     }
 
 }

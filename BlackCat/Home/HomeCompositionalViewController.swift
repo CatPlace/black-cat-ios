@@ -87,6 +87,13 @@ class HomeCompositionalViewController: UIViewController {
     // MARK: - Binding
 
     private func bind() {
+        searchBarButtonItem.rx.tap
+            .bind(to: viewModel.didTapSearchBarButtonItem)
+            .disposed(by: disposeBag)
+
+        heartBarButtonItem.rx.tap
+            .bind(to: viewModel.didTapHeartBarButtonItem)
+            .disposed(by: disposeBag)
 
         viewModel.homeItems
             .drive(homeCollectionView.rx.items(dataSource: dataSource))
@@ -130,13 +137,13 @@ class HomeCompositionalViewController: UIViewController {
     let searchBarButtonItem: UIBarButtonItem = {
         let image = UIImage(systemName: "magnifyingglass")?.withTintColor(.black, renderingMode: .alwaysOriginal)
 
-        return UIBarButtonItem(image: image, style: .plain, target: nil, action: nil)
+        return UIBarButtonItem(image: image, style: .plain, target: self, action: nil)
     }()
 
     let heartBarButtonItem: UIBarButtonItem = {
         let image = UIImage(systemName: "heart")?.withTintColor(.black, renderingMode: .alwaysOriginal)
 
-        return UIBarButtonItem(image: image, style: .plain, target: nil, action: nil)
+        return UIBarButtonItem(image: image, style: .plain, target: self, action: nil)
     }()
 
     lazy var homeCollectionView: UICollectionView = {
