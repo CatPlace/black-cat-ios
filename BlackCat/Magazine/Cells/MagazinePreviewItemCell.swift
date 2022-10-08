@@ -34,6 +34,11 @@ class MagazinePreviewItemCell: UICollectionViewCell {
     let titleLabel = UILabel()
     let writerLabel = UILabel()
     let dateLabel = UILabel()
+
+}
+
+extension MagazinePreviewItemCell {
+    
     func setImage() {
         guard let viewModel, let url = URL(string: viewModel.imageUrl) else { return }
         let request = ImageRequest(url: url,priority: .high)
@@ -74,5 +79,4 @@ class MagazinePreviewItemCell: UICollectionViewCell {
             $0.leading.equalTo(dateLabel)
         }
     }
-    
 }

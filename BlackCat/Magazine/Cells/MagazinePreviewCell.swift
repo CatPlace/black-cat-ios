@@ -40,7 +40,7 @@ class MagazinePreviewCell: UITableViewCell {
             .withUnretained(self)
             .bind { owner, indexPath in
                 guard let cell = owner.magazinePreviewCollectionView.cellForItem(at: indexPath) as? MagazinePreviewItemCell else { return }
-                print(cell.viewModel)
+                // TODO: - 화면 전환
             }.disposed(by: disposeBag)
     }
     
