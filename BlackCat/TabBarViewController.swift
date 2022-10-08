@@ -28,13 +28,12 @@ final class TabBarViewController: UITabBarController {
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
-        tabBar.backgroundColor = .brown
         tabBar.tintColor = .darkGray
         tabBar.layer.cornerRadius = tabBar.frame.height * 0.41
         tabBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
         UITabBar.clearShadow()
         tabBar.layer.applyShadow(color: .gray, alpha: 0.3, x: 0, y: 0, blur: 12)
-
         viewControllers = [vc, vc2]
     }
 

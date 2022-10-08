@@ -8,7 +8,7 @@
 import UIKit
 
 extension UITabBar {
-    // 기본 그림자 스타일을 초기화해야 커스텀 스타일을 적용할 수 있다.
+    /// UITabBar의 기본 스타일을 빼내는 코드
     static func clearShadow() {
         UITabBar.appearance().shadowImage = UIImage()
         UITabBar.appearance().backgroundImage = UIImage()
