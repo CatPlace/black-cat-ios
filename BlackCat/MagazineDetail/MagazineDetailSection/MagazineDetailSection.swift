@@ -16,6 +16,7 @@ enum MagazineDetailSectionItem: Equatable, IdentifiableType {
     case textCell(MagazineDetailTextCellReactor)
     case imageCell(MagazineDetailImageCellReactor)
     case bulletedCell(MagazineDetailBulletedCellReactor)
+    case emptyCell(MagazineDetailEmptyCellReactor)
     
     static func == (lhs: MagazineDetailSectionItem, rhs: MagazineDetailSectionItem) -> Bool {
         lhs.identity == rhs.identity
@@ -28,6 +29,7 @@ enum MagazineDetailCellSection {
     case textCell([MagazineDetailSectionItem])
     case imageCell([MagazineDetailSectionItem])
     case bulletedCell([MagazineDetailSectionItem])
+    case emptyCell([MagazineDetailSectionItem])
 }
 
 extension MagazineDetailCellSection: AnimatableSectionModelType {
@@ -37,23 +39,19 @@ extension MagazineDetailCellSection: AnimatableSectionModelType {
     
     var items: [Item] {
         switch self {
-        case .textCell(let items):
-            return items
-        case .imageCell(let items):
-            return items
-        case .bulletedCell(let items):
-            return items
+        case .textCell(let items): return items
+        case .imageCell(let items): return items
+        case .bulletedCell(let items): return items
+        case .emptyCell(let items): return items
         }
     }
     
     init(original: MagazineDetailCellSection, items: [MagazineDetailSectionItem]) {
         switch original {
-        case .textCell:
-            self = .textCell(items)
-        case .imageCell:
-            self = .imageCell(items)
-        case .bulletedCell:
-            self = .bulletedCell(items)
+        case .textCell: self = .textCell(items)
+        case .imageCell: self = .imageCell(items)
+        case .bulletedCell: self = .bulletedCell(items)
+        case .emptyCell: self = .emptyCell(items)
         }
     }
 }

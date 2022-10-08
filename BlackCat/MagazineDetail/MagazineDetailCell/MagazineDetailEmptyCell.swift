@@ -18,29 +18,34 @@ final class MagazineDetailEmptyCell: MagazineDetailBaseCell, View {
         reactor.state.compactMap { $0 }
             .withUnretained(self)
             .bind { owner, item in
+                print("item.emptyHeight \(item.emptyHeight)")
+                owner.emptyView = UIView(frame: CGRect(x: 0,
+                                                       y: 0,
+                                                       width: Int(owner.frame.width),
+                                                       height: item.emptyHeight))
                 
+                owner.setUI()
             }
             .disposed(by: self.disposeBag)
     }
     
     // MARK: - Initalizing
     override func initialize() {
-        self.setUI()
+//        self.setUI()
     }
    
     // MARK: - UIComponents
-    private let emptyView = UIImageView()
+    private var emptyView = UIView()
 }
 
 extension MagazineDetailEmptyCell {
     func setUI() {
         addSubview(emptyView)
+        emptyView.backgroundColor = .orange
         
         emptyView.snp.makeConstraints {
-            $0.width.height.equalTo(10)
-            $0.top.equalToSuperview().offset(10)
-            $0.leading.equalToSuperview().offset(24)
-            $0.bottom.lessThanOrEqualToSuperview().inset(10)
+            $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
     }
 }

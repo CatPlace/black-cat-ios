@@ -10,21 +10,23 @@ import ReactorKit
 import RxCocoa
 import RxDataSources
 import RxSwift
+import BlackCatSDK
 
 final class MagazineDetailViewController: UIViewController, View {
     typealias Reactor = MagazineDetailViewReactor
     typealias ManageMentDataSource = RxTableViewSectionedAnimatedDataSource<MagazineDetailCellSection>
-
+    
+    enum Reuable {
+        static let textCell = ReusableCell<MagazineDetailTextCell>()
+    }
+    
     // MARK: - Properties
     var disposeBag: DisposeBag = DisposeBag()
     let dataSource: ManageMentDataSource = ManageMentDataSource { _, tableView, indexPath, items in
         
         switch items {
         case .textCell(let reactor):
-            guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: MagazineDetailTextCell.identifier,
-                for: indexPath
-            ) as? MagazineDetailTextCell else { return UITableViewCell() }
+            let cell = tableView.dequeue(Reuable.textCell, for: indexPath)
             
             cell.reactor = reactor
             return cell
@@ -43,6 +45,16 @@ final class MagazineDetailViewController: UIViewController, View {
             ) as? MagazineDetailBulletedCell else { return UITableViewCell() }
             
             cell.reactor = reactor
+            return cell
+        case .emptyCell(let reactor):
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: MagazineDetailEmptyCell.identifier,
+                for: indexPath
+            ) as? MagazineDetailEmptyCell else { return UITableViewCell() }
+            
+            cell.reactor = reactor
+            
+            tableView.layoutIfNeeded()
             return cell
         }
     }
@@ -79,9 +91,10 @@ final class MagazineDetailViewController: UIViewController, View {
     // MARK: UIComponents
     lazy var tableView: UITableView = {
         var tv = UITableView(frame: .zero, style: .plain)
-        tv.register(MagazineDetailTextCell.self, forCellReuseIdentifier: MagazineDetailTextCell.identifier)
+        tv.register(Reuable.textCell)
         tv.register(MagazineDetailImageCell.self, forCellReuseIdentifier: MagazineDetailImageCell.identifier)
         tv.register(MagazineDetailBulletedCell.self, forCellReuseIdentifier: MagazineDetailBulletedCell.identifier)
+        tv.register(MagazineDetailEmptyCell.self, forCellReuseIdentifier: MagazineDetailEmptyCell.identifier)
         tv.rowHeight = UITableView.automaticDimension
         tv.estimatedRowHeight = 70
         return tv

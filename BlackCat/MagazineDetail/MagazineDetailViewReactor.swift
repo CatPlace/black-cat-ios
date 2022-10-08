@@ -123,8 +123,13 @@ extension MagazineDetailViewReactor {
         
         let bulletedCellSection = MagazineDetailCellSection.bulletedCell([bulletedCell, bulletedCell2])
         
+        let emptyCell = MagazineDetailSectionFactory.makeEmptyCell(MagazineDetailModel(emptyHeight: 140))
+        let emptyCell2 = MagazineDetailSectionFactory.makeEmptyCell(MagazineDetailModel(emptyHeight: 240))
+        
+        let emptyCellSection = MagazineDetailCellSection.emptyCell([emptyCell, emptyCell2])
         return [
             bulletedCellSection,
+            emptyCellSection,
             textCellSection,
 //            imageCellSection
         ]
