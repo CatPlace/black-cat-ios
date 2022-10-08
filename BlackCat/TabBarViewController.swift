@@ -35,6 +35,7 @@ final class TabBarViewController: UITabBarController {
         
         viewControllers = [vc, vc2]
     }
+
 }
 
 struct TabBarFactory {
