@@ -11,16 +11,16 @@ import RxSwift
 
 class MagazineTestUseCase {
     
-    func loadFamousMagazine() -> Observable<[FamousMagazine]> {
-        print("update Famous Magazines")
-        return .just(FamousMagazine.dummy)
-    }
-    
-    func loadMoreMagazine(page: Int) -> Observable<[PreviewMagazine]> {
+//    func loadFamousMagazine() -> Observable<[Magazine]> {
+//        print("update Famous Magazines")
+//        return .just(Magazine.dummy)
+//    }
+//
+    func loadMoreMagazine(page: Int) -> Observable<[Magazine]> {
         print("request page: \(page)")
-        return .just(PreviewMagazine.dummy.map { magazine in
-            PreviewMagazine(
-                id: magazine.id + (page * PreviewMagazine.dummy.count),
+        return .just(Magazine.dummy.map { magazine in
+            Magazine(
+                id: magazine.id + (page * Magazine.dummy.count),
                 imageUrl: magazine.imageUrl,
                 title: magazine.title,
                 writer: magazine.writer,
