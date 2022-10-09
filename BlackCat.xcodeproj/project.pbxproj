@@ -41,8 +41,6 @@
 		B1E4986728EE9BE800B469AC /* MagazineDetailBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E4986628EE9BE800B469AC /* MagazineDetailBaseCell.swift */; };
 		B1E4986928EE9E3500B469AC /* MagazineDetailViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E4986828EE9E3500B469AC /* MagazineDetailViewReactor.swift */; };
 		B1E4987028EEADC900B469AC /* MagazineDetailSectionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E4986F28EEADC900B469AC /* MagazineDetailSectionFactory.swift */; };
-		B1EDD51928EB1CA400FBB722 /* BlackCatKEY.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1EDD51828EB1CA400FBB722 /* BlackCatKEY.framework */; };
-		B1EDD51A28EB1CA400FBB722 /* BlackCatKEY.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B1EDD51828EB1CA400FBB722 /* BlackCatKEY.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -53,7 +51,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				B1D3363828F1CA2000826636 /* BlackCatSDK.framework in Embed Frameworks */,
-				B1EDD51A28EB1CA400FBB722 /* BlackCatKEY.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -97,7 +94,6 @@
 				B1E4985528EE848700B469AC /* RxSwift in Frameworks */,
 				B1E4984828EE83BD00B469AC /* RealmSwift in Frameworks */,
 				B1E4984E28EE83E400B469AC /* Nuke in Frameworks */,
-				B1EDD51928EB1CA400FBB722 /* BlackCatKEY.framework in Frameworks */,
 				B1D3363728F1CA2000826636 /* BlackCatSDK.framework in Frameworks */,
 				B1E4985128EE848700B469AC /* RxCocoa in Frameworks */,
 				B1E4985D28EE873100B469AC /* RxDataSources in Frameworks */,
