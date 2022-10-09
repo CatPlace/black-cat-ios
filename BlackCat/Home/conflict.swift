@@ -1,14 +1,18 @@
 //
-//  UIColor_.swift
-//  catplace
+//  conflict.swift
+//  BlackCat
 //
-//  Created by SeYeong on 2022/09/29.
+//  Created by SeYeong on 2022/10/09.
 //
 
 import UIKit
 
-public extension UIColor {
+extension UIColor {
     static func designSystem(_ color: Pallete) -> UIColor? {
         return UIColor(named: color.rawValue)
     }
+}
+
+enum Pallete: String {
+    case background
 }

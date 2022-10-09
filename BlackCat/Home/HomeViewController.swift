@@ -103,9 +103,9 @@ class HomeViewController: UIViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
 
-        rx.viewDidLoad
-            .bind(to: viewModel.viewDidLoad)
-            .disposed(by: disposeBag)
+//        rx.viewDidLoad
+//            .bind(to: viewModel.viewDidLoad)
+//            .disposed(by: disposeBag)
     }
 
     required init?(coder: NSCoder) {
