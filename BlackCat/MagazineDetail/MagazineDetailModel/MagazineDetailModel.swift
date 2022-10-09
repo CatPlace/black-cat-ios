@@ -19,7 +19,7 @@ class MagazineDetailModel {
     /** 매거진 imageUrlString  (dafault = nil) */ var imageUrlString: String?
     /** 매거진 imageCornerRadius  (dafault = 0)*/ var imageCornerRadius: Int
     
-    /** 매거진 emptyCell에 사용되는 높이값  (dafault = 0)*/ var emptyHeight: Int
+    /** 매거진 cell에 사용되는 높이값  (dafault = 0)*/ var layoutHeight: Int
     
     
     init(
@@ -39,7 +39,7 @@ class MagazineDetailModel {
         self.fontWeight = fontWeight
         self.imageUrlString = imageUrlString
         self.imageCornerRadius = imageCornerRadius
-        self.emptyHeight = emptyHeight
+        self.layoutHeight = emptyHeight
     }
     
     enum TextColor: String {

@@ -16,22 +16,8 @@ final class MagazineDetailEmptyCell: MagazineDetailBaseCell, View {
     func bind(reactor: Reactor) {
         reactor.state.compactMap { $0 }
             .withUnretained(self)
-            .bind { owner, item in
-                print("item.emptyHeight \(item.emptyHeight)")
-                var emptyView = UIView()
-                emptyView = UIView(frame: CGRect(x: 0,
-                                                 y: 0,
-                                                 width: Int(self.frame.width),
-                                                 height: item.emptyHeight))
-                 
-                self.setUI(item.emptyHeight)
-            }
+            .bind { owner, item in owner.setUI(item.layoutHeight) }
             .disposed(by: self.disposeBag)
-    }
-    
-    // MARK: - Initalizing
-    override func initialize() {
-//        self.setUI()
     }
    
     // MARK: - UIComponents
@@ -39,13 +25,13 @@ final class MagazineDetailEmptyCell: MagazineDetailBaseCell, View {
 }
 
 extension MagazineDetailEmptyCell {
-    func setUI(_ height: Int) {
+    func setUI(_ height: Int = 0) {
         addSubview(emptyView)
 
         emptyView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview().inset(10)
-            $0.height.greaterThanOrEqualTo(height).priority(750)
-            $0.bottom.equalToSuperview().inset(10).priority(1000)
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.greaterThanOrEqualTo(height)
+            $0.bottom.equalToSuperview()
         }
     }
 }
@@ -58,10 +44,4 @@ final class MagazineDetailEmptyCellReactor: Reactor {
     init(initialState: MagazineDetailModel) {
         self.initialState = initialState
     }
-    
-//    func reduce(state: State, mutation: NoAction) -> State {
-//        var newState = state
-//        newState.height = currentState.height
-//        return newState
-//    }
 }
