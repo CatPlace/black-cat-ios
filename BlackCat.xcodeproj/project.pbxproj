@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8E2D8C4828F2EC27004B514D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4728F2EC27004B514D /* HomeViewController.swift */; };
+		8E2D8C4A28F2ECD2004B514D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4928F2ECD2004B514D /* HomeViewModel.swift */; };
 		B12C1DC728ED219C0089964E /* UIVIewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12C1DC628ED219C0089964E /* UIVIewController+Rx.swift */; };
 		B1CA040628F00CC1004A6027 /* MagazineDetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CA040528F00CC1004A6027 /* MagazineDetailImageCell.swift */; };
 		B1CA040828F00D84004A6027 /* Rect.png in Resources */ = {isa = PBXBuildFile; fileRef = B1CA040728F00D84004A6027 /* Rect.png */; };
@@ -66,6 +67,7 @@
 
 /* Begin PBXFileReference section */
 		8E2D8C4728F2EC27004B514D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		8E2D8C4928F2ECD2004B514D /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		B12C1DC628ED219C0089964E /* UIVIewController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIewController+Rx.swift"; sourceTree = "<group>"; };
 		B1CA040528F00CC1004A6027 /* MagazineDetailImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailImageCell.swift; sourceTree = "<group>"; };
 		B1CA040728F00D84004A6027 /* Rect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rect.png; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				8E2D8C4728F2EC27004B514D /* HomeViewController.swift */,
+				8E2D8C4928F2ECD2004B514D /* HomeViewModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				B1E361E428F28C3100A29CC8 /* MagazineDetailStroyShareButtonCell.swift in Sources */,
 				B1E4985F28EE886900B469AC /* MagazineDetailSection.swift in Sources */,
 				B1E4987028EEADC900B469AC /* MagazineDetailSectionFactory.swift in Sources */,
+				8E2D8C4A28F2ECD2004B514D /* HomeViewModel.swift in Sources */,
 				B1D3364128F1CCFA00826636 /* UICollectionView+.swift in Sources */,
 				B1D127DD28F08DCA007E3667 /* TabBarViewController.swift in Sources */,
 				B1E4986228EE8BFE00B469AC /* MagazineDetailTextCell.swift in Sources */,
