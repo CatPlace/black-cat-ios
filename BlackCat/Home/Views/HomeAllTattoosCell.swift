@@ -21,9 +21,9 @@ class HomeAllTattoosCell: UICollectionViewCell {
     // MARK: - Binding
 
     func bind(to viewModel: HomeAllTattoosCellViewModel) {
-        viewModel.imageURLString
-            .drive()
-            .disposed(by: disposeBag)
+        if let url = URL(string: viewModel.homeAllTattoos.imageURLString) {
+            Nuke.loadImage(with: url, into: thumbnailImageView)
+        }
     }
 
     // MARK: - Initializing
