@@ -48,23 +48,6 @@
 		B1EDD51628EB14F200FBB722 /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = B1EDD51528EB14F200FBB722 /* ReactorKit */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		8EB75C9F28ED710D00F5AFEB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8EB75C9A28ED710D00F5AFEB /* BlackCatKEY.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8E87C52328EB0FC20038FA6C;
-			remoteInfo = BlackCatKEY;
-		};
-		8EB75CA128ED710D00F5AFEB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8EB75C9A28ED710D00F5AFEB /* BlackCatKEY.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8E87C52D28EB0FC30038FA6C;
-			remoteInfo = BlackCatKEYTests;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		B1EDD51B28EB1CA400FBB722 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -90,7 +73,6 @@
 		8EB75C9228ED168900F5AFEB /* HomeCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCategoryCell.swift; sourceTree = "<group>"; };
 		8EB75C9628ED1C0F00F5AFEB /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		8EB75C9828ED1F8700F5AFEB /* HomeCategoryCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCategoryCellViewModel.swift; sourceTree = "<group>"; };
-		8EB75C9A28ED710D00F5AFEB /* BlackCatKEY.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BlackCatKEY.xcodeproj; path = "../../black-cat-ios-key/BlackCatKEY/BlackCatKEY.xcodeproj"; sourceTree = "<group>"; };
 		8EB75CA528ED778100F5AFEB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8EB75CA628ED778100F5AFEB /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 		8EB75CA828ED778100F5AFEB /* GmarketSansTTFLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFLight.ttf; sourceTree = "<group>"; };
@@ -152,6 +134,8 @@
 		8EB75C8528ED14FD00F5AFEB /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				8E8C215A28F1240300981A01 /* Extension */,
+				8EB75CA328ED778100F5AFEB /* DesignSystem */,
 				8EC0914928EF24190043EC5C /* HomeViewController.swift */,
 				8EB75C9628ED1C0F00F5AFEB /* HomeViewModel.swift */,
 				8E8C215F28F1327200981A01 /* HomeModel.swift */,
@@ -174,15 +158,6 @@
 				8E8C215828F11DFF00981A01 /* HomeSection2CellViewModel.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		8EB75C9B28ED710D00F5AFEB /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				8EB75CA028ED710D00F5AFEB /* BlackCatKEY.framework */,
-				8EB75CA228ED710D00F5AFEB /* BlackCatKEYTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		8EB75CA328ED778100F5AFEB /* DesignSystem */ = {
@@ -271,8 +246,6 @@
 		B1D79CA928EB0EF9008487D0 /* BlackCat */ = {
 			isa = PBXGroup;
 			children = (
-				8E8C215A28F1240300981A01 /* Extension */,
-				8EB75CA328ED778100F5AFEB /* DesignSystem */,
 				B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */,
 				B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */,
 				B1D79CAE28EB0EF9008487D0 /* ViewController.swift */,
@@ -280,7 +253,6 @@
 				B1D79CB528EB0EFB008487D0 /* LaunchScreen.storyboard */,
 				B1D79CB828EB0EFB008487D0 /* Info.plist */,
 				8EB75C8528ED14FD00F5AFEB /* Home */,
-				8EB75C9A28ED710D00F5AFEB /* BlackCatKEY.xcodeproj */,
 			);
 			path = BlackCat;
 			sourceTree = "<group>";
@@ -353,35 +325,12 @@
 			);
 			productRefGroup = B1D79CA828EB0EF9008487D0 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 8EB75C9B28ED710D00F5AFEB /* Products */;
-					ProjectRef = 8EB75C9A28ED710D00F5AFEB /* BlackCatKEY.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				B1D79CA628EB0EF9008487D0 /* BlackCat */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		8EB75CA028ED710D00F5AFEB /* BlackCatKEY.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = BlackCatKEY.framework;
-			remoteRef = 8EB75C9F28ED710D00F5AFEB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8EB75CA228ED710D00F5AFEB /* BlackCatKEYTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = BlackCatKEYTests.xctest;
-			remoteRef = 8EB75CA128ED710D00F5AFEB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		B1D79CA528EB0EF9008487D0 /* Resources */ = {
