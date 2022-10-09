@@ -160,13 +160,13 @@
 			children = (
 				8E2D8C4E28F2ED53004B514D /* HomeHeaderView.swift */,
 				8E2D8C5028F2EDF3004B514D /* HomeCategorySectionBackgroundReusableView.swift */,
-				8E2D8C5528F2EE69004B514D /* HomeAllTattoosCell.swift */,
-				8E2D8C5728F2EE69004B514D /* HomeAllTattoosCellViewModel.swift */,
 				8E2D8C5428F2EE69004B514D /* HomeCategoryCell.swift */,
 				8E2D8C5328F2EE68004B514D /* HomeCategoryCellViewModel.swift */,
-				8E2D8C5228F2EE68004B514D /* HomeEmptyCell.swift */,
 				8E2D8C5628F2EE69004B514D /* HomeRecommendCell.swift */,
 				8E2D8C5828F2EE69004B514D /* HomeRecommendCellViewModel.swift */,
+				8E2D8C5228F2EE68004B514D /* HomeEmptyCell.swift */,
+				8E2D8C5528F2EE69004B514D /* HomeAllTattoosCell.swift */,
+				8E2D8C5728F2EE69004B514D /* HomeAllTattoosCellViewModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

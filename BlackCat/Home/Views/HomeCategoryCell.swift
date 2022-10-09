@@ -14,8 +14,7 @@ import SnapKit
 class HomeCategoryCell: UICollectionViewCell {
 
     // MARK: - Properties
-
-    static let identifier = String(describing: HomeCategoryCell.self)
+    
     let disposeBag = DisposeBag()
 
     // MARK: - Binding

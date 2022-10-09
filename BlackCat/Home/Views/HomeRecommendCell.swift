@@ -14,8 +14,6 @@ class HomeRecommendCell: UICollectionViewCell {
 
     // MARK: - Properties
 
-    static let identifier = String(describing: HomeRecommendCell.self)
-
     // MARK: - Binding
 
     func bind(to viewModel: HomeRecommendCellViewModel) {

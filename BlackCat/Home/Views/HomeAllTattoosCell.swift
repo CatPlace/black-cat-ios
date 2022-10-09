@@ -14,8 +14,6 @@ class HomeAllTattoosCell: UICollectionViewCell {
 
     // MARK: - Properties
 
-    static let identifer = String(describing: HomeAllTattoosCell.self)
-
     // MARK: - Binding
 
     func bind(to viewModel: HomeAllTattoosCellViewModel) {

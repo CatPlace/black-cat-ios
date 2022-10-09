@@ -20,6 +20,7 @@ class HomeViewController: UIViewController {
         static let recommendCell = ReusableCell<HomeRecommendCell>()
         static let emptyCell = ReusableCell<HomeEmptyCell>()
         static let allTattoosCell = ReusableCell<HomeAllTattoosCell>()
+        static let headerView = ReusableView<HomeHeaderView>()
     }
 
     // MARK: - Properties
@@ -30,38 +31,26 @@ class HomeViewController: UIViewController {
         configureCell: { dataSource, collectionView, indexPath, item in
         switch item {
         case .HomeCategoryCellItem(let category):
-            let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: HomeCategoryCell.identifier,
-                for: indexPath
-            ) as! HomeCategoryCell
+            let cell = collectionView.dequeue(Reusable.categoryCell, for: indexPath)
 
             cell.bind(to: HomeCategoryCellViewModel(category: category))
 
             return cell
 
         case .Section1(let section1):
-            let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: HomeRecommendCell.identifier,
-                for: indexPath
-            ) as! HomeRecommendCell
+            let cell = collectionView.dequeue(Reusable.recommendCell, for: indexPath)
 
             cell.bind(to: HomeRecommendCellViewModel(section1: section1))
 
             return cell
 
         case .Empty(let empty):
-            let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: HomeEmptyCell.identifier,
-                for: indexPath
-            ) as! HomeEmptyCell
+            let cell = collectionView.dequeue(Reusable.emptyCell, for: indexPath)
 
             return cell
 
         case .Section2(let section2):
-            let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: HomeAllTattoosCell.identifer,
-                for: indexPath
-            ) as! HomeAllTattoosCell
+            let cell = collectionView.dequeue(Reusable.allTattoosCell, for: indexPath)
 
             cell.bind(to: HomeAllTattoosCellViewModel(section2: section2))
 
@@ -74,11 +63,7 @@ class HomeViewController: UIViewController {
             return UICollectionReusableView()
         }
 
-        let headerView = collectionView.dequeueReusableSupplementaryView(
-            ofKind: kind,
-            withReuseIdentifier: HomeHeaderView.identifer,
-            for: indexPath
-        ) as! HomeHeaderView
+        let headerView = collectionView.dequeue(Reusable.headerView, kind: .header, for: indexPath)
         let headerTitle = dataSource.sectionModels[indexPath.section].header
 
         headerView.titleLabel.text = headerTitle
@@ -158,27 +143,11 @@ class HomeViewController: UIViewController {
             collectionViewLayout: compositionalLayout
         )
 
-        collectionView.register(
-            HomeCategoryCell.self,
-            forCellWithReuseIdentifier: HomeCategoryCell.identifier
-        )
-        collectionView.register(
-            HomeRecommendCell.self,
-            forCellWithReuseIdentifier: HomeRecommendCell.identifier
-        )
-        collectionView.register(
-            HomeEmptyCell.self,
-            forCellWithReuseIdentifier: HomeEmptyCell.identifier
-        )
-        collectionView.register(
-            HomeAllTattoosCell.self,
-            forCellWithReuseIdentifier: HomeAllTattoosCell.identifer
-        )
-        collectionView.register(
-            HomeHeaderView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: HomeHeaderView.identifer
-        )
+        collectionView.register(Reusable.categoryCell)
+        collectionView.register(Reusable.recommendCell)
+        collectionView.register(Reusable.emptyCell)
+        collectionView.register(Reusable.allTattoosCell)
+        collectionView.register(Reusable.headerView, kind: .header)
 
         collectionView.showsVerticalScrollIndicator = false
 
