@@ -45,9 +45,8 @@ final class MagazineDetailViewController: UIViewController, View {
             return cell
         case .emptyCell(let reactor):
             let cell = tableView.dequeue(Reuable.emptyCell, for: indexPath)
-            
             cell.reactor = reactor
-//            tableView.layoutIfNeeded()
+            
             return cell
         }
     }
