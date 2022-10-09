@@ -18,15 +18,11 @@ final class MagazineDetailTextCell: MagazineDetailBaseCell, View {
             .withUnretained(self)
             .bind { owner, item in
                 owner.contentTextLabelBuilder(owner.contentTextLabel, item)
+                owner.setUI(item)
             }
             .disposed(by: self.disposeBag)
     }
     
-    // MARK: - Initalizing
-    override func initialize() {
-        self.setUI()
-    }
-   
     // MARK: - UIComponents
     private let contentTextLabel = UILabel()
     

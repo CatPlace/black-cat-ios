@@ -33,8 +33,10 @@ extension MagazineDetailImageCell {
         addSubview(contentImageView)
         
         contentImageView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(item.layoutLeadingInset)
-            $0.top.bottom.equalToSuperview()
+            $0.leading.equalToSuperview().inset(item.layoutLeadingInset)
+            $0.trailing.equalToSuperview().inset(item.layoutTrailingInset)
+            $0.top.equalToSuperview().inset(item.layoutTopInset)
+            $0.bottom.equalToSuperview().inset(item.layoutBottomInset)
         }
     }
 }

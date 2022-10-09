@@ -67,7 +67,9 @@ extension MagazineDetailViewReactor {
                 textAlignment: .left,
                 fontWeight: .heavy,
                 imageUrlString: "",
-                imageCornerRadius: 0
+                imageCornerRadius: 0,
+                layoutLeadingInset: 30,
+                layoutTopInset: 10
             )
         )
         
@@ -110,14 +112,20 @@ extension MagazineDetailViewReactor {
         
         
         let bulletedCell = MagazineDetailSectionFactory.makeBulletedCell(
-            MagazineDetailModel(text: "불렛셀")
+            MagazineDetailModel(
+                text: "불렛셀",
+                layoutLeadingInset: 70,
+                layoutTopInset: 10
+            )
         )
         
         let bulletedCell2 = MagazineDetailSectionFactory.makeBulletedCell(
             MagazineDetailModel(
                 text: "ㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹ불렛셂ㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹ",
                 fontSize: 24,
-                fontWeight: .heavy
+                fontWeight: .heavy,
+                imageUrlString: "Rect3",
+                layoutHeight: 30
             )
         )
         

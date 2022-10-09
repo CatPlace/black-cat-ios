@@ -19,8 +19,8 @@ class MagazineDetailModel {
     /** 매거진 imageUrlString  (dafault = nil) */ var imageUrlString: String?
     /** 매거진 imageCornerRadius  (dafault = 0)*/ var imageCornerRadius: Int
     
-    /** 매거진 cell에 사용되는 layoutHeight  (dafault = 0)*/ var layoutHeight: Int
-    /** 매거진 cell에 사용되는 layoutWidth  (dafault = 0)*/ var layoutWidth: Int
+    /** 매거진 cell에 사용되는 layoutHeight  (dafault = 10)*/ var layoutHeight: Int
+    /** 매거진 cell에 사용되는 layoutWidth  (dafault = 10)*/ var layoutWidth: Int
     /** 매거진 cell에 사용되는 layoutLeadingInset  (dafault = 20)*/ var layoutLeadingInset: Int
     /** 매거진 cell에 사용되는 layoutTrailingInset  (dafault = 20)*/ var layoutTrailingInset: Int
     /** 매거진 cell에 사용되는 layoutTopInset  (dafault = 20)*/ var layoutTopInset: Int
@@ -35,8 +35,8 @@ class MagazineDetailModel {
         fontWeight: FontWeightType = .regular,
         imageUrlString: String? = nil,
         imageCornerRadius: Int = 0,
-        layoutHeight: Int = 0,
-        layoutWidth: Int = 0,
+        layoutHeight: Int = 10,
+        layoutWidth: Int = 10,
         layoutLeadingInset: Int = 20,
         layoutTrailingInset: Int = 20,
         layoutTopInset: Int = 20,

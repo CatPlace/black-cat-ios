@@ -17,17 +17,14 @@ final class MagazineDetailBulletedCell: MagazineDetailBaseCell, View {
         reactor.state.compactMap { $0 }
             .withUnretained(self)
             .bind { owner, item in
+                owner.setUI(item)
+                
                 owner.contentTextLabelBuilder(owner.contentTextLabel, item)
                 owner.contentImageViewBuilder(owner.contentImageView, item)
             }
             .disposed(by: self.disposeBag)
     }
-    
-    // MARK: - Initalizing
-    override func initialize() {
-        self.setUI()
-    }
-   
+
     // MARK: - UIComponents
     private let contentImageView = UIImageView()
     private let contentTextLabel = UILabel()
@@ -38,26 +35,29 @@ final class MagazineDetailBulletedCell: MagazineDetailBaseCell, View {
         super.contentImageViewBuilder(sender, item)
         
         contentImageView.backgroundColor = .darkGray
-        contentImageView.layer.cornerRadius = 5
+        contentImageView.layer.cornerRadius = CGFloat(item.layoutHeight) / 2.0
     }
 }
 
 extension MagazineDetailBulletedCell {
-    func setUI() {
+    func setUI(_ item: MagazineDetailModel) {
         [contentImageView, contentTextLabel].forEach { addSubview($0) }
         
+        contentImageView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         contentImageView.snp.makeConstraints {
-            $0.width.height.equalTo(10)
+            $0.width.height.equalTo(item.layoutHeight)
             $0.top.equalToSuperview().offset(10)
-            $0.leading.equalToSuperview().offset(24)
+            $0.leading.equalToSuperview().inset(item.layoutLeadingInset)
             $0.bottom.lessThanOrEqualToSuperview().inset(10)
         }
+//        print("contentImageView \(contentImageView.fra)")
         
+        contentTextLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         contentTextLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.bottom.equalToSuperview()
             $0.leading.equalTo(contentImageView.snp.trailing).offset(12)
-            $0.trailing.equalToSuperview().inset(24)
+            $0.trailing.equalToSuperview().inset(item.layoutTrailingInset)
         }
     }
 }
