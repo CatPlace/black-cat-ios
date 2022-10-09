@@ -30,26 +30,26 @@ class HomeViewController: UIViewController {
     private lazy var dataSource = RxCollectionViewSectionedReloadDataSource<HomeSection>(
         configureCell: { dataSource, collectionView, indexPath, item in
         switch item {
-        case .HomeCategoryCellItem(let category):
+        case .homeCategoryCellItem(let category):
             let cell = collectionView.dequeue(Reusable.categoryCell, for: indexPath)
 
             cell.bind(to: HomeCategoryCellViewModel(category: category))
 
             return cell
 
-        case .Section1(let section1):
+        case .recommendCellItem(let section1):
             let cell = collectionView.dequeue(Reusable.recommendCell, for: indexPath)
 
             cell.bind(to: HomeRecommendCellViewModel(section1: section1))
 
             return cell
 
-        case .Empty(let empty):
+        case .empty(let empty):
             let cell = collectionView.dequeue(Reusable.emptyCell, for: indexPath)
 
             return cell
 
-        case .Section2(let section2):
+        case .allTattoosCellItem(let section2):
             let cell = collectionView.dequeue(Reusable.allTattoosCell, for: indexPath)
 
             cell.bind(to: HomeAllTattoosCellViewModel(section2: section2))
@@ -154,10 +154,18 @@ class HomeViewController: UIViewController {
         return collectionView
     }()
 
-    let compositionalLayout: UICollectionViewLayout = {
+    lazy var compositionalLayout: UICollectionViewLayout = {
+        enum SectionType: Int {
+            case category
+            case recommend
+            case empty
+            case allTattoos
+        }
+
         let layout = UICollectionViewCompositionalLayout { section, env -> NSCollectionLayoutSection? in
-            switch section {
-            case 0:
+            guard let sectionType = SectionType(rawValue: section) else { return nil }
+            switch sectionType {
+            case .category:
                 let itemSpacing: CGFloat = 12
                 let sectionLeadingInset: CGFloat = 14
                 let sectionTrailinginset: CGFloat = 14
@@ -187,7 +195,7 @@ class HomeViewController: UIViewController {
                 section.decorationItems = [sectionBackgroundView]
 
                 return section
-            case 1:
+            case .recommend:
                 let itemSize = NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),
                     heightDimension: .fractionalHeight(1)
@@ -220,7 +228,7 @@ class HomeViewController: UIViewController {
 
                 return section
 
-            case 2:
+            case .empty:
                 let itemSize = NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),
                     heightDimension: .fractionalHeight(1)
@@ -237,7 +245,7 @@ class HomeViewController: UIViewController {
 
                 return section
 
-            default:
+            case .allTattoos:
                 let itemSize = NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),
                     heightDimension: .fractionalHeight(1)
