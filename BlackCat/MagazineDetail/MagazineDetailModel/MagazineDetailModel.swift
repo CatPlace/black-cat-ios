@@ -10,6 +10,8 @@ import UIKit
 // ✅ NOTE: - 이거 DTO가 아니라 Model임!! 명심할 것
 class MagazineDetailModel {
     
+    /** 매거진 cellTyep (dafault = emptyCell) */ var cellType: MagazineDetailCellType?
+    
     /** 매거진 텍스트 (dafault = nil) */ var text: String?
     /** 매거진 fontSzie  (dafault = 12) */ var fontSize: Int
     /** 매거진 textColor  (dafault = black) */ var textColor: TextColor
@@ -28,6 +30,7 @@ class MagazineDetailModel {
     
     
     init(
+        cellType: MagazineDetailCellType = .emptyCell,
         text: String? = nil,
         fontSize: Int = 12,
         textColor: TextColor = .black,
@@ -42,6 +45,7 @@ class MagazineDetailModel {
         layoutTopInset: Int = 20,
         layoutBottomInset: Int = 20
     ) {
+        self.cellType = cellType
         self.text = text
         self.fontSize = fontSize
         self.textColor = textColor
@@ -55,6 +59,14 @@ class MagazineDetailModel {
         self.layoutTrailingInset = layoutTrailingInset
         self.layoutTopInset = layoutTopInset
         self.layoutBottomInset = layoutBottomInset
+    }
+    
+    enum MagazineDetailCellType {
+        case textCell
+        case imageCell
+        case bulletedCell
+        case emptyCell
+        case storyShareCell
     }
     
     enum TextColor: String {
