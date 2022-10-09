@@ -33,12 +33,14 @@ final class MagazineDetailTextCell: MagazineDetailBaseCell, View {
 }
 
 extension MagazineDetailTextCell {
-    func setUI() {
+    func setUI(_ item: MagazineDetailModel) {
         addSubview(contentTextLabel)
         
         contentTextLabel.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.top.bottom.equalToSuperview()
+            $0.leading.equalToSuperview().inset(item.layoutLeadingInset)
+            $0.trailing.equalToSuperview().inset(item.layoutTrailingInset)
+            $0.top.equalToSuperview().inset(item.layoutTopInset)
+            $0.bottom.equalToSuperview().inset(item.layoutBottomInset)
         }
     }
 }

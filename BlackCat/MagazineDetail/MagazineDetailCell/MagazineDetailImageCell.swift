@@ -18,26 +18,22 @@ final class MagazineDetailImageCell: MagazineDetailBaseCell, View {
             .withUnretained(self)
             .bind { owner, item in
                 owner.contentImageViewBuilder(owner.contentImageView, item)
+                owner.setUI(item)
             }
             .disposed(by: self.disposeBag)
     }
     
-    // MARK: - Initalizing
-    override func initialize() {
-        self.setUI()
-    }
-   
     // MARK: - UIComponents
     private let contentImageView = UIImageView()
     
 }
 
 extension MagazineDetailImageCell {
-    func setUI() {
+    func setUI(_ item: MagazineDetailModel) {
         addSubview(contentImageView)
         
         contentImageView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(item.layoutLeadingInset)
             $0.top.bottom.equalToSuperview()
         }
     }

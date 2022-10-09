@@ -19,7 +19,12 @@ class MagazineDetailModel {
     /** 매거진 imageUrlString  (dafault = nil) */ var imageUrlString: String?
     /** 매거진 imageCornerRadius  (dafault = 0)*/ var imageCornerRadius: Int
     
-    /** 매거진 cell에 사용되는 높이값  (dafault = 0)*/ var layoutHeight: Int
+    /** 매거진 cell에 사용되는 layoutHeight  (dafault = 0)*/ var layoutHeight: Int
+    /** 매거진 cell에 사용되는 layoutWidth  (dafault = 0)*/ var layoutWidth: Int
+    /** 매거진 cell에 사용되는 layoutLeadingInset  (dafault = 20)*/ var layoutLeadingInset: Int
+    /** 매거진 cell에 사용되는 layoutTrailingInset  (dafault = 20)*/ var layoutTrailingInset: Int
+    /** 매거진 cell에 사용되는 layoutTopInset  (dafault = 20)*/ var layoutTopInset: Int
+    /** 매거진 cell에 사용되는 layoutBottomInset  (dafault = 20)*/ var layoutBottomInset: Int
     
     
     init(
@@ -30,7 +35,12 @@ class MagazineDetailModel {
         fontWeight: FontWeightType = .regular,
         imageUrlString: String? = nil,
         imageCornerRadius: Int = 0,
-        emptyHeight: Int = 0
+        layoutHeight: Int = 0,
+        layoutWidth: Int = 0,
+        layoutLeadingInset: Int = 20,
+        layoutTrailingInset: Int = 20,
+        layoutTopInset: Int = 20,
+        layoutBottomInset: Int = 20
     ) {
         self.text = text
         self.fontSize = fontSize
@@ -39,7 +49,12 @@ class MagazineDetailModel {
         self.fontWeight = fontWeight
         self.imageUrlString = imageUrlString
         self.imageCornerRadius = imageCornerRadius
-        self.layoutHeight = emptyHeight
+        self.layoutHeight = layoutHeight
+        self.layoutWidth = layoutWidth
+        self.layoutLeadingInset = layoutLeadingInset
+        self.layoutTrailingInset = layoutTrailingInset
+        self.layoutTopInset = layoutTopInset
+        self.layoutBottomInset = layoutBottomInset
     }
     
     enum TextColor: String {
