@@ -14,13 +14,33 @@ final class MagazineDetailStroyShareButtonCell: MagazineDetailBaseCell, View {
     
     // MARK: - Binding
     func bind(reactor: Reactor) {
-        reactor.state.compactMap { $0 }
+        print("binding")
+        dispatch(reactor: reactor)
+        render(reactor: reactor)
+    }
+    
+    private func dispatch(reactor: Reactor) {
+        stroyShareButton.rx.tap
+            .debug("didTapTouched")
+            .map { Reactor.Action.didTapShareButton }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+    }
+    
+    private func render(reactor: Reactor) {
+        reactor.state.compactMap { $0.isShowingShare }
+            .distinctUntilChanged()
+            .filter { $0 == true }
             .withUnretained(self)
-            .bind { owner, item in
-//                owner.contentTextLabelBuilder(owner.contentTextLabel, item)
-                owner.setUI(item)
+            .bind { owner, value in
+                print("open share")
             }
             .disposed(by: self.disposeBag)
+    }
+    
+    // MARK: - Initialize
+    override func initialize() {
+        self.setUI()
     }
     
     // MARK: - UIComponents
@@ -28,7 +48,7 @@ final class MagazineDetailStroyShareButtonCell: MagazineDetailBaseCell, View {
 }
 
 extension MagazineDetailStroyShareButtonCell {
-    func setUI(_ item: MagazineDetailModel) {
+    private func setUI() {
         addSubview(stroyShareButton)
         
         self.configureStroyShareButton(sender: stroyShareButton)
@@ -51,11 +71,12 @@ extension MagazineDetailStroyShareButtonCell {
         switch overrideUserInterfaceStyle {
         case .light, .unspecified:
             sender.tintColor = .systemBlue
-            sender.backgroundColor = .darkGray
+            sender.setTitleColor(.systemBlue, for: .normal)
+            sender.backgroundColor = .lightGray
         case .dark:
             sender.tintColor = .white
             sender.setTitleColor(.white, for: .normal)
-            sender.backgroundColor = .lightGray
+            sender.backgroundColor = .gray
         @unknown default:
             assert(true, "✨")
         }
@@ -64,12 +85,39 @@ extension MagazineDetailStroyShareButtonCell {
 
 final class MagazineDetailStroyShareButtonCellReactor: Reactor {
 
-    typealias Action = NoAction
+    enum Action {
+        case didTapShareButton
+    }
+    
+    enum Mutation {
+        case isShowing(Bool)
+    }
+    
+    struct State {
+        var isShowingShare: Bool = false
+    }
 
-    var initialState: MagazineDetailModel
+    var initialState: State
 
-    init(initialState: MagazineDetailModel) {
+    init(initialState: State) {
         self.initialState = initialState
+    }
+    
+    func mutate(action: Action) -> Observable<Mutation> {
+        switch action {
+        case .didTapShareButton:
+            return .just(.isShowing(true))
+        }
+    }
+    
+    func reduce(state: State, mutation: Mutation) -> State {
+        var newState = state
+        
+        switch mutation {
+        case .isShowing(let value):
+            newState.isShowingShare = value
+            return newState
+        }
     }
 }
 

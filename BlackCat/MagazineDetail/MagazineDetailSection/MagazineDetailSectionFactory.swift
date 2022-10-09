@@ -53,9 +53,7 @@ struct MagazineDetailSectionFactory {
     static func makeStoryShareCell(_ item: MagazineDetailModel) -> MagazineDetailSectionItem {
         
         return MagazineDetailSectionItem.storyShareButtonCell(
-            MagazineDetailStroyShareButtonCellReactor(
-                initialState: item
-            )
+            MagazineDetailStroyShareButtonCellReactor(initialState: MagazineDetailStroyShareButtonCellReactor.State())
         )
     }
     
