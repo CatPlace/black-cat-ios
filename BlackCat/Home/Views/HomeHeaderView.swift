@@ -1,0 +1,47 @@
+//
+//  HomeHeaderView.swift
+//  BlackCat
+//
+//  Created by SeYeong on 2022/10/09.
+//
+
+import UIKit
+
+import SnapKit
+
+class HomeHeaderView: UICollectionReusableView {
+
+    // MARK: - Properties
+
+    static let identifer = String(describing: HomeHeaderView.self)
+
+    // MARK: - Initializing
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        setUI()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - UIComponents
+
+    let titleLabel = UILabel()
+}
+
+extension HomeHeaderView {
+    private func setUI() {
+        addSubview(titleLabel)
+
+        titleLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(15)
+            $0.top.equalToSuperview().inset(15)
+        }
+
+        titleLabel.font = .systemFont(ofSize: 20, weight: .bold)
+    }
+}
+
