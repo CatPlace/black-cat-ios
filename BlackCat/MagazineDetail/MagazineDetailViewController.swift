@@ -51,8 +51,8 @@ final class MagazineDetailViewController: UIViewController, View {
             return cell
         case .storyShareButtonCell(let reactor):
             let cell = tableView.dequeue(Reuable.storyShareButtonCell, for: indexPath)
-            cell.reactor = reactor
             
+            cell.reactor = reactor
             return cell
         }
     }

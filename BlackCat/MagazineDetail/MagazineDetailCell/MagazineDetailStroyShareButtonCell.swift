@@ -8,6 +8,8 @@
 import UIKit
 import ReactorKit
 import SnapKit
+import RxCocoa
+import RxSwift
 
 final class MagazineDetailStroyShareButtonCell: MagazineDetailBaseCell, View {
     typealias Reactor = MagazineDetailStroyShareButtonCellReactor
@@ -49,7 +51,7 @@ final class MagazineDetailStroyShareButtonCell: MagazineDetailBaseCell, View {
 
 extension MagazineDetailStroyShareButtonCell {
     private func setUI() {
-        addSubview(stroyShareButton)
+        contentView.addSubview(stroyShareButton)
         
         self.configureStroyShareButton(sender: stroyShareButton)
         
@@ -59,7 +61,7 @@ extension MagazineDetailStroyShareButtonCell {
             $0.width.equalTo(width)
             $0.height.greaterThanOrEqualTo(heigth)
             $0.centerX.equalToSuperview()
-            $0.top.bottom.equalToSuperview()
+            $0.top.bottom.equalToSuperview().inset(50)
         }
     }
     
@@ -72,7 +74,7 @@ extension MagazineDetailStroyShareButtonCell {
         case .light, .unspecified:
             sender.tintColor = .systemBlue
             sender.setTitleColor(.systemBlue, for: .normal)
-            sender.backgroundColor = .lightGray
+            sender.backgroundColor = .systemGray6
         case .dark:
             sender.tintColor = .white
             sender.setTitleColor(.white, for: .normal)
