@@ -5,6 +5,9 @@
       location = "group:../black-cat-ios-sdk/BlackCatSDK/BlackCatSDK.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:../black-cat-ios-key/BlackCatKEY/BlackCatKEY.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:BlackCat.xcodeproj">
    </FileRef>
 </Workspace>
