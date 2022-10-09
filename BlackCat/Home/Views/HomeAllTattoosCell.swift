@@ -7,6 +7,8 @@
 
 import UIKit
 
+import RxCocoa
+import RxSwift
 import Nuke
 import SnapKit
 
@@ -14,14 +16,15 @@ class HomeAllTattoosCell: UICollectionViewCell {
 
     // MARK: - Properties
 
+    let disposeBag = DisposeBag()
+
     // MARK: - Binding
 
     func bind(to viewModel: HomeAllTattoosCellViewModel) {
-        if let url = URL(string: viewModel.imageURLString) {
-            Nuke.loadImage(with: url, into: thumbnailImageView)
-        }
+        viewModel.imageURLString
+            .drive()
+            .disposed(by: disposeBag)
     }
-
 
     // MARK: - Initializing
 

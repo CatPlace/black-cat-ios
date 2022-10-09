@@ -11,10 +11,6 @@ import SnapKit
 
 class HomeHeaderView: UICollectionReusableView {
 
-    // MARK: - Properties
-
-    static let identifer = String(describing: HomeHeaderView.self)
-
     // MARK: - Initializing
 
     override init(frame: CGRect) {

@@ -29,51 +29,55 @@ class HomeViewController: UIViewController {
     let disposeBag = DisposeBag()
     private lazy var dataSource = RxCollectionViewSectionedReloadDataSource<HomeSection>(
         configureCell: { dataSource, collectionView, indexPath, item in
-        switch item {
-        case .homeCategoryCellItem(let category):
-            let cell = collectionView.dequeue(Reusable.categoryCell, for: indexPath)
+            switch item {
+            case .categoryCellItem(let categoryCellViewModel):
+                let cell = collectionView.dequeue(Reusable.categoryCell, for: indexPath)
 
-            cell.bind(to: HomeCategoryCellViewModel(category: category))
+                cell.bind(to: categoryCellViewModel)
 
-            return cell
+                return cell
 
-        case .recommendCellItem(let section1):
-            let cell = collectionView.dequeue(Reusable.recommendCell, for: indexPath)
+            case .recommendCellItem(let recommendCellViewModel):
+                let cell = collectionView.dequeue(Reusable.recommendCell, for: indexPath)
 
-            cell.bind(to: HomeRecommendCellViewModel(section1: section1))
+                cell.bind(to: recommendCellViewModel)
 
-            return cell
+                return cell
 
-        case .empty(let empty):
-            let cell = collectionView.dequeue(Reusable.emptyCell, for: indexPath)
+            case .empty(let empty):
+                let cell = collectionView.dequeue(Reusable.emptyCell, for: indexPath)
 
-            return cell
+                return cell
 
-        case .allTattoosCellItem(let section2):
-            let cell = collectionView.dequeue(Reusable.allTattoosCell, for: indexPath)
+            case .allTattoosCellItem(let allTattoosCellViewModel):
+                let cell = collectionView.dequeue(Reusable.allTattoosCell, for: indexPath)
 
-            cell.bind(to: HomeAllTattoosCellViewModel(section2: section2))
+                cell.bind(to: allTattoosCellViewModel)
 
-            return cell
-        }
-    }, configureSupplementaryView: { dataSource, collectionView, kind, indexPath -> UICollectionReusableView in
-        guard kind == UICollectionView.elementKindSectionHeader,
-              indexPath.section == 1 || indexPath.section == 3
-        else {
-            return UICollectionReusableView()
-        }
+                return cell
+            }
+        }, configureSupplementaryView: { dataSource, collectionView, kind, indexPath -> UICollectionReusableView in
+            guard kind == UICollectionView.elementKindSectionHeader,
+                  indexPath.section == 1 || indexPath.section == 3
+            else {
+                return UICollectionReusableView()
+            }
 
-        let headerView = collectionView.dequeue(Reusable.headerView, kind: .header, for: indexPath)
-        let headerTitle = dataSource.sectionModels[indexPath.section].header
+            let headerView = collectionView.dequeue(Reusable.headerView, kind: .header, for: indexPath)
+            let headerTitle = dataSource.sectionModels[indexPath.section].header
 
-        headerView.titleLabel.text = headerTitle
+            headerView.titleLabel.text = headerTitle
 
-        return headerView
-    })
+            return headerView
+        })
 
     // MARK: - Binding
 
     private func bind() {
+        rx.viewDidLoad
+            .bind(to: viewModel.viewDidLoad)
+            .disposed(by: disposeBag)
+
         searchBarButtonItem.rx.tap
             .bind(to: viewModel.didTapSearchBarButtonItem)
             .disposed(by: disposeBag)
@@ -96,9 +100,7 @@ class HomeViewController: UIViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
 
-        rx.viewDidLoad
-            .bind(to: viewModel.viewDidLoad)
-            .disposed(by: disposeBag)
+        bind()
     }
 
     required init?(coder: NSCoder) {
@@ -112,7 +114,6 @@ class HomeViewController: UIViewController {
 
         setNavigationBar()
         setUI()
-        bind()
     }
 
     // MARK: - UIComponents

@@ -20,7 +20,7 @@ class HomeCategoryCell: UICollectionViewCell {
     // MARK: - Binding
 
     func bind(to viewModel: HomeCategoryCellViewModel) {
-        categoryTitleLabel.text = viewModel.title
+        categoryTitleLabel.text = viewModel.category.title
     }
 
     // MARK: - Initializing

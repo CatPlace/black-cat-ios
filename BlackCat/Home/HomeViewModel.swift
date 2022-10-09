@@ -14,14 +14,14 @@ import RxSwift
 class HomeViewModel {
     private let categoryItemTitles = Observable<[HomeCategory]>.just(HomeCategory.default)
 
-    // MARK: - View -> ViewModel
+    // MARK: - Input
 
     let viewDidLoad = PublishRelay<Void>()
     let didTapSearchBarButtonItem = PublishRelay<Void>()
     let didTapHeartBarButtonItem = PublishRelay<Void>()
     let didTapCollectionViewItem = PublishRelay<IndexPath>()
 
-    // MARK: - ViewModel -> View
+    // MARK: - Output
 
     let homeItems: Driver<[HomeSection]>
 
@@ -60,10 +60,20 @@ class HomeViewModel {
                 categoryItemTitles, fetchedSection1Items, fetchedSection2Items
             ) { categoryItems, recommendItems, allTattoosItems -> [HomeSection] in
                 [
-                    HomeSection(items: categoryItems.map { .homeCategoryCellItem($0) }),
-                    HomeSection(header: "항목 1", items: recommendItems.map { .recommendCellItem($0) }),
-                    HomeSection(items: [.empty(Empty())]),
-                    HomeSection(header: "항목 2", items: allTattoosItems.map { .allTattoosCellItem($0) })
+                    HomeSection(
+                        items: categoryItems.map { .categoryCellItem(HomeCategoryCellViewModel(with: $0)) }
+                    ),
+                    HomeSection(
+                        header: "추천 항목",
+                        items: recommendItems.map { .recommendCellItem(HomeRecommendCellViewModel(with: $0)) }
+                    ),
+                    HomeSection(
+                        items: [.empty(Empty())]
+                    ),
+                    HomeSection(
+                        header: "전체 보기",
+                        items: allTattoosItems.map { .allTattoosCellItem(HomeAllTattoosCellViewModel(with: $0)) }
+                    )
                 ]
             }
             .asDriver(onErrorJustReturn: [])
@@ -75,10 +85,10 @@ struct HomeSection {
     var items: [Item]
 
     enum HomeItem {
-        case homeCategoryCellItem(HomeCategory)
-        case recommendCellItem(HomeRecommend)
+        case categoryCellItem(HomeCategoryCellViewModel)
+        case recommendCellItem(HomeRecommendCellViewModel)
         case empty(Empty)
-        case allTattoosCellItem(HomeAllTattoos)
+        case allTattoosCellItem(HomeAllTattoosCellViewModel)
     }
 }
 

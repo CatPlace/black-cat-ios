@@ -12,19 +12,17 @@ import SnapKit
 
 class HomeRecommendCell: UICollectionViewCell {
 
-    // MARK: - Properties
-
     // MARK: - Binding
 
     func bind(to viewModel: HomeRecommendCellViewModel) {
 
         // TODO: - Nuke 조사 필요합니다..
 
-        if let url = URL(string: viewModel.imageURLString) {
+        if let url = URL(string: viewModel.homeRecommend.imageURLString) {
             Nuke.loadImage(with: url, into: thumbnailImageView)
         }
-        priceLabel.text = viewModel.price
-        tattooistNameLabel.text = viewModel.tattooistName
+        priceLabel.text = viewModel.homeRecommend.priceString
+        tattooistNameLabel.text = viewModel.homeRecommend.tattooistName
     }
 
     // MARK: - Initializing

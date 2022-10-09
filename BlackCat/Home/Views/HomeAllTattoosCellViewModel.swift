@@ -8,9 +8,9 @@
 import Foundation
 
 class HomeAllTattoosCellViewModel {
-    let imageURLString: String
+    let homeAllTattoos: HomeAllTattoos
 
-    init(section2: HomeAllTattoos) {
-        self.imageURLString = section2.imageURLString
+    init(with model: HomeAllTattoos) {
+        self.homeAllTattoos = model
     }
 }

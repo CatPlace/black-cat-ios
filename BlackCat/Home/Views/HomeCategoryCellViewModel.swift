@@ -8,9 +8,9 @@
 import Foundation
 
 final class HomeCategoryCellViewModel {
-    let title: String
+    let category: HomeCategory
 
-    init(category: HomeCategory) {
-        self.title = category.title
+    init(with model: HomeCategory) {
+        self.category = model
     }
 }

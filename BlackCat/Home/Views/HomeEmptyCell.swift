@@ -9,8 +9,6 @@ import UIKit
 
 class HomeEmptyCell: UICollectionViewCell {
 
-    // MARK: - Properties
-
     // MARK: - Initializing
 
     override init(frame: CGRect) {

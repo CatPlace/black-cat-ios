@@ -8,13 +8,9 @@
 import Foundation
 
 class HomeRecommendCellViewModel {
-    let imageURLString: String
-    let price: String
-    let tattooistName: String
+    let homeRecommend: HomeRecommend
 
-    init(section1: HomeRecommend) {
-        self.imageURLString = section1.imageURLString
-        self.price = section1.priceString
-        self.tattooistName = section1.tattooistName
+    init(with model: HomeRecommend) {
+        self.homeRecommend = model
     }
 }
