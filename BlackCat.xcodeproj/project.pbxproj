@@ -12,6 +12,13 @@
 		8E2D8C4C28F2ED03004B514D /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4B28F2ED03004B514D /* HomeModel.swift */; };
 		8E2D8C4F28F2ED53004B514D /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4E28F2ED53004B514D /* HomeHeaderView.swift */; };
 		8E2D8C5128F2EDF3004B514D /* HomeCategorySectionBackgroundReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C5028F2EDF3004B514D /* HomeCategorySectionBackgroundReusableView.swift */; };
+		8E2D8C5928F2EE69004B514D /* HomeEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C5228F2EE68004B514D /* HomeEmptyCell.swift */; };
+		8E2D8C5A28F2EE69004B514D /* HomeCategoryCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C5328F2EE68004B514D /* HomeCategoryCellViewModel.swift */; };
+		8E2D8C5B28F2EE69004B514D /* HomeCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C5428F2EE69004B514D /* HomeCategoryCell.swift */; };
+		8E2D8C5C28F2EE69004B514D /* HomeAllTattoosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C5528F2EE69004B514D /* HomeAllTattoosCell.swift */; };
+		8E2D8C5D28F2EE69004B514D /* HomeRecommendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C5628F2EE69004B514D /* HomeRecommendCell.swift */; };
+		8E2D8C5E28F2EE69004B514D /* HomeAllTattoosCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C5728F2EE69004B514D /* HomeAllTattoosCellViewModel.swift */; };
+		8E2D8C5F28F2EE69004B514D /* HomeRecommendCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C5828F2EE69004B514D /* HomeRecommendCellViewModel.swift */; };
 		B12C1DC728ED219C0089964E /* UIVIewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12C1DC628ED219C0089964E /* UIVIewController+Rx.swift */; };
 		B1CA040628F00CC1004A6027 /* MagazineDetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CA040528F00CC1004A6027 /* MagazineDetailImageCell.swift */; };
 		B1CA040828F00D84004A6027 /* Rect.png in Resources */ = {isa = PBXBuildFile; fileRef = B1CA040728F00D84004A6027 /* Rect.png */; };
@@ -74,6 +81,13 @@
 		8E2D8C4B28F2ED03004B514D /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
 		8E2D8C4E28F2ED53004B514D /* HomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderView.swift; sourceTree = "<group>"; };
 		8E2D8C5028F2EDF3004B514D /* HomeCategorySectionBackgroundReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCategorySectionBackgroundReusableView.swift; sourceTree = "<group>"; };
+		8E2D8C5228F2EE68004B514D /* HomeEmptyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeEmptyCell.swift; sourceTree = "<group>"; };
+		8E2D8C5328F2EE68004B514D /* HomeCategoryCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCategoryCellViewModel.swift; sourceTree = "<group>"; };
+		8E2D8C5428F2EE69004B514D /* HomeCategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCategoryCell.swift; sourceTree = "<group>"; };
+		8E2D8C5528F2EE69004B514D /* HomeAllTattoosCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeAllTattoosCell.swift; sourceTree = "<group>"; };
+		8E2D8C5628F2EE69004B514D /* HomeRecommendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRecommendCell.swift; sourceTree = "<group>"; };
+		8E2D8C5728F2EE69004B514D /* HomeAllTattoosCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeAllTattoosCellViewModel.swift; sourceTree = "<group>"; };
+		8E2D8C5828F2EE69004B514D /* HomeRecommendCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRecommendCellViewModel.swift; sourceTree = "<group>"; };
 		B12C1DC628ED219C0089964E /* UIVIewController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIewController+Rx.swift"; sourceTree = "<group>"; };
 		B1CA040528F00CC1004A6027 /* MagazineDetailImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailImageCell.swift; sourceTree = "<group>"; };
 		B1CA040728F00D84004A6027 /* Rect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rect.png; sourceTree = "<group>"; };
@@ -146,6 +160,13 @@
 			children = (
 				8E2D8C4E28F2ED53004B514D /* HomeHeaderView.swift */,
 				8E2D8C5028F2EDF3004B514D /* HomeCategorySectionBackgroundReusableView.swift */,
+				8E2D8C5528F2EE69004B514D /* HomeAllTattoosCell.swift */,
+				8E2D8C5728F2EE69004B514D /* HomeAllTattoosCellViewModel.swift */,
+				8E2D8C5428F2EE69004B514D /* HomeCategoryCell.swift */,
+				8E2D8C5328F2EE68004B514D /* HomeCategoryCellViewModel.swift */,
+				8E2D8C5228F2EE68004B514D /* HomeEmptyCell.swift */,
+				8E2D8C5628F2EE69004B514D /* HomeRecommendCell.swift */,
+				8E2D8C5828F2EE69004B514D /* HomeRecommendCellViewModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -355,22 +376,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E2D8C5E28F2EE69004B514D /* HomeAllTattoosCellViewModel.swift in Sources */,
 				B1E361E428F28C3100A29CC8 /* MagazineDetailStroyShareButtonCell.swift in Sources */,
 				B1E4985F28EE886900B469AC /* MagazineDetailSection.swift in Sources */,
 				B1E4987028EEADC900B469AC /* MagazineDetailSectionFactory.swift in Sources */,
+				8E2D8C5C28F2EE69004B514D /* HomeAllTattoosCell.swift in Sources */,
 				8E2D8C4A28F2ECD2004B514D /* HomeViewModel.swift in Sources */,
 				B1D3364128F1CCFA00826636 /* UICollectionView+.swift in Sources */,
+				8E2D8C5D28F2EE69004B514D /* HomeRecommendCell.swift in Sources */,
 				B1D127DD28F08DCA007E3667 /* TabBarViewController.swift in Sources */,
 				B1E4986228EE8BFE00B469AC /* MagazineDetailTextCell.swift in Sources */,
 				B1E4985828EE85A800B469AC /* MagazineDetailViewController.swift in Sources */,
+				8E2D8C5F28F2EE69004B514D /* HomeRecommendCellViewModel.swift in Sources */,
 				8E2D8C5128F2EDF3004B514D /* HomeCategorySectionBackgroundReusableView.swift in Sources */,
 				B1D79CAF28EB0EF9008487D0 /* ViewController.swift in Sources */,
 				B1D127E228F0923C007E3667 /* Asset.swift in Sources */,
 				B1E4986528EE957E00B469AC /* MagazineDetailModel.swift in Sources */,
 				B1E4986728EE9BE800B469AC /* MagazineDetailBaseCell.swift in Sources */,
+				8E2D8C5928F2EE69004B514D /* HomeEmptyCell.swift in Sources */,
 				8E2D8C4F28F2ED53004B514D /* HomeHeaderView.swift in Sources */,
 				8E2D8C4828F2EC27004B514D /* HomeViewController.swift in Sources */,
 				B1D3362928F1AC1200826636 /* MagazineDetailEmptyCell.swift in Sources */,
+				8E2D8C5A28F2EE69004B514D /* HomeCategoryCellViewModel.swift in Sources */,
 				B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */,
 				B1D3362528F142A400826636 /* CALayer+.swift in Sources */,
 				B1D127DF28F09200007E3667 /* UIImage+.swift in Sources */,
@@ -380,6 +407,7 @@
 				B12C1DC728ED219C0089964E /* UIVIewController+Rx.swift in Sources */,
 				B1D79CAD28EB0EF9008487D0 /* SceneDelegate.swift in Sources */,
 				8E2D8C4C28F2ED03004B514D /* HomeModel.swift in Sources */,
+				8E2D8C5B28F2EE69004B514D /* HomeCategoryCell.swift in Sources */,
 				B1D127DB28F047A9007E3667 /* MagazineDetailBulletedCell.swift in Sources */,
 				B1DD25DD28EF0BC800103FF1 /* UIColor+.swift in Sources */,
 				B1D3362728F1457700826636 /* UITabBar+.swift in Sources */,
