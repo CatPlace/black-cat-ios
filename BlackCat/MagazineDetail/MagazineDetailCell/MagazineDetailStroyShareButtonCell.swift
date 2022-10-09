@@ -31,16 +31,13 @@ extension MagazineDetailStroyShareButtonCell {
     func setUI(_ item: MagazineDetailModel) {
         addSubview(stroyShareButton)
         
-        let screenWidth = UIScreen.main.bounds.width
-        
         self.configureStroyShareButton(sender: stroyShareButton)
-        stroyShareButton.tintColor = .white
-        stroyShareButton.layer.cornerRadius = 12
-        stroyShareButton.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
-        stroyShareButton.setTitle(" 스토리 공유", for: .normal)
+        
+        let width = UIScreen.main.bounds.width * 3 / 7
+        let heigth = UIScreen.main.bounds.width * 3 / 7 * 2 / 7
         stroyShareButton.snp.makeConstraints {
-            $0.width.equalTo(screenWidth * 3 / 7)
-            $0.height.greaterThanOrEqualTo(screenWidth * 3 / 7 * 2 / 7)
+            $0.width.equalTo(width)
+            $0.height.greaterThanOrEqualTo(heigth)
             $0.centerX.equalToSuperview()
             $0.top.bottom.equalToSuperview()
         }
@@ -48,6 +45,8 @@ extension MagazineDetailStroyShareButtonCell {
     
     private func configureStroyShareButton(sender: UIButton) {
         sender.layer.cornerRadius = 12
+        sender.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
+        sender.setTitle(" 스토리 공유", for: .normal)
         
         switch overrideUserInterfaceStyle {
         case .light, .unspecified:
