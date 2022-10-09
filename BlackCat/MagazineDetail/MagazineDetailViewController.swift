@@ -21,6 +21,7 @@ final class MagazineDetailViewController: UIViewController, View {
         static let imageCell = ReusableCell<MagazineDetailImageCell>()
         static let bulletedCell = ReusableCell<MagazineDetailBulletedCell>()
         static let emptyCell = ReusableCell<MagazineDetailEmptyCell>()
+        static let storyShareButtonCell = ReusableCell<MagazineDetailStroyShareButtonCell>()
     }
     
     // MARK: - Properties
@@ -45,6 +46,11 @@ final class MagazineDetailViewController: UIViewController, View {
             return cell
         case .emptyCell(let reactor):
             let cell = tableView.dequeue(Reuable.emptyCell, for: indexPath)
+            cell.reactor = reactor
+            
+            return cell
+        case .storyShareButtonCell(let reactor):
+            let cell = tableView.dequeue(Reuable.storyShareButtonCell, for: indexPath)
             cell.reactor = reactor
             
             return cell
@@ -87,6 +93,7 @@ final class MagazineDetailViewController: UIViewController, View {
         tv.register(Reuable.imageCell)
         tv.register(Reuable.bulletedCell)
         tv.register(Reuable.emptyCell)
+        tv.register(Reuable.storyShareButtonCell)
         
         tv.rowHeight = UITableView.automaticDimension
         tv.estimatedRowHeight = 70

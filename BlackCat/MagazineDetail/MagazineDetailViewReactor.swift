@@ -135,7 +135,13 @@ extension MagazineDetailViewReactor {
         let emptyCell2 = MagazineDetailSectionFactory.makeEmptyCell(MagazineDetailModel(layoutHeight: 240))
         
         let emptyCellSection = MagazineDetailCellSection.emptyCell([emptyCell, emptyCell2])
+        
+        let stroyShareButtonCell = MagazineDetailSectionFactory.makeStoryShareCell(.init())
+        let stroyShareButtonSection = MagazineDetailCellSection.storyShareButtonCell([stroyShareButtonCell])
+        
+        
         return [
+            stroyShareButtonSection,
             bulletedCellSection,
             emptyCellSection,
             textCellSection,
