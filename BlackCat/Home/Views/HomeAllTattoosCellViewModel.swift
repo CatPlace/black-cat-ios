@@ -10,7 +10,7 @@ import Foundation
 class HomeAllTattoosCellViewModel {
     let imageURLString: String
 
-    init(section2: Section2) {
+    init(section2: HomeAllTattoos) {
         self.imageURLString = section2.imageURLString
     }
 }

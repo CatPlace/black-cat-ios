@@ -31,7 +31,7 @@ struct HomeCategory {
     ]
 }
 
-struct Section1 {
+struct HomeRecommend {
     let imageURLString: String
     let priceString: String
     let tattooistName: String
@@ -39,7 +39,7 @@ struct Section1 {
 
 struct Empty {}
 
-struct Section2 {
+struct HomeAllTattoos {
     let imageURLString: String
 }
 

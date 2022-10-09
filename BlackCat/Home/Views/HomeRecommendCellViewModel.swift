@@ -12,7 +12,7 @@ class HomeRecommendCellViewModel {
     let price: String
     let tattooistName: String
 
-    init(section1: Section1) {
+    init(section1: HomeRecommend) {
         self.imageURLString = section1.imageURLString
         self.price = section1.priceString
         self.tattooistName = section1.tattooistName
