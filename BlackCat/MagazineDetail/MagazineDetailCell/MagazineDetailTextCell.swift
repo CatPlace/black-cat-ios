@@ -10,7 +10,6 @@ import ReactorKit
 import SnapKit
 
 final class MagazineDetailTextCell: MagazineDetailBaseCell, View {
-    static let identifier = String(describing: MagazineDetailTextCell.self)
     typealias Reactor = MagazineDetailTextCellReactor
     
     // MARK: - Binding
@@ -18,27 +17,37 @@ final class MagazineDetailTextCell: MagazineDetailBaseCell, View {
         reactor.state.compactMap { $0 }
             .withUnretained(self)
             .bind { owner, item in
-                owner.contentTextLabel.text = item.text
+                owner.contentTextLabelBuilder(owner.contentTextLabel, item)
+                owner.setUI(item)
             }
             .disposed(by: self.disposeBag)
     }
     
-    // MARK: - Initalizing
-    override func initialize() {
-        self.setUI()
-    }
-   
     // MARK: - UIComponents
     private let contentTextLabel = UILabel()
+    
 }
 
 extension MagazineDetailTextCell {
-    func setUI() {
+    func setUI(_ item: MagazineDetailModel) {
         addSubview(contentTextLabel)
         
-        contentTextLabel.numberOfLines = 0
         contentTextLabel.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(10)
+            $0.leading.equalToSuperview().inset(item.layoutLeadingInset)
+            $0.trailing.equalToSuperview().inset(item.layoutTrailingInset)
+            $0.top.equalToSuperview().inset(item.layoutTopInset)
+            $0.bottom.equalToSuperview().inset(item.layoutBottomInset)
         }
+    }
+}
+
+final class MagazineDetailTextCellReactor: Reactor {
+
+    typealias Action = NoAction
+
+    var initialState: MagazineDetailModel
+
+    init(initialState: MagazineDetailModel) {
+        self.initialState = initialState
     }
 }

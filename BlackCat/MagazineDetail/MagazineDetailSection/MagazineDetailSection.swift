@@ -14,6 +14,10 @@ enum MagazineDetailSectionItem: Equatable, IdentifiableType {
     var identity: some Hashable { UUID().uuidString }
     
     case textCell(MagazineDetailTextCellReactor)
+    case imageCell(MagazineDetailImageCellReactor)
+    case bulletedCell(MagazineDetailBulletedCellReactor)
+    case emptyCell(MagazineDetailEmptyCellReactor)
+    case storyShareButtonCell(MagazineDetailStroyShareButtonCellReactor)
     
     static func == (lhs: MagazineDetailSectionItem, rhs: MagazineDetailSectionItem) -> Bool {
         lhs.identity == rhs.identity
@@ -24,6 +28,10 @@ enum MagazineDetailSectionItem: Equatable, IdentifiableType {
 // MARK: - 섹션들을 정의합니다.
 enum MagazineDetailCellSection {
     case textCell([MagazineDetailSectionItem])
+    case imageCell([MagazineDetailSectionItem])
+    case bulletedCell([MagazineDetailSectionItem])
+    case emptyCell([MagazineDetailSectionItem])
+    case storyShareButtonCell([MagazineDetailSectionItem])
 }
 
 extension MagazineDetailCellSection: AnimatableSectionModelType {
@@ -33,15 +41,21 @@ extension MagazineDetailCellSection: AnimatableSectionModelType {
     
     var items: [Item] {
         switch self {
-        case .textCell(let items):
-            return items
+        case .textCell(let items): return items
+        case .imageCell(let items): return items
+        case .bulletedCell(let items): return items
+        case .emptyCell(let items): return items
+        case .storyShareButtonCell(let items): return items
         }
     }
     
     init(original: MagazineDetailCellSection, items: [MagazineDetailSectionItem]) {
         switch original {
-        case .textCell:
-            self = .textCell(items)
+        case .textCell: self = .textCell(items)
+        case .imageCell: self = .imageCell(items)
+        case .bulletedCell: self = .bulletedCell(items)
+        case .emptyCell: self = .emptyCell(items)
+        case .storyShareButtonCell: self = .storyShareButtonCell(items)
         }
     }
 }

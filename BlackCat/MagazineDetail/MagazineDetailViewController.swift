@@ -10,20 +10,47 @@ import ReactorKit
 import RxCocoa
 import RxDataSources
 import RxSwift
+import BlackCatSDK
 
 final class MagazineDetailViewController: UIViewController, View {
     typealias Reactor = MagazineDetailViewReactor
     typealias ManageMentDataSource = RxTableViewSectionedAnimatedDataSource<MagazineDetailCellSection>
-
+    
+    enum Reuable {
+        static let textCell = ReusableCell<MagazineDetailTextCell>()
+        static let imageCell = ReusableCell<MagazineDetailImageCell>()
+        static let bulletedCell = ReusableCell<MagazineDetailBulletedCell>()
+        static let emptyCell = ReusableCell<MagazineDetailEmptyCell>()
+        static let storyShareButtonCell = ReusableCell<MagazineDetailStroyShareButtonCell>()
+    }
+    
     // MARK: - Properties
     var disposeBag: DisposeBag = DisposeBag()
     let dataSource: ManageMentDataSource = ManageMentDataSource { _, tableView, indexPath, items in
+        
         switch items {
         case .textCell(let reactor):
-            guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: MagazineDetailTextCell.identifier,
-                for: indexPath
-            ) as? MagazineDetailTextCell else { return UITableViewCell() }
+            let cell = tableView.dequeue(Reuable.textCell, for: indexPath)
+            
+            cell.reactor = reactor
+            return cell
+        case .imageCell(let reactor):
+            let cell = tableView.dequeue(Reuable.imageCell, for: indexPath)
+            
+            cell.reactor = reactor
+            return cell
+        case .bulletedCell(let reactor):
+            let cell = tableView.dequeue(Reuable.bulletedCell, for: indexPath)
+            
+            cell.reactor = reactor
+            return cell
+        case .emptyCell(let reactor):
+            let cell = tableView.dequeue(Reuable.emptyCell, for: indexPath)
+            cell.reactor = reactor
+            
+            return cell
+        case .storyShareButtonCell(let reactor):
+            let cell = tableView.dequeue(Reuable.storyShareButtonCell, for: indexPath)
             
             cell.reactor = reactor
             return cell
@@ -32,7 +59,6 @@ final class MagazineDetailViewController: UIViewController, View {
     
     // MARK: - Binding
     func bind(reactor: Reactor) {
-        print("bind did called")
         dispatch(reactor: reactor)
         render(reactor: reactor)
     }
@@ -63,7 +89,12 @@ final class MagazineDetailViewController: UIViewController, View {
     // MARK: UIComponents
     lazy var tableView: UITableView = {
         var tv = UITableView(frame: .zero, style: .plain)
-        tv.register(MagazineDetailTextCell.self, forCellReuseIdentifier: MagazineDetailTextCell.identifier)
+        tv.register(Reuable.textCell)
+        tv.register(Reuable.imageCell)
+        tv.register(Reuable.bulletedCell)
+        tv.register(Reuable.emptyCell)
+        tv.register(Reuable.storyShareButtonCell)
+        
         tv.rowHeight = UITableView.automaticDimension
         tv.estimatedRowHeight = 70
         return tv
