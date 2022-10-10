@@ -18,11 +18,13 @@ struct MagazineViewModel {
     //input
     let updateMagazineTrigger = BehaviorRelay<Int>(value: 0)
     let recentMagazineSectionScrollOffsetX = PublishRelay<(CGFloat, CGFloat)>() // (offsetX, view넓이)
-    let MagazineCollectionViewScrollOffsetY = PublishRelay<(CGFloat, CGFloat)>() // (offsetY, view높이)
+    let magazineCollectionViewScrollOffsetY = PublishRelay<(CGFloat, CGFloat)>() // (offsetY, view높이)
     
     //output
     var magazineDriver: Driver<[MagazineSection]>
-    var recentSectionPageControlValuesDriver: Driver<(Int, Int)>
+    var recentSectionPageControlValuesDriver: Driver<(Int, Int)> // (numberOfPages, currentPage)
+    var magazineCollectionViewTopInsetDriver: Driver<CGFloat>
+    var magazineCollectionViewScrollOffsetYDriver: Driver<CGFloat>
     
     init(useCase: MagazineTestUseCase = MagazineTestUseCase()) {
         self.useCase = useCase
@@ -43,17 +45,36 @@ struct MagazineViewModel {
         let lastMagazineSectionItemsObservable = fetchedData
             .map { Array($0[recentMagazineSize...]) }
         
-        self.magazineDriver = Observable.combineLatest(recentMagazineSectionItemsObservable, lastMagazineSectionItemsObservable) { topSectionItems, lastStorSectionItems in
-            [
+        self.magazineDriver = Observable.combineLatest(recentMagazineSectionItemsObservable,
+                                                       lastMagazineSectionItemsObservable)
+        {
+            topSectionItems,
+            lastStorSectionItems in
+            
+            return [
                 MagazineSection(items: topSectionItems.map { .topSection(.init(magazine: $0)) }),
                 MagazineSection(items: lastStorSectionItems.map { .lastStorySection(.init(magazine: $0)) })
             ]
+            
         }.asDriver(onErrorJustReturn: [])
-
+        
         recentSectionPageControlValuesDriver = recentMagazineSectionScrollOffsetX
             .map { (offsetX, sceneWidth) in
-            (recentMagazineSize, Int(round(offsetX / sceneWidth)))
+                (recentMagazineSize, Int(round(offsetX / sceneWidth)))
             }
             .asDriver(onErrorJustReturn: (0, 0))
+        
+        magazineCollectionViewTopInsetDriver = magazineCollectionViewScrollOffsetY
+            .map { (offsetY, sceneHeight) in
+                offsetY > sceneHeight
+                ? 26.0
+                : 0.0
+            }.distinctUntilChanged()
+            .asDriver(onErrorJustReturn: 0.0)
+        
+        magazineCollectionViewScrollOffsetYDriver = magazineCollectionViewScrollOffsetY
+            .map { (offsetY, _) in
+                offsetY
+            }.asDriver(onErrorJustReturn: 0.0)
     }
 }

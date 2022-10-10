@@ -33,5 +33,3 @@ enum MagazineItem {
     case topSection(RecentMagazineCellViewModel)
     case lastStorySection(LastMagazineCellViewModel)
 }
-
-

@@ -13,6 +13,7 @@ import RxRelay
 
 struct RecentMagazineFooterViewModel {
     
+    //output
     let currentPageDriver: Driver<Int>
     let numberOfPagesDriver: Driver<Int>
     
