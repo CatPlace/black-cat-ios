@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxRelay
+import BlackCatSDK
 
 struct RecentMagazineFooterViewModel {
     
