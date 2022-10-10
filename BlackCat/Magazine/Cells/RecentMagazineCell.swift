@@ -16,7 +16,7 @@ import Nuke
 struct RecentMagazineCellViewModel {
     let magazine: Magazine
     
-    //output
+    // MARK: - Output
     let imageUrlDriver: Driver<String>
     
     init(magazine: Magazine) {
@@ -42,9 +42,9 @@ class RecentMagazineCell: UICollectionViewCell {
     func bind(to viewModel: RecentMagazineCellViewModel) {
         viewModel.imageUrlDriver
             .compactMap { URL(string: $0) }
-            .drive(onNext: {
+            .drive {
                 Nuke.loadImage(with: $0, into: self.recentMagazineImageView)
-            })
+            }
             .disposed(by: disposeBag)
     }
     

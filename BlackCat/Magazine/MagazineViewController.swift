@@ -12,37 +12,32 @@ import RxDataSources
 import RxRelay
 import BlackCatSDK
 
-
-enum MagazineSectionType: Int {
-    case recentMagazine = 0
-    case lastMagazine = 1
-}
-
-enum Reusable {
-    static let recentMagazineCell = ReusableCell<RecentMagazineCell>()
-    static let recentMagazineFooterView = ReusableView<RecentMagazineFooterView>()
-    static let lastMagazineHeaderView = ReusableView<LastMagazineHeaderView>()
-    static let lastMagazinecell = ReusableCell<LastMagazineCell>()
-}
-
 class MagazineViewController: UIViewController {
-    
+    enum MagazineSectionType: Int {
+        case recentMagazine = 0
+        case lastMagazine = 1
+    }
+
+    enum Reusable {
+        static let recentMagazineCell = ReusableCell<RecentMagazineCell>()
+        static let recentMagazineFooterView = ReusableView<RecentMagazineFooterView>()
+        static let lastMagazineHeaderView = ReusableView<LastMagazineHeaderView>()
+        static let lastMagazinecell = ReusableCell<LastMagazineCell>()
+    }
     // MARK: - Properties
     let disposeBag = DisposeBag()
     let viewModel = MagazineViewModel()
-    
+
     lazy var dataSource = RxCollectionViewSectionedReloadDataSource<MagazineSection> (
         configureCell: { dataSource, collectionView, indexPath, item in
             switch item {
             case .topSection(let viewModel):
-                let cell = collectionView.dequeue(Reusable.recentMagazineCell,
-                                                  for: indexPath)
+                let cell = collectionView.dequeue(Reusable.recentMagazineCell, for: indexPath)
                 cell.viewModel = viewModel
                 
                 return cell
             case .lastStorySection(let viewModel):
-                let cell = collectionView.dequeue( Reusable.lastMagazinecell,
-                                                   for: indexPath)
+                let cell = collectionView.dequeue(Reusable.lastMagazinecell, for: indexPath)
                 
                 cell.viewModel = viewModel
                 
@@ -55,9 +50,7 @@ class MagazineViewController: UIViewController {
             
             switch (sectionType, kind) {
             case (.recentMagazine, UICollectionView.elementKindSectionFooter):
-                let footerView = collectionView.dequeue(Reusable.recentMagazineFooterView,
-                                                        kind: .footer,
-                                                        for: indexPath)
+                let footerView = collectionView.dequeue(Reusable.recentMagazineFooterView, kind: .footer, for: indexPath)
                 guard let self else { return UICollectionReusableView() }
                 guard let v = self.footerView else {
                     self.footerView = footerView
@@ -68,11 +61,7 @@ class MagazineViewController: UIViewController {
                 }
                 return v
             case (.lastMagazine, UICollectionView.elementKindSectionHeader):
-                let headerView = collectionView.dequeue(
-                    Reusable.lastMagazineHeaderView,
-                    kind: .header,
-                    for: indexPath
-                )
+                let headerView = collectionView.dequeue(Reusable.lastMagazineHeaderView, kind: .header, for: indexPath)
                 return headerView
                 
             default:

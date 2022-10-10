@@ -15,12 +15,12 @@ struct MagazineViewModel {
     
     var useCase: MagazineTestUseCase
     
-    //input
+    // MARK: - Input
     let updateMagazineTrigger = BehaviorRelay<Int>(value: 0)
     let recentMagazineSectionScrollOffsetX = PublishRelay<(CGFloat, CGFloat)>() // (offsetX, view넓이)
     let magazineCollectionViewScrollOffsetY = PublishRelay<(CGFloat, CGFloat)>() // (offsetY, view높이)
     
-    //output
+    // MARK: - Output
     var magazineDriver: Driver<[MagazineSection]>
     var recentSectionPageControlValuesDriver: Driver<(Int, Int)> // (numberOfPages, currentPage)
     var magazineCollectionViewTopInsetDriver: Driver<CGFloat>

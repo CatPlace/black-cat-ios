@@ -15,7 +15,7 @@ import Nuke
 struct LastMagazineCellViewModel {
     let magazine: Magazine
     
-    //output
+    // MARK: - Output
     let imageUrlDriver: Driver<String>
     let titleDriver: Driver<String>
     let writerDriver: Driver<String>
@@ -45,9 +45,9 @@ class LastMagazineCell: UICollectionViewCell {
     func bind(to viewModel: LastMagazineCellViewModel) {
         viewModel.imageUrlDriver
             .compactMap { URL(string: $0) }
-            .drive(onNext: {
+            .drive {
                 Nuke.loadImage(with: $0, into: self.lastMagazineImageView)
-            })
+            }
             .disposed(by: disposeBag)
         
         viewModel.titleDriver

@@ -13,7 +13,7 @@ import RxRelay
 
 struct RecentMagazineFooterViewModel {
     
-    //output
+    // MARK: - Output
     let currentPageDriver: Driver<Int>
     let numberOfPagesDriver: Driver<Int>
     
@@ -35,9 +35,9 @@ class RecentMagazineFooterView: UICollectionReusableView {
     // MARK: - Binding
     func bind() {
         viewModel?.currentPageDriver
-            .drive(onNext: { [weak self] page in
+            .drive { [weak self] page in
                 self?.pageControl.set(progress: page, animated: true)
-            })
+            }
             .disposed(by: disposeBag)
         
         viewModel?.numberOfPagesDriver
