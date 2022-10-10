@@ -34,26 +34,22 @@ class HomeViewController: UIViewController {
                 let cell = collectionView.dequeue(Reusable.categoryCell, for: indexPath)
 
                 cell.bind(to: categoryCellViewModel)
-
                 return cell
 
             case .recommendCellItem(let recommendCellViewModel):
                 let cell = collectionView.dequeue(Reusable.recommendCell, for: indexPath)
 
                 cell.bind(to: recommendCellViewModel)
-
                 return cell
 
             case .empty(let empty):
                 let cell = collectionView.dequeue(Reusable.emptyCell, for: indexPath)
-
                 return cell
 
             case .allTattoosCellItem(let allTattoosCellViewModel):
                 let cell = collectionView.dequeue(Reusable.allTattoosCell, for: indexPath)
 
                 cell.bind(to: allTattoosCellViewModel)
-
                 return cell
             }
         }, configureSupplementaryView: { dataSource, collectionView, kind, indexPath -> UICollectionReusableView in
@@ -67,7 +63,6 @@ class HomeViewController: UIViewController {
             let headerTitle = dataSource.sectionModels[indexPath.section].header
 
             headerView.titleLabel.text = headerTitle
-
             return headerView
         })
 
@@ -122,19 +117,16 @@ class HomeViewController: UIViewController {
         let label = UILabel()
         label.text = "Black Cat"
         label.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 32)
-
         return UIBarButtonItem(customView: label)
     }()
 
     let searchBarButtonItem: UIBarButtonItem = {
         let image = UIImage(systemName: "magnifyingglass")?.withTintColor(.black, renderingMode: .alwaysOriginal)
-
         return UIBarButtonItem(image: image, style: .plain, target: self, action: nil)
     }()
 
     let heartBarButtonItem: UIBarButtonItem = {
         let image = UIImage(systemName: "heart")?.withTintColor(.black, renderingMode: .alwaysOriginal)
-
         return UIBarButtonItem(image: image, style: .plain, target: self, action: nil)
     }()
 
@@ -151,7 +143,6 @@ class HomeViewController: UIViewController {
         collectionView.register(Reusable.headerView, kind: .header)
 
         collectionView.showsVerticalScrollIndicator = false
-
         return collectionView
     }()
 
