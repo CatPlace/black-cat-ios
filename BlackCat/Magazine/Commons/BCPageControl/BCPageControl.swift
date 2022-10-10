@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-open class JHPageControl: BasePageControl {
+open class BCPageControl: BasePageControl {
 
     @IBInspectable open var elementWidth: CGFloat = 20 {
         didSet {
