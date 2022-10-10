@@ -30,23 +30,20 @@ class HomeViewController: UIViewController {
     private lazy var dataSource = RxCollectionViewSectionedReloadDataSource<HomeSection>(
         configureCell: { dataSource, collectionView, indexPath, item in
             switch item {
-            case .categoryCellItem(let categoryCellViewModel):
+            case .categoryCell(let categoryCellViewModel):
                 let cell = collectionView.dequeue(Reusable.categoryCell, for: indexPath)
 
                 cell.bind(to: categoryCellViewModel)
                 return cell
-
-            case .recommendCellItem(let recommendCellViewModel):
+            case .recommendCell(let recommendCellViewModel):
                 let cell = collectionView.dequeue(Reusable.recommendCell, for: indexPath)
 
                 cell.bind(to: recommendCellViewModel)
                 return cell
-
-            case .empty(let empty):
+            case .emptyCell(let empty):
                 let cell = collectionView.dequeue(Reusable.emptyCell, for: indexPath)
                 return cell
-
-            case .allTattoosCellItem(let allTattoosCellViewModel):
+            case .allTattoosCell(let allTattoosCellViewModel):
                 let cell = collectionView.dequeue(Reusable.allTattoosCell, for: indexPath)
 
                 cell.bind(to: allTattoosCellViewModel)
@@ -54,10 +51,7 @@ class HomeViewController: UIViewController {
             }
         }, configureSupplementaryView: { dataSource, collectionView, kind, indexPath -> UICollectionReusableView in
             guard kind == UICollectionView.elementKindSectionHeader,
-                  indexPath.section == 1 || indexPath.section == 3
-            else {
-                return UICollectionReusableView()
-            }
+                  indexPath.section == 1 || indexPath.section == 3 else { return UICollectionReusableView() }
 
             let headerView = collectionView.dequeue(Reusable.headerView, kind: .header, for: indexPath)
             let headerTitle = dataSource.sectionModels[indexPath.section].header
@@ -152,129 +146,9 @@ class HomeViewController: UIViewController {
     }()
 
     lazy var compositionalLayout: UICollectionViewLayout = {
-        enum SectionType: Int {
-            case category
-            case recommend
-            case empty
-            case allTattoos
-        }
-
         let layout = UICollectionViewCompositionalLayout { section, env -> NSCollectionLayoutSection? in
-            guard let sectionType = SectionType(rawValue: section) else { return nil }
-            switch sectionType {
-            case .category:
-                let itemSpacing: CGFloat = 12
-                let sectionLeadingInset: CGFloat = 14
-                let sectionTrailinginset: CGFloat = 14
-                let itemWidth = (UIScreen.main.bounds.width - (itemSpacing * 4) - (sectionLeadingInset + sectionTrailinginset)) / 5
-
-                let itemSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .fractionalHeight(1)
-                )
-                let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-                let groupSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .absolute(itemWidth)
-                )
-
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 5)
-                group.interItemSpacing = .fixed(itemSpacing)
-
-                let section = NSCollectionLayoutSection(group: group)
-                section.interGroupSpacing = itemSpacing
-                section.contentInsets = NSDirectionalEdgeInsets(top: 30, leading: 14, bottom: 30, trailing: 14)
-
-                let sectionBackgroundView = NSCollectionLayoutDecorationItem.background(
-                    elementKind: HomeCategorySectionBackgroundReusableView.identifier
-                )
-                section.decorationItems = [sectionBackgroundView]
-
-                return section
-            case .recommend:
-                let itemSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .fractionalHeight(1)
-                )
-                let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-                let groupSize = NSCollectionLayoutSize(
-                    widthDimension: .estimated(140),
-                    heightDimension: .estimated(210)
-                )
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
-                let section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .continuous
-                section.interGroupSpacing = 20
-                section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 0, trailing: 20)
-
-                let headerSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .estimated(43)
-                )
-                let header = NSCollectionLayoutBoundarySupplementaryItem(
-                    layoutSize: headerSize,
-                    elementKind: UICollectionView.elementKindSectionHeader,
-                    alignment: .top
-                )
-                header.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: -10, bottom: 0, trailing: 0)
-
-                section.boundarySupplementaryItems = [header]
-
-                return section
-
-            case .empty:
-                let itemSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .fractionalHeight(1)
-                )
-                let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-                let groupSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .absolute(20)
-                )
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
-                let section = NSCollectionLayoutSection(group: group)
-
-                return section
-
-            case .allTattoos:
-                let itemSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .fractionalHeight(1)
-                )
-                let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-                let groupSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .fractionalWidth(1 / 3)
-                )
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 3)
-                group.interItemSpacing = .fixed(1)
-
-                let section = NSCollectionLayoutSection(group: group)
-                section.interGroupSpacing = 1
-                section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0.5, bottom: 0, trailing: 0.5)
-
-                let headerSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .estimated(43)
-                )
-                let header = NSCollectionLayoutBoundarySupplementaryItem(
-                    layoutSize: headerSize,
-                    elementKind: UICollectionView.elementKindSectionHeader,
-                    alignment: .top
-                )
-                header.contentInsets = .init(top: 0, leading: 9.5, bottom: 0, trailing: 0)
-
-                section.boundarySupplementaryItems = [header]
-
-                return section
-            }
+            guard let sectionType = HomeCompositionalLayoutSection(rawValue: section) else { return nil }
+            return sectionType.createLayout()
         }
 
         layout.register(
@@ -289,10 +163,8 @@ class HomeViewController: UIViewController {
 extension HomeViewController {
     private func setNavigationBar() {
         navigationItem.leftBarButtonItem = leftTitleBarButtonItem
-        navigationItem.rightBarButtonItems = [
-            heartBarButtonItem,
-            searchBarButtonItem
-        ]
+        navigationItem.rightBarButtonItems = [heartBarButtonItem,
+                                              searchBarButtonItem]
     }
 
     private func setUI() {

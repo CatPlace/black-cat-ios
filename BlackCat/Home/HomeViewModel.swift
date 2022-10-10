@@ -61,43 +61,21 @@ class HomeViewModel {
             ) { categoryItems, recommendItems, allTattoosItems -> [HomeSection] in
                 [
                     HomeSection(
-                        items: categoryItems.map { .categoryCellItem(HomeCategoryCellViewModel(with: $0)) }
+                        items: categoryItems.map { .categoryCell(HomeCategoryCellViewModel(with: $0)) }
                     ),
                     HomeSection(
                         header: "추천 항목",
-                        items: recommendItems.map { .recommendCellItem(HomeRecommendCellViewModel(with: $0)) }
+                        items: recommendItems.map { .recommendCell(HomeRecommendCellViewModel(with: $0)) }
                     ),
                     HomeSection(
-                        items: [.empty(HomeModel.Empty())]
+                        items: [.emptyCell(HomeModel.Empty())]
                     ),
                     HomeSection(
                         header: "전체 보기",
-                        items: allTattoosItems.map { .allTattoosCellItem(HomeAllTattoosCellViewModel(with: $0)) }
+                        items: allTattoosItems.map { .allTattoosCell(HomeAllTattoosCellViewModel(with: $0)) }
                     )
                 ]
             }
             .asDriver(onErrorJustReturn: [])
     }
 }
-
-struct HomeSection {
-    var header: String = ""
-    var items: [Item]
-
-    enum HomeItem {
-        case categoryCellItem(HomeCategoryCellViewModel)
-        case recommendCellItem(HomeRecommendCellViewModel)
-        case empty(HomeModel.Empty)
-        case allTattoosCellItem(HomeAllTattoosCellViewModel)
-    }
-}
-
-extension HomeSection: SectionModelType {
-    typealias Item = HomeItem
-
-    init(original: HomeSection, items: [Item] = []) {
-        self = original
-        self.items = items
-    }
-}
-
