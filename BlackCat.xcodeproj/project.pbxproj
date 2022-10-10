@@ -22,6 +22,8 @@
 		78D734C928F2F06B00D3330E /* LastMagazineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D734C828F2F06B00D3330E /* LastMagazineHeaderView.swift */; };
 		78D734CB28F2F3E100D3330E /* RecentMagazineFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D734CA28F2F3E100D3330E /* RecentMagazineFooterView.swift */; };
 		78D734CD28F3FB7200D3330E /* MagazineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D734CC28F3FB7200D3330E /* MagazineModel.swift */; };
+		78D734CF28F4037000D3330E /* BlackCatSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78D734CE28F4037000D3330E /* BlackCatSDK.framework */; };
+		78D734D028F4037000D3330E /* BlackCatSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 78D734CE28F4037000D3330E /* BlackCatSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		78E94A3528EF2DBB00DBBF5C /* PageControllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E94A3428EF2DBB00DBBF5C /* PageControllable.swift */; };
 		78E94A3828EF2DEE00DBBF5C /* PageControlLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E94A3728EF2DEE00DBBF5C /* PageControlLayer.swift */; };
 		78E94A3A28EF2E3900DBBF5C /* BasePageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E94A3928EF2E3900DBBF5C /* BasePageControl.swift */; };
@@ -45,6 +47,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				78D734D028F4037000D3330E /* BlackCatSDK.framework in Embed Frameworks */,
 				B1EDD51A28EB1CA400FBB722 /* BlackCatKEY.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -62,6 +65,7 @@
 		78D734C828F2F06B00D3330E /* LastMagazineHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMagazineHeaderView.swift; sourceTree = "<group>"; };
 		78D734CA28F2F3E100D3330E /* RecentMagazineFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMagazineFooterView.swift; sourceTree = "<group>"; };
 		78D734CC28F3FB7200D3330E /* MagazineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineModel.swift; sourceTree = "<group>"; };
+		78D734CE28F4037000D3330E /* BlackCatSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BlackCatSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		78E94A3428EF2DBB00DBBF5C /* PageControllable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControllable.swift; sourceTree = "<group>"; };
 		78E94A3728EF2DEE00DBBF5C /* PageControlLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControlLayer.swift; sourceTree = "<group>"; };
 		78E94A3928EF2E3900DBBF5C /* BasePageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePageControl.swift; sourceTree = "<group>"; };
@@ -85,6 +89,7 @@
 				B1EDD51628EB14F200FBB722 /* ReactorKit in Frameworks */,
 				B1EDD51328EB14D700FBB722 /* SnapKit in Frameworks */,
 				781768BF28ED65DE006D857E /* RxDataSources in Frameworks */,
+				78D734CF28F4037000D3330E /* BlackCatSDK.framework in Frameworks */,
 				780EF43E28EB1C9500257FB8 /* Moya in Frameworks */,
 				781768B828ED42B2006D857E /* RxCocoa in Frameworks */,
 				780EF44128EB1CD700257FB8 /* RealmSwift in Frameworks */,
@@ -199,6 +204,7 @@
 		B1EDD51728EB1CA400FBB722 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				78D734CE28F4037000D3330E /* BlackCatSDK.framework */,
 				B1EDD51828EB1CA400FBB722 /* BlackCatKEY.framework */,
 			);
 			name = Frameworks;

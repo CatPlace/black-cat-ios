@@ -28,7 +28,7 @@ struct RecentMagazineCellViewModel {
     }
 }
 
-class RecentMagzazineCell: UICollectionViewCell {
+class RecentMagazineCell: UICollectionViewCell {
     // MARK: - Properties
     var disposeBag = DisposeBag()
     var viewModel: RecentMagazineCellViewModel? {
@@ -66,7 +66,7 @@ class RecentMagzazineCell: UICollectionViewCell {
     let recentMagazineImageView = UIImageView()
 }
 
-extension RecentMagzazineCell {
+extension RecentMagazineCell {
     func setUI() {
         addSubview(recentMagazineImageView)
         recentMagazineImageView.snp.makeConstraints {

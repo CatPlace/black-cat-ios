@@ -10,7 +10,20 @@ import UIKit
 import RxSwift
 import RxDataSources
 import RxRelay
-//import BlackCatSDK
+import BlackCatSDK
+
+
+enum MagazineSectionType: Int {
+    case recentMagazine = 0
+    case lastMagazine = 1
+}
+
+enum Reusable {
+    static let recentMagazineCell = ReusableCell<RecentMagazineCell>()
+    static let recentMagazineFooterView = ReusableView<RecentMagazineFooterView>()
+    static let lastMagazineHeaderView = ReusableView<LastMagazineHeaderView>()
+    static let lastMagazinecell = ReusableCell<LastMagazineCell>()
+}
 
 class MagazineViewController: UIViewController {
     
@@ -22,14 +35,12 @@ class MagazineViewController: UIViewController {
         configureCell: { dataSource, collectionView, indexPath, item in
             switch item {
             case .topSection(let viewModel):
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecentMagzazineCell.self.description(), for: indexPath) as? RecentMagzazineCell
-                else { return UICollectionViewCell() }
-                
+                let cell = collectionView.dequeue(Reusable.recentMagazineCell, for: indexPath)
                 cell.viewModel = viewModel
                 
                 return cell
             case .lastStorySection(let viewModel):
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LastMagazineCell.self.description(), for: indexPath) as? LastMagazineCell else { return UICollectionViewCell() }
+                let cell = collectionView.dequeue(Reusable.lastMagazinecell, for: indexPath)
                 
                 cell.viewModel = viewModel
                 
@@ -37,13 +48,12 @@ class MagazineViewController: UIViewController {
             }
         },
         configureSupplementaryView: { [weak self] dataSource, collectionView, kind, indexPath -> UICollectionReusableView in
-            switch (indexPath.section, kind) {
-            case (0, UICollectionView.elementKindSectionFooter):
-                guard let footerView = collectionView.dequeueReusableSupplementaryView(
-                    ofKind: kind,
-                    withReuseIdentifier: RecentMagazineFooterView.self.description(),
-                    for: indexPath
-                ) as? RecentMagazineFooterView else { return UICollectionReusableView() }
+            
+            let sectionType = MagazineSectionType(rawValue: indexPath.section)
+            
+            switch (sectionType, kind) {
+            case (.recentMagazine, UICollectionView.elementKindSectionFooter):
+                let footerView = collectionView.dequeue(Reusable.recentMagazineFooterView, kind: .footer, for: indexPath)
                 guard let self else { return UICollectionReusableView() }
                 guard let v = self.footerView else {
                     self.footerView = footerView
@@ -52,13 +62,8 @@ class MagazineViewController: UIViewController {
                     return self.footerView!
                 }
                 return v
-                
-            case (1, UICollectionView.elementKindSectionHeader):
-                guard let headerView = collectionView.dequeueReusableSupplementaryView(
-                    ofKind: kind,
-                    withReuseIdentifier: LastMagazineHeaderView.self.description(),
-                    for: indexPath
-                ) as? LastMagazineHeaderView else { return UICollectionReusableView() }
+            case (.lastMagazine, UICollectionView.elementKindSectionHeader):
+                let headerView = collectionView.dequeue(Reusable.lastMagazineHeaderView, kind: .header, for: indexPath)
                 return headerView
                 
             default:
@@ -116,7 +121,6 @@ class MagazineViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
         navigationController?.navigationBar.isHidden = false
         
         let navigationAppearance = UINavigationBarAppearance()
@@ -125,9 +129,8 @@ class MagazineViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .white
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: nil),
-            UIBarButtonItem(image: UIImage(systemName: "chevron.right"), style: .plain, target: self, action: nil)
+            UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: nil)
         ]
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -138,11 +141,10 @@ class MagazineViewController: UIViewController {
     let headerMarginView = UIView()
     let magazineCollectionView: UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
-        cv.register(RecentMagzazineCell.self, forCellWithReuseIdentifier: RecentMagzazineCell.self.description())
-        cv.register(RecentMagazineFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: RecentMagazineFooterView.self.description())
-        
-        cv.register(LastMagazineHeaderView.self, forSupplementaryViewOfKind:  UICollectionView.elementKindSectionHeader, withReuseIdentifier: LastMagazineHeaderView.self.description())
-        cv.register(LastMagazineCell.self, forCellWithReuseIdentifier: LastMagazineCell.self.description())
+        cv.register(Reusable.recentMagazineCell)
+        cv.register(Reusable.recentMagazineFooterView, kind: .footer)
+        cv.register(Reusable.lastMagazineHeaderView, kind: .header)
+        cv.register(Reusable.lastMagazinecell)
         return cv
     }()
     var footerView: RecentMagazineFooterView?
@@ -169,11 +171,6 @@ extension MagazineViewController {
             $0.height.equalTo(26)
         }
     }
-}
-
-enum MagazineSectionType: Int {
-    case recentMagazine = 0
-    case lastMagazine = 1
 }
 
 extension MagazineViewController {
