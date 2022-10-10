@@ -19,6 +19,8 @@
 		781768BF28ED65DE006D857E /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 781768BE28ED65DE006D857E /* RxDataSources */; };
 		784BD0E628EDF05800CA86F0 /* MagazineViewModel.dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784BD0E528EDF05800CA86F0 /* MagazineViewModel.dummy.swift */; };
 		7867D2DE28EEC24300373464 /* MagazineTestUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7867D2DD28EEC24300373464 /* MagazineTestUseCase.swift */; };
+		78D734C928F2F06B00D3330E /* LastMagazineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D734C828F2F06B00D3330E /* LastMagazineHeaderView.swift */; };
+		78D734CB28F2F3E100D3330E /* RecentMagazineFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D734CA28F2F3E100D3330E /* RecentMagazineFooterView.swift */; };
 		78E94A3528EF2DBB00DBBF5C /* PageControllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E94A3428EF2DBB00DBBF5C /* PageControllable.swift */; };
 		78E94A3828EF2DEE00DBBF5C /* PageControlLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E94A3728EF2DEE00DBBF5C /* PageControlLayer.swift */; };
 		78E94A3A28EF2E3900DBBF5C /* BasePageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E94A3928EF2E3900DBBF5C /* BasePageControl.swift */; };
@@ -56,6 +58,8 @@
 		7812681828EC917B00131AD8 /* RecentMagazineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMagazineCell.swift; sourceTree = "<group>"; };
 		784BD0E528EDF05800CA86F0 /* MagazineViewModel.dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineViewModel.dummy.swift; sourceTree = "<group>"; };
 		7867D2DD28EEC24300373464 /* MagazineTestUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineTestUseCase.swift; sourceTree = "<group>"; };
+		78D734C828F2F06B00D3330E /* LastMagazineHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMagazineHeaderView.swift; sourceTree = "<group>"; };
+		78D734CA28F2F3E100D3330E /* RecentMagazineFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMagazineFooterView.swift; sourceTree = "<group>"; };
 		78E94A3428EF2DBB00DBBF5C /* PageControllable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControllable.swift; sourceTree = "<group>"; };
 		78E94A3728EF2DEE00DBBF5C /* PageControlLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControlLayer.swift; sourceTree = "<group>"; };
 		78E94A3928EF2E3900DBBF5C /* BasePageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePageControl.swift; sourceTree = "<group>"; };
@@ -96,6 +100,7 @@
 			children = (
 				7812680D28EC822000131AD8 /* MagazineViewController.swift */,
 				7812681328EC83A300131AD8 /* MagazineViewModel.swift */,
+				78D734C728F2F04500D3330E /* Views */,
 				7812681128EC82B100131AD8 /* Cells */,
 				78E94A4428EF601C00DBBF5C /* Test */,
 				78E94A4128EF5FC500DBBF5C /* Commons */,
@@ -110,6 +115,15 @@
 				7812680F28EC82AE00131AD8 /* LastMagazineCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		78D734C728F2F04500D3330E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				78D734CA28F2F3E100D3330E /* RecentMagazineFooterView.swift */,
+				78D734C828F2F06B00D3330E /* LastMagazineHeaderView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		78E94A3328EF2CF700DBBF5C /* JHPageControl */ = {
@@ -281,10 +295,12 @@
 				7812681928EC917B00131AD8 /* RecentMagazineCell.swift in Sources */,
 				78E94A3528EF2DBB00DBBF5C /* PageControllable.swift in Sources */,
 				B1D79CAF28EB0EF9008487D0 /* ViewController.swift in Sources */,
+				78D734CB28F2F3E100D3330E /* RecentMagazineFooterView.swift in Sources */,
 				78E94A3C28EF2E8A00DBBF5C /* JHPageControl.swift in Sources */,
 				784BD0E628EDF05800CA86F0 /* MagazineViewModel.dummy.swift in Sources */,
 				7867D2DE28EEC24300373464 /* MagazineTestUseCase.swift in Sources */,
 				78E94A3A28EF2E3900DBBF5C /* BasePageControl.swift in Sources */,
+				78D734C928F2F06B00D3330E /* LastMagazineHeaderView.swift in Sources */,
 				B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */,
 				7812681428EC83A300131AD8 /* MagazineViewModel.swift in Sources */,
 				78E94A3828EF2DEE00DBBF5C /* PageControlLayer.swift in Sources */,

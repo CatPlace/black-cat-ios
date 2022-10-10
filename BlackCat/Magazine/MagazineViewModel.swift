@@ -33,10 +33,15 @@ struct MagazineViewModel {
     var useCase: MagazineTestUseCase
     
     //input
-    var updateMagazineTrigger = BehaviorRelay<Int>(value: 0)
+    let updateMagazineTrigger = BehaviorRelay<Int>(value: 0)
+    let scrollOffset = PublishRelay<CGFloat>()
+    let recentSectionScrollOffsetX = PublishRelay<(CGFloat, CGFloat)>()
     
     //output
     var magazineDriver: Driver<[MagazineSection]>
+    var recentSectionNumberOfPagesDriver: Driver<Int>
+    var recentSectionCurrentPageDriver: Driver<Int>
+    
     init(useCase: MagazineTestUseCase = MagazineTestUseCase()) {
         self.useCase = useCase
         
@@ -48,11 +53,13 @@ struct MagazineViewModel {
                 feeds.append(contentsOf: item)
             }.share()
         
+        let recentMagazineSize = 4
+        
         let recentMagazineSectionItemsObservable = fetchedData
-            .map { Array($0[...3]) }
+            .map { Array($0[..<recentMagazineSize]) }
         
         let lastMagazineSectionItemsObservable = fetchedData
-            .map { Array($0[4...]) }
+            .map { Array($0[recentMagazineSize...]) }
         
         self.magazineDriver = Observable.combineLatest(recentMagazineSectionItemsObservable, lastMagazineSectionItemsObservable) { topSectionItems, lastStorSectionItems in
             [
@@ -60,5 +67,13 @@ struct MagazineViewModel {
                 MagazineSection(items: lastStorSectionItems.map { .lastStorySection(.init(magazine: $0)) })
             ]
         }.asDriver(onErrorJustReturn: [])
+        
+        recentSectionNumberOfPagesDriver = Observable.just(recentMagazineSize).asDriver(onErrorJustReturn: 0)
+        
+        recentSectionCurrentPageDriver = recentSectionScrollOffsetX
+            .map { (offsetX, sceneWidth) in
+            Int(round(offsetX / sceneWidth))
+        }.distinctUntilChanged()
+            .asDriver(onErrorJustReturn: 0)
     }
 }
