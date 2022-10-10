@@ -12,7 +12,7 @@ import RxDataSources
 import RxSwift
 
 class HomeViewModel {
-    private let categoryItemTitles = Observable<[HomeCategory]>.just(HomeCategory.default)
+    private let categoryItemTitles = Observable<[HomeModel.Category]>.just(HomeModel.Category.default)
 
     // MARK: - Input
 
@@ -29,29 +29,29 @@ class HomeViewModel {
         let startFetchItems = viewDidLoad.share()
 
         let fetchedSection1Items = startFetchItems
-            .map { () -> [HomeRecommend] in
+            .map { () -> [HomeModel.Recommend] in
                 // Dummy 모델
                 [
-                    HomeRecommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
-                    HomeRecommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
-                    HomeRecommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
-                    HomeRecommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
-                    HomeRecommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투")
+                    HomeModel.Recommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
+                    HomeModel.Recommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
+                    HomeModel.Recommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
+                    HomeModel.Recommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
+                    HomeModel.Recommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투")
                 ]
             }
 
         let fetchedSection2Items = startFetchItems
-            .map { () -> [HomeAllTattoos] in
+            .map { () -> [HomeModel.AllTattoos] in
                 // Dummy 모델
                 [
-                    HomeAllTattoos(imageURLString: ""),
-                    HomeAllTattoos(imageURLString: ""),
-                    HomeAllTattoos(imageURLString: ""),
-                    HomeAllTattoos(imageURLString: ""),
-                    HomeAllTattoos(imageURLString: ""),
-                    HomeAllTattoos(imageURLString: ""),
-                    HomeAllTattoos(imageURLString: ""),
-                    HomeAllTattoos(imageURLString: "")
+                    HomeModel.AllTattoos(imageURLString: ""),
+                    HomeModel.AllTattoos(imageURLString: ""),
+                    HomeModel.AllTattoos(imageURLString: ""),
+                    HomeModel.AllTattoos(imageURLString: ""),
+                    HomeModel.AllTattoos(imageURLString: ""),
+                    HomeModel.AllTattoos(imageURLString: ""),
+                    HomeModel.AllTattoos(imageURLString: ""),
+                    HomeModel.AllTattoos(imageURLString: "")
                 ]
             }
 
@@ -68,7 +68,7 @@ class HomeViewModel {
                         items: recommendItems.map { .recommendCellItem(HomeRecommendCellViewModel(with: $0)) }
                     ),
                     HomeSection(
-                        items: [.empty(Empty())]
+                        items: [.empty(HomeModel.Empty())]
                     ),
                     HomeSection(
                         header: "전체 보기",
@@ -87,7 +87,7 @@ struct HomeSection {
     enum HomeItem {
         case categoryCellItem(HomeCategoryCellViewModel)
         case recommendCellItem(HomeRecommendCellViewModel)
-        case empty(Empty)
+        case empty(HomeModel.Empty)
         case allTattoosCellItem(HomeAllTattoosCellViewModel)
     }
 }
