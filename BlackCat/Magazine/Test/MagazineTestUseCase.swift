@@ -10,12 +10,6 @@ import Foundation
 import RxSwift
 
 class MagazineTestUseCase {
-    
-//    func loadFamousMagazine() -> Observable<[Magazine]> {
-//        print("update Famous Magazines")
-//        return .just(Magazine.dummy)
-//    }
-//
     func loadMoreMagazine(page: Int) -> Observable<[Magazine]> {
         print("request page: \(page)")
         return .just(Magazine.dummy.map { magazine in

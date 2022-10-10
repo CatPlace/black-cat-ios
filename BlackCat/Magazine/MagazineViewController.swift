@@ -12,23 +12,12 @@ import RxDataSources
 import RxRelay
 //import BlackCatSDK
 
-extension MagazineSection: SectionModelType {
-    typealias Item = MagazineItem
-    
-    init(original: MagazineSection, items: [Item] = []) {
-        self = original
-        self.items = items
-    }
-}
-
 class MagazineViewController: UIViewController {
     
     // MARK: - Properties
     let disposeBag = DisposeBag()
     let viewModel = MagazineViewModel()
     let magazineCollectionViewInset = PublishRelay<CGFloat>()
-    let pageSubject = BehaviorSubject<CGFloat>(value: 0)
-    // 섹션마다 다른셀을 주기 위해 rxDataSource사용
     lazy var dataSource = RxCollectionViewSectionedReloadDataSource<MagazineSection> (
         configureCell: { dataSource, collectionView, indexPath, item in
             switch item {
@@ -37,18 +26,19 @@ class MagazineViewController: UIViewController {
                 else { return UICollectionViewCell() }
                 
                 cell.viewModel = viewModel
-                return cell
                 
+                return cell
             case .lastStorySection(let viewModel):
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LastMagazineCell.self.description(), for: indexPath) as? LastMagazineCell else { return UICollectionViewCell() }
+                
                 cell.viewModel = viewModel
+                
                 return cell
             }
         },
         configureSupplementaryView: { [weak self] dataSource, collectionView, kind, indexPath -> UICollectionReusableView in
             switch (indexPath.section, kind) {
             case (0, UICollectionView.elementKindSectionFooter):
-                print(indexPath)
                 guard let footerView = collectionView.dequeueReusableSupplementaryView(
                     ofKind: kind,
                     withReuseIdentifier: RecentMagazineFooterView.self.description(),
@@ -57,6 +47,8 @@ class MagazineViewController: UIViewController {
                 guard let self else { return UICollectionReusableView() }
                 guard let v = self.footerView else {
                     self.footerView = footerView
+                    // 임시로 최근 매거진 4개로 해두었습니다.
+                    self.footerView?.viewModel = .init(currentPage: 0, numberOfPages: 4)
                     return self.footerView!
                 }
                 return v
@@ -108,15 +100,11 @@ class MagazineViewController: UIViewController {
                 }
                 
             }.disposed(by: disposeBag)
-        viewModel.recentSectionNumberOfPagesDriver
-            .drive(onNext: { [weak self] numberOfPages in
-                self?.footerView?.viewModel.numberOfPagesRelay.accept(numberOfPages)
-            }).disposed(by: disposeBag)
-        viewModel.recentSectionCurrentPageDriver
-            .do {print($0)}
-            .drive(onNext: { [weak self] currentPage in
-                self?.footerView?.viewModel.currentPageRelay.accept(currentPage)
-            }).disposed(by: disposeBag)
+        
+        viewModel.recentSectionPageControlValuesDriver
+            .drive { [weak self] numberOfPages, currentPage in
+                self?.footerView?.viewModel = .init(currentPage: currentPage, numberOfPages: numberOfPages)
+            }.disposed(by: disposeBag)
     }
     
     // MARK: - Life Cycle
@@ -221,7 +209,7 @@ extension MagazineViewController {
                 section.boundarySupplementaryItems = [footer]
                 section.visibleItemsInvalidationHandler = { [weak self] (_, offset, _) -> Void in
                     guard let self else { return }
-                    self.viewModel.recentSectionScrollOffsetX.accept((offset.x, self.view.frame.width))
+                    self.viewModel.recentMagazineSectionScrollOffsetX.accept((offset.x, self.view.frame.width))
                 }
                 return section
             case .lastMagazine:

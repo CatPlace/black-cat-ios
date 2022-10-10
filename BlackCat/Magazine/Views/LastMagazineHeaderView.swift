@@ -8,8 +8,7 @@
 import UIKit
 
 class LastMagazineHeaderView: UICollectionReusableView {
-    let headerLabel = UILabel()
-    
+    // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
@@ -19,6 +18,11 @@ class LastMagazineHeaderView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - UIComponents
+    let headerLabel = UILabel()
+}
+
+extension LastMagazineHeaderView {
     func setUI() {
         backgroundColor = .systemBackground
         

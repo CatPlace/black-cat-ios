@@ -11,36 +11,18 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-struct Magazine {
-    let id: Int
-    let imageUrl: String
-    let title: String
-    let writer: String
-    let date: String
-}
-
-struct MagazineSection {
-    var items: [Item]
-}
-
-enum MagazineItem {
-    case topSection(RecentMagazineCellViewModel)
-    case lastStorySection(LastMagazineCellViewModel)
-}
-
 struct MagazineViewModel {
     
     var useCase: MagazineTestUseCase
     
     //input
     let updateMagazineTrigger = BehaviorRelay<Int>(value: 0)
-    let scrollOffset = PublishRelay<CGFloat>()
-    let recentSectionScrollOffsetX = PublishRelay<(CGFloat, CGFloat)>()
+    let recentMagazineSectionScrollOffsetX = PublishRelay<(CGFloat, CGFloat)>() // (offsetX, view넓이)
+    let MagazineCollectionViewScrollOffsetY = PublishRelay<(CGFloat, CGFloat)>() // (offsetY, view높이)
     
     //output
     var magazineDriver: Driver<[MagazineSection]>
-    var recentSectionNumberOfPagesDriver: Driver<Int>
-    var recentSectionCurrentPageDriver: Driver<Int>
+    var recentSectionPageControlValuesDriver: Driver<(Int, Int)>
     
     init(useCase: MagazineTestUseCase = MagazineTestUseCase()) {
         self.useCase = useCase
@@ -67,13 +49,11 @@ struct MagazineViewModel {
                 MagazineSection(items: lastStorSectionItems.map { .lastStorySection(.init(magazine: $0)) })
             ]
         }.asDriver(onErrorJustReturn: [])
-        
-        recentSectionNumberOfPagesDriver = Observable.just(recentMagazineSize).asDriver(onErrorJustReturn: 0)
-        
-        recentSectionCurrentPageDriver = recentSectionScrollOffsetX
+
+        recentSectionPageControlValuesDriver = recentMagazineSectionScrollOffsetX
             .map { (offsetX, sceneWidth) in
-            Int(round(offsetX / sceneWidth))
-        }.distinctUntilChanged()
-            .asDriver(onErrorJustReturn: 0)
+            (recentMagazineSize, Int(round(offsetX / sceneWidth)))
+            }
+            .asDriver(onErrorJustReturn: (0, 0))
     }
 }
