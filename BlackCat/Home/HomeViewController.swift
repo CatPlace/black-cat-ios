@@ -69,6 +69,9 @@ class HomeViewController: UIViewController {
     // MARK: - Binding
 
     private func bind() {
+
+        // MARK: - Action
+
         rx.viewDidLoad
             .bind(to: viewModel.viewDidLoad)
             .disposed(by: disposeBag)
@@ -84,6 +87,8 @@ class HomeViewController: UIViewController {
         collectionView.rx.itemSelected
             .bind(to: viewModel.didTapCollectionViewItem)
             .disposed(by: disposeBag)
+
+        // MARK: - State
 
         viewModel.homeItems
             .drive(collectionView.rx.items(dataSource: dataSource))
