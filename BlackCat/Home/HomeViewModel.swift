@@ -59,22 +59,19 @@ class HomeViewModel {
             .combineLatest(
                 categoryItemTitles, fetchedSection1Items, fetchedSection2Items
             ) { categoryItems, recommendItems, allTattoosItems -> [HomeSection] in
-                [
-                    HomeSection(
-                        items: categoryItems.map { .categoryCell(HomeCategoryCellViewModel(with: $0)) }
-                    ),
-                    HomeSection(
-                        header: "추천 항목",
-                        items: recommendItems.map { .recommendCell(HomeRecommendCellViewModel(with: $0)) }
-                    ),
-                    HomeSection(
-                        items: [.emptyCell(HomeModel.Empty())]
-                    ),
-                    HomeSection(
-                        header: "전체 보기",
-                        items: allTattoosItems.map { .allTattoosCell(HomeAllTattoosCellViewModel(with: $0)) }
-                    )
-                ]
+                [HomeSection(
+                    items: categoryItems.map { .categoryCell(HomeCategoryCellViewModel(with: $0)) }
+                ),
+                 HomeSection(
+                    header: "추천 항목",
+                    items: recommendItems.map { .recommendCell(HomeRecommendCellViewModel(with: $0)) }
+                 ),
+                 HomeSection(
+                    items: [.emptyCell(HomeModel.Empty())]
+                 ),
+                 HomeSection(
+                    header: "전체 보기",
+                    items: allTattoosItems.map { .allTattoosCell(HomeAllTattoosCellViewModel(with: $0)) })]
             }
             .asDriver(onErrorJustReturn: [])
     }
