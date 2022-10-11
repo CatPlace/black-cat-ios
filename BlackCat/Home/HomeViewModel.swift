@@ -7,6 +7,7 @@
 
 import Foundation
 
+import BlackCatSDK
 import RxCocoa
 import RxDataSources
 import RxSwift
@@ -28,53 +29,41 @@ class HomeViewModel {
     init() {
         let startFetchItems = viewDidLoad.share()
 
-        let fetchedSection1Items = startFetchItems
+        let fetchedRecommendItems = startFetchItems
             .map { () -> [HomeModel.Recommend] in
                 // Dummy 모델
-                [
-                    HomeModel.Recommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
-                    HomeModel.Recommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
-                    HomeModel.Recommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
-                    HomeModel.Recommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
-                    HomeModel.Recommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투")
-                ]
+                [HomeModel.Recommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
+                 HomeModel.Recommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
+                 HomeModel.Recommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
+                 HomeModel.Recommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
+                 HomeModel.Recommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투")]
             }
 
-        let fetchedSection2Items = startFetchItems
+        let fetchedTattooAlbumItems = startFetchItems
             .map { () -> [HomeModel.TattooAlbum] in
                 // Dummy 모델
-                [
-                    HomeModel.TattooAlbum(imageURLString: ""),
-                    HomeModel.TattooAlbum(imageURLString: ""),
-                    HomeModel.TattooAlbum(imageURLString: ""),
-                    HomeModel.TattooAlbum(imageURLString: ""),
-                    HomeModel.TattooAlbum(imageURLString: ""),
-                    HomeModel.TattooAlbum(imageURLString: ""),
-                    HomeModel.TattooAlbum(imageURLString: ""),
-                    HomeModel.TattooAlbum(imageURLString: "")
-                ]
+                [HomeModel.TattooAlbum(imageURLString: ""),
+                 HomeModel.TattooAlbum(imageURLString: ""),
+                 HomeModel.TattooAlbum(imageURLString: ""),
+                 HomeModel.TattooAlbum(imageURLString: ""),
+                 HomeModel.TattooAlbum(imageURLString: ""),
+                 HomeModel.TattooAlbum(imageURLString: ""),
+                 HomeModel.TattooAlbum(imageURLString: ""),
+                 HomeModel.TattooAlbum(imageURLString: "")]
             }
 
         homeItems = Observable
             .combineLatest(
-                categoryItemTitles, fetchedSection1Items, fetchedSection2Items
-            ) { categoryItems, recommendItems, allTattoosItems -> [HomeSection] in
-                [HomeSection(
-                    header: .empty,
-                    items: categoryItems.map { .categoryCell(HomeCategoryCellViewModel(with: $0)) }
-                ),
-                 HomeSection(
-                    header: .title("추천 항목"),
-                    items: recommendItems.map { .recommendCell(HomeRecommendCellViewModel(with: $0)) }
-                 ),
-                 HomeSection(
-                    header: .empty,
-                    items: [.emptyCell(HomeModel.Empty())]
-                 ),
-                 HomeSection(
-                    header: .title("전체 보기"),
-                    items: allTattoosItems.map { .allTattoosCell(HomeTattooAlbumCellViewModel(with: $0)) }
-                 )]
+                categoryItemTitles, fetchedRecommendItems, fetchedTattooAlbumItems
+            ) { categoryItems, recommendItems, tattooAlbumItems -> [HomeSection] in
+                [HomeSection(header: .empty,
+                             items: categoryItems.map { .categoryCell(HomeCategoryCellViewModel(with: $0)) }),
+                 HomeSection(header: .title("추천 항목"),
+                             items: recommendItems.map { .recommendCell(HomeRecommendCellViewModel(with: $0)) }),
+                 HomeSection(header: .empty,
+                             items: [.emptyCell(HomeModel.Empty())]),
+                 HomeSection(header: .title("전체 보기"),
+                             items: tattooAlbumItems.map { .allTattoosCell(HomeTattooAlbumCellViewModel(with: $0)) })]
             }
             .asDriver(onErrorJustReturn: [])
     }

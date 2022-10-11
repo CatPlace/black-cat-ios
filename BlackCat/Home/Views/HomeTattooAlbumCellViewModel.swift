@@ -8,9 +8,9 @@
 import Foundation
 
 class HomeTattooAlbumCellViewModel {
-    let homeAllTattoos: HomeModel.TattooAlbum
+    let homeTattooAlbum: HomeModel.TattooAlbum
 
-    init(with model: HomeModel.TattooAlbum) {
-        self.homeAllTattoos = model
+    init(with tattooAlbum: HomeModel.TattooAlbum) {
+        self.homeTattooAlbum = tattooAlbum
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 class HomeRecommendCellViewModel {
     let homeRecommend: HomeModel.Recommend
 
-    init(with model: HomeModel.Recommend) {
-        self.homeRecommend = model
+    init(with recommend: HomeModel.Recommend) {
+        self.homeRecommend = recommend
     }
 }

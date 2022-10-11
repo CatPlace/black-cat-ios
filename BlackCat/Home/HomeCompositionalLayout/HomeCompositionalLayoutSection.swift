@@ -11,7 +11,7 @@ enum HomeCompositionalLayoutSection: Int {
     case category
     case recommend
     case empty
-    case allTattoos
+    case tattooAlbum
 
     func createLayout() -> NSCollectionLayoutSection {
         switch self {
@@ -27,7 +27,9 @@ enum HomeCompositionalLayoutSection: Int {
 
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                    heightDimension: .absolute(itemWidth))
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 5)
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
+                                                           subitem: item,
+                                                           count: 5)
             group.interItemSpacing = .fixed(itemSpacing)
 
             let section = NSCollectionLayoutSection(group: group)
@@ -49,7 +51,8 @@ enum HomeCompositionalLayoutSection: Int {
                 widthDimension: .estimated(140),
                 heightDimension: .estimated(210)
             )
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
+                                                           subitems: [item])
 
             let section = NSCollectionLayoutSection(group: group)
             section.orthogonalScrollingBehavior = .continuous
@@ -75,19 +78,22 @@ enum HomeCompositionalLayoutSection: Int {
 
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                    heightDimension: .absolute(20))
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
+                                                           subitems: [item])
 
             let section = NSCollectionLayoutSection(group: group)
 
             return section
-        case .allTattoos:
+        case .tattooAlbum:
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                   heightDimension: .fractionalHeight(1))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                    heightDimension: .fractionalWidth(1 / 3))
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 3)
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
+                                                           subitem: item,
+                                                           count: 3)
             group.interItemSpacing = .fixed(1)
 
             let section = NSCollectionLayoutSection(group: group)
@@ -96,11 +102,9 @@ enum HomeCompositionalLayoutSection: Int {
 
             let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                     heightDimension: .estimated(43))
-            let header = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: headerSize,
-                elementKind: UICollectionView.elementKindSectionHeader,
-                alignment: .top
-            )
+            let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
+                                                                     elementKind: UICollectionView.elementKindSectionHeader,
+                                                                     alignment: .top)
             header.contentInsets = .init(top: 0, leading: 9.5, bottom: 0, trailing: 0)
 
             section.boundarySupplementaryItems = [header]

@@ -21,7 +21,7 @@ class HomeTattooAlbumCell: UICollectionViewCell {
     // MARK: - Binding
 
     func bind(to viewModel: HomeTattooAlbumCellViewModel) {
-        if let url = URL(string: viewModel.homeAllTattoos.imageURLString) {
+        if let url = URL(string: viewModel.homeTattooAlbum.imageURLString) {
             Nuke.loadImage(with: url, into: thumbnailImageView)
         }
     }

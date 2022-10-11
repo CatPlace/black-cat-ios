@@ -15,6 +15,7 @@ import SnapKit
 
 class HomeViewController: UIViewController {
 
+    let disposeBag = DisposeBag()
     enum Reusable {
         static let categoryCell = ReusableCell<HomeCategoryCell>()
         static let recommendCell = ReusableCell<HomeRecommendCell>()
@@ -26,7 +27,6 @@ class HomeViewController: UIViewController {
     // MARK: - Properties
 
     let viewModel = HomeViewModel()
-    let disposeBag = DisposeBag()
     private let dataSource = RxCollectionViewSectionedReloadDataSource<HomeSection>(
         configureCell: { _, collectionView, indexPath, item in
             switch item {
@@ -102,6 +102,7 @@ class HomeViewController: UIViewController {
         bind()
         setNavigationBar()
         setUI()
+
     }
 
     required init?(coder: NSCoder) {
@@ -128,19 +129,17 @@ class HomeViewController: UIViewController {
     }()
 
     lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(
-            frame: .zero,
-            collectionViewLayout: compositionalLayout
-        )
+        let  cv = UICollectionView(frame: .zero,
+                                   collectionViewLayout: compositionalLayout)
 
-        collectionView.register(Reusable.categoryCell)
-        collectionView.register(Reusable.recommendCell)
-        collectionView.register(Reusable.emptyCell)
-        collectionView.register(Reusable.tattooAlbumCell)
-        collectionView.register(Reusable.headerView, kind: .header)
+         cv.register(Reusable.categoryCell)
+         cv.register(Reusable.recommendCell)
+         cv.register(Reusable.emptyCell)
+         cv.register(Reusable.tattooAlbumCell)
+         cv.register(Reusable.headerView, kind: .header)
 
-        collectionView.showsVerticalScrollIndicator = false
-        return collectionView
+         cv.showsVerticalScrollIndicator = false
+        return  cv
     }()
 
     lazy var compositionalLayout: UICollectionViewLayout = {

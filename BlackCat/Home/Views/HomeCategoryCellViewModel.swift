@@ -10,7 +10,7 @@ import Foundation
 final class HomeCategoryCellViewModel {
     let category: HomeModel.Category
 
-    init(with model: HomeModel.Category) {
-        self.category = model
+    init(with category: HomeModel.Category) {
+        self.category = category
     }
 }
