@@ -30,12 +30,10 @@ struct MagazineViewModel {
         self.useCase = useCase
         
         let fetchedData = updateMagazineTrigger
-            .scan(0, accumulator: { prePage, one in
-                prePage + one
-            }).flatMap { page in useCase.loadMoreMagazine(page: page) }
-            .scan(into: [Magazine]()) { feeds, item in
-                feeds.append(contentsOf: item)
-            }.share()
+            .scan(0) { $0 + $1 }
+            .flatMap { useCase.loadMoreMagazine(page: $0) }
+            .scan(into: [Magazine]()) { feeds, item in feeds.append(contentsOf: item) }
+            .share()
         
         let recentMagazineSize = 4
         
@@ -45,23 +43,17 @@ struct MagazineViewModel {
         let lastMagazineSectionItemsObservable = fetchedData
             .map { Array($0[recentMagazineSize...]) }
         
-        self.magazineDriver = Observable.combineLatest(recentMagazineSectionItemsObservable,
-                                                       lastMagazineSectionItemsObservable)
-        {
-            topSectionItems,
-            lastStorSectionItems in
-            
-            return [
-                MagazineSection(items: topSectionItems.map { .topSection(.init(magazine: $0)) }),
-                MagazineSection(items: lastStorSectionItems.map { .lastStorySection(.init(magazine: $0)) })
-            ]
-            
-        }.asDriver(onErrorJustReturn: [])
+        self.magazineDriver = Observable
+            .combineLatest(recentMagazineSectionItemsObservable,
+                           lastMagazineSectionItemsObservable) { topSectionItems, lastStorSectionItems in
+                return [
+                    MagazineSection(items: topSectionItems.map { .topSection(.init(magazine: $0)) }),
+                    MagazineSection(items: lastStorSectionItems.map { .lastStorySection(.init(magazine: $0)) })
+                ]
+            }.asDriver(onErrorJustReturn: [])
         
         recentSectionPageControlValuesDriver = recentMagazineSectionScrollOffsetX
-            .map { (offsetX, sceneWidth) in
-                (recentMagazineSize, Int(round(offsetX / sceneWidth)))
-            }
+            .map { (offsetX, sceneWidth) in (recentMagazineSize, Int(round(offsetX / sceneWidth))) }
             .asDriver(onErrorJustReturn: (0, 0))
         
         magazineCollectionViewTopInsetDriver = magazineCollectionViewScrollOffsetY
@@ -73,8 +65,6 @@ struct MagazineViewModel {
             .asDriver(onErrorJustReturn: 0.0)
         
         magazineCollectionViewScrollOffsetYDriver = magazineCollectionViewScrollOffsetY
-            .map { (offsetY, _) in
-                offsetY
-            }.asDriver(onErrorJustReturn: 0.0)
+            .map { $0.0 }.asDriver(onErrorJustReturn: 0.0)
     }
 }

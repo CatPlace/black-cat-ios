@@ -15,10 +15,10 @@ class MagazineTestUseCase {
         return .just(Magazine.dummy.map { magazine in
             Magazine(
                 id: magazine.id + (page * Magazine.dummy.count),
-                imageUrl: magazine.imageUrl,
+                imageUrlString: magazine.imageUrlString,
                 title: magazine.title,
                 writer: magazine.writer,
-                date: magazine.date
+                dateString: magazine.dateString
             )
         })
     }

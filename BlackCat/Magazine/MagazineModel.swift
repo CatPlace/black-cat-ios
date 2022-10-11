@@ -10,10 +10,10 @@ import Differentiator
 
 struct Magazine {
     let id: Int
-    let imageUrl: String
+    let imageUrlString: String
     let title: String
     let writer: String
-    let date: String
+    let dateString: String
 }
 
 struct MagazineSection {

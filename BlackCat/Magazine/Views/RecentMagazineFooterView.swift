@@ -29,19 +29,18 @@ class RecentMagazineFooterView: UICollectionReusableView {
     var disposeBag = DisposeBag()
     var viewModel: RecentMagazineFooterViewModel? {
         didSet {
-            bind()
+            guard let viewModel else { return }
+            bind(to: viewModel)
         }
     }
     
     // MARK: - Binding
-    func bind() {
-        viewModel?.currentPageDriver
-            .drive { [weak self] page in
-                self?.pageControl.set(progress: page, animated: true)
-            }
+    func bind(to viewModel: RecentMagazineFooterViewModel) {
+        viewModel.currentPageDriver
+            .drive { [weak self] in self?.pageControl.set(progress: $0, animated: true) }
             .disposed(by: disposeBag)
         
-        viewModel?.numberOfPagesDriver
+        viewModel.numberOfPagesDriver
             .drive(pageControl.rx.numberOfPages)
             .disposed(by: disposeBag)
     }
@@ -50,7 +49,6 @@ class RecentMagazineFooterView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
-        bind()
     }
     
     required init?(coder: NSCoder) {

@@ -11,6 +11,7 @@ class LastMagazineHeaderView: UICollectionReusableView {
     // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .systemBackground
         setUI()
     }
     
@@ -19,17 +20,17 @@ class LastMagazineHeaderView: UICollectionReusableView {
     }
     
     // MARK: - UIComponents
-    let headerLabel = UILabel()
+    let headerLabel: UILabel = {
+        let l = UILabel()
+        l.text = "지난 이야기"
+        l.font = .boldSystemFont(ofSize: 20)
+        return l
+    }()
 }
 
 extension LastMagazineHeaderView {
     func setUI() {
-        backgroundColor = .systemBackground
-        
         addSubview(headerLabel)
-        
-        headerLabel.text = "지난 이야기"
-        headerLabel.font = .boldSystemFont(ofSize: 20)
         
         headerLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(10)

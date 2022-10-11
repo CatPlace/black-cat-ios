@@ -13,21 +13,17 @@ import RxRelay
 import Nuke
 
 struct LastMagazineCellViewModel {
-    let magazine: Magazine
-    
     // MARK: - Output
-    let imageUrlDriver: Driver<String>
+    let imageUrlStringDriver: Driver<String>
     let titleDriver: Driver<String>
     let writerDriver: Driver<String>
-    let dateDriver: Driver<String>
+    let dateStringDriver: Driver<String>
     
     init(magazine: Magazine) {
-        self.magazine = magazine
-        
-        imageUrlDriver = Observable.just(magazine.imageUrl).asDriver(onErrorJustReturn: "")
+        imageUrlStringDriver = Observable.just(magazine.imageUrlString).asDriver(onErrorJustReturn: "")
         titleDriver = Observable.just(magazine.title).asDriver(onErrorJustReturn: "")
         writerDriver = Observable.just(magazine.writer).asDriver(onErrorJustReturn: "")
-        dateDriver = Observable.just(magazine.date).asDriver(onErrorJustReturn: "")
+        dateStringDriver = Observable.just(magazine.dateString).asDriver(onErrorJustReturn: "")
     }
 }
 
@@ -43,9 +39,10 @@ class LastMagazineCell: UICollectionViewCell {
     
     // MARK: - Binding
     func bind(to viewModel: LastMagazineCellViewModel) {
-        viewModel.imageUrlDriver
+        viewModel.imageUrlStringDriver
             .compactMap { URL(string: $0) }
-            .drive {
+            .drive { [weak self] in
+                guard let self else { return }
                 Nuke.loadImage(with: $0, into: self.lastMagazineImageView)
             }
             .disposed(by: disposeBag)
@@ -58,7 +55,7 @@ class LastMagazineCell: UICollectionViewCell {
             .drive(writerLabel.rx.text)
             .disposed(by: disposeBag)
         
-        viewModel.dateDriver
+        viewModel.dateStringDriver
             .drive(dateLabel.rx.text)
             .disposed(by: disposeBag)
     }
@@ -67,6 +64,7 @@ class LastMagazineCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
+        contentView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
     }
     
     required init?(coder: NSCoder) {
@@ -79,40 +77,45 @@ class LastMagazineCell: UICollectionViewCell {
     
     // MARK: - UIComponents
     let lastMagazineImageView = UIImageView()
-    let titleLabel = UILabel()
-    let writerLabel = UILabel()
-    let dateLabel = UILabel()
+    let titleLabel: UILabel = {
+        let l = UILabel()
+        l.textColor = .white
+        l.font = .boldSystemFont(ofSize: 18)
+        return l
+    }()
+    let writerLabel: UILabel = {
+        let l = UILabel()
+        l.textColor = .white
+        l.font = .systemFont(ofSize: 14)
+        return l
+    }()
+    let dateLabel: UILabel = {
+        let l = UILabel()
+        l.textColor = .white
+        l.font = .systemFont(ofSize: 14)
+        return l
+    }()
 }
 
 extension LastMagazineCell {
     func setUI() {
         addSubview(lastMagazineImageView)
         
-        [titleLabel, writerLabel, dateLabel].forEach {
-            contentView.addSubview($0)
-            $0.textColor = .white
-        }
-        contentView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        
         lastMagazineImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         
-        dateLabel.font = .systemFont(ofSize: 14)
+        [titleLabel, writerLabel, dateLabel].forEach { contentView.addSubview($0) }
         
         dateLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(10)
             $0.leading.equalToSuperview().inset(21)
         }
         
-        writerLabel.font = .systemFont(ofSize: 14)
-        
         writerLabel.snp.makeConstraints {
             $0.bottom.equalTo(dateLabel.snp.top)
             $0.leading.equalTo(dateLabel)
         }
-        
-        titleLabel.font = .boldSystemFont(ofSize: 18)
         
         titleLabel.snp.makeConstraints {
             $0.bottom.equalTo(writerLabel.snp.top).offset(-5)

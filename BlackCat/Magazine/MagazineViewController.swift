@@ -14,8 +14,8 @@ import BlackCatSDK
 
 class MagazineViewController: UIViewController {
     enum MagazineSectionType: Int {
-        case recentMagazine = 0
-        case lastMagazine = 1
+        case recentMagazine
+        case lastMagazine
     }
 
     enum Reusable {
@@ -34,24 +34,20 @@ class MagazineViewController: UIViewController {
             case .topSection(let viewModel):
                 let cell = collectionView.dequeue(Reusable.recentMagazineCell, for: indexPath)
                 cell.viewModel = viewModel
-                
                 return cell
             case .lastStorySection(let viewModel):
                 let cell = collectionView.dequeue(Reusable.lastMagazinecell, for: indexPath)
-                
                 cell.viewModel = viewModel
-                
                 return cell
             }
         },
-        configureSupplementaryView: { [weak self] dataSource, collectionView, kind, indexPath -> UICollectionReusableView in
+        configureSupplementaryView: { [weak self] _, collectionView, kind, indexPath -> UICollectionReusableView in
             
-            let sectionType = MagazineSectionType(rawValue: indexPath.section)
+            guard let sectionType = MagazineSectionType(rawValue: indexPath.section), let self else { return UICollectionReusableView() }
             
-            switch (sectionType, kind) {
-            case (.recentMagazine, UICollectionView.elementKindSectionFooter):
+            switch sectionType {
+            case .recentMagazine:
                 let footerView = collectionView.dequeue(Reusable.recentMagazineFooterView, kind: .footer, for: indexPath)
-                guard let self else { return UICollectionReusableView() }
                 guard let v = self.footerView else {
                     self.footerView = footerView
                     // 임시로 최근 매거진 4개로 해두었습니다.
@@ -60,12 +56,8 @@ class MagazineViewController: UIViewController {
                     return self.footerView!
                 }
                 return v
-            case (.lastMagazine, UICollectionView.elementKindSectionHeader):
-                let headerView = collectionView.dequeue(Reusable.lastMagazineHeaderView, kind: .header, for: indexPath)
-                return headerView
-                
-            default:
-                return UICollectionReusableView()
+            case .lastMagazine:
+                return collectionView.dequeue(Reusable.lastMagazineHeaderView, kind: .header, for: indexPath)
             }
         })
     
@@ -80,8 +72,7 @@ class MagazineViewController: UIViewController {
             .withUnretained(self)
             .map { owner, contentOffset in
                 (contentOffset.y, owner.view.frame.width * 500 / 375.0)
-            }
-            .bind(to: viewModel.magazineCollectionViewScrollOffsetY)
+            }.bind(to: viewModel.magazineCollectionViewScrollOffsetY)
             .disposed(by: disposeBag)
         
         viewModel.magazineCollectionViewTopInsetDriver
@@ -142,8 +133,9 @@ class MagazineViewController: UIViewController {
         v.isHidden = true
         return v
     }()
-    lazy var magazineCollectionView: UICollectionView = { [unowned self] in
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout())
+    lazy var magazineCollectionView: UICollectionView = {
+        let layout = createLayout()
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.register(Reusable.recentMagazineCell)
         cv.register(Reusable.recentMagazineFooterView, kind: .footer)
         cv.register(Reusable.lastMagazineHeaderView, kind: .header)
@@ -157,9 +149,7 @@ class MagazineViewController: UIViewController {
 extension MagazineViewController {
     
     func setUI() {
-        [magazineCollectionView, headerMarginView].forEach {
-            view.addSubview($0)
-        }
+        [magazineCollectionView, headerMarginView].forEach { view.addSubview($0) }
         
         magazineCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -172,77 +162,3 @@ extension MagazineViewController {
     }
 }
 
-extension MagazineViewController {
-    func createLayout() -> UICollectionViewCompositionalLayout {
-        return UICollectionViewCompositionalLayout { (section, env) -> NSCollectionLayoutSection? in
-            
-            let sectionType = MagazineSectionType(rawValue: section)
-            
-            switch sectionType {
-            case .recentMagazine:
-                let itemSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .fractionalWidth(500 / 375.0)
-                )
-                let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                
-                let groupSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .fractionalWidth(500 / 375.0)
-                )
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
-                                                               subitems: [item])
-                
-                let section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .groupPaging
-                let footer = NSCollectionLayoutBoundarySupplementaryItem(
-                    layoutSize: .init(
-                        widthDimension: .fractionalWidth(1),
-                        heightDimension: .absolute(26)
-                    ),
-                    elementKind: UICollectionView.elementKindSectionFooter,
-                    alignment: .bottom
-                )
-                section.boundarySupplementaryItems = [footer]
-                section.visibleItemsInvalidationHandler = { [weak self] (_, offset, _) -> Void in
-                    guard let self else { return }
-                    self.viewModel.recentMagazineSectionScrollOffsetX.accept((offset.x, self.view.frame.width))
-                }
-                return section
-            case .lastMagazine:
-                let itemSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .fractionalWidth((248 / 187.0) * 0.5)
-                )
-                let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                
-                let groupSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .fractionalWidth((248 / 187.0) * 0.5)
-                )
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
-                                                               subitem: item,
-                                                               count: 2)
-                group.interItemSpacing = .fixed(1)
-                
-                let section = NSCollectionLayoutSection(group: group)
-                
-                let header = NSCollectionLayoutBoundarySupplementaryItem(
-                    layoutSize: .init(
-                        widthDimension: .fractionalWidth(1),
-                        heightDimension: .absolute(70)
-                    ),
-                    elementKind: UICollectionView.elementKindSectionHeader,
-                    alignment: .top
-                )
-                header.pinToVisibleBounds = true
-                
-                section.boundarySupplementaryItems = [header]
-                
-                return section
-            default:
-                return nil
-            }
-        }
-    }
-}

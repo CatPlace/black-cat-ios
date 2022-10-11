@@ -14,16 +14,12 @@ import SnapKit
 import Nuke
 
 struct RecentMagazineCellViewModel {
-    let magazine: Magazine
-    
     // MARK: - Output
-    let imageUrlDriver: Driver<String>
+    let imageUrlStringDriver: Driver<String>
     
     init(magazine: Magazine) {
-        self.magazine = magazine
-        
-        imageUrlDriver = Observable
-            .just(magazine.imageUrl)
+        imageUrlStringDriver = Observable
+            .just(magazine.imageUrlString)
             .asDriver(onErrorJustReturn: "")
     }
 }
@@ -40,9 +36,10 @@ class RecentMagazineCell: UICollectionViewCell {
     
     // MARK: - Binding
     func bind(to viewModel: RecentMagazineCellViewModel) {
-        viewModel.imageUrlDriver
+        viewModel.imageUrlStringDriver
             .compactMap { URL(string: $0) }
-            .drive {
+            .drive { [weak self] in
+                guard let self else { return }
                 Nuke.loadImage(with: $0, into: self.recentMagazineImageView)
             }
             .disposed(by: disposeBag)
@@ -51,7 +48,6 @@ class RecentMagazineCell: UICollectionViewCell {
     // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setUI()
     }
     
@@ -69,6 +65,7 @@ class RecentMagazineCell: UICollectionViewCell {
 extension RecentMagazineCell {
     func setUI() {
         addSubview(recentMagazineImageView)
+        
         recentMagazineImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
