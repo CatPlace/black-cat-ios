@@ -5,13 +5,19 @@
 //  Created by SeYeong on 2022/10/10.
 //
 
-import Foundation
+import UIKit
 
 import RxDataSources
 
 struct HomeSection {
-    var header: String = ""
+    var header: Header
     var items: [Item]
+
+    enum Header {
+        case empty
+        case title(String)
+        case image(UIImage)
+    }
 
     enum HomeItem {
         case categoryCell(HomeCategoryCellViewModel)

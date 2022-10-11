@@ -60,17 +60,19 @@ class HomeViewModel {
                 categoryItemTitles, fetchedSection1Items, fetchedSection2Items
             ) { categoryItems, recommendItems, allTattoosItems -> [HomeSection] in
                 [HomeSection(
+                    header: .empty,
                     items: categoryItems.map { .categoryCell(HomeCategoryCellViewModel(with: $0)) }
                 ),
                  HomeSection(
-                    header: "추천 항목",
+                    header: .title("추천 항목"),
                     items: recommendItems.map { .recommendCell(HomeRecommendCellViewModel(with: $0)) }
                  ),
                  HomeSection(
+                    header: .empty,
                     items: [.emptyCell(HomeModel.Empty())]
                  ),
                  HomeSection(
-                    header: "전체 보기",
+                    header: .title("전체 보기"),
                     items: allTattoosItems.map { .allTattoosCell(HomeTattooAlbumCellViewModel(with: $0)) }
                  )]
             }

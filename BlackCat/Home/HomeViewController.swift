@@ -27,8 +27,8 @@ class HomeViewController: UIViewController {
 
     let viewModel = HomeViewModel()
     let disposeBag = DisposeBag()
-    private lazy var dataSource = RxCollectionViewSectionedReloadDataSource<HomeSection>(
-        configureCell: { dataSource, collectionView, indexPath, item in
+    private let dataSource = RxCollectionViewSectionedReloadDataSource<HomeSection>(
+        configureCell: { _, collectionView, indexPath, item in
             switch item {
             case .categoryCell(let categoryCellViewModel):
                 let cell = collectionView.dequeue(Reusable.categoryCell, for: indexPath)
@@ -50,13 +50,18 @@ class HomeViewController: UIViewController {
                 return cell
             }
         }, configureSupplementaryView: { dataSource, collectionView, kind, indexPath -> UICollectionReusableView in
-            guard kind == UICollectionView.elementKindSectionHeader,
-                  indexPath.section == 1 || indexPath.section == 3 else { return UICollectionReusableView() }
+            guard kind == UICollectionView.elementKindSectionHeader else { return UICollectionReusableView() }
 
             let headerView = collectionView.dequeue(Reusable.headerView, kind: .header, for: indexPath)
-            let headerTitle = dataSource.sectionModels[indexPath.section].header
+            let headerType = dataSource.sectionModels[indexPath.section].header
 
-            headerView.titleLabel.text = headerTitle
+            switch headerType {
+            case .empty, .image(_): // 이미지 header가 없어서 디폴트로 반환합니다.
+                return UICollectionReusableView()
+            case .title(let title):
+                headerView.titleLabel.text = title
+            }
+
             return headerView
         })
 

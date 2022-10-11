@@ -44,4 +44,3 @@ enum HomeModel {
         let imageURLString: String
     }
 }
-

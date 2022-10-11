@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Moya/Moya",
       "state" : {
-        "branch" : "master",
-        "revision" : "77e67c0b25ebd785c6fe56cad544885f67c8c2c4"
+        "revision" : "9b906860e3c3c09032879465c471e6375829593f",
+        "version" : "15.0.0"
       }
     },
     {
