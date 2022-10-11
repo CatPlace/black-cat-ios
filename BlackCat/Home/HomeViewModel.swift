@@ -71,7 +71,8 @@ class HomeViewModel {
                  ),
                  HomeSection(
                     header: "전체 보기",
-                    items: allTattoosItems.map { .allTattoosCell(HomeTattooAlbumCellViewModel(with: $0)) })]
+                    items: allTattoosItems.map { .allTattoosCell(HomeTattooAlbumCellViewModel(with: $0)) }
+                 )]
             }
             .asDriver(onErrorJustReturn: [])
     }

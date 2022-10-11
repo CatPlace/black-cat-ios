@@ -144,10 +144,8 @@ class HomeViewController: UIViewController {
             return sectionType.createLayout()
         }
 
-        layout.register(
-            HomeCategorySectionBackgroundReusableView.self,
-            forDecorationViewOfKind: HomeCategorySectionBackgroundReusableView.identifier
-        )
+        layout.register(HomeCategorySectionBackgroundReusableView.self,
+                        forDecorationViewOfKind: HomeCategorySectionBackgroundReusableView.identifier)
 
         return layout
     }()
