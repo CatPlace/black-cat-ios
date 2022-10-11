@@ -9,7 +9,7 @@ import Foundation
 
 // TODO: - SDK로 옮겨야 됨!
 
-enum HomeModel {
+struct HomeModel {
     struct Category {
         let title: String
 
