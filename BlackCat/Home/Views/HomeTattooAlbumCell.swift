@@ -12,7 +12,7 @@ import RxSwift
 import Nuke
 import SnapKit
 
-class HomeAllTattoosCell: UICollectionViewCell {
+class HomeTattooAlbumCell: UICollectionViewCell {
 
     // MARK: - Properties
 
@@ -20,7 +20,7 @@ class HomeAllTattoosCell: UICollectionViewCell {
 
     // MARK: - Binding
 
-    func bind(to viewModel: HomeAllTattoosCellViewModel) {
+    func bind(to viewModel: HomeTattooAlbumCellViewModel) {
         if let url = URL(string: viewModel.homeAllTattoos.imageURLString) {
             Nuke.loadImage(with: url, into: thumbnailImageView)
         }
@@ -43,7 +43,7 @@ class HomeAllTattoosCell: UICollectionViewCell {
     let thumbnailImageView = UIImageView()
 }
 
-extension HomeAllTattoosCell {
+extension HomeTattooAlbumCell {
     private func setUI() {
         contentView.addSubview(thumbnailImageView)
 

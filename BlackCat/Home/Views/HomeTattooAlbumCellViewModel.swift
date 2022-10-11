@@ -7,10 +7,10 @@
 
 import Foundation
 
-class HomeAllTattoosCellViewModel {
-    let homeAllTattoos: HomeModel.AllTattoos
+class HomeTattooAlbumCellViewModel {
+    let homeAllTattoos: HomeModel.TattooAlbum
 
-    init(with model: HomeModel.AllTattoos) {
+    init(with model: HomeModel.TattooAlbum) {
         self.homeAllTattoos = model
     }
 }

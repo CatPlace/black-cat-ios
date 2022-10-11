@@ -19,7 +19,7 @@ class HomeViewController: UIViewController {
         static let categoryCell = ReusableCell<HomeCategoryCell>()
         static let recommendCell = ReusableCell<HomeRecommendCell>()
         static let emptyCell = ReusableCell<HomeEmptyCell>()
-        static let allTattoosCell = ReusableCell<HomeAllTattoosCell>()
+        static let tattooAlbumCell = ReusableCell<HomeTattooAlbumCell>()
         static let headerView = ReusableView<HomeHeaderView>()
     }
 
@@ -43,10 +43,10 @@ class HomeViewController: UIViewController {
             case .emptyCell(let empty):
                 let cell = collectionView.dequeue(Reusable.emptyCell, for: indexPath)
                 return cell
-            case .allTattoosCell(let allTattoosCellViewModel):
-                let cell = collectionView.dequeue(Reusable.allTattoosCell, for: indexPath)
+            case .allTattoosCell(let tattooAlbumCellViewModel):
+                let cell = collectionView.dequeue(Reusable.tattooAlbumCell, for: indexPath)
 
-                cell.bind(to: allTattoosCellViewModel)
+                cell.bind(to: tattooAlbumCellViewModel)
                 return cell
             }
         }, configureSupplementaryView: { dataSource, collectionView, kind, indexPath -> UICollectionReusableView in
@@ -131,7 +131,7 @@ class HomeViewController: UIViewController {
         collectionView.register(Reusable.categoryCell)
         collectionView.register(Reusable.recommendCell)
         collectionView.register(Reusable.emptyCell)
-        collectionView.register(Reusable.allTattoosCell)
+        collectionView.register(Reusable.tattooAlbumCell)
         collectionView.register(Reusable.headerView, kind: .header)
 
         collectionView.showsVerticalScrollIndicator = false

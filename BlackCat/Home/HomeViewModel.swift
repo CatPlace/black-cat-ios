@@ -41,17 +41,17 @@ class HomeViewModel {
             }
 
         let fetchedSection2Items = startFetchItems
-            .map { () -> [HomeModel.AllTattoos] in
+            .map { () -> [HomeModel.TattooAlbum] in
                 // Dummy 모델
                 [
-                    HomeModel.AllTattoos(imageURLString: ""),
-                    HomeModel.AllTattoos(imageURLString: ""),
-                    HomeModel.AllTattoos(imageURLString: ""),
-                    HomeModel.AllTattoos(imageURLString: ""),
-                    HomeModel.AllTattoos(imageURLString: ""),
-                    HomeModel.AllTattoos(imageURLString: ""),
-                    HomeModel.AllTattoos(imageURLString: ""),
-                    HomeModel.AllTattoos(imageURLString: "")
+                    HomeModel.TattooAlbum(imageURLString: ""),
+                    HomeModel.TattooAlbum(imageURLString: ""),
+                    HomeModel.TattooAlbum(imageURLString: ""),
+                    HomeModel.TattooAlbum(imageURLString: ""),
+                    HomeModel.TattooAlbum(imageURLString: ""),
+                    HomeModel.TattooAlbum(imageURLString: ""),
+                    HomeModel.TattooAlbum(imageURLString: ""),
+                    HomeModel.TattooAlbum(imageURLString: "")
                 ]
             }
 
@@ -71,7 +71,7 @@ class HomeViewModel {
                  ),
                  HomeSection(
                     header: "전체 보기",
-                    items: allTattoosItems.map { .allTattoosCell(HomeAllTattoosCellViewModel(with: $0)) })]
+                    items: allTattoosItems.map { .allTattoosCell(HomeTattooAlbumCellViewModel(with: $0)) })]
             }
             .asDriver(onErrorJustReturn: [])
     }

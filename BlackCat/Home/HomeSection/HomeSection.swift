@@ -17,7 +17,7 @@ struct HomeSection {
         case categoryCell(HomeCategoryCellViewModel)
         case recommendCell(HomeRecommendCellViewModel)
         case emptyCell(HomeModel.Empty)
-        case allTattoosCell(HomeAllTattoosCellViewModel)
+        case allTattoosCell(HomeTattooAlbumCellViewModel)
     }
 }
 

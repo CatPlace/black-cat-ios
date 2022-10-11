@@ -40,7 +40,7 @@ enum HomeModel {
 
     struct Empty {}
 
-    struct AllTattoos {
+    struct TattooAlbum {
         let imageURLString: String
     }
 }
