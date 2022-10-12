@@ -13,10 +13,6 @@ import RxRelay
 import BlackCatSDK
 
 class MagazineViewController: UIViewController {
-    enum MagazineSectionType: Int {
-        case recentMagazine
-        case lastMagazine
-    }
 
     enum Reusable {
         static let recentMagazineCell = ReusableCell<RecentMagazineCell>()
@@ -24,6 +20,7 @@ class MagazineViewController: UIViewController {
         static let lastMagazineHeaderView = ReusableView<LastMagazineHeaderView>()
         static let lastMagazinecell = ReusableCell<LastMagazineCell>()
     }
+    
     // MARK: - Properties
     let disposeBag = DisposeBag()
     let viewModel = MagazineViewModel()
@@ -47,19 +44,17 @@ class MagazineViewController: UIViewController {
             
             switch sectionType {
             case .recentMagazine:
-                let footerView = collectionView.dequeue(Reusable.recentMagazineFooterView, kind: .footer, for: indexPath)
-                guard let v = self.footerView else {
-                    self.footerView = footerView
-                    // 임시로 최근 매거진 4개로 해두었습니다.
-                    self.footerView?.viewModel = .init(currentPage: 0,
+                if self.recentMagazineFooterView == nil {
+                    self.recentMagazineFooterView = collectionView.dequeue(Reusable.recentMagazineFooterView, kind: .footer, for: indexPath)
+                    self.recentMagazineFooterView?.viewModel = .init(currentPage: 0,
                                                        numberOfPages: 4)
-                    return self.footerView!
                 }
-                return v
+                return self.recentMagazineFooterView!
             case .lastMagazine:
                 return collectionView.dequeue(Reusable.lastMagazineHeaderView, kind: .header, for: indexPath)
             }
-        })
+        }
+    )
     
     // MARK: - Binding
     func bind() {
@@ -68,7 +63,7 @@ class MagazineViewController: UIViewController {
             .disposed(by: disposeBag)
         
         magazineCollectionView.rx.contentOffset
-            .observe(on:MainScheduler.asyncInstance)
+            .observe(on: MainScheduler.asyncInstance)
             .withUnretained(self)
             .map { owner, contentOffset in
                 (contentOffset.y, owner.view.frame.width * 500 / 375.0)
@@ -80,7 +75,7 @@ class MagazineViewController: UIViewController {
                 self?.magazineCollectionView.contentInset = .init(top: inset, left: 0, bottom: 0, right: 0)
                 self?.headerMarginView.isHidden = inset == 0
             }.disposed(by: disposeBag)
-        
+
         viewModel.magazineCollectionViewScrollOffsetYDriver
             .filter { $0 > self.magazineCollectionView.contentSize.height - self.view.frame.height * 1.5 }
             .map { _ in 1 }
@@ -89,7 +84,7 @@ class MagazineViewController: UIViewController {
         
         viewModel.recentSectionPageControlValuesDriver
             .drive { [weak self] numberOfPages, currentPage in
-                self?.footerView?.viewModel = .init(currentPage: currentPage,
+                self?.recentMagazineFooterView?.viewModel = .init(currentPage: currentPage,
                                                     numberOfPages: numberOfPages)
             }.disposed(by: disposeBag)
     }
@@ -143,7 +138,7 @@ class MagazineViewController: UIViewController {
         cv.contentInsetAdjustmentBehavior = .never
         return cv
     }()
-    var footerView: RecentMagazineFooterView?
+    var recentMagazineFooterView: RecentMagazineFooterView?
 }
 
 extension MagazineViewController {
@@ -161,4 +156,3 @@ extension MagazineViewController {
         }
     }
 }
-
