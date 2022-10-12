@@ -49,7 +49,6 @@
 		B1D3364328F1CD1B00826636 /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3364228F1CD1B00826636 /* UITableView+.swift */; };
 		B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */; };
 		B1D79CAD28EB0EF9008487D0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */; };
-		B1D79CAF28EB0EF9008487D0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAE28EB0EF9008487D0 /* ViewController.swift */; };
 		B1D79CB428EB0EFB008487D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1D79CB328EB0EFB008487D0 /* Assets.xcassets */; };
 		B1D79CB728EB0EFB008487D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1D79CB528EB0EFB008487D0 /* LaunchScreen.storyboard */; };
 		B1DD25DD28EF0BC800103FF1 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DD25DC28EF0BC800103FF1 /* UIColor+.swift */; };
@@ -130,7 +129,6 @@
 		B1D79CA728EB0EF9008487D0 /* BlackCat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlackCat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B1D79CAE28EB0EF9008487D0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B1D79CB328EB0EFB008487D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B1D79CB628EB0EFB008487D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B1D79CB828EB0EFB008487D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -306,7 +304,6 @@
 			children = (
 				B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */,
 				B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */,
-				B1D79CAE28EB0EF9008487D0 /* ViewController.swift */,
 				B1D127DC28F08DCA007E3667 /* TabBarViewController.swift */,
 				8E2D8C4628F2EBFA004B514D /* Home */,
 				78B00BA928F5661000A9915D /* Magazine */,
@@ -482,7 +479,6 @@
 				8E2D8C5F28F2EE69004B514D /* HomeRecommendCellViewModel.swift in Sources */,
 				78B00BB828F5661000A9915D /* LastMagazineCell.swift in Sources */,
 				8E2D8C5128F2EDF3004B514D /* HomeCategorySectionBackgroundReusableView.swift in Sources */,
-				B1D79CAF28EB0EF9008487D0 /* ViewController.swift in Sources */,
 				8EE9A0C128F3CB0D003D7761 /* HomeSection.swift in Sources */,
 				B1D127E228F0923C007E3667 /* Asset.swift in Sources */,
 				78B00BB928F5661000A9915D /* MagazineTestUseCase.swift in Sources */,
