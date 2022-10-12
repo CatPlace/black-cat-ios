@@ -110,4 +110,5 @@ iOSInjectionProject/
 
 # End of https://www.gitignore.io/api/xcode,swift,cocoapods
 
-Package.resolved
+# 커스텀
+*.DS_Store
