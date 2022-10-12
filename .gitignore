@@ -90,3 +90,6 @@ fastlane/test_output
 # After new code Injection tools there's a generated folder /iOSInjectionProject
 
 iOSInjectionProject/
+
+# 커스텀
+*.DS_Store
