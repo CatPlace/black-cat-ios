@@ -12,6 +12,7 @@ import RxSwift
 class MagazineTestUseCase {
     func loadMoreMagazine(page: Int) -> Observable<[Magazine]> {
         print("request page: \(page)")
+        
         return .just(Magazine.dummy.map { magazine in
             Magazine(
                 id: magazine.id + (page * Magazine.dummy.count),

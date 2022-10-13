@@ -51,7 +51,6 @@ class HomeViewController: UIViewController {
             }
         }, configureSupplementaryView: { dataSource, collectionView, kind, indexPath -> UICollectionReusableView in
             guard kind == UICollectionView.elementKindSectionHeader else { return UICollectionReusableView() }
-
             let headerView = collectionView.dequeue(Reusable.headerView, kind: .header, for: indexPath)
             let headerType = dataSource.sectionModels[indexPath.section].header
 

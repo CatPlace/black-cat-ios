@@ -13,7 +13,7 @@ import RxRelay
 import BlackCatSDK
 
 class MagazineViewController: UIViewController {
-
+    
     enum Reusable {
         static let recentMagazineCell = ReusableCell<RecentMagazineCell>()
         static let recentMagazineFooterView = ReusableView<RecentMagazineFooterView>()
@@ -24,7 +24,7 @@ class MagazineViewController: UIViewController {
     // MARK: - Properties
     let disposeBag = DisposeBag()
     let viewModel = MagazineViewModel()
-
+    
     lazy var dataSource = RxCollectionViewSectionedReloadDataSource<MagazineSection> (
         configureCell: { dataSource, collectionView, indexPath, item in
             switch item {
@@ -40,18 +40,23 @@ class MagazineViewController: UIViewController {
         },
         configureSupplementaryView: { [weak self] _, collectionView, kind, indexPath -> UICollectionReusableView in
             
-            guard let sectionType = MagazineSectionType(rawValue: indexPath.section), let self else { return UICollectionReusableView() }
+            guard let sectionType = MagazineSectionType(rawValue: indexPath.section),
+                  let self else { return UICollectionReusableView() }
             
             switch sectionType {
             case .recentMagazine:
                 if self.recentMagazineFooterView == nil {
-                    self.recentMagazineFooterView = collectionView.dequeue(Reusable.recentMagazineFooterView, kind: .footer, for: indexPath)
+                    self.recentMagazineFooterView = collectionView.dequeue(Reusable.recentMagazineFooterView,
+                                                                           kind: .footer,
+                                                                           for: indexPath)
                     self.recentMagazineFooterView?.viewModel = .init(currentPage: 0,
-                                                       numberOfPages: 4)
+                                                                     numberOfPages: 4)
                 }
                 return self.recentMagazineFooterView!
             case .lastMagazine:
-                return collectionView.dequeue(Reusable.lastMagazineHeaderView, kind: .header, for: indexPath)
+                return collectionView.dequeue(Reusable.lastMagazineHeaderView,
+                                              kind: .header,
+                                              for: indexPath)
             }
         }
     )
@@ -75,17 +80,17 @@ class MagazineViewController: UIViewController {
                 self?.magazineCollectionView.contentInset = .init(top: inset, left: 0, bottom: 0, right: 0)
                 self?.headerMarginView.isHidden = inset == 0
             }.disposed(by: disposeBag)
-
+        
         viewModel.magazineCollectionViewScrollOffsetYDriver
             .filter { $0 > self.magazineCollectionView.contentSize.height - self.view.frame.height * 1.5 }
-            .map { _ in 1 }
+            .map { _ in () }
             .drive(viewModel.updateMagazineTrigger)
             .disposed(by: disposeBag)
         
         viewModel.recentSectionPageControlValuesDriver
             .drive { [weak self] numberOfPages, currentPage in
                 self?.recentMagazineFooterView?.viewModel = .init(currentPage: currentPage,
-                                                    numberOfPages: numberOfPages)
+                                                                  numberOfPages: numberOfPages)
             }.disposed(by: disposeBag)
     }
     

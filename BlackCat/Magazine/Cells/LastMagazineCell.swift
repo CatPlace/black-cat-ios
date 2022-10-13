@@ -44,8 +44,7 @@ class LastMagazineCell: UICollectionViewCell {
             .drive { [weak self] in
                 guard let self else { return }
                 Nuke.loadImage(with: $0, into: self.lastMagazineImageView)
-            }
-            .disposed(by: disposeBag)
+            }.disposed(by: disposeBag)
         
         viewModel.titleDriver
             .drive(titleLabel.rx.text)
