@@ -60,8 +60,8 @@ class RecentMagazineFooterView: UICollectionReusableView {
     }
     
     //MARK: UIComponents
-    let pageControl: CatPageControl = {
-        let pc = CatPageControl()
+    let pageControl: CHIPageControlJaloro = {
+        let pc = CHIPageControlJaloro()
         pc.tintColor = UIColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1)
         pc.currentPageTintColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
         pc.radius = 3

@@ -41,8 +41,7 @@ class RecentMagazineCell: UICollectionViewCell {
             .drive { [weak self] in
                 guard let self else { return }
                 Nuke.loadImage(with: $0, into: self.recentMagazineImageView)
-            }
-            .disposed(by: disposeBag)
+            }.disposed(by: disposeBag)
     }
     
     // MARK: - Life Cycle

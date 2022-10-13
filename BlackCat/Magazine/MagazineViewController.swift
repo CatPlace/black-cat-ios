@@ -13,21 +13,18 @@ import RxRelay
 import BlackCatSDK
 
 class MagazineViewController: UIViewController {
-    enum MagazineSectionType: Int {
-        case recentMagazine
-        case lastMagazine
-    }
-
+    
     enum Reusable {
         static let recentMagazineCell = ReusableCell<RecentMagazineCell>()
         static let recentMagazineFooterView = ReusableView<RecentMagazineFooterView>()
         static let lastMagazineHeaderView = ReusableView<LastMagazineHeaderView>()
         static let lastMagazinecell = ReusableCell<LastMagazineCell>()
     }
+    
     // MARK: - Properties
     let disposeBag = DisposeBag()
     let viewModel = MagazineViewModel()
-
+    
     lazy var dataSource = RxCollectionViewSectionedReloadDataSource<MagazineSection> (
         configureCell: { dataSource, collectionView, indexPath, item in
             switch item {
@@ -43,23 +40,26 @@ class MagazineViewController: UIViewController {
         },
         configureSupplementaryView: { [weak self] _, collectionView, kind, indexPath -> UICollectionReusableView in
             
-            guard let sectionType = MagazineSectionType(rawValue: indexPath.section), let self else { return UICollectionReusableView() }
+            guard let sectionType = MagazineSectionType(rawValue: indexPath.section),
+                  let self else { return UICollectionReusableView() }
             
             switch sectionType {
             case .recentMagazine:
-                let footerView = collectionView.dequeue(Reusable.recentMagazineFooterView, kind: .footer, for: indexPath)
-                guard let v = self.footerView else {
-                    self.footerView = footerView
-                    // 임시로 최근 매거진 4개로 해두었습니다.
-                    self.footerView?.viewModel = .init(currentPage: 0,
-                                                       numberOfPages: 4)
-                    return self.footerView!
+                if self.recentMagazineFooterView == nil {
+                    self.recentMagazineFooterView = collectionView.dequeue(Reusable.recentMagazineFooterView,
+                                                                           kind: .footer,
+                                                                           for: indexPath)
+                    self.recentMagazineFooterView?.viewModel = .init(currentPage: 0,
+                                                                     numberOfPages: 4)
                 }
-                return v
+                return self.recentMagazineFooterView!
             case .lastMagazine:
-                return collectionView.dequeue(Reusable.lastMagazineHeaderView, kind: .header, for: indexPath)
+                return collectionView.dequeue(Reusable.lastMagazineHeaderView,
+                                              kind: .header,
+                                              for: indexPath)
             }
-        })
+        }
+    )
     
     // MARK: - Binding
     func bind() {
@@ -68,7 +68,7 @@ class MagazineViewController: UIViewController {
             .disposed(by: disposeBag)
         
         magazineCollectionView.rx.contentOffset
-            .observe(on:MainScheduler.asyncInstance)
+            .observe(on: MainScheduler.asyncInstance)
             .withUnretained(self)
             .map { owner, contentOffset in
                 (contentOffset.y, owner.view.frame.width * 500 / 375.0)
@@ -83,14 +83,14 @@ class MagazineViewController: UIViewController {
         
         viewModel.magazineCollectionViewScrollOffsetYDriver
             .filter { $0 > self.magazineCollectionView.contentSize.height - self.view.frame.height * 1.5 }
-            .map { _ in 1 }
+            .map { _ in () }
             .drive(viewModel.updateMagazineTrigger)
             .disposed(by: disposeBag)
         
         viewModel.recentSectionPageControlValuesDriver
             .drive { [weak self] numberOfPages, currentPage in
-                self?.footerView?.viewModel = .init(currentPage: currentPage,
-                                                    numberOfPages: numberOfPages)
+                self?.recentMagazineFooterView?.viewModel = .init(currentPage: currentPage,
+                                                                  numberOfPages: numberOfPages)
             }.disposed(by: disposeBag)
     }
     
@@ -143,7 +143,7 @@ class MagazineViewController: UIViewController {
         cv.contentInsetAdjustmentBehavior = .never
         return cv
     }()
-    var footerView: RecentMagazineFooterView?
+    var recentMagazineFooterView: RecentMagazineFooterView?
 }
 
 extension MagazineViewController {
@@ -161,4 +161,3 @@ extension MagazineViewController {
         }
     }
 }
-
