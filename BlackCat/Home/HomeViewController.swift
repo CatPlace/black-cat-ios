@@ -171,3 +171,15 @@ extension HomeViewController {
     }
 }
 
+extension Reactive where Base: UIScrollView {
+    /// 사용자가 Device의 반의 높이까지 스크롤할 때 다음 페이지를 Observable<Int>타입으로 알려줍니다.
+    var nextFetchPage: Observable<Int> {
+        return didScroll.map { _ in
+            let offset = base.contentOffset.y
+            let screenHeight = UIScreen.main.bounds.height
+            let nextFetchPage = Int(offset / (screenHeight / 2))
+
+            return nextFetchPage
+        }
+    }
+}
