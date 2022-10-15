@@ -41,33 +41,11 @@ final class SparseContentSheetViewController: BottomSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        setUI()
+//        setUI()
     }
-    
-    private lazy var titleLabel: UILabel = {
-        $0.text = "필터 검색"
-        $0.textAlignment = .center
-        $0.font = .systemFont(ofSize: 28, weight: .semibold)
-        return $0
-    }(UILabel())
     
 }
 
 extension SparseContentSheetViewController {
-    func setUI() {
-        [titleLabel].forEach { view.addSubview($0) }
-        
-        titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(20)
-            $0.leading.trailing.equalToSuperview()
-            $0.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide)
-        }
-        titleLabel.backgroundColor = .red
-        view.backgroundColor = .orange
-
-    }
-}
-
-class FilterTitleCell: FilterBaseCell {
     
 }
