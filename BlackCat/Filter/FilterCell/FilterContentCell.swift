@@ -18,17 +18,23 @@ final class FilterContentCell: FilterBaseCell {
     }
     
     // MARK: - Properties
-    private lazy var lineView = UIView()
+    private var contentLabel: UILabel = {
+        $0.textColor = .green
+        $0.textAlignment = .center
+        $0.adjustsFontSizeToFitWidth = true
+        return $0
+    }(UILabel())
+    private var contentCollectionView = UICollectionView()
 }
 
 extension FilterContentCell {
     func setUI() {
-        contentView.addSubview(lineView)
+        [contentLabel, contentCollectionView].forEach { contentView.addSubview($0) }
         
-        lineView.snp.makeConstraints {
-            $0.height.equalTo(1)
-            $0.top.equalToSuperview()
+        contentLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(20)
             $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(20)
         }
     }
 }

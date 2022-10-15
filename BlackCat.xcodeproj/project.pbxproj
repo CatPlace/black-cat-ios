@@ -78,6 +78,8 @@
 		B1EE650628FA746D0055A4F1 /* FilterTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE650528FA746D0055A4F1 /* FilterTitleCell.swift */; };
 		B1EE650828FA750C0055A4F1 /* FilterLineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE650728FA750C0055A4F1 /* FilterLineCell.swift */; };
 		B1EE650A28FA77860055A4F1 /* FilterContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE650928FA77860055A4F1 /* FilterContentCell.swift */; };
+		B1EE650C28FA79DF0055A4F1 /* FilterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE650B28FA79DF0055A4F1 /* FilterSection.swift */; };
+		B1EE650F28FA7A060055A4F1 /* FilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE650E28FA7A060055A4F1 /* FilterModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -158,6 +160,8 @@
 		B1EE650528FA746D0055A4F1 /* FilterTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTitleCell.swift; sourceTree = "<group>"; };
 		B1EE650728FA750C0055A4F1 /* FilterLineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterLineCell.swift; sourceTree = "<group>"; };
 		B1EE650928FA77860055A4F1 /* FilterContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterContentCell.swift; sourceTree = "<group>"; };
+		B1EE650B28FA79DF0055A4F1 /* FilterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSection.swift; sourceTree = "<group>"; };
+		B1EE650E28FA7A060055A4F1 /* FilterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -333,9 +337,10 @@
 				8E2D8C4628F2EBFA004B514D /* Home */,
 				78B00BA928F5661000A9915D /* Magazine */,
 				B1E4985628EE859600B469AC /* MagazineDetail */,
+				B1EE64F428FA48170055A4F1 /* Filter */,
 				B1D127E028F09223007E3667 /* Utils */,
 				B12C1DC528ED21830089964E /* Extension */,
-				B1EE64F428FA48170055A4F1 /* Filter */,
+				B1EE64FB28FA4E720055A4F1 /* BottomSheet */,
 				B1D79CB328EB0EFB008487D0 /* Assets.xcassets */,
 				B1CA040B28F00DA0004A6027 /* Rect3.png */,
 				B1CA040928F00D8C004A6027 /* Rect2.png */,
@@ -401,7 +406,8 @@
 			isa = PBXGroup;
 			children = (
 				B1EE64F728FA4ABE0055A4F1 /* FilterExampleViewController.swift */,
-				B1EE64FB28FA4E720055A4F1 /* BottomSheet */,
+				B1EE651028FA7A090055A4F1 /* FilterModel */,
+				B1EE650D28FA79E50055A4F1 /* FilterSection */,
 				B1EE650428FA74170055A4F1 /* FilterCell */,
 			);
 			path = Filter;
@@ -425,6 +431,22 @@
 				B1EE650928FA77860055A4F1 /* FilterContentCell.swift */,
 			);
 			path = FilterCell;
+			sourceTree = "<group>";
+		};
+		B1EE650D28FA79E50055A4F1 /* FilterSection */ = {
+			isa = PBXGroup;
+			children = (
+				B1EE650B28FA79DF0055A4F1 /* FilterSection.swift */,
+			);
+			path = FilterSection;
+			sourceTree = "<group>";
+		};
+		B1EE651028FA7A090055A4F1 /* FilterModel */ = {
+			isa = PBXGroup;
+			children = (
+				B1EE650E28FA7A060055A4F1 /* FilterModel.swift */,
+			);
+			path = FilterModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -533,6 +555,7 @@
 				B1E4986228EE8BFE00B469AC /* MagazineDetailTextCell.swift in Sources */,
 				B1E4985828EE85A800B469AC /* MagazineDetailViewController.swift in Sources */,
 				8E2D8C5F28F2EE69004B514D /* HomeRecommendCellViewModel.swift in Sources */,
+				B1EE650C28FA79DF0055A4F1 /* FilterSection.swift in Sources */,
 				78B00BB828F5661000A9915D /* LastMagazineCell.swift in Sources */,
 				8E2D8C5128F2EDF3004B514D /* HomeCategorySectionBackgroundReusableView.swift in Sources */,
 				8EE9A0C128F3CB0D003D7761 /* HomeSection.swift in Sources */,
@@ -547,6 +570,7 @@
 				B1EE64F828FA4ABE0055A4F1 /* FilterExampleViewController.swift in Sources */,
 				78858BEC28F6F4E400EC7BF7 /* MagazineSection.swift in Sources */,
 				78B00BBB28F5661000A9915D /* MagazineModel.swift in Sources */,
+				B1EE650F28FA7A060055A4F1 /* FilterModel.swift in Sources */,
 				B1D3362928F1AC1200826636 /* MagazineDetailEmptyCell.swift in Sources */,
 				78B00BBE28F5661000A9915D /* MagazineViewModel.swift in Sources */,
 				8E2D8C5A28F2EE69004B514D /* HomeCategoryCellViewModel.swift in Sources */,
