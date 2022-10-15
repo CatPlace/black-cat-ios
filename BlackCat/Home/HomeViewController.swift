@@ -74,6 +74,10 @@ class HomeViewController: UIViewController {
             .bind(to: viewModel.viewDidLoad)
             .disposed(by: disposeBag)
 
+        collectionView.rx.nextFetchPage
+            .bind(to: viewModel.nextFetchPage)
+            .disposed(by: disposeBag)
+
         searchBarButtonItem.rx.tap
             .bind(to: viewModel.didTapSearchBarButtonItem)
             .disposed(by: disposeBag)
