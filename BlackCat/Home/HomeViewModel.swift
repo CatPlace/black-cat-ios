@@ -66,5 +66,26 @@ class HomeViewModel {
                              items: tattooAlbumItems.map { .allTattoosCell(HomeTattooAlbumCellViewModel(with: $0)) })]
             }
             .asDriver(onErrorJustReturn: [])
+
+        // Dummy Function입니다.
+        // API가 나오는대로 SDK에서 처리할 함수입니다.
+        func fetchTattoAlbumItems(at page: Int) -> Observable<[HomeModel.TattooAlbum]> {
+            return .just(Array(repeating: HomeModel.TattooAlbum(imageURLString: ""), count: 15))
+        }
+    }
+}
+
+extension Observable where Element: Hashable {
+    /// 이전에 발생한 이벤트가 새로 발생할 경우 해당 이벤트는 무시합니다
+    func distinct() -> Observable<Element> {
+        var cache = Set<Element>()
+        return flatMap { element -> Observable<Element> in
+            if cache.contains(element) {
+                return Observable<Element>.empty()
+            } else {
+                cache.insert(element)
+                return Observable<Element>.just(element)
+            }
+        }
     }
 }
