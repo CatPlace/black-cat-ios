@@ -13,24 +13,32 @@ final class FilterCell: FilterBaseCell {
     typealias ViewModel = FilterCellViewModel
     
     // MARK: - Properties
-//    var viewModel: ViewModel? {
-//        didSet {
-//            print("didSetCALLED")
-//            guard let viewModel else { return }
-//            bind(viewModel)
-//        }
-//    }
-//
-//    func bind(_ viewModel: ViewModel) {
-//        print("여기는 셀")
-//        contentView.backgroundColor = .red
+    var viewModel: ViewModel? {
+        didSet {
+            print("didSetCALLED")
+            guard let viewModel else { return }
+            bind(viewModel)
+        }
+    }
+
+    func bind(_ viewModel: ViewModel) {
+        print("여기는 셀")
+        contentView.backgroundColor = .red
+        
+        viewModel.dv
+            .drive { self.titleLabel.text = $0 }
+        
+    }
+    
+//    func configureCell(with: String) {
+//        setUI()
+//        print("ddd")
+//        titleLabel.text = with
+//        contentView.backgroundColor = .green
 //    }
     
-    func configureCell(with: String) {
+    override func initialize() {
         setUI()
-        print("ddd")
-        titleLabel.text = with
-        contentView.backgroundColor = .green
     }
     
     func setUI() {
@@ -45,5 +53,10 @@ final class FilterCell: FilterBaseCell {
 }
 
 class FilterCellViewModel {
+    let dv: Driver<String>
     
+    init(item: String) {
+        dv = Observable.just(item)
+            .asDriver(onErrorJustReturn: "도라오멩")
+    }
 }

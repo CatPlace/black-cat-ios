@@ -31,22 +31,19 @@ final class FilterViewController: BottomSheetController {
     private func dispatch(_ viewModel: ViewModel) { }
     
     private func render(_ viewModel: ViewModel) {
-        viewModel.taskDriver
-//            .asObservable()
+//        viewModel.taskDriver
+        Observable.just(["작업", "도안"])
+            .asObservable()
             .debug("데이터")
-            .drive(taskCollectionView.rx.items) { cv, row, item in
+            .bind(to: taskCollectionView.rx.items) { cv, row, item in
                 let cell = cv.dequeue(Reuable.filterCell, for: IndexPath(row: row, section: 0))
                 
                 print("item \(item)")
-                cell.configureCell(with: item)
-                cell.backgroundColor = .red
+                cell.viewModel = .init(item: item)
+//                cell.configureCell(with: item)
+//                cell.backgroundColor = .red
                 return cell
             }
-//            .bind(to: taskCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
-//                print("💬 \(row) \(item) \(cell)")
-////                cell.viewModel = FilterCellViewModel()
-//                cell.configureCell(with: item)
-//            }
             .disposed(by: disposeBag)
     }
     
@@ -73,6 +70,7 @@ final class FilterViewController: BottomSheetController {
     // NOTE: - 작업 종류 선택
     private lazy var taskSectionTitleLabel: UILabel = {
         viewModel.sectionTitleModifier($0)
+        $0.text = "도라에몽 22 ㅋㅋㅋ"
         return $0
     }(UILabel())
     
@@ -133,7 +131,7 @@ extension FilterViewController {
         }
         
         taskSectionTitleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(20)
+            $0.top.equalTo(dividerView01.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(28)
         }
@@ -141,6 +139,7 @@ extension FilterViewController {
         taskCollectionView.snp.makeConstraints {
             $0.top.equalTo(taskSectionTitleLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(26)
+            $0.bottom.equalToSuperview()
         }
 //
 //        dividerLineView12.snp.makeConstraints {
