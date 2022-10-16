@@ -9,6 +9,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 import SnapKit
+import RealmSwift
 
 class FilterExampleViewController: UIViewController {
     override func viewDidLoad() {
@@ -22,13 +23,14 @@ class FilterExampleViewController: UIViewController {
         }
         
         button.rx.tap
-            .debug("didTapTouched")
             .bind { [weak self] _ in
                 let vc = FilterViewController()
                 vc.preferredSheetSizing = .fit
                 self?.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
+        
+        print("🍑 \(Realm.Configuration.defaultConfiguration.fileURL)")
     }
     
     let button = UIButton()

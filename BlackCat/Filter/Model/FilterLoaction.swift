@@ -8,7 +8,7 @@
 import Foundation
 
 // NOTE: - 지역이 늘어나면 "_" replace "/" 자동화 필요.
-enum FilterLocationType: String, CaseIterable {
+public enum FilterLocationType: String, CaseIterable {
     case 서울 = "서울"
     case 경기_인천 = "경기/인천"
     case 충청_대전 = "충천/대전"
@@ -19,9 +19,9 @@ enum FilterLocationType: String, CaseIterable {
     case 제주 = "제주"
 }
 
-struct FilterLocation {
-    var type: FilterLocationType
-    var isSubscribe: Bool
+public struct FilterLocation {
+    public var type: FilterLocationType
+    public var isSubscribe: Bool
     
     init(item: FilterLocationType, isSubscribe: Bool = false) {
         self.type = item

@@ -57,6 +57,20 @@ final class FilterViewController: BottomSheetController {
             .disposed(by: disposeBag)
     }
     
+    
+    // MARK: - function
+    // 구분선 Modifier
+    func divierViewModifier(_ sender: UIView) {
+        sender.backgroundColor = .darkGray
+    }
+    
+    // 섹션 타이틀 Modifier
+    func sectionTitleModifier(_ sender: UILabel) {
+        sender.textAlignment = .center
+        sender.textColor = .gray
+        sender.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 14)
+    }
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         setUI()
@@ -73,13 +87,13 @@ final class FilterViewController: BottomSheetController {
     
     // NOTE: - 구분선: 0과 1
     private lazy var dividerView01: UIView = {
-        viewModel.divierViewModifier($0)
+        divierViewModifier($0)
         return $0
     }(UIView())
     
     // NOTE: - 작업 종류 선택
     private lazy var taskSectionTitleLabel: UILabel = {
-        viewModel.sectionTitleModifier($0)
+        sectionTitleModifier($0)
         $0.text = "작업 종류를 선택해주세요."
         return $0
     }(UILabel())
@@ -94,13 +108,13 @@ final class FilterViewController: BottomSheetController {
     
     // NOTE: - 구분선: 1과 2
     private lazy var dividerView12: UIView = {
-        viewModel.divierViewModifier($0)
+        divierViewModifier($0)
         return $0
     }(UIView())
     
     // NOTE: - 지역 선택
     private lazy var locationSectionTitleLabel: UILabel = {
-        viewModel.sectionTitleModifier($0)
+        sectionTitleModifier($0)
         $0.text = "작업 종류를 선택해주세요."
         return $0
     }(UILabel())

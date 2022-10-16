@@ -40,19 +40,4 @@ class FilterViewModel {
 //            .map(<#T##transform: (IndexPath) throws -> Result##(IndexPath) throws -> Result#>)
         
     }
-    
-    // MARK: - function
-    // 구분선 Modifier
-    func divierViewModifier(_ sender: UIView) {
-        sender.backgroundColor = .darkGray
-    }
-    
-    // 섹션 타이틀 Modifier
-    func sectionTitleModifier(_ sender: UILabel) {
-        sender.textAlignment = .center
-        sender.textColor = .gray
-        sender.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 14)
-    }
-    
-    
 }
