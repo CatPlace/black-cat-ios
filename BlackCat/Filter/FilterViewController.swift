@@ -31,18 +31,9 @@ final class FilterViewController: BottomSheetController {
     private func dispatch(_ viewModel: ViewModel) { }
     
     private func render(_ viewModel: ViewModel) {
-//        viewModel.taskDriver
-        Observable.just(["작업", "도안"])
-            .asObservable()
-            .debug("데이터")
-            .bind(to: taskCollectionView.rx.items) { cv, row, item in
-                let cell = cv.dequeue(Reuable.filterCell, for: IndexPath(row: row, section: 0))
-                
-                print("item \(item)")
+        viewModel.taskDriver
+            .drive(taskCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
                 cell.viewModel = .init(item: item)
-//                cell.configureCell(with: item)
-//                cell.backgroundColor = .red
-                return cell
             }
             .disposed(by: disposeBag)
     }
@@ -70,7 +61,7 @@ final class FilterViewController: BottomSheetController {
     // NOTE: - 작업 종류 선택
     private lazy var taskSectionTitleLabel: UILabel = {
         viewModel.sectionTitleModifier($0)
-        $0.text = "도라에몽 22 ㅋㅋㅋ"
+        $0.text = "작업 종류를 선택해주세요."
         return $0
     }(UILabel())
     
@@ -110,6 +101,7 @@ extension FilterViewController: UICollectionViewDelegateFlowLayout {
 
 extension FilterViewController {
     func setUI() {
+        view.backgroundColor = .white
         // NOTE: - UI에 그려지는 상태대로 정렬
         [titleLabel,
          dividerView01,

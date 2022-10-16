@@ -15,48 +15,45 @@ final class FilterCell: FilterBaseCell {
     // MARK: - Properties
     var viewModel: ViewModel? {
         didSet {
-            print("didSetCALLED")
             guard let viewModel else { return }
             bind(viewModel)
         }
     }
 
+    // MARK: - Binding
     func bind(_ viewModel: ViewModel) {
-        print("여기는 셀")
-        contentView.backgroundColor = .red
-        
-        viewModel.dv
-            .drive { self.titleLabel.text = $0 }
-        
+        viewModel.itemDriver
+            .asObservable()
+            .withUnretained(self)
+            .bind { owner, item in
+                owner.setUI()
+                owner.titleLabel.text = item
+            }.disposed(by: self.disposeBag)
     }
     
-//    func configureCell(with: String) {
-//        setUI()
-//        print("ddd")
-//        titleLabel.text = with
-//        contentView.backgroundColor = .green
-//    }
-    
-    override func initialize() {
-        setUI()
-    }
-    
-    func setUI() {
+    private func setUI() {
         contentView.addSubview(titleLabel)
+        contentView.layer.cornerRadius = 16
+        contentView.backgroundColor = .gray
+        
         titleLabel.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
     
     // MARK: - Properties
-    private lazy var titleLabel = UILabel()
+    private lazy var titleLabel: UILabel = {
+        $0.textAlignment = .center
+        $0.font = .systemFont(ofSize: 16, weight: .semibold)
+        return $0
+    }(UILabel())
 }
 
 class FilterCellViewModel {
-    let dv: Driver<String>
+    let itemDriver: Driver<String>
     
     init(item: String) {
-        dv = Observable.just(item)
-            .asDriver(onErrorJustReturn: "도라오멩")
+        itemDriver = Observable.just(item)
+            .asDriver(onErrorJustReturn: "🚨 버그 신고를 해주새요.")
     }
 }
