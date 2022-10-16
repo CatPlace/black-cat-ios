@@ -109,17 +109,6 @@ final class FilterViewController: BottomSheetController {
 extension FilterViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        // NOTE: - TaskCollectionView
-        if collectionView == taskCollectionView {
-            // NOTE: - 디자이너님 요청
-            // 셀 사이의 간격 12
-            // 셀 중앙정렬
-            
-            
-        } else {
-            return CGSize(width: 100, height: 40)
-        }
-        
         return CGSize(width: 100, height: 40)
     }
 }
