@@ -25,7 +25,7 @@ class FilterExampleViewController: UIViewController {
             .debug("didTapTouched")
             .bind { [weak self] _ in
                 let vc = FilterViewController()
-                vc.preferredSheetSizing = .medium
+                vc.preferredSheetSizing = .fit
                 self?.present(vc, animated: true)
             }
             .disposed(by: disposeBag)

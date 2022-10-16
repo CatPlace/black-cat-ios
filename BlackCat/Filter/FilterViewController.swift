@@ -45,8 +45,6 @@ final class FilterViewController: BottomSheetController {
                 cell.viewModel = .init(item: item)
             }
             .disposed(by: disposeBag)
-        
-        
     }
     
     // MARK: - Life Cycle
@@ -78,6 +76,7 @@ final class FilterViewController: BottomSheetController {
     
     private lazy var taskCollectionView: UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        cv.isScrollEnabled = false
         
         cv.register(Reuable.filterCell)
         return cv
@@ -98,12 +97,22 @@ final class FilterViewController: BottomSheetController {
     
     private lazy var locationCollectionView: UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        cv.isScrollEnabled = false
         
         cv.register(Reuable.filterCell)
         return cv
     }()
     // NOTE: - 완료 버튼
-    private lazy var applyButton = UIButton()
+    private lazy var applyTextLabel: UILabel = {
+        $0.text = "필터 적용"
+        $0.textAlignment = .center
+        $0.contentMode = .top
+        $0.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 24)
+        $0.textColor = .white
+        $0.backgroundColor = .black
+        
+        return $0
+    }(UILabel())
 }
 
 extension FilterViewController: UICollectionViewDelegateFlowLayout {
@@ -122,7 +131,7 @@ extension FilterViewController {
          taskSectionTitleLabel, taskCollectionView,
          dividerView12,
          locationSectionTitleLabel, locationCollectionView,
-         applyButton].forEach { view.addSubview($0) }
+         applyTextLabel].forEach { view.addSubview($0) }
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(20)
@@ -145,7 +154,7 @@ extension FilterViewController {
         taskCollectionView.snp.makeConstraints {
             $0.top.equalTo(taskSectionTitleLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(26)
-            $0.height.equalTo(120 - 28)
+            $0.height.equalTo(40 * 1 + 10)
         }
 
         dividerView12.snp.makeConstraints {
@@ -164,11 +173,14 @@ extension FilterViewController {
         locationCollectionView.snp.makeConstraints {
             $0.top.equalTo(locationSectionTitleLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(26)
-            $0.height.equalTo(120 - 28)
+            $0.height.equalTo(40 * 3 + 10 * 2 + 10)
         }
         
-        applyButton.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalToSuperview()
+        applyTextLabel.snp.makeConstraints {
+            $0.top.equalTo(locationCollectionView.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(90).priority(.high)
+            $0.bottom.equalToSuperview().priority(.low)
         }
         
     }
