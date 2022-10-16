@@ -33,7 +33,7 @@ final class FilterCell: FilterBaseCell {
     
     private func setUI() {
         contentView.addSubview(titleLabel)
-        contentView.layer.cornerRadius = 16
+        contentView.layer.cornerRadius = 12
         contentView.backgroundColor = .gray
         
         titleLabel.snp.makeConstraints {

@@ -31,11 +31,22 @@ final class FilterViewController: BottomSheetController {
     private func dispatch(_ viewModel: ViewModel) { }
     
     private func render(_ viewModel: ViewModel) {
+        taskCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
+        locationCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
+        
         viewModel.taskDriver
             .drive(taskCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
                 cell.viewModel = .init(item: item)
             }
             .disposed(by: disposeBag)
+        
+        viewModel.locationDriver
+            .drive(locationCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
+                cell.viewModel = .init(item: item)
+            }
+            .disposed(by: disposeBag)
+        
+        
     }
     
     // MARK: - Life Cycle
@@ -67,19 +78,30 @@ final class FilterViewController: BottomSheetController {
     
     private lazy var taskCollectionView: UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        cv.delegate = self
-
+        
         cv.register(Reuable.filterCell)
         return cv
     }()
     
     // NOTE: - 구분선: 1과 2
-    private lazy var dividerView12 = UIView()
+    private lazy var dividerView12: UIView = {
+        viewModel.divierViewModifier($0)
+        return $0
+    }(UIView())
     
     // NOTE: - 지역 선택
-//    private lazy var loactionSectionTitleLabel = UILabel()
-//    private lazy var loactionCollectionView = UICollectionView()
+    private lazy var locationSectionTitleLabel: UILabel = {
+        viewModel.sectionTitleModifier($0)
+        $0.text = "작업 종류를 선택해주세요."
+        return $0
+    }(UILabel())
     
+    private lazy var locationCollectionView: UICollectionView = {
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        
+        cv.register(Reuable.filterCell)
+        return cv
+    }()
     // NOTE: - 완료 버튼
     private lazy var applyButton = UIButton()
 }
@@ -89,13 +111,16 @@ extension FilterViewController: UICollectionViewDelegateFlowLayout {
         
         // NOTE: - TaskCollectionView
         if collectionView == taskCollectionView {
+            // NOTE: - 디자이너님 요청
+            // 셀 사이의 간격 12
+            // 셀 중앙정렬
             
-            print("😇맞")
+            
         } else {
-            print("아닌")
+            return CGSize(width: 100, height: 40)
         }
         
-        return CGSize(width: 100, height: 50)
+        return CGSize(width: 100, height: 40)
     }
 }
 
@@ -106,8 +131,8 @@ extension FilterViewController {
         [titleLabel,
          dividerView01,
          taskSectionTitleLabel, taskCollectionView,
-//         dividerView12,
-//         loactionSectionTitleLabel, loactionCollectionView,
+         dividerView12,
+         locationSectionTitleLabel, locationCollectionView,
          applyButton].forEach { view.addSubview($0) }
         
         titleLabel.snp.makeConstraints {
@@ -117,9 +142,9 @@ extension FilterViewController {
         }
         
         dividerView01.snp.makeConstraints {
-            $0.height.equalTo(1)
             $0.top.equalTo(titleLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(1)
         }
         
         taskSectionTitleLabel.snp.makeConstraints {
@@ -131,14 +156,27 @@ extension FilterViewController {
         taskCollectionView.snp.makeConstraints {
             $0.top.equalTo(taskSectionTitleLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(26)
-            $0.bottom.equalToSuperview()
+            $0.height.equalTo(120 - 28)
         }
-//
-//        dividerLineView12.snp.makeConstraints {
-//            $0.height.equalTo(1)
-//            $0.top.equalTo(taskCollectionView.snp.bottom).offset(20)
-//            $0.leading.trailing.equalToSuperview().inset(20)
-//        }
+
+        dividerView12.snp.makeConstraints {
+            $0.top.equalTo(dividerView01.snp.bottom).offset(120)
+            $0.leading.trailing.equalTo(dividerView01)
+            $0.height.equalTo(1)
+        }
+        
+        locationSectionTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(dividerView12.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(28)
+        }
+        
+        
+        locationCollectionView.snp.makeConstraints {
+            $0.top.equalTo(locationSectionTitleLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(26)
+            $0.height.equalTo(120 - 28)
+        }
         
         applyButton.snp.makeConstraints {
             $0.leading.trailing.bottom.equalToSuperview()

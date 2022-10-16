@@ -15,10 +15,19 @@ class FilterViewModel {
     
     // MARK: - Output
     let taskDriver: Driver<[String]>
+    let locationDriver: Driver<[String]>
     
     // MARK: - Initialize
     init() {
-        taskDriver = Observable.just(["작업", "도안"])
+        let tasks = FilterTask.allCases
+            .map { $0.rawValue }
+        
+        taskDriver = Observable.just(tasks)
+            .asDriver(onErrorJustReturn: [])
+        
+        let loactions = FilterLoaction.allCases
+            .map { $0.rawValue }
+        locationDriver = Observable.just(loactions)
             .asDriver(onErrorJustReturn: [])
     }
     
@@ -32,7 +41,7 @@ class FilterViewModel {
     func sectionTitleModifier(_ sender: UILabel) {
         sender.textAlignment = .center
         sender.textColor = .gray
-        sender.font = .systemFont(ofSize: 14, weight: .medium)
+        sender.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 14)
     }
     
 }
