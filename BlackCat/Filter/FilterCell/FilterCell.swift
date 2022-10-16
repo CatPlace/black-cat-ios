@@ -13,15 +13,31 @@ final class FilterCell: FilterBaseCell {
     typealias ViewModel = FilterCellViewModel
     
     // MARK: - Properties
-    var viewModel: ViewModel? {
-        didSet {
-            guard let viewModel else { return }
-            bind(viewModel)
-        }
+//    var viewModel: ViewModel? {
+//        didSet {
+//            print("didSetCALLED")
+//            guard let viewModel else { return }
+//            bind(viewModel)
+//        }
+//    }
+//
+//    func bind(_ viewModel: ViewModel) {
+//        print("여기는 셀")
+//        contentView.backgroundColor = .red
+//    }
+    
+    func configureCell(with: String) {
+        setUI()
+        print("ddd")
+        titleLabel.text = with
+        contentView.backgroundColor = .green
     }
     
-    func bind(_ viewModel: ViewModel) {
-        
+    func setUI() {
+        contentView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
     
     // MARK: - Properties

@@ -20,7 +20,7 @@ final class FilterViewController: BottomSheetController {
     
     // MARK: - Properties
     let disposeBag = DisposeBag()
-    let viewModel: ViewModel
+    let viewModel = ViewModel()
     
     // MARK: - Binding
     private func bind(_ viewModel: ViewModel) {
@@ -32,37 +32,28 @@ final class FilterViewController: BottomSheetController {
     
     private func render(_ viewModel: ViewModel) {
         viewModel.taskDriver
-            .asObservable()
-            .bind(to: taskCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
+//            .asObservable()
+            .debug("데이터")
+            .drive(taskCollectionView.rx.items) { cv, row, item in
+                let cell = cv.dequeue(Reuable.filterCell, for: IndexPath(row: row, section: 0))
                 
+                print("item \(item)")
+                cell.configureCell(with: item)
+                cell.backgroundColor = .red
+                return cell
             }
+//            .bind(to: taskCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
+//                print("💬 \(row) \(item) \(cell)")
+////                cell.viewModel = FilterCellViewModel()
+//                cell.configureCell(with: item)
+//            }
             .disposed(by: disposeBag)
     }
     
-    // MARK: - Initialize
-    init(viewModel: ViewModel = ViewModel()) {
-        self.viewModel = viewModel
-
-        super.init(nibName: nil, bundle: nil)
+    // MARK: - Life Cycle
+    override func viewDidLoad() {
         setUI()
         bind(viewModel)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - function
-    // 구분선 Modifier
-    fileprivate func divierViewModifier(_ sender: UIView) {
-        sender.backgroundColor = .darkGray
-    }
-    
-    // 섹션 타이틀 Modifier
-    fileprivate func sectionTitleModifier(_ sender: UILabel) {
-        sender.textAlignment = .center
-        sender.textColor = .gray
-        sender.font = .systemFont(ofSize: 14, weight: .medium)
     }
     
     // MARK: - Properties
@@ -75,20 +66,21 @@ final class FilterViewController: BottomSheetController {
     
     // NOTE: - 구분선: 0과 1
     private lazy var dividerView01: UIView = {
-        divierViewModifier($0)
+        viewModel.divierViewModifier($0)
         return $0
     }(UIView())
     
     // NOTE: - 작업 종류 선택
     private lazy var taskSectionTitleLabel: UILabel = {
-        sectionTitleModifier($0)
+        viewModel.sectionTitleModifier($0)
         return $0
     }(UILabel())
     
     private lazy var taskCollectionView: UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        cv.delegate = self
+
         cv.register(Reuable.filterCell)
-        
         return cv
     }()
     
@@ -101,6 +93,21 @@ final class FilterViewController: BottomSheetController {
     
     // NOTE: - 완료 버튼
     private lazy var applyButton = UIButton()
+}
+
+extension FilterViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        // NOTE: - TaskCollectionView
+        if collectionView == taskCollectionView {
+            
+            print("😇맞")
+        } else {
+            print("아닌")
+        }
+        
+        return CGSize(width: 100, height: 50)
+    }
 }
 
 extension FilterViewController {
