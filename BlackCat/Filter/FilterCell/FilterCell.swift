@@ -14,35 +14,56 @@ final class FilterCell: FilterBaseCell {
     typealias TaskVM = FilterCellTaskViewModel
     typealias LoactionVM = FilterCellLocationViewModel
     
+    enum Status {
+        case subscribe
+        case unSubscribe
+    }
+    
     // MARK: - Properties
-    var taskVM: TaskVM? {
+    var taskViewModel: TaskVM? {
         didSet {
-            guard let taskVM else { return }
+            guard let taskViewModel else { return }
             setUI()
             
-            taskVM.itemDriver
+            taskViewModel.itemDriver
                 .map { $0.type.rawValue }
                 .drive { self.titleLabel.text = $0 }
                 .disposed(by: self.disposeBag)
         }
     }
     
-    var loactionVM: LoactionVM? {
+    var loactionViewModel: LoactionVM? {
         didSet {
-            guard let loactionVM else { return }
+            guard let loactionViewModel else { return }
             setUI()
             
-            loactionVM.itemDriver
+            loactionViewModel.itemDriver
                 .map { $0.type.rawValue }
                 .drive { self.titleLabel.text = $0 }
                 .disposed(by: self.disposeBag)
         }
     }
     
+    func selectedAttributes() {
+        DispatchQueue.main.async { [weak self] in
+            self?.titleLabel.textColor = .systemGray
+//            self?.contentView.backgroundColor = self?.viewModel?.status.selectedBackgroundColor
+        }
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setUI()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
     private func setUI() {
-        contentView.addSubview(titleLabel)
         contentView.layer.cornerRadius = 12
         contentView.backgroundColor = .gray
+        contentView.addSubview(titleLabel)
         
         titleLabel.snp.makeConstraints {
             $0.edges.equalToSuperview()

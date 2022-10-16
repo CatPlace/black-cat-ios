@@ -32,7 +32,6 @@ final class FilterViewController: BottomSheetController {
         taskCollectionView.rx.itemSelected
             .debug("🧀")
             .bind {
-                print("reloadCell")
                 self.taskCollectionView.reloadItems(at: [$0])
             }
 //            .bind(to: viewModel.taskItemSelectedSubject)
@@ -56,7 +55,6 @@ final class FilterViewController: BottomSheetController {
             }
             .disposed(by: disposeBag)
     }
-    
     
     // MARK: - function
     // 구분선 Modifier
