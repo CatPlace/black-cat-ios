@@ -23,7 +23,6 @@ final class FilterCell: FilterBaseCell {
     var taskViewModel: TaskVM? {
         didSet {
             guard let taskViewModel else { return }
-            setUI()
             
             taskViewModel.itemDriver
                 .map { $0.type.rawValue }
@@ -35,7 +34,6 @@ final class FilterCell: FilterBaseCell {
     var loactionViewModel: LoactionVM? {
         didSet {
             guard let loactionViewModel else { return }
-            setUI()
             
             loactionViewModel.itemDriver
                 .map { $0.type.rawValue }
@@ -45,6 +43,13 @@ final class FilterCell: FilterBaseCell {
     }
     
     func selectedAttributes() {
+        DispatchQueue.main.async { [weak self] in
+            self?.titleLabel.textColor = .systemGray
+//            self?.contentView.backgroundColor = self?.viewModel?.status.selectedBackgroundColor
+        }
+    }
+    
+    func unSelectedAttributes() {
         DispatchQueue.main.async { [weak self] in
             self?.titleLabel.textColor = .systemGray
 //            self?.contentView.backgroundColor = self?.viewModel?.status.selectedBackgroundColor
@@ -70,7 +75,7 @@ final class FilterCell: FilterBaseCell {
         }
     }
     
-    // MARK: - Properties
+    // MARK: - UIComponents
     private lazy var titleLabel: UILabel = {
         $0.textAlignment = .center
         $0.font = .systemFont(ofSize: 16, weight: .semibold)
@@ -78,7 +83,23 @@ final class FilterCell: FilterBaseCell {
     }(UILabel())
 }
 
-class FilterCellTaskViewModel {
+extension FilterCell.Status {
+    var backgroundColor: UIColor? {
+        switch self {
+        case .subscribe: return .darkGray
+        case .unSubscribe: return #colorLiteral(red: 0.4449512362, green: 0.1262507141, blue: 0.628126204, alpha: 1)
+        }
+    }
+    
+    var textColor: UIColor? {
+        switch self {
+        case .subscribe: return .white
+        case .unSubscribe: return .gray
+        }
+    }
+}
+
+final class FilterCellTaskViewModel {
     let itemDriver: Driver<FilterTask>
     
     init(item: FilterTask) {
@@ -87,7 +108,7 @@ class FilterCellTaskViewModel {
     }
 }
 
-class FilterCellLocationViewModel {
+final class FilterCellLocationViewModel {
     let itemDriver: Driver<FilterLocation>
 
     init(item: FilterLocation) {
