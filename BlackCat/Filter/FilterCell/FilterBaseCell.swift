@@ -8,13 +8,11 @@
 import UIKit
 import RxSwift
 
-// MARK: - Cell
-class FilterBaseCell: UITableViewCell {
+class FilterBaseCell: UICollectionViewCell {
     var disposeBag: DisposeBag = DisposeBag()
     
-    // MARK: - Initializing
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
         initialize()
     }

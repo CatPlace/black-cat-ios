@@ -24,7 +24,7 @@ class FilterExampleViewController: UIViewController {
         button.rx.tap
             .debug("didTapTouched")
             .bind { [weak self] _ in
-                let vc = SparseContentSheetViewController()
+                let vc = FilterViewController()
                 vc.preferredSheetSizing = .medium
                 self?.present(vc, animated: true)
             }
@@ -33,19 +33,4 @@ class FilterExampleViewController: UIViewController {
     
     let button = UIButton()
     let disposeBag = DisposeBag()
-}
-
-
-final class SparseContentSheetViewController: BottomSheetController {
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    
-//        setUI()
-    }
-    
-}
-
-extension SparseContentSheetViewController {
-    
 }
