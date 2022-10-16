@@ -45,13 +45,13 @@ final class FilterViewController: BottomSheetController {
         viewModel.taskDriver
             .debug("r🥭")
             .drive(taskCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
-                cell.taskVM = .init(item: item)
+                cell.taskViewModel = .init(item: item)
             }
             .disposed(by: disposeBag)
         
         viewModel.locationDriver
             .drive(locationCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
-                cell.loactionVM = .init(item: item)
+                cell.loactionViewModel = .init(item: item)
             }
             .disposed(by: disposeBag)
     }

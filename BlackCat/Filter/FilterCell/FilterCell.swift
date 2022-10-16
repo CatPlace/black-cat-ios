@@ -99,6 +99,8 @@ extension FilterCell.Status {
     }
 }
 
+// MARK: - FilterCellTaskViewModel
+
 final class FilterCellTaskViewModel {
     let itemDriver: Driver<FilterTask>
     
@@ -107,6 +109,8 @@ final class FilterCellTaskViewModel {
             .asDriver(onErrorJustReturn: .init())
     }
 }
+
+// MARK: - FilterCellLocationViewModel
 
 final class FilterCellLocationViewModel {
     let itemDriver: Driver<FilterLocation>
