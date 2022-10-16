@@ -12,23 +12,33 @@ import RxCocoa
 class FilterViewModel {
     
     // MARK: - Input
+    let taskItemSelectedSubject = PublishSubject<IndexPath>()
     
     // MARK: - Output
-    let taskDriver: Driver<[String]>
-    let locationDriver: Driver<[String]>
+    let taskDriver: Driver<[FilterTask]>
+    let locationDriver: Driver<[FilterLocation]>
     
+//    let taskItemReloadDriver: Driver<IndexPath>
     // MARK: - Initialize
     init() {
-        let tasks = FilterTask.allCases
-            .map { $0.rawValue }
+        let tasks = FilterTaskType.allCases
+            .map { item -> FilterTask in
+                FilterTask(item: item, isSubscribe: false)
+            }
         
         taskDriver = Observable.just(tasks)
             .asDriver(onErrorJustReturn: [])
         
-        let loactions = FilterLoaction.allCases
-            .map { $0.rawValue }
+        let loactions = FilterLocationType.allCases
+            .map { item -> FilterLocation in
+                FilterLocation(item: item, isSubscribe: false)
+            }
         locationDriver = Observable.just(loactions)
             .asDriver(onErrorJustReturn: [])
+        
+//        taskItemReloadDriver = taskItemSelectedSubject
+//            .map(<#T##transform: (IndexPath) throws -> Result##(IndexPath) throws -> Result#>)
+        
     }
     
     // MARK: - function
@@ -43,5 +53,6 @@ class FilterViewModel {
         sender.textColor = .gray
         sender.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 14)
     }
+    
     
 }

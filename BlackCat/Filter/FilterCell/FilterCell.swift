@@ -8,27 +8,35 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxGesture
 
 final class FilterCell: FilterBaseCell {
-    typealias ViewModel = FilterCellViewModel
+    typealias TaskVM = FilterCellTaskViewModel
+    typealias LoactionVM = FilterCellLocationViewModel
     
     // MARK: - Properties
-    var viewModel: ViewModel? {
+    var taskVM: TaskVM? {
         didSet {
-            guard let viewModel else { return }
-            bind(viewModel)
+            guard let taskVM else { return }
+            setUI()
+            
+            taskVM.itemDriver
+                .map { $0.type.rawValue }
+                .drive { self.titleLabel.text = $0 }
+                .disposed(by: self.disposeBag)
         }
     }
-
-    // MARK: - Binding
-    func bind(_ viewModel: ViewModel) {
-        viewModel.itemDriver
-            .asObservable()
-            .withUnretained(self)
-            .bind { owner, item in
-                owner.setUI()
-                owner.titleLabel.text = item
-            }.disposed(by: self.disposeBag)
+    
+    var loactionVM: LoactionVM? {
+        didSet {
+            guard let loactionVM else { return }
+            setUI()
+            
+            loactionVM.itemDriver
+                .map { $0.type.rawValue }
+                .drive { self.titleLabel.text = $0 }
+                .disposed(by: self.disposeBag)
+        }
     }
     
     private func setUI() {
@@ -49,11 +57,20 @@ final class FilterCell: FilterBaseCell {
     }(UILabel())
 }
 
-class FilterCellViewModel {
-    let itemDriver: Driver<String>
+class FilterCellTaskViewModel {
+    let itemDriver: Driver<FilterTask>
     
-    init(item: String) {
+    init(item: FilterTask) {
         itemDriver = Observable.just(item)
-            .asDriver(onErrorJustReturn: "🚨 버그 신고를 해주새요.")
+            .asDriver(onErrorJustReturn: .init(item: .작품))
+    }
+}
+
+class FilterCellLocationViewModel {
+    let itemDriver: Driver<FilterLocation>
+
+    init(item: FilterLocation) {
+        itemDriver = Observable.just(item)
+            .asDriver(onErrorJustReturn: .init(item: .서울))
     }
 }

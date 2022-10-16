@@ -28,21 +28,31 @@ final class FilterViewController: BottomSheetController {
         render(viewModel)
     }
     
-    private func dispatch(_ viewModel: ViewModel) { }
+    private func dispatch(_ viewModel: ViewModel) {
+        taskCollectionView.rx.itemSelected
+            .debug("🧀")
+            .bind {
+                print("reloadCell")
+                self.taskCollectionView.reloadItems(at: [$0])
+            }
+//            .bind(to: viewModel.taskItemSelectedSubject)
+            .disposed(by: disposeBag)
+    }
     
     private func render(_ viewModel: ViewModel) {
         taskCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
         locationCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
         
         viewModel.taskDriver
+            .debug("r🥭")
             .drive(taskCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
-                cell.viewModel = .init(item: item)
+                cell.taskVM = .init(item: item)
             }
             .disposed(by: disposeBag)
         
         viewModel.locationDriver
             .drive(locationCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
-                cell.viewModel = .init(item: item)
+                cell.loactionVM = .init(item: item)
             }
             .disposed(by: disposeBag)
     }
