@@ -23,7 +23,7 @@ class FilterViewModel {
     init() {
         let tasks = FilterTaskType.allCases
             .map { item -> FilterTask in
-                FilterTask(item: item, isSubscribe: false)
+                FilterTask(type: item, isSubscribe: false)
             }
         
         taskDriver = Observable.just(tasks)

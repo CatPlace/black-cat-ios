@@ -62,7 +62,7 @@ class FilterCellTaskViewModel {
     
     init(item: FilterTask) {
         itemDriver = Observable.just(item)
-            .asDriver(onErrorJustReturn: .init(item: .작품))
+            .asDriver(onErrorJustReturn: .init())
     }
 }
 

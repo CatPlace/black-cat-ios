@@ -6,18 +6,26 @@
 //
 
 import Foundation
+import RealmSwift
 
 enum FilterTaskType: String, CaseIterable {
     case 작품
     case 도안
 }
 
-struct FilterTask {
-    var type: FilterTaskType
-    var isSubscribe: Bool
+class FilterTask: Object {
     
-    init(item: FilterTaskType, isSubscribe: Bool = false) {
-        self.type = item
+    @Persisted private var typeString: String = FilterTaskType.작품.rawValue
+    
+    var type: FilterTaskType {
+        get { return FilterTaskType(rawValue: typeString) ?? .작품 }
+        set { typeString = newValue.rawValue }
+    }
+    @Persisted var isSubscribe: Bool = false
+    
+    convenience init(type: FilterTaskType, isSubscribe: Bool = false) {
+        self.init()
+        self.type = type
         self.isSubscribe = isSubscribe
     }
 }
