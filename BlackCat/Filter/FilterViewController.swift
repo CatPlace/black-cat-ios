@@ -31,10 +31,14 @@ final class FilterViewController: BottomSheetController {
     private func dispatch(_ viewModel: ViewModel) {
         taskCollectionView.rx.itemSelected
             .debug("🧀")
-            .bind {
-                self.taskCollectionView.reloadItems(at: [$0])
-            }
-//            .bind(to: viewModel.taskItemSelectedSubject)
+//            .bind {
+//                self.taskCollectionView.reloadItems(at: [$0])
+//            }
+            .bind(to: viewModel.taskItemSelectedSubject)
+            .disposed(by: disposeBag)
+        
+        taskCollectionView.rx.modelSelected(FilterTask.self)
+            .bind(to: viewModel.taskModelSelectedSubject)
             .disposed(by: disposeBag)
     }
     
@@ -53,6 +57,11 @@ final class FilterViewController: BottomSheetController {
             .drive(locationCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
                 cell.loactionViewModel = .init(item: item)
             }
+            .disposed(by: disposeBag)
+        
+        viewModel.taskItemReloadDriver
+            .asObservable()
+            .bind { self.taskCollectionView.reloadItems(at: [$0]) }
             .disposed(by: disposeBag)
     }
     
