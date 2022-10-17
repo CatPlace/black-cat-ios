@@ -14,9 +14,9 @@ final class FilterCell: FilterBaseCell {
     typealias TaskVM = FilterCellTaskViewModel
     typealias LoactionVM = FilterCellLocationViewModel
     
-    enum Status {
-        case subscribe
-        case unSubscribe
+    enum Status: Int {
+        case subscribe = 0
+        case unSubscribe = 1
     }
     
     // MARK: - Properties
@@ -24,9 +24,16 @@ final class FilterCell: FilterBaseCell {
         didSet {
             guard let taskViewModel else { return }
             
-            taskViewModel.itemDriver
-                .map { $0.type.rawValue }
-                .drive { self.titleLabel.text = $0 }
+            taskViewModel.typeStringDriver
+                .drive(with: self) { owner, text in
+                    owner.titleLabel.text = text
+                }.disposed(by: self.disposeBag)
+            
+            taskViewModel.isSubscribeDriver
+                .asObservable()
+                .bind { [weak self] value in
+                    self?.configureAttributes(value)
+                }
                 .disposed(by: self.disposeBag)
         }
     }
@@ -42,17 +49,15 @@ final class FilterCell: FilterBaseCell {
         }
     }
     
-    func selectedAttributes() {
+    func configureAttributes(_ isSubscribe: Bool) {
         DispatchQueue.main.async { [weak self] in
-            self?.titleLabel.textColor = .systemGray
-//            self?.contentView.backgroundColor = self?.viewModel?.status.selectedBackgroundColor
-        }
-    }
-    
-    func unSelectedAttributes() {
-        DispatchQueue.main.async { [weak self] in
-            self?.titleLabel.textColor = .systemGray
-//            self?.contentView.backgroundColor = self?.viewModel?.status.selectedBackgroundColor
+            self?.titleLabel.textColor = isSubscribe
+            ? .white
+            : .darkGray
+            
+            self?.contentView.backgroundColor = isSubscribe
+            ? #colorLiteral(red: 0.4449512362, green: 0.1262507141, blue: 0.628126204, alpha: 1)
+            : .systemGray6
         }
     }
     
@@ -67,7 +72,6 @@ final class FilterCell: FilterBaseCell {
 
     private func setUI() {
         contentView.layer.cornerRadius = 12
-        contentView.backgroundColor = .gray
         contentView.addSubview(titleLabel)
         
         titleLabel.snp.makeConstraints {
@@ -102,11 +106,17 @@ extension FilterCell.Status {
 // MARK: - FilterCellTaskViewModel
 
 final class FilterCellTaskViewModel {
-    let itemDriver: Driver<FilterTask>
+    let typeStringDriver: Driver<String>
+    let isSubscribeDriver: Driver<Bool>
     
     init(item: FilterTask) {
-        itemDriver = Observable.just(item)
-            .asDriver(onErrorJustReturn: .init())
+        
+        typeStringDriver = Observable.just(item.type)
+            .map { $0.rawValue }
+            .asDriver(onErrorJustReturn: "")
+        
+        isSubscribeDriver = Observable.just(item.isSubscribe)
+            .asDriver(onErrorJustReturn: false)
     }
 }
 
