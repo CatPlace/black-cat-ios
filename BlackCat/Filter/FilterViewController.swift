@@ -43,7 +43,7 @@ final class FilterViewController: BottomSheetController {
         locationCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
         
         viewModel.taskDriver
-            .debug("r🥭")
+            .debug("🥭")
             .drive(taskCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
                 cell.taskViewModel = .init(item: item)
             }

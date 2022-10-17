@@ -14,11 +14,6 @@ final class FilterCell: FilterBaseCell {
     typealias TaskVM = FilterCellTaskViewModel
     typealias LoactionVM = FilterCellLocationViewModel
     
-    enum Status: Int {
-        case subscribe = 0
-        case unSubscribe = 1
-    }
-    
     // MARK: - Properties
     var taskViewModel: TaskVM? {
         didSet {
@@ -30,9 +25,8 @@ final class FilterCell: FilterBaseCell {
                 }.disposed(by: self.disposeBag)
             
             taskViewModel.isSubscribeDriver
-                .asObservable()
-                .bind { [weak self] value in
-                    self?.configureAttributes(value)
+                .drive(with: self) { owner, isSubscribe in
+                    owner.configureAttributes(isSubscribe)
                 }
                 .disposed(by: self.disposeBag)
         }
@@ -65,11 +59,11 @@ final class FilterCell: FilterBaseCell {
         super.init(frame: frame)
         setUI()
     }
-
+    
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
+        fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func setUI() {
         contentView.layer.cornerRadius = 12
         contentView.addSubview(titleLabel)
@@ -87,22 +81,6 @@ final class FilterCell: FilterBaseCell {
     }(UILabel())
 }
 
-extension FilterCell.Status {
-    var backgroundColor: UIColor? {
-        switch self {
-        case .subscribe: return .darkGray
-        case .unSubscribe: return #colorLiteral(red: 0.4449512362, green: 0.1262507141, blue: 0.628126204, alpha: 1)
-        }
-    }
-    
-    var textColor: UIColor? {
-        switch self {
-        case .subscribe: return .white
-        case .unSubscribe: return .gray
-        }
-    }
-}
-
 // MARK: - FilterCellTaskViewModel
 
 final class FilterCellTaskViewModel {
@@ -116,6 +94,8 @@ final class FilterCellTaskViewModel {
             .asDriver(onErrorJustReturn: "")
         
         isSubscribeDriver = Observable.just(item.isSubscribe)
+            .debug("🐻‍❄️")
+            .map { !$0 }
             .asDriver(onErrorJustReturn: false)
     }
 }

@@ -33,6 +33,7 @@
 		8EE9A0C128F3CB0D003D7761 /* HomeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9A0C028F3CB0D003D7761 /* HomeSection.swift */; };
 		8EE9A0C328F3CD25003D7761 /* HomeCompositionalLayoutSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9A0C228F3CD25003D7761 /* HomeCompositionalLayoutSection.swift */; };
 		B12C1DC728ED219C0089964E /* UIVIewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12C1DC628ED219C0089964E /* UIVIewController+Rx.swift */; };
+		B1C80AB928FD9B3000ACE943 /* Object+RealmSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C80AB828FD9B3000ACE943 /* Object+RealmSwift.swift */; };
 		B1CA040628F00CC1004A6027 /* MagazineDetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CA040528F00CC1004A6027 /* MagazineDetailImageCell.swift */; };
 		B1CA040828F00D84004A6027 /* Rect.png in Resources */ = {isa = PBXBuildFile; fileRef = B1CA040728F00D84004A6027 /* Rect.png */; };
 		B1CA040A28F00D8C004A6027 /* Rect2.png in Resources */ = {isa = PBXBuildFile; fileRef = B1CA040928F00D8C004A6027 /* Rect2.png */; };
@@ -124,6 +125,7 @@
 		8EE9A0C028F3CB0D003D7761 /* HomeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSection.swift; sourceTree = "<group>"; };
 		8EE9A0C228F3CD25003D7761 /* HomeCompositionalLayoutSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCompositionalLayoutSection.swift; sourceTree = "<group>"; };
 		B12C1DC628ED219C0089964E /* UIVIewController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIewController+Rx.swift"; sourceTree = "<group>"; };
+		B1C80AB828FD9B3000ACE943 /* Object+RealmSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Object+RealmSwift.swift"; sourceTree = "<group>"; };
 		B1CA040528F00CC1004A6027 /* MagazineDetailImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailImageCell.swift; sourceTree = "<group>"; };
 		B1CA040728F00D84004A6027 /* Rect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rect.png; sourceTree = "<group>"; };
 		B1CA040928F00D8C004A6027 /* Rect2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rect2.png; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 				B1D127DE28F09200007E3667 /* UIImage+.swift */,
 				B1D3362428F142A400826636 /* CALayer+.swift */,
 				B1D3362628F1457700826636 /* UITabBar+.swift */,
+				B1C80AB828FD9B3000ACE943 /* Object+RealmSwift.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -562,6 +565,7 @@
 				8E2D8C5928F2EE69004B514D /* HomeEmptyCell.swift in Sources */,
 				8E2D8C4F28F2ED53004B514D /* HomeHeaderView.swift in Sources */,
 				B1EABEC128FBD83F0029B6BC /* FilterLoaction.swift in Sources */,
+				B1C80AB928FD9B3000ACE943 /* Object+RealmSwift.swift in Sources */,
 				78B00BBD28F5661000A9915D /* MagazineViewController.swift in Sources */,
 				8E2D8C4828F2EC27004B514D /* HomeViewController.swift in Sources */,
 				B1EE64F828FA4ABE0055A4F1 /* FilterExampleViewController.swift in Sources */,

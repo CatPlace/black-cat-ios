@@ -8,8 +8,9 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RealmSwift
 
-class FilterViewModel {
+final class FilterViewModel {
     
     // MARK: - Input
     let taskItemSelectedSubject = PublishSubject<IndexPath>()
@@ -19,14 +20,16 @@ class FilterViewModel {
     let locationDriver: Driver<[FilterLocation]>
     
 //    let taskItemReloadDriver: Driver<IndexPath>
+    
+//    let realmService
     // MARK: - Initialize
-    init() {
-        let tasks = FilterTaskType.allCases
-            .map { item -> FilterTask in
-                FilterTask(type: item, isSubscribe: false)
-            }
+    init(provider: FilterService = FilterService()) {
+        // 초기화할때 값 모두 저장
+        provider.loadSavedData()
         
-        taskDriver = Observable.just(tasks)
+        let tasks = provider.all
+        
+        taskDriver = tasks
             .asDriver(onErrorJustReturn: [])
         
         let loactions = FilterLocationType.allCases
@@ -38,6 +41,77 @@ class FilterViewModel {
         
 //        taskItemReloadDriver = taskItemSelectedSubject
 //            .map(<#T##transform: (IndexPath) throws -> Result##(IndexPath) throws -> Result#>)
-        
     }
 }
+
+//public class FilterService {
+//    var all = PublishSubject<[FilterTask]>()
+//
+//    func add(task: FilterTask) {
+//        guard write(task: task) else { return }
+//
+////        all.append(task)
+//    }
+//
+//    func loadSavedData() {
+//        DispatchQueue.global().async {
+//            guard let realm = self.getRealm() else { return }
+//
+//            let allType = FilterTask.TaskType.allCases
+//
+//            let result = allType.map { type -> FilterTask in
+//                self.buildFilterTask(type: type)
+//            }
+//
+//            result.forEach { task in
+//                self.write(task: task)
+//            }
+//
+//            let objects = realm.objects(FilterTask.self)
+//            print("objects \(objects)")
+//
+//            DispatchQueue.global().sync {
+//                self.all.onNext(Array(objects))
+//            }
+//
+//        }
+//    }
+//
+//    func buildFilterTask(type :FilterTask.TaskType) -> FilterTask {
+//        FilterTask(type: type, isSubscribe: false)
+//    }
+//
+//    @discardableResult
+//    private func write(task: FilterTask) -> Bool {
+//        realmWrite { realm in
+//            realm.add(task, update: .modified)
+//        }
+//    }
+//
+//    private func realmWrite(operation: (_ realm: Realm) -> Void) -> Bool {
+//        guard let realm = getRealm() else { return false }
+//
+//        // realm 파일위치
+//        print(Realm.Configuration.defaultConfiguration.fileURL!)
+//
+//        do {
+//            try realm.write { operation(realm) }
+//        }
+//        catch let error as NSError {
+//            print(error.localizedDescription)
+//            return false
+//        }
+//
+//        return true
+//    }
+//
+//    private func getRealm() -> Realm? {
+//        do {
+//            return try Realm()
+//        }
+//        catch let error as NSError {
+//            print(error.localizedDescription)
+//            return nil
+//        }
+//    }
+//}
