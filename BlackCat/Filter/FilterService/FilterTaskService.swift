@@ -60,15 +60,16 @@ final class FilterTaskService: BaseRealmProtocol, FilterTaskServiceProtocol {
     
     /// 필터 저장을 누르지 않을시, revert를 수행합니다.
     func executeRevert(tasks: [FilterTask], revertTasks: [FilterTask]) {
-        zip(tasks, revertTasks).forEach { (task, reverTask) in
+        zip(tasks, revertTasks).forEach { (task, revertTask) in
             
             realmWrite { realm in
-                task.isSubscribe = reverTask.isSubscribe
+                task.isSubscribe = revertTask.isSubscribe
             }
         }
     }
     
     // MARK: - Function 내부에서만 사용
+    
     fileprivate func write(task: FilterTask) {
         realmWrite { realm in
             realm.add(task ,update: .modified)

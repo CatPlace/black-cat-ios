@@ -110,6 +110,9 @@ extension FilterReactor {
         if isRevert {
             provider.taskService.executeRevert(tasks: currentState.tasks,
                                                revertTasks: currentState.revertTasks)
+            
+            provider.locationService.executeRevert(locations: currentState.locations,
+                                                   revertLocations: currentState.revertLocations)
         }
     }
 }

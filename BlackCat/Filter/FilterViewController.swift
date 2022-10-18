@@ -31,7 +31,6 @@ final class FilterViewController: BottomSheetController, View {
     private func dispatch(reactor: Reactor) {
         self.rx.viewDidLoad
             .map { Reactor.Action.refresh }
-            .debug("icalled")
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
