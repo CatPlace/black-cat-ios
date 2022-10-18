@@ -8,9 +8,11 @@
 import Foundation
 
 protocol FilterServiceProtocol {
-    var taskService: FilterTaskServiceProtocol { get }
+    var taskService: FilterTaskServiceProtocol { get set }
+    var loactionService: FilterLoactionServiceProtocol { get set }
 }
 
 final class FilterServiceProvider: FilterServiceProtocol {
     var taskService: FilterTaskServiceProtocol = FilterTaskService()
+    var loactionService: FilterLoactionServiceProtocol = FilterLoactionService()
 }

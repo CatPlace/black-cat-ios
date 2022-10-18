@@ -26,36 +26,38 @@ public class FilterTask: Object {
     
     convenience init(type: TaskType, isSubscribe: Bool = false) {
         self.init()
+        
         self.typeString = type.rawValue
         self.type = type
         
-        self.save()
+        self.saveAllData()
     }
     
-    convenience init(typeString: String, isSubscribe: Bool = false) {
-        self.init(type: TaskType(rawValue: typeString) ?? .작품)
-        self.typeString = typeString
-        self.isSubscribe = isSubscribe
-    }
+//    convenience init(typeString: String, isSubscribe: Bool = false) {
+//        self.init()
+//
+//        self.typeString = typeString
+//        self.isSubscribe = isSubscribe
+//    }
 }
 
 extension FilterTask: BaseRealmProtocol {
     
-    func write(task: FilterTask) {
+    fileprivate func write(task: FilterTask) {
         realmWrite { realm in
             realm.add(task ,update: .modified)
         }
     }
     
     /// 값을 처음에 저장해야합니다.
-    func save() {
+    fileprivate func saveAllData() {
+        print("탯ㅌ")
         guard let realm = self.getRealm() else { return }
         
         let keys = Array(realm.objects(FilterTask.self))
             .map { $0.typeString }
         
-        TaskType.allCases
-            .map { $0.rawValue }
+        TaskType.allCases.map { $0.rawValue }
             .filter { !keys.contains($0) }
             .forEach { _ in self.write(task: FilterTask(type: type, isSubscribe: false)) }
     }

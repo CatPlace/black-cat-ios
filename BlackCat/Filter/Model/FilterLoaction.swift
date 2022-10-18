@@ -6,25 +6,61 @@
 //
 
 import Foundation
+import RealmSwift
 
-// NOTE: - 지역이 늘어나면 "_" replace "/" 자동화 필요.
-public enum FilterLocationType: String, CaseIterable {
-    case 서울 = "서울"
-    case 경기_인천 = "경기/인천"
-    case 충청_대전 = "충천/대전"
-    case 전라_광주 = "전라/광주"
-    case 경북_대구 = "경북/대구"
-    case 경남_부산_울산 = "경남/부산/울산"
-    case 강원 = "강원"
-    case 제주 = "제주"
+public class FilterLocation: Object {
+    
+    // ✏️ NOTE: - 지역이 늘어나면 "_" replace "/" 자동화 필요.
+    public enum LocationType: String, CaseIterable {
+        case 서울 = "서울"
+        case 경기_인천 = "경기/인천"
+        case 충청_대전 = "충천/대전"
+        case 전라_광주 = "전라/광주"
+        case 경북_대구 = "경북/대구"
+        case 경남_부산_울산 = "경남/부산/울산"
+        case 강원 = "강원"
+        case 제주 = "제주"
+    }
+
+    @Persisted(primaryKey: true) private var typeString: String
+    
+    public var type: LocationType {
+        get { return LocationType(rawValue: typeString) ?? .서울 }
+        set { typeString = newValue.rawValue }
+    }
+    @Persisted public var isSubscribe: Bool = false
+    
+    
+    convenience init(type: LocationType, isSubscribe: Bool = false) {
+        self.init()
+        
+        self.typeString = type.rawValue
+        self.type = type
+        
+        self.saveAllData()
+    }
 }
 
-public struct FilterLocation {
-    public var type: FilterLocationType
-    public var isSubscribe: Bool
-    
-    init(item: FilterLocationType, isSubscribe: Bool = false) {
-        self.type = item
-        self.isSubscribe = isSubscribe
+extension FilterLocation: BaseRealmProtocol {
+   
+    fileprivate func write(location: FilterLocation) {
+        realmWrite { realm in
+            realm.add(location ,update: .modified)
+        }
     }
+    
+    /// 값을 처음에 저장해야합니다.
+    fileprivate func saveAllData() {
+        print("가감없이 삭제하세요.")
+        
+        guard let realm = self.getRealm() else { return }
+        
+        let keys = Array(realm.objects(FilterLocation.self))
+            .map { $0.typeString }
+        
+        LocationType.allCases.map { $0.rawValue }
+            .filter { !keys.contains($0) }
+            .forEach { _ in self.write(location: FilterLocation(type: type, isSubscribe: false)) }
+    }
+    
 }

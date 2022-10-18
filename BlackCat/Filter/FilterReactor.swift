@@ -20,10 +20,12 @@ final class FilterReactor: Reactor {
     
     enum Mutation {
         case setTasks([FilterTask])
+        case setLocations([FilterLocation])
     }
     
     struct State {
-        @Pulse var tasks: [FilterTask] = []
+        var tasks: [FilterTask] = []
+        var locations: [FilterLocation] = []
     }
     
     var initialState: State
@@ -37,10 +39,17 @@ final class FilterReactor: Reactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .refresh:
-            return provider.taskService.fetch()
-                .map { tasks in
-                    return .setTasks(tasks)
-                }
+            return .concat([
+                provider.taskService.fetch()
+                    .map { tasks in
+                        return .setTasks(tasks)
+                    },
+                provider.loactionService.fetch()
+                    .map { locations in
+                        return .setLocations(locations)
+                    }
+            ])
+            
                 
         case .didTapCell(let task):
             return provider.taskService.update(task: task)
@@ -55,6 +64,9 @@ final class FilterReactor: Reactor {
         switch mutation {
         case let .setTasks(tasks):
             newState.tasks = tasks
+            return newState
+        case let .setLocations(locations):
+            newState.locations = locations
             return newState
         }
     }

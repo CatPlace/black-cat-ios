@@ -27,8 +27,7 @@ final class FilterCell: FilterBaseCell {
             taskViewModel.isSubscribeDriver
                 .drive(with: self) { owner, isSubscribe in
                     owner.configureAttributes(isSubscribe)
-                }
-                .disposed(by: self.disposeBag)
+                }.disposed(by: self.disposeBag)
         }
     }
     
@@ -36,10 +35,15 @@ final class FilterCell: FilterBaseCell {
         didSet {
             guard let loactionViewModel else { return }
             
-            loactionViewModel.itemDriver
-                .map { $0.type.rawValue }
-                .drive { self.titleLabel.text = $0 }
-                .disposed(by: self.disposeBag)
+            loactionViewModel.typeStringDriver
+                .drive(with: self) { owner, text in
+                    owner.titleLabel.text = text
+                }.disposed(by: self.disposeBag)
+            
+            loactionViewModel.isSubscribeDriver
+                .drive(with: self) { owner, isSubscribe in
+                    owner.configureAttributes(isSubscribe)
+                }.disposed(by: self.disposeBag)
         }
     }
     
@@ -103,10 +107,17 @@ final class FilterCellTaskViewModel {
 // MARK: - FilterCellLocationViewModel
 
 final class FilterCellLocationViewModel {
-    let itemDriver: Driver<FilterLocation>
+    let typeStringDriver: Driver<String>
+    let isSubscribeDriver: Driver<Bool>
 
     init(item: FilterLocation) {
-        itemDriver = Observable.just(item)
-            .asDriver(onErrorJustReturn: .init(item: .서울))
+        typeStringDriver = Observable.just(item.type)
+            .map { $0.rawValue }
+            .asDriver(onErrorJustReturn: "")
+        
+        isSubscribeDriver = Observable.just(item.isSubscribe)
+            .debug("🐬")
+            .map { !$0 }
+            .asDriver(onErrorJustReturn: false)
     }
 }

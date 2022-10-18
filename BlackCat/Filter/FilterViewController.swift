@@ -45,6 +45,12 @@ final class FilterViewController: BottomSheetController, View {
             .bind(to: taskCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
                 cell.taskViewModel = .init(item: item)
             }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.locations }
+            .debug("👇🏻")
+            .bind(to: locationCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
+                cell.loactionViewModel = .init(item: item)
+            }.disposed(by: disposeBag)
     }
     
     // MARK: - Initialize
