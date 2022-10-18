@@ -12,7 +12,7 @@ import RealmSwift
 protocol FilterTaskServiceProtocol {
     func fetch() -> Observable<[FilterTask]>
     func update(task: FilterTask) -> Observable<[FilterTask]>
-    func revert(tasks: [FilterTask], revertTasks: [FilterTask])
+    func executeRevert(tasks: [FilterTask], revertTasks: [FilterTask])
     
     func fetchRevert() -> [RevertFilterTask]
 }
@@ -23,6 +23,7 @@ final class FilterTaskService: BaseRealmProtocol, FilterTaskServiceProtocol {
         saveAllData()
     }
     
+    /// 로컬 디바이스에서 filterTask를 fetch합니다.
     func fetch() -> Observable<[FilterTask]> {
         guard let realm = self.getRealm() else { return .empty() }
         
@@ -30,34 +31,24 @@ final class FilterTaskService: BaseRealmProtocol, FilterTaskServiceProtocol {
         return Observable.just(tasks)
     }
     
+    /// 로컬 디바이스에 저장된 값과 revert할 값의 싱크릴 맞춥니다.
     func fetchRevert() -> [RevertFilterTask] {
-        /*
-         💡 fetchRevert Idea
-         1. 새로운 relation 만들기
-         2. 임시 스레드를 새로 열어서 싱크 맞추는 것을 막기
-         */
-        
         guard let realm = self.getRealm() else { return [] }
         
         let tasks = Array(realm.objects(FilterTask.self))
-        var revertTasks = Array(realm.objects(RevertFilterTask.self))
+        let revertTasks = Array(realm.objects(RevertFilterTask.self))
         
-        print("✅ \(tasks)")
-        print("❌ \(revertTasks)")
-        
-        zip(revertTasks, tasks).forEach { item in
+        zip(revertTasks, tasks).forEach { (revertTask, task) in
+            
             realmWrite { realm in
-                var item = item
-                var a = item.0
-//                a.type = item.1.type
-                a.isSubscribe = item.1.isSubscribe
+                revertTask.isSubscribe = task.isSubscribe
             }
         }
         
-        print("✅❌ \(revertTasks)")
         return revertTasks
     }
     
+    /// itemSelected시 상태를 업데이트 합니다.
     @discardableResult
     func update(task: FilterTask) -> Observable<[FilterTask]> {
         realmWrite { realm in
@@ -67,15 +58,17 @@ final class FilterTaskService: BaseRealmProtocol, FilterTaskServiceProtocol {
         return fetch()
     }
     
-    func revert(tasks: [FilterTask], revertTasks: [FilterTask]) {
-        zip(tasks, revertTasks).forEach { item in
+    /// 필터 저장을 누르지 않을시, revert를 수행합니다.
+    func executeRevert(tasks: [FilterTask], revertTasks: [FilterTask]) {
+        zip(tasks, revertTasks).forEach { (task, reverTask) in
+            
             realmWrite { realm in
-                var item = item
-                item.0 = item.1
+                task.isSubscribe = reverTask.isSubscribe
             }
         }
     }
     
+    // MARK: - Function 내부에서만 사용
     fileprivate func write(task: FilterTask) {
         realmWrite { realm in
             realm.add(task ,update: .modified)
@@ -98,4 +91,5 @@ final class FilterTaskService: BaseRealmProtocol, FilterTaskServiceProtocol {
     }
 }
 
+/// Revert를 시도하기 위한 클래스
 class RevertFilterTask: FilterTask { }

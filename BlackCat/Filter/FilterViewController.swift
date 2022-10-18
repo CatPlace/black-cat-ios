@@ -49,6 +49,12 @@ final class FilterViewController: BottomSheetController, View {
             .map { Reactor.Action.didTapLocationCell($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        applyTextLabel.rx.tapGesture()
+            .when(.recognized)
+            .map { _ in Reactor.Action.didTapApplyTextLabel }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func render(reactor: Reactor) {

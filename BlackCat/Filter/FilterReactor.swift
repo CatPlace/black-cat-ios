@@ -40,7 +40,6 @@ final class FilterReactor: Reactor {
         var revertLocations: [FilterLocation] = []
         
         init(revertTasks: [RevertFilterTask], revertLocations: [FilterLocation]) {
-            print("revertTasks \(revertTasks)")
             self.revertTasks = revertTasks
             self.revertLocations = revertLocations
         }
@@ -109,11 +108,8 @@ final class FilterReactor: Reactor {
 extension FilterReactor {
     func revert(isRevert: Bool) {
         if isRevert {
-            
-            print("revert1 \(currentState.revertTasks)")
-            print("revert2 \(initialState.revertTasks)")
-            provider.taskService.revert(tasks: currentState.tasks,
-                                        revertTasks: currentState.revertTasks)
+            provider.taskService.executeRevert(tasks: currentState.tasks,
+                                               revertTasks: currentState.revertTasks)
         }
     }
 }
