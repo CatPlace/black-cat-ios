@@ -5,16 +5,8 @@
 //  Created by Hamlit Jason on 2022/10/19.
 //
 
-@testable import BlackCat
-import RxSwift
-import RxCocoa
-import XCTest
-import Quick
-import Nimble
-import RxBlocking
-import RxTest
 
-final class BlackCatTests: XCTestCase {
+final class BlackCatTests: BaseXCTestCase {
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
