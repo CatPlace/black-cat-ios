@@ -33,7 +33,7 @@ extension BaseRealmProtocol {
         guard let realm = getRealm() else { return false }
         
         // realm 파일경로
-        print("🗂️ \(Realm.Configuration.defaultConfiguration.fileURL!)")
+//        print("🗂️ \(Realm.Configuration.defaultConfiguration.fileURL!)")
 
         do {
             try realm.write { operation(realm) }
