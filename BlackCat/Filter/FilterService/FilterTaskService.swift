@@ -7,11 +7,14 @@
 
 import Foundation
 import RxSwift
+import RealmSwift
 
 protocol FilterTaskServiceProtocol {
     func fetch() -> Observable<[FilterTask]>
     func update(task: FilterTask) -> Observable<[FilterTask]>
-    func revert(tasks: [FilterTask]) 
+    func revert(tasks: [FilterTask], revertTasks: [FilterTask])
+    
+    func fetchRevert() -> [RevertFilterTask]
 }
 
 final class FilterTaskService: BaseRealmProtocol, FilterTaskServiceProtocol {
@@ -27,6 +30,27 @@ final class FilterTaskService: BaseRealmProtocol, FilterTaskServiceProtocol {
         return Observable.just(tasks)
     }
     
+    func fetchRevert() -> [RevertFilterTask] {
+        guard let realm = self.getRealm() else { return [] }
+        let tasks = Array(realm.objects(FilterTask.self))
+        var revertTasks = Array(realm.objects(RevertFilterTask.self))
+        
+        print("✅ \(tasks)")
+        print("❌ \(revertTasks)")
+        
+        zip(revertTasks, tasks).forEach { item in
+            realmWrite { realm in
+                var item = item
+                var a = item.0
+//                a.type = item.1.type
+                a.isSubscribe = item.1.isSubscribe
+            }
+        }
+        
+        print("✅❌ \(revertTasks)")
+        return revertTasks
+    }
+    
     @discardableResult
     func update(task: FilterTask) -> Observable<[FilterTask]> {
         realmWrite { realm in
@@ -36,9 +60,12 @@ final class FilterTaskService: BaseRealmProtocol, FilterTaskServiceProtocol {
         return fetch()
     }
     
-    func revert(tasks: [FilterTask]) {
-        tasks.forEach { task in
-            update(task: task)
+    func revert(tasks: [FilterTask], revertTasks: [FilterTask]) {
+        zip(tasks, revertTasks).forEach { item in
+            realmWrite { realm in
+                var item = item
+                item.0 = item.1
+            }
         }
     }
     
@@ -58,7 +85,10 @@ final class FilterTaskService: BaseRealmProtocol, FilterTaskServiceProtocol {
             .filter { !keys.contains($0) }
             .forEach { typeString in
                 let task = FilterTask(type: FilterTask.TaskType(rawValue: typeString) ?? .작품)
+                
                 self.write(task: task)
             }
     }
 }
+
+class RevertFilterTask: FilterTask { }

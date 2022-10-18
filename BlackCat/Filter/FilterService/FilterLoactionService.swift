@@ -11,6 +11,8 @@ import RxSwift
 protocol FilterLocationServiceProtocol {
     func fetch() -> Observable<[FilterLocation]>
     func update(location: FilterLocation) -> Observable<[FilterLocation]>
+    
+    func fetchRevert() -> [FilterLocation]
 }
 
 final class FilterLoactionService: BaseRealmProtocol, FilterLocationServiceProtocol {
@@ -24,6 +26,11 @@ final class FilterLoactionService: BaseRealmProtocol, FilterLocationServiceProto
 
         let locations = Array(realm.objects(FilterLocation.self))
         return Observable.just(locations)
+    }
+    
+    func fetchRevert() -> [FilterLocation] {
+        guard let realm = self.getRealm() else { return [] }
+        return Array(realm.objects(FilterLocation.self))
     }
 
     func update(location: FilterLocation) -> Observable<[FilterLocation]> {

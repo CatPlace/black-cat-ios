@@ -24,8 +24,6 @@ final class FilterReactor: Reactor {
     enum Mutation {
         case setTasks([FilterTask])
         case setLocations([FilterLocation])
-        case revertTasks([FilterTask])
-        case revertLocastions([FilterLocation])
         
         case isDissmiss
         case isRevert
@@ -35,19 +33,26 @@ final class FilterReactor: Reactor {
         var tasks: [FilterTask] = []
         var locations: [FilterLocation] = []
         
-        var revertTasks: [FilterTask] = []
-        var revertLocsations: [FilterLocation] = []
-        
         var isDismiss: Bool = false
         var isRevert: Bool = true
+        
+        var revertTasks: [RevertFilterTask] = []
+        var revertLocations: [FilterLocation] = []
+        
+        init(revertTasks: [RevertFilterTask], revertLocations: [FilterLocation]) {
+            print("revertTasks \(revertTasks)")
+            self.revertTasks = revertTasks
+            self.revertLocations = revertLocations
+        }
     }
     
     var initialState: State
     var provider: FilterServiceProtocol
     
     init(provider: FilterServiceProtocol = FilterServiceProvider()) {
+        self.initialState = State(revertTasks: provider.taskService.fetchRevert(),
+                                  revertLocations: provider.locationService.fetchRevert())
         self.provider = provider
-        self.initialState = State()
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -84,12 +89,6 @@ final class FilterReactor: Reactor {
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state
         switch mutation {
-        case let .revertTasks(revertTasks):
-            newState.revertTasks = revertTasks
-            return newState
-        case let .revertLocastions(revertLocations):
-            newState.revertLocsations = revertLocations
-            return newState
         case let .setTasks(tasks):
             newState.tasks = tasks
             return newState
@@ -97,7 +96,7 @@ final class FilterReactor: Reactor {
             newState.locations = locations
             return newState
         case .isDissmiss:
-            revert(isRevert: currentState.isRevert)
+            self.revert(isRevert: currentState.isRevert)
             newState.isDismiss = true
             return newState
         case .isRevert:
@@ -110,8 +109,11 @@ final class FilterReactor: Reactor {
 extension FilterReactor {
     func revert(isRevert: Bool) {
         if isRevert {
-            print("revert \(currentState.revertTasks)")
-            provider.taskService.revert(tasks: currentState.revertTasks)
+            
+            print("revert1 \(currentState.revertTasks)")
+            print("revert2 \(initialState.revertTasks)")
+            provider.taskService.revert(tasks: currentState.tasks,
+                                        revertTasks: currentState.revertTasks)
         }
     }
 }
