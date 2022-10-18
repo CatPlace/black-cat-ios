@@ -8,7 +8,7 @@
 import Foundation
 
 protocol FilterServiceProtocol {
-    var taskService: FilterTaskServiceProtocol { get set }
+    var taskService: FilterTaskServiceProtocol { get }
 }
 
 final class FilterServiceProvider: FilterServiceProtocol {

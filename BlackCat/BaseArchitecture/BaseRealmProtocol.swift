@@ -28,6 +28,7 @@ extension BaseRealmProtocol {
         }
     }
     
+    @discardableResult
     public func realmWrite(operation: (_ realm: Realm) -> Void) -> Bool {
         guard let realm = getRealm() else { return false }
         

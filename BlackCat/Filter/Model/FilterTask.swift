@@ -39,50 +39,24 @@ public class FilterTask: Object {
     }
 }
 
-extension FilterTask {
-    /// 불러오기
-    func fetch() -> [FilterTask] {
-        guard let realm = self.getRealm() else { return [] }
-        print("🥹 \(Array(realm.objects(FilterTask.self)))")
-        return Array(realm.objects(FilterTask.self))
-    }
+extension FilterTask: BaseRealmProtocol {
     
-    /// 글쓰기
-    func write(task: FilterTask) -> Bool {
+    func write(task: FilterTask) {
         realmWrite { realm in
             realm.add(task ,update: .modified)
         }
     }
     
-    func update(task: FilterTask) {
-        realmWrite { realm in
-            task.isSubscribe = !task.isSubscribe
-        }
-    }
-    
-    func convertToRealmTask(task: FilterTask) -> FilterTask {
-        FilterTask(typeString: task.type.rawValue, isSubscribe: task.isSubscribe)
-    }
-    
     /// 값을 처음에 저장해야합니다.
     func save() {
-        print("나 불림용")
         guard let realm = self.getRealm() else { return }
         
-        // 1. 값을 불러옵니다.
-        let objects = Array(realm.objects(FilterTask.self))
+        let keys = Array(realm.objects(FilterTask.self))
+            .map { $0.typeString }
         
-        // 2. 키들을 뽑아냅니다.
-        let keys = objects.map { $0.typeString }
-        
-        // 3. 없는 값인 경우 저장
-        TaskType.allCases.forEach { type in
-            let typeString = type.rawValue
-            print("나 불림용2")
-            if !keys.contains(typeString) {
-                print("🌿") 
-                self.write(task: FilterTask(type: type, isSubscribe: true))
-            } else { print("여기 불리면 이미 값이 저장되어 있다는 말이에용") }
-        }
+        TaskType.allCases
+            .map { $0.rawValue }
+            .filter { !keys.contains($0) }
+            .forEach { _ in self.write(task: FilterTask(type: type, isSubscribe: false)) }
     }
 }
