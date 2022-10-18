@@ -47,14 +47,10 @@ final class FilterReactor: Reactor {
         switch mutation {
         case .setTasks: return newState
         case .updateTask(let task):
-            FilterTask().write(
-                task: FilterTask(
-                    type: task.type,
-                    isSubscribe: !task.isSubscribe
-                )
-            )
-//            newState.tasks =
+            FilterTask().update(task: task)
             return newState
         }
     }
 }
+
+

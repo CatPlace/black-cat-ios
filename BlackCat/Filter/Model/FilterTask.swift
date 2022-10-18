@@ -48,10 +48,15 @@ extension FilterTask {
     }
     
     /// 글쓰기
-    func write(task: FilterTask, initialize: Bool = false) -> Bool {
+    func write(task: FilterTask) -> Bool {
         realmWrite { realm in
-//            task.type.rawValue
-            realm.add(FilterTask(typeString: task.type.rawValue, isSubscribe: task.isSubscribe), update: .modified)
+            realm.add(task ,update: .modified)
+        }
+    }
+    
+    func update(task: FilterTask) {
+        realmWrite { realm in
+            task.isSubscribe = !task.isSubscribe
         }
     }
     

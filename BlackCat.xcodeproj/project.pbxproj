@@ -72,6 +72,8 @@
 		B1E4986728EE9BE800B469AC /* MagazineDetailBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E4986628EE9BE800B469AC /* MagazineDetailBaseCell.swift */; };
 		B1E4986928EE9E3500B469AC /* MagazineDetailViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E4986828EE9E3500B469AC /* MagazineDetailViewReactor.swift */; };
 		B1E4987028EEADC900B469AC /* MagazineDetailSectionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E4986F28EEADC900B469AC /* MagazineDetailSectionFactory.swift */; };
+		B1E986AB28FE888800962F5B /* FilterTaskRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E986AA28FE888800962F5B /* FilterTaskRepository.swift */; };
+		B1E986AE28FE8D4F00962F5B /* BaseRealmProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E986AD28FE8D4F00962F5B /* BaseRealmProtocol.swift */; };
 		B1EABEBC28FBA87C0029B6BC /* FilterTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EABEBB28FBA87C0029B6BC /* FilterTask.swift */; };
 		B1EABEBF28FBA8E10029B6BC /* FilterReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EABEBE28FBA8E10029B6BC /* FilterReactor.swift */; };
 		B1EABEC128FBD83F0029B6BC /* FilterLoaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EABEC028FBD83F0029B6BC /* FilterLoaction.swift */; };
@@ -155,6 +157,8 @@
 		B1E4986628EE9BE800B469AC /* MagazineDetailBaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailBaseCell.swift; sourceTree = "<group>"; };
 		B1E4986828EE9E3500B469AC /* MagazineDetailViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailViewReactor.swift; sourceTree = "<group>"; };
 		B1E4986F28EEADC900B469AC /* MagazineDetailSectionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailSectionFactory.swift; sourceTree = "<group>"; };
+		B1E986AA28FE888800962F5B /* FilterTaskRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTaskRepository.swift; sourceTree = "<group>"; };
+		B1E986AD28FE8D4F00962F5B /* BaseRealmProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRealmProtocol.swift; sourceTree = "<group>"; };
 		B1EABEBB28FBA87C0029B6BC /* FilterTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTask.swift; sourceTree = "<group>"; };
 		B1EABEBE28FBA8E10029B6BC /* FilterReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterReactor.swift; sourceTree = "<group>"; };
 		B1EABEC028FBD83F0029B6BC /* FilterLoaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterLoaction.swift; sourceTree = "<group>"; };
@@ -343,6 +347,7 @@
 				78B00BA928F5661000A9915D /* Magazine */,
 				B1E4985628EE859600B469AC /* MagazineDetail */,
 				B1EE64F428FA48170055A4F1 /* Filter */,
+				B1E986AF28FE8D5B00962F5B /* BaseArchitecture */,
 				B1D127E028F09223007E3667 /* Utils */,
 				B12C1DC528ED21830089964E /* Extension */,
 				B1EE64FB28FA4E720055A4F1 /* BottomSheet */,
@@ -398,6 +403,22 @@
 			path = MagazineDetailSection;
 			sourceTree = "<group>";
 		};
+		B1E986AC28FE889200962F5B /* FilterRepository */ = {
+			isa = PBXGroup;
+			children = (
+				B1E986AA28FE888800962F5B /* FilterTaskRepository.swift */,
+			);
+			path = FilterRepository;
+			sourceTree = "<group>";
+		};
+		B1E986AF28FE8D5B00962F5B /* BaseArchitecture */ = {
+			isa = PBXGroup;
+			children = (
+				B1E986AD28FE8D4F00962F5B /* BaseRealmProtocol.swift */,
+			);
+			path = BaseArchitecture;
+			sourceTree = "<group>";
+		};
 		B1EABEBD28FBA88A0029B6BC /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -422,6 +443,7 @@
 				B1EE64F728FA4ABE0055A4F1 /* FilterExampleViewController.swift */,
 				B1EE651128FA872B0055A4F1 /* FilterViewController.swift */,
 				B1EABEBE28FBA8E10029B6BC /* FilterReactor.swift */,
+				B1E986AC28FE889200962F5B /* FilterRepository */,
 				B1EABEBD28FBA88A0029B6BC /* Model */,
 				B1EE651528FA8B190055A4F1 /* FilterCell */,
 			);
@@ -563,6 +585,7 @@
 				B1E4986528EE957E00B469AC /* MagazineDetailModel.swift in Sources */,
 				B1E4986728EE9BE800B469AC /* MagazineDetailBaseCell.swift in Sources */,
 				8E2D8C5928F2EE69004B514D /* HomeEmptyCell.swift in Sources */,
+				B1E986AB28FE888800962F5B /* FilterTaskRepository.swift in Sources */,
 				8E2D8C4F28F2ED53004B514D /* HomeHeaderView.swift in Sources */,
 				B1EABEC128FBD83F0029B6BC /* FilterLoaction.swift in Sources */,
 				B1C80AB928FD9B3000ACE943 /* Object+RealmSwift.swift in Sources */,
@@ -576,6 +599,7 @@
 				78B00BBE28F5661000A9915D /* MagazineViewModel.swift in Sources */,
 				8E2D8C5A28F2EE69004B514D /* HomeCategoryCellViewModel.swift in Sources */,
 				B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */,
+				B1E986AE28FE8D4F00962F5B /* BaseRealmProtocol.swift in Sources */,
 				B1D3362528F142A400826636 /* CALayer+.swift in Sources */,
 				78B00BC028F5661000A9915D /* LastMagazineHeaderView.swift in Sources */,
 				78B00BBA28F5661000A9915D /* MagazineViewModel.dummy.swift in Sources */,
