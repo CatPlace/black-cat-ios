@@ -24,7 +24,7 @@ class FilterExampleViewController: UIViewController {
         
         button.rx.tap
             .bind { [weak self] _ in
-                let vc = FilterViewController()
+                let vc = FilterViewController(reactor: FilterReactor())
                 vc.preferredSheetSizing = .fit
                 self?.present(vc, animated: true)
             }

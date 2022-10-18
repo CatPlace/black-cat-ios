@@ -12,59 +12,85 @@ import RxCocoa
 import BlackCatSDK
 import ReactorKit
 
-final class FilterViewController: BottomSheetController {
-    typealias ViewModel = FilterViewModel
+final class FilterViewController: BottomSheetController, View {
+    typealias Reactor = FilterReactor
     
     enum Reuable {
         static let filterCell = ReusableCell<FilterCell>()
     }
     
     // MARK: - Properties
-    let disposeBag = DisposeBag()
-    let viewModel = ViewModel()
+    var disposeBag = DisposeBag()
     
     // MARK: - Binding
-    private func bind(_ viewModel: ViewModel) {
-        dispatch(viewModel)
-        render(viewModel)
-    }
-    
-    private func dispatch(_ viewModel: ViewModel) {
-        taskCollectionView.rx.itemSelected
-            .debug("🧀")
-//            .bind {
-//                self.taskCollectionView.reloadItems(at: [$0])
-//            }
-            .bind(to: viewModel.taskItemSelectedSubject)
-            .disposed(by: disposeBag)
-        
-        taskCollectionView.rx.modelSelected(FilterTask.self)
-            .bind(to: viewModel.taskModelSelectedSubject)
-            .disposed(by: disposeBag)
-    }
-    
-    private func render(_ viewModel: ViewModel) {
+    func bind(reactor: Reactor) {
         taskCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
-        locationCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
         
-        viewModel.taskDriver
-            .debug("🥭")
-            .drive(taskCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
+        // MARK: - Action
+        taskCollectionView.rx.modelSelected(FilterTask.self)
+            .map { Reactor.Action.didTapCell($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        // MARK: - State
+        reactor.state.map { $0.tasks }
+            .debug("❤️")
+            .bind(to: taskCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
                 cell.taskViewModel = .init(item: item)
             }
             .disposed(by: disposeBag)
         
-        viewModel.locationDriver
-            .drive(locationCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
-                cell.loactionViewModel = .init(item: item)
-            }
-            .disposed(by: disposeBag)
         
-        viewModel.taskItemReloadDriver
-            .asObservable()
-            .bind { self.taskCollectionView.reloadItems(at: [$0]) }
-            .disposed(by: disposeBag)
     }
+    
+    // MARK: - Initialize
+    init(reactor: Reactor) {
+        super.init(nibName: nil, bundle: nil)
+        self.reactor = reactor
+        
+        setUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+//    private func dispatch(_ viewModel: ViewModel) {
+//        taskCollectionView.rx.itemSelected
+//            .debug("🧀")
+////            .bind {
+////                self.taskCollectionView.reloadItems(at: [$0])
+////            }
+//            .bind(to: viewModel.taskItemSelectedSubject)
+//            .disposed(by: disposeBag)
+//
+//        taskCollectionView.rx.modelSelected(FilterTask.self)
+//            .bind(to: viewModel.taskModelSelectedSubject)
+//            .disposed(by: disposeBag)
+//    }
+//
+//    private func render(_ viewModel: ViewModel) {
+//        taskCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
+//        locationCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
+//
+//        viewModel.taskDriver
+//            .debug("🥭")
+//            .drive(taskCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
+//                cell.taskViewModel = .init(item: item)
+//            }
+//            .disposed(by: disposeBag)
+//
+//        viewModel.locationDriver
+//            .drive(locationCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
+//                cell.loactionViewModel = .init(item: item)
+//            }
+//            .disposed(by: disposeBag)
+//
+//        viewModel.taskItemReloadDriver
+//            .asObservable()
+//            .bind { self.taskCollectionView.reloadItems(at: [$0]) }
+//            .disposed(by: disposeBag)
+//    }
     
     // MARK: - function
     // 구분선 Modifier
@@ -77,12 +103,6 @@ final class FilterViewController: BottomSheetController {
         sender.textAlignment = .center
         sender.textColor = .gray
         sender.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 14)
-    }
-    
-    // MARK: - Life Cycle
-    override func viewDidLoad() {
-        setUI()
-        bind(viewModel)
     }
     
     // MARK: - Properties
