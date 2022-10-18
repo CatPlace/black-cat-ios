@@ -15,7 +15,8 @@ final class FilterReactor: Reactor {
     
     enum Action {
         case refresh
-        case didTapCell(FilterTask)
+        case didTapTaskCell(FilterTask)
+        case didTapLocationCell(FilterLocation)
     }
     
     enum Mutation {
@@ -44,17 +45,22 @@ final class FilterReactor: Reactor {
                     .map { tasks in
                         return .setTasks(tasks)
                     },
-                provider.loactionService.fetch()
+                provider.locationService.fetch()
                     .map { locations in
                         return .setLocations(locations)
                     }
             ])
-            
                 
-        case .didTapCell(let task):
+        case .didTapTaskCell(let task):
             return provider.taskService.update(task: task)
                 .map { tasks in
                     return .setTasks(tasks)
+                }
+            
+        case .didTapLocationCell(let location):
+            return provider.locationService.update(location: location)
+                .map { locations in
+                    return .setLocations(locations)
                 }
         }
     }

@@ -35,7 +35,12 @@ final class FilterViewController: BottomSheetController, View {
             .disposed(by: disposeBag)
         
         taskCollectionView.rx.modelSelected(FilterTask.self)
-            .map { Reactor.Action.didTapCell($0) }
+            .map { Reactor.Action.didTapTaskCell($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        locationCollectionView.rx.modelSelected(FilterLocation.self)
+            .map { Reactor.Action.didTapLocationCell($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
