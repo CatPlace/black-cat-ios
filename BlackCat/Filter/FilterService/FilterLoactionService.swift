@@ -41,7 +41,6 @@ final class FilterLoactionService: BaseRealmProtocol, FilterLocationServiceProto
             
             realmWrite { realm in
                 revertLocation.isSubscribe = location.isSubscribe
-                realm.add(revertLocation, update: .modified)
             }
         }
         

@@ -76,6 +76,12 @@ final class FilterTaskService: BaseRealmProtocol, FilterTaskServiceProtocol {
         }
     }
     
+    fileprivate func revertWrite(revertTask: RevertFilterTask) {
+        realmWrite { realm in
+            realm.add(revertTask ,update: .modified)
+        }
+    }
+    
     /// 값을 처음에 저장해야합니다.
     fileprivate func saveAllData() {
         guard let realm = self.getRealm() else { return }
@@ -86,8 +92,10 @@ final class FilterTaskService: BaseRealmProtocol, FilterTaskServiceProtocol {
             .filter { !keys.contains($0) }
             .forEach { typeString in
                 let task = FilterTask(type: FilterTask.TaskType(rawValue: typeString) ?? .작품)
-                
                 self.write(task: task)
+                
+                let revertTask = RevertFilterTask(type: FilterTask.TaskType(rawValue: typeString) ?? .작품)
+                self.revertWrite(revertTask: revertTask)
             }
     }
 }
