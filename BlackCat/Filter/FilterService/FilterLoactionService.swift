@@ -11,9 +11,9 @@ import RxSwift
 protocol FilterLocationServiceProtocol {
     func fetch() -> Observable<[FilterLocation]>
     func update(location: FilterLocation) -> Observable<[FilterLocation]>
-    func executeRevert(locations: [FilterLocation], revertLocations: [FilterLocation])
+    func recoverLastState(locations: [FilterLocation], mementoLocations: [FilterLocation])
     
-    func fetchRevert() -> [RevertFilterLocation]
+    func createMemento() -> [MementoFilterLocation]
 }
 
 final class FilterLoactionService: BaseRealmProtocol, FilterLocationServiceProtocol {
@@ -30,21 +30,21 @@ final class FilterLoactionService: BaseRealmProtocol, FilterLocationServiceProto
         return Observable.just(locations)
     }
     
-    /// 로컬 디바이스에 저장된 값과 revert할 값의 싱크릴 맞춥니다.
-    func fetchRevert() -> [RevertFilterLocation] {
+    /// 로컬 디바이스에 저장된 값과 recover할 값의 싱크를 맞춥니다.
+    func createMemento() -> [MementoFilterLocation] {
         guard let realm = self.getRealm() else { return [] }
         
         let locations = Array(realm.objects(FilterLocation.self))
-        let revertLocations = Array(realm.objects(RevertFilterLocation.self))
+        let recoverLocations = Array(realm.objects(MementoFilterLocation.self))
         
-        zip(revertLocations, locations).forEach { (revertLocation, location) in
+        zip(recoverLocations, locations).forEach { (recoverLocation, location) in
             
             realmWrite { realm in
-                revertLocation.isSubscribe = location.isSubscribe
+                recoverLocation.isSubscribe = location.isSubscribe
             }
         }
         
-        return revertLocations
+        return recoverLocations
     }
 
     /// itemSelected시 상태를 업데이트 합니다.
@@ -57,12 +57,12 @@ final class FilterLoactionService: BaseRealmProtocol, FilterLocationServiceProto
         return fetch()
     }
     
-    /// 필터 저장을 누르지 않을시, revert를 수행합니다.
-    func executeRevert(locations: [FilterLocation], revertLocations: [FilterLocation]) {
-        zip(locations, revertLocations).forEach { (location, revertLocation) in
+    /// 필터 저장을 누르지 않을시, recover를 수행합니다.
+    func recoverLastState(locations: [FilterLocation], mementoLocations: [FilterLocation]) {
+        zip(locations, mementoLocations).forEach { (location, recoverLocation) in
             
             realmWrite { realm in
-                location.isSubscribe = revertLocation.isSubscribe
+                location.isSubscribe = recoverLocation.isSubscribe
             }
         }
     }
@@ -75,9 +75,9 @@ final class FilterLoactionService: BaseRealmProtocol, FilterLocationServiceProto
         }
     }
     
-    fileprivate func revertWrite(revertLocation: RevertFilterLocation) {
+    fileprivate func memotoWrite(mementoLocation: MementoFilterLocation) {
         realmWrite { realm in
-            realm.add(revertLocation ,update: .modified)
+            realm.add(mementoLocation ,update: .modified)
         }
     }
     
@@ -93,10 +93,10 @@ final class FilterLoactionService: BaseRealmProtocol, FilterLocationServiceProto
                 let location = FilterLocation(type: FilterLocation.LocationType(rawValue: typeString) ?? .서울)
                 self.write(location: location)
                 
-                let revertLocation = RevertFilterLocation(type: FilterLocation.LocationType(rawValue: typeString) ?? .서울)
-                self.revertWrite(revertLocation: revertLocation)
+                let mementoLocation = MementoFilterLocation(type: FilterLocation.LocationType(rawValue: typeString) ?? .서울)
+                self.memotoWrite(mementoLocation: mementoLocation)
             }
     }
 }
 
-class RevertFilterLocation: FilterLocation { }
+class MementoFilterLocation: FilterLocation { }

@@ -26,7 +26,7 @@ final class FilterReactor: Reactor {
         case setLocations([FilterLocation])
         
         case isDissmiss
-        case isRevert
+        case isRecoverState
     }
     
     struct State {
@@ -34,14 +34,14 @@ final class FilterReactor: Reactor {
         var locations: [FilterLocation] = []
         
         var isDismiss: Bool = false
-        var isRevert: Bool = true
+        var isRecover: Bool = true
         
-        var revertTasks: [RevertFilterTask] = []
-        var revertLocations: [FilterLocation] = []
+        var mementoTasks: [MementoFilterTask] = []
+        var mementoLocations: [MementoFilterLocation] = []
         
-        init(revertTasks: [RevertFilterTask], revertLocations: [FilterLocation]) {
-            self.revertTasks = revertTasks
-            self.revertLocations = revertLocations
+        init(mementoTasks: [MementoFilterTask], mementoLocations: [MementoFilterLocation]) {
+            self.mementoTasks = mementoTasks
+            self.mementoLocations = mementoLocations
         }
     }
     
@@ -49,8 +49,8 @@ final class FilterReactor: Reactor {
     var provider: FilterServiceProtocol
     
     init(provider: FilterServiceProtocol = FilterServiceProvider()) {
-        self.initialState = State(revertTasks: provider.taskService.fetchRevert(),
-                                  revertLocations: provider.locationService.fetchRevert())
+        self.initialState = State(mementoTasks: provider.taskService.createMemento(),
+                                  mementoLocations: provider.locationService.createMemento())
         self.provider = provider
     }
     
@@ -79,7 +79,7 @@ final class FilterReactor: Reactor {
             
         case .didTapApplyTextLabel:
             return .concat([
-                .just(.isRevert),
+                .just(.isRecoverState),
                 .just(.isDissmiss)
             ])
         }
@@ -95,24 +95,24 @@ final class FilterReactor: Reactor {
             newState.locations = locations
             return newState
         case .isDissmiss:
-            self.revert(isRevert: currentState.isRevert)
+            self.recover(isRecover: currentState.isRecover)
             newState.isDismiss = true
             return newState
-        case .isRevert:
-            newState.isRevert = false
+        case .isRecoverState:
+            newState.isRecover = false
             return newState
         }
     }
 }
 
 extension FilterReactor {
-    func revert(isRevert: Bool) {
-        if isRevert {
-            provider.taskService.executeRevert(tasks: currentState.tasks,
-                                               revertTasks: currentState.revertTasks)
+    func recover(isRecover: Bool) {
+        if isRecover {
+            provider.taskService.recoverLastState(tasks: currentState.tasks,
+                                               mementoTasks: currentState.mementoTasks)
             
-            provider.locationService.executeRevert(locations: currentState.locations,
-                                                   revertLocations: currentState.revertLocations)
+            provider.locationService.recoverLastState(locations: currentState.locations,
+                                                   mementoLocations: currentState.mementoLocations)
         }
     }
 }
