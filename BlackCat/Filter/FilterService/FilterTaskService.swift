@@ -31,7 +31,14 @@ final class FilterTaskService: BaseRealmProtocol, FilterTaskServiceProtocol {
     }
     
     func fetchRevert() -> [RevertFilterTask] {
+        /*
+         💡 fetchRevert Idea
+         1. 새로운 relation 만들기
+         2. 임시 스레드를 새로 열어서 싱크 맞추는 것을 막기
+         */
+        
         guard let realm = self.getRealm() else { return [] }
+        
         let tasks = Array(realm.objects(FilterTask.self))
         var revertTasks = Array(realm.objects(RevertFilterTask.self))
         
