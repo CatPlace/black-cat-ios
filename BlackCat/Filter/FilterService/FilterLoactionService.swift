@@ -8,12 +8,12 @@
 import Foundation
 import RxSwift
 
-protocol FilterLoactionServiceProtocol {
+protocol FilterLocationServiceProtocol {
     func fetch() -> Observable<[FilterLocation]>
     func update(location: FilterLocation) -> Observable<[FilterLocation]>
 }
 
-final class FilterLoactionService: BaseRealmProtocol, FilterLoactionServiceProtocol {
+final class FilterLoactionService: BaseRealmProtocol, FilterLocationServiceProtocol {
     
     init() {
         saveAllData()
@@ -34,24 +34,23 @@ final class FilterLoactionService: BaseRealmProtocol, FilterLoactionServiceProto
         return fetch()
     }
     
-    fileprivate func write(task: FilterTask) {
+    fileprivate func write(location: FilterLocation) {
         realmWrite { realm in
-            realm.add(task ,update: .modified)
+            realm.add(location ,update: .modified)
         }
     }
     
     /// 값을 처음에 저장해야합니다.
     fileprivate func saveAllData() {
-        print("탯ㅌ")
         guard let realm = self.getRealm() else { return }
-        
-        let keys = Array(realm.objects(FilterTask.self))
+        let keys = Array(realm.objects(FilterLocation.self))
             .map { $0.type.rawValue }
         
-        FilterTask.TaskType.allCases.map { $0.rawValue }
+        FilterLocation.LocationType.allCases.map { $0.rawValue }
             .filter { !keys.contains($0) }
-            .forEach { key in
-//                self.write(task: FilterTask(type: type))
+            .forEach { typeString in
+                let location = FilterLocation(type: FilterLocation.LocationType(rawValue: typeString) ?? .서울)
+                self.write(location: location)
             }
     }
 }

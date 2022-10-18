@@ -163,6 +163,7 @@ final class FilterViewController: BottomSheetController, View {
         cv.isScrollEnabled = false
         
         cv.register(Reuable.filterCell)
+        cv.rx.setDelegate(self).disposed(by: disposeBag)
         return cv
     }()
     // NOTE: - 완료 버튼

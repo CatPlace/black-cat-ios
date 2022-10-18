@@ -28,39 +28,12 @@ public class FilterLocation: Object {
         get { return LocationType(rawValue: typeString) ?? .서울 }
         set { typeString = newValue.rawValue }
     }
-    @Persisted public var isSubscribe: Bool = false
-    
+    @Persisted public var isSubscribe: Bool
     
     convenience init(type: LocationType, isSubscribe: Bool = false) {
         self.init()
         
         self.typeString = type.rawValue
         self.type = type
-        
-        self.saveAllData()
     }
-}
-
-extension FilterLocation: BaseRealmProtocol {
-   
-    fileprivate func write(location: FilterLocation) {
-        realmWrite { realm in
-            realm.add(location ,update: .modified)
-        }
-    }
-    
-    /// 값을 처음에 저장해야합니다.
-    fileprivate func saveAllData() {
-        print("가감없이 삭제하세요.")
-        
-        guard let realm = self.getRealm() else { return }
-        
-        let keys = Array(realm.objects(FilterLocation.self))
-            .map { $0.typeString }
-        
-        LocationType.allCases.map { $0.rawValue }
-            .filter { !keys.contains($0) }
-            .forEach { _ in self.write(location: FilterLocation(type: type, isSubscribe: false)) }
-    }
-    
 }

@@ -15,6 +15,10 @@ protocol FilterTaskServiceProtocol {
 
 final class FilterTaskService: BaseRealmProtocol, FilterTaskServiceProtocol {
     
+    init() {
+        saveAllData()
+    }
+    
     func fetch() -> Observable<[FilterTask]> {
         guard let realm = self.getRealm() else { return .empty() }
         
@@ -28,5 +32,25 @@ final class FilterTaskService: BaseRealmProtocol, FilterTaskServiceProtocol {
         }
         
         return fetch()
+    }
+    
+    fileprivate func write(task: FilterTask) {
+        realmWrite { realm in
+            realm.add(task ,update: .modified)
+        }
+    }
+    
+    /// 값을 처음에 저장해야합니다.
+    fileprivate func saveAllData() {
+        guard let realm = self.getRealm() else { return }
+        let keys = Array(realm.objects(FilterTask.self))
+            .map { $0.type.rawValue }
+        
+        FilterTask.TaskType.allCases.map { $0.rawValue }
+            .filter { !keys.contains($0) }
+            .forEach { typeString in
+                let task = FilterTask(type: FilterTask.TaskType(rawValue: typeString) ?? .작품)
+                self.write(task: task)
+            }
     }
 }
