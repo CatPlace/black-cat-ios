@@ -59,13 +59,8 @@ final class FilterCell: FilterBaseCell {
         }
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override func initialize() {
         setUI()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     private func setUI() {
