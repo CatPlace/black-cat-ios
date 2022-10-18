@@ -20,7 +20,6 @@ final class FilterReactor: Reactor {
     
     enum Mutation {
         case setTasks([FilterTask])
-        case updateTask(FilterTask)
     }
     
     struct State {
@@ -44,7 +43,10 @@ final class FilterReactor: Reactor {
                 }
                 
         case .didTapCell(let task):
-            return .just(.updateTask(task))
+            return provider.taskService.update(task: task)
+                .map { tasks in
+                    return .setTasks(tasks)
+                }
         }
     }
     
@@ -53,9 +55,6 @@ final class FilterReactor: Reactor {
         switch mutation {
         case let .setTasks(tasks):
             newState.tasks = tasks
-            return newState
-        case .updateTask(let task):
-            FilterTask().update(task: task)
             return newState
         }
     }

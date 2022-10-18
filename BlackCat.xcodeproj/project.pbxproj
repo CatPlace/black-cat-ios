@@ -72,8 +72,9 @@
 		B1E4986728EE9BE800B469AC /* MagazineDetailBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E4986628EE9BE800B469AC /* MagazineDetailBaseCell.swift */; };
 		B1E4986928EE9E3500B469AC /* MagazineDetailViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E4986828EE9E3500B469AC /* MagazineDetailViewReactor.swift */; };
 		B1E4987028EEADC900B469AC /* MagazineDetailSectionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E4986F28EEADC900B469AC /* MagazineDetailSectionFactory.swift */; };
-		B1E986AB28FE888800962F5B /* FilterTaskRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E986AA28FE888800962F5B /* FilterTaskRepository.swift */; };
+		B1E986AB28FE888800962F5B /* FilterTaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E986AA28FE888800962F5B /* FilterTaskService.swift */; };
 		B1E986AE28FE8D4F00962F5B /* BaseRealmProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E986AD28FE8D4F00962F5B /* BaseRealmProtocol.swift */; };
+		B1E986B128FE975C00962F5B /* FilterServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E986B028FE975C00962F5B /* FilterServiceProvider.swift */; };
 		B1EABEBC28FBA87C0029B6BC /* FilterTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EABEBB28FBA87C0029B6BC /* FilterTask.swift */; };
 		B1EABEBF28FBA8E10029B6BC /* FilterReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EABEBE28FBA8E10029B6BC /* FilterReactor.swift */; };
 		B1EABEC128FBD83F0029B6BC /* FilterLoaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EABEC028FBD83F0029B6BC /* FilterLoaction.swift */; };
@@ -157,8 +158,9 @@
 		B1E4986628EE9BE800B469AC /* MagazineDetailBaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailBaseCell.swift; sourceTree = "<group>"; };
 		B1E4986828EE9E3500B469AC /* MagazineDetailViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailViewReactor.swift; sourceTree = "<group>"; };
 		B1E4986F28EEADC900B469AC /* MagazineDetailSectionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailSectionFactory.swift; sourceTree = "<group>"; };
-		B1E986AA28FE888800962F5B /* FilterTaskRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTaskRepository.swift; sourceTree = "<group>"; };
+		B1E986AA28FE888800962F5B /* FilterTaskService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTaskService.swift; sourceTree = "<group>"; };
 		B1E986AD28FE8D4F00962F5B /* BaseRealmProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRealmProtocol.swift; sourceTree = "<group>"; };
+		B1E986B028FE975C00962F5B /* FilterServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterServiceProvider.swift; sourceTree = "<group>"; };
 		B1EABEBB28FBA87C0029B6BC /* FilterTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTask.swift; sourceTree = "<group>"; };
 		B1EABEBE28FBA8E10029B6BC /* FilterReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterReactor.swift; sourceTree = "<group>"; };
 		B1EABEC028FBD83F0029B6BC /* FilterLoaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterLoaction.swift; sourceTree = "<group>"; };
@@ -406,7 +408,8 @@
 		B1E986AC28FE889200962F5B /* FilterService */ = {
 			isa = PBXGroup;
 			children = (
-				B1E986AA28FE888800962F5B /* FilterTaskRepository.swift */,
+				B1E986B028FE975C00962F5B /* FilterServiceProvider.swift */,
+				B1E986AA28FE888800962F5B /* FilterTaskService.swift */,
 			);
 			path = FilterService;
 			sourceTree = "<group>";
@@ -572,6 +575,7 @@
 				8E2D8C4A28F2ECD2004B514D /* HomeViewModel.swift in Sources */,
 				B1EE651728FA8DDE0055A4F1 /* FilterBaseCell.swift in Sources */,
 				B1D3364128F1CCFA00826636 /* UICollectionView+.swift in Sources */,
+				B1E986B128FE975C00962F5B /* FilterServiceProvider.swift in Sources */,
 				8E2D8C5D28F2EE69004B514D /* HomeRecommendCell.swift in Sources */,
 				B1D127DD28F08DCA007E3667 /* TabBarViewController.swift in Sources */,
 				B1E4986228EE8BFE00B469AC /* MagazineDetailTextCell.swift in Sources */,
@@ -585,7 +589,7 @@
 				B1E4986528EE957E00B469AC /* MagazineDetailModel.swift in Sources */,
 				B1E4986728EE9BE800B469AC /* MagazineDetailBaseCell.swift in Sources */,
 				8E2D8C5928F2EE69004B514D /* HomeEmptyCell.swift in Sources */,
-				B1E986AB28FE888800962F5B /* FilterTaskRepository.swift in Sources */,
+				B1E986AB28FE888800962F5B /* FilterTaskService.swift in Sources */,
 				8E2D8C4F28F2ED53004B514D /* HomeHeaderView.swift in Sources */,
 				B1EABEC128FBD83F0029B6BC /* FilterLoaction.swift in Sources */,
 				B1C80AB928FD9B3000ACE943 /* Object+RealmSwift.swift in Sources */,

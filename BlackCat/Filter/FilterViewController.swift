@@ -24,9 +24,11 @@ final class FilterViewController: BottomSheetController, View {
     
     // MARK: - Binding
     func bind(reactor: Reactor) {
-        taskCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
-        
-        // MARK: - Action
+        dispatch(reactor: reactor)
+        render(reactor: reactor)
+    }
+    
+    private func dispatch(reactor: Reactor) {
         self.rx.viewDidLoad
             .map { Reactor.Action.refresh }
             .bind(to: reactor.action)
@@ -36,16 +38,13 @@ final class FilterViewController: BottomSheetController, View {
             .map { Reactor.Action.didTapCell($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
-        
-        // MARK: - State
+    }
+    
+    private func render(reactor: Reactor) {
         reactor.state.map { $0.tasks }
-            .debug("❤️")
             .bind(to: taskCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
                 cell.taskViewModel = .init(item: item)
-            }
-            .disposed(by: disposeBag)
-        
-        
+            }.disposed(by: disposeBag)
     }
     
     // MARK: - Initialize
@@ -136,6 +135,7 @@ final class FilterViewController: BottomSheetController, View {
         cv.isScrollEnabled = false
         
         cv.register(Reuable.filterCell)
+        cv.rx.setDelegate(self).disposed(by: disposeBag)
         return cv
     }()
     
