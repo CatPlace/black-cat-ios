@@ -34,6 +34,11 @@ final class FilterViewController: BottomSheetController, View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        self.rx.viewWillDisappear
+            .map { _ in Reactor.Action.dismiss }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         taskCollectionView.rx.modelSelected(FilterTask.self)
             .map { Reactor.Action.didTapTaskCell($0) }
             .bind(to: reactor.action)
@@ -52,10 +57,15 @@ final class FilterViewController: BottomSheetController, View {
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.locations }
-            .debug("👇🏻")
             .bind(to: locationCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
                 cell.loactionViewModel = .init(item: item)
             }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isDismiss }
+            .filter { $0 == true }
+            .withUnretained(self)
+            .bind { owner, _ in owner.dismiss(animated: true) }
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Initialize
@@ -69,43 +79,6 @@ final class FilterViewController: BottomSheetController, View {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-//    private func dispatch(_ viewModel: ViewModel) {
-//        taskCollectionView.rx.itemSelected
-//            .debug("🧀")
-////            .bind {
-////                self.taskCollectionView.reloadItems(at: [$0])
-////            }
-//            .bind(to: viewModel.taskItemSelectedSubject)
-//            .disposed(by: disposeBag)
-//
-//        taskCollectionView.rx.modelSelected(FilterTask.self)
-//            .bind(to: viewModel.taskModelSelectedSubject)
-//            .disposed(by: disposeBag)
-//    }
-//
-//    private func render(_ viewModel: ViewModel) {
-//        taskCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
-//        locationCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
-//
-//        viewModel.taskDriver
-//            .debug("🥭")
-//            .drive(taskCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
-//                cell.taskViewModel = .init(item: item)
-//            }
-//            .disposed(by: disposeBag)
-//
-//        viewModel.locationDriver
-//            .drive(locationCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
-//                cell.loactionViewModel = .init(item: item)
-//            }
-//            .disposed(by: disposeBag)
-//
-//        viewModel.taskItemReloadDriver
-//            .asObservable()
-//            .bind { self.taskCollectionView.reloadItems(at: [$0]) }
-//            .disposed(by: disposeBag)
-//    }
     
     // MARK: - function
     // 구분선 Modifier

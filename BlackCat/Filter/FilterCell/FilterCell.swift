@@ -98,8 +98,6 @@ final class FilterCellTaskViewModel {
             .asDriver(onErrorJustReturn: "")
         
         isSubscribeDriver = Observable.just(item.isSubscribe)
-            .debug("🐻‍❄️")
-            .map { !$0 }
             .asDriver(onErrorJustReturn: false)
     }
 }
@@ -116,8 +114,6 @@ final class FilterCellLocationViewModel {
             .asDriver(onErrorJustReturn: "")
         
         isSubscribeDriver = Observable.just(item.isSubscribe)
-            .debug("🐬")
-            .map { !$0 }
             .asDriver(onErrorJustReturn: false)
     }
 }

@@ -11,6 +11,7 @@ import RxSwift
 protocol FilterTaskServiceProtocol {
     func fetch() -> Observable<[FilterTask]>
     func update(task: FilterTask) -> Observable<[FilterTask]>
+    func revert(tasks: [FilterTask]) 
 }
 
 final class FilterTaskService: BaseRealmProtocol, FilterTaskServiceProtocol {
@@ -26,12 +27,19 @@ final class FilterTaskService: BaseRealmProtocol, FilterTaskServiceProtocol {
         return Observable.just(tasks)
     }
     
+    @discardableResult
     func update(task: FilterTask) -> Observable<[FilterTask]> {
         realmWrite { realm in
             task.isSubscribe = !task.isSubscribe
         }
         
         return fetch()
+    }
+    
+    func revert(tasks: [FilterTask]) {
+        tasks.forEach { task in
+            update(task: task)
+        }
     }
     
     fileprivate func write(task: FilterTask) {

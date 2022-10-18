@@ -17,16 +17,29 @@ final class FilterReactor: Reactor {
         case refresh
         case didTapTaskCell(FilterTask)
         case didTapLocationCell(FilterLocation)
+        case didTapApplyTextLabel
+        case dismiss
     }
     
     enum Mutation {
         case setTasks([FilterTask])
         case setLocations([FilterLocation])
+        case revertTasks([FilterTask])
+        case revertLocastions([FilterLocation])
+        
+        case isDissmiss
+        case isRevert
     }
     
     struct State {
         var tasks: [FilterTask] = []
         var locations: [FilterLocation] = []
+        
+        var revertTasks: [FilterTask] = []
+        var revertLocsations: [FilterLocation] = []
+        
+        var isDismiss: Bool = false
+        var isRevert: Bool = true
     }
     
     var initialState: State
@@ -41,14 +54,8 @@ final class FilterReactor: Reactor {
         switch action {
         case .refresh:
             return .concat([
-                provider.taskService.fetch()
-                    .map { tasks in
-                        return .setTasks(tasks)
-                    },
-                provider.locationService.fetch()
-                    .map { locations in
-                        return .setLocations(locations)
-                    }
+                provider.taskService.fetch().map { .setTasks($0) },
+                provider.locationService.fetch().map { .setLocations($0) }
             ])
                 
         case .didTapTaskCell(let task):
@@ -62,20 +69,49 @@ final class FilterReactor: Reactor {
                 .map { locations in
                     return .setLocations(locations)
                 }
+            
+        case .dismiss:
+            return .just(.isDissmiss)
+            
+        case .didTapApplyTextLabel:
+            return .concat([
+                .just(.isRevert),
+                .just(.isDissmiss)
+            ])
         }
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state
         switch mutation {
+        case let .revertTasks(revertTasks):
+            newState.revertTasks = revertTasks
+            return newState
+        case let .revertLocastions(revertLocations):
+            newState.revertLocsations = revertLocations
+            return newState
         case let .setTasks(tasks):
             newState.tasks = tasks
             return newState
         case let .setLocations(locations):
             newState.locations = locations
             return newState
+        case .isDissmiss:
+            revert(isRevert: currentState.isRevert)
+            newState.isDismiss = true
+            return newState
+        case .isRevert:
+            newState.isRevert = false
+            return newState
         }
     }
 }
 
-
+extension FilterReactor {
+    func revert(isRevert: Bool) {
+        if isRevert {
+            print("revert \(currentState.revertTasks)")
+            provider.taskService.revert(tasks: currentState.revertTasks)
+        }
+    }
+}

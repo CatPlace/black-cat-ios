@@ -29,8 +29,6 @@ class FilterExampleViewController: UIViewController {
                 self?.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
-        
-        print("🍑 \(Realm.Configuration.defaultConfiguration.fileURL)")
     }
     
     let button = UIButton()
