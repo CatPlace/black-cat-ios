@@ -35,7 +35,7 @@
 		B12C1DC728ED219C0089964E /* UIVIewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12C1DC628ED219C0089964E /* UIVIewController+Rx.swift */; };
 		B160DBF928FF3CBD00C0D682 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B160DBF828FF3CBD00C0D682 /* BaseCollectionViewCell.swift */; };
 		B160DBFB28FF3D8E00C0D682 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B160DBFA28FF3D8E00C0D682 /* BaseTableViewCell.swift */; };
-		B160DC0928FF523C00C0D682 /* BlackCatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B160DC0828FF523C00C0D682 /* BlackCatTests.swift */; };
+		B160DC0928FF523C00C0D682 /* FilterReactorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B160DC0828FF523C00C0D682 /* FilterReactorTests.swift */; };
 		B160DC1428FF535700C0D682 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = B160DC1328FF535700C0D682 /* Quick */; };
 		B160DC1728FF536C00C0D682 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = B160DC1628FF536C00C0D682 /* Nimble */; };
 		B160DC1A28FF53C400C0D682 /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = B160DC1928FF53C400C0D682 /* RxBlocking */; };
@@ -46,7 +46,6 @@
 		B160DC2428FF56F500C0D682 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = B160DC2328FF56F500C0D682 /* RxCocoa */; };
 		B160DC2628FF570B00C0D682 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B160DC2528FF570B00C0D682 /* RxSwift */; settings = {ATTRIBUTES = (Weak, ); }; };
 		B160DC2828FF573E00C0D682 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B160DC2728FF573E00C0D682 /* RealmSwift */; };
-		B160DC2A28FF634600C0D682 /* BaseXCTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B160DC2928FF634600C0D682 /* BaseXCTestCase.swift */; };
 		B1CA040628F00CC1004A6027 /* MagazineDetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CA040528F00CC1004A6027 /* MagazineDetailImageCell.swift */; };
 		B1D127DB28F047A9007E3667 /* MagazineDetailBulletedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D127DA28F047A9007E3667 /* MagazineDetailBulletedCell.swift */; };
 		B1D127DD28F08DCA007E3667 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D127DC28F08DCA007E3667 /* TabBarViewController.swift */; };
@@ -149,8 +148,7 @@
 		B160DBF828FF3CBD00C0D682 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		B160DBFA28FF3D8E00C0D682 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		B160DC0628FF523C00C0D682 /* BlackCatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlackCatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B160DC0828FF523C00C0D682 /* BlackCatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackCatTests.swift; sourceTree = "<group>"; };
-		B160DC2928FF634600C0D682 /* BaseXCTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseXCTestCase.swift; sourceTree = "<group>"; };
+		B160DC0828FF523C00C0D682 /* FilterReactorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterReactorTests.swift; sourceTree = "<group>"; };
 		B1CA040528F00CC1004A6027 /* MagazineDetailImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailImageCell.swift; sourceTree = "<group>"; };
 		B1D127DA28F047A9007E3667 /* MagazineDetailBulletedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailBulletedCell.swift; sourceTree = "<group>"; };
 		B1D127DC28F08DCA007E3667 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
@@ -350,8 +348,7 @@
 		B160DC0728FF523C00C0D682 /* BlackCatTests */ = {
 			isa = PBXGroup;
 			children = (
-				B160DC0828FF523C00C0D682 /* BlackCatTests.swift */,
-				B160DC2928FF634600C0D682 /* BaseXCTestCase.swift */,
+				B160DC0828FF523C00C0D682 /* FilterReactorTests.swift */,
 			);
 			path = BlackCatTests;
 			sourceTree = "<group>";
@@ -649,8 +646,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B160DC0928FF523C00C0D682 /* BlackCatTests.swift in Sources */,
-				B160DC2A28FF634600C0D682 /* BaseXCTestCase.swift in Sources */,
+				B160DC0928FF523C00C0D682 /* FilterReactorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
