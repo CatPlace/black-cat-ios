@@ -18,7 +18,7 @@ public class FilterTask: Object {
     
     @Persisted(primaryKey: true) private var typeString: String
     
-    public var type: TaskType {
+    public private(set) var type: TaskType {
         get { return TaskType(rawValue: typeString) ?? .작품 }
         set { typeString = newValue.rawValue }
     }
@@ -27,7 +27,6 @@ public class FilterTask: Object {
     convenience init(type: TaskType, isSubscribe: Bool = false) {
         self.init()
         
-        self.typeString = type.rawValue
         self.type = type
     }
 }

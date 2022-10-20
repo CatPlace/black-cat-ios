@@ -24,7 +24,7 @@ public class FilterLocation: Object {
 
     @Persisted(primaryKey: true) private var typeString: String
     
-    public var type: LocationType {
+    public private(set) var type: LocationType {
         get { return LocationType(rawValue: typeString) ?? .서울 }
         set { typeString = newValue.rawValue }
     }
@@ -33,7 +33,6 @@ public class FilterLocation: Object {
     convenience init(type: LocationType, isSubscribe: Bool = false) {
         self.init()
         
-        self.typeString = type.rawValue
         self.type = type
     }
 }
