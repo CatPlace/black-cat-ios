@@ -13,26 +13,11 @@ import RxSwift
 import RxTest
 import RxBlocking
 
-final class FilterViewControllerTests: XCTestCase {
-    
-    let reactor = FilterReactor()
-    var sut: FilterViewController?
-    
-    override func setUp() {
-        super.setUp()
-        
-        sut = FilterViewController(reactor: reactor)
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-        
-        sut = nil
-    }
-    
+final class FilterReactorTests: XCTestCase {
+
     func test_reactor() {
         // Given
-        // NOTE: - Given이 사실상 setUp에서 전부 처리 되어서 비워둠.
+        let reactor = FilterReactor()
         
         // WHen
         reactor.action.onNext(.refresh)
@@ -40,8 +25,6 @@ final class FilterViewControllerTests: XCTestCase {
         // Then
         let mementoTasks = reactor.provider.taskService.createMemento()
         let mementoLocations = reactor.provider.locationService.createMemento()
-//        expect(mementoTasks).to(nog([]))
-//        expect(mementoLocations).to(equal([]))
         
         do {
             if
