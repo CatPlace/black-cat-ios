@@ -13,8 +13,9 @@ public class FilterLocation: Object {
     // ✏️ NOTE: - 지역이 늘어나면 "_" replace "/" 자동화 필요.
     public enum LocationType: String, CaseIterable {
         case 서울 = "서울"
-        case 경기_인천 = "경기/인천"
-        case 충청_대전 = "충천/대전"
+        case 경기 = "경기"
+        case 인천 = "인천"
+        case 충청_대전 = "충청/대전"
         case 전라_광주 = "전라/광주"
         case 경북_대구 = "경북/대구"
         case 경남_부산_울산 = "경남/부산/울산"

@@ -47,6 +47,7 @@
 		B160DC2628FF570B00C0D682 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B160DC2528FF570B00C0D682 /* RxSwift */; settings = {ATTRIBUTES = (Weak, ); }; };
 		B160DC2828FF573E00C0D682 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B160DC2728FF573E00C0D682 /* RealmSwift */; };
 		B1CA040628F00CC1004A6027 /* MagazineDetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CA040528F00CC1004A6027 /* MagazineDetailImageCell.swift */; };
+		B1D0FAED29039B5600DFF336 /* MockFilterTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D0FAEC29039B5600DFF336 /* MockFilterTask.swift */; };
 		B1D127DB28F047A9007E3667 /* MagazineDetailBulletedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D127DA28F047A9007E3667 /* MagazineDetailBulletedCell.swift */; };
 		B1D127DD28F08DCA007E3667 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D127DC28F08DCA007E3667 /* TabBarViewController.swift */; };
 		B1D127DF28F09200007E3667 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D127DE28F09200007E3667 /* UIImage+.swift */; };
@@ -150,6 +151,7 @@
 		B160DC0628FF523C00C0D682 /* BlackCatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlackCatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B160DC0828FF523C00C0D682 /* FilterReactorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterReactorTests.swift; sourceTree = "<group>"; };
 		B1CA040528F00CC1004A6027 /* MagazineDetailImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailImageCell.swift; sourceTree = "<group>"; };
+		B1D0FAEC29039B5600DFF336 /* MockFilterTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFilterTask.swift; sourceTree = "<group>"; };
 		B1D127DA28F047A9007E3667 /* MagazineDetailBulletedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailBulletedCell.swift; sourceTree = "<group>"; };
 		B1D127DC28F08DCA007E3667 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		B1D127DE28F09200007E3667 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
@@ -348,9 +350,18 @@
 		B160DC0728FF523C00C0D682 /* BlackCatTests */ = {
 			isa = PBXGroup;
 			children = (
-				B160DC0828FF523C00C0D682 /* FilterReactorTests.swift */,
+				B1D0FAEB29039B3F00DFF336 /* FilterTests */,
 			);
 			path = BlackCatTests;
+			sourceTree = "<group>";
+		};
+		B1D0FAEB29039B3F00DFF336 /* FilterTests */ = {
+			isa = PBXGroup;
+			children = (
+				B160DC0828FF523C00C0D682 /* FilterReactorTests.swift */,
+				B1D0FAEC29039B5600DFF336 /* MockFilterTask.swift */,
+			);
+			path = FilterTests;
 			sourceTree = "<group>";
 		};
 		B1D127E028F09223007E3667 /* Utils */ = {
@@ -646,6 +657,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1D0FAED29039B5600DFF336 /* MockFilterTask.swift in Sources */,
 				B160DC0928FF523C00C0D682 /* FilterReactorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
