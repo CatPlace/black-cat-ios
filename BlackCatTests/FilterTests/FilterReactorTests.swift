@@ -64,4 +64,27 @@ final class FilterReactorTests: XCTestCase {
         expect(mock.isSubscribe) == true
     }
     
+    func test_didTapApplyTextLabel() {
+        // Given
+        let reactor = FilterReactor()
+        
+        // When
+        reactor.action.onNext(.didTapApplyTextLabel)
+        
+        // Then
+        expect(reactor.currentState.isRecover) == false
+        expect(reactor.currentState.isDismiss) == true
+    }
+    
+    func test_dismiss() {
+        // Given
+        let reactor = FilterReactor()
+        
+        // When
+        reactor.action.onNext(.dismiss)
+        
+        // Then
+        expect(reactor.currentState.isRecover) == true
+        expect(reactor.currentState.isDismiss) == true
+    }
 }
