@@ -18,6 +18,7 @@ public class FilterTask: Object {
     
     @Persisted(primaryKey: true) private var typeString: String
     
+     // public private(set) var type: TaskType private(set)이 테스트코드 때문에 열어야 할 수도 있음.
     public private(set) var type: TaskType {
         get { return TaskType(rawValue: typeString) ?? .작품 }
         set { typeString = newValue.rawValue }
@@ -28,5 +29,6 @@ public class FilterTask: Object {
         self.init()
         
         self.type = type
+        self.isSubscribe = isSubscribe // 테스트코드 작성하다가 이거 빠진거 발견함 ㅠㅠ
     }
 }

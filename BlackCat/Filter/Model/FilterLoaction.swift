@@ -34,5 +34,6 @@ public class FilterLocation: Object {
         self.init()
         
         self.type = type
+        self.isSubscribe = isSubscribe // 테스트코드 작성하다가 이거 빠진거 발견함 ㅠㅠ
     }
 }

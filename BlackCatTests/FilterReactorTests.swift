@@ -14,7 +14,7 @@ import RxTest
 import RxBlocking
 
 final class FilterReactorTests: XCTestCase {
-
+    
     func test_reactor() {
         // Given
         let reactor = FilterReactor()
@@ -47,9 +47,10 @@ final class FilterReactorTests: XCTestCase {
                 let 구독하지않은Locations = Set(locations.filter { !$0.isSubscribe }.map { $0.type })
                 let 구독하지않은MementoLocations = Set(mementoLocations.filter { !$0.isSubscribe }.map { $0.type })
                 
-                expect(구독한Tasks).to(equal(구독한MementoTasks))
-                expect(구독하지않은Tasks).to(equal(구독하지않은MementoTasks))
+                expect(구독한Locations).to(equal(구독한MementoLocations))
+                expect(구독하지않은Locations).to(equal(구독하지않은MementoLocations))
                 
+                expect(tasks).to(equal(reactor.currentState.tasks))
             } else {
                 XCTFail("🚨 빈배열이에요. 초기저장로직 및 Realm 마이그레이션을 체크해주세요.")
             }
@@ -57,4 +58,25 @@ final class FilterReactorTests: XCTestCase {
             XCTFail("🚨 Realm에서 읽어오는 것을 실패했습니다.")
         }
     }
+    
+    func test_refresh() {
+        // Given
+        let reactor = FilterReactor()
+        
+        // When
+        reactor.action.onNext(.refresh)
+            
+        // Then
+        let mementoTasks = reactor.currentState.mementoTasks
+        
+        let tasks = reactor.currentState.tasks
+        
+        zip(tasks, mementoTasks).forEach { task, mementoTask in
+            XCTAssertEqual(task.isSubscribe, mementoTask.isSubscribe)
+            XCTAssertEqual(task.type, mementoTask.type)
+        }
+    }
+    
+    
+    
 }
