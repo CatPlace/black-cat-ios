@@ -14,7 +14,7 @@ import RxTest
 import RxBlocking
 
 final class FilterReactorTests: XCTestCase {
-    
+    // MARK: - Reactor를 테스트합니다.
     func test_refresh() {
         // Given
         let reactor = FilterReactor()
