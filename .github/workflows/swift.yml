@@ -19,4 +19,4 @@ jobs:
     - name: Build
       run: swift build -v
     - name: Run Unit Test FilterView
-      run: xcodebuild clean test -project UIBezierPath.xcodeproj -scheme UIBezierPath -destination "platform=iOS Simulator,name=iPhone 12,OS=latest" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
+      run: xcodebuild clean test -project BlackCat.xcodeproj -scheme BlackCat -destination "platform=iOS Simulator,name=iPhone 12,OS=latest" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
