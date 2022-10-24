@@ -16,6 +16,7 @@ import RxBlocking
 final class FilterReactorTests: XCTestCase {
     func test_CI_테스트용() {
         XCTAssertTrue(true)
+        XCTAssertEqual(0, 0)
     }
     
     // MARK: - Reactor를 테스트합니다.
