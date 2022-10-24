@@ -14,7 +14,7 @@ import RxTest
 import RxBlocking
 
 final class FilterReactorTests: XCTestCase {
-    func test_CI() {
+    func test_CI_테스트용() {
         XCTAssertTrue(true)
     }
     
