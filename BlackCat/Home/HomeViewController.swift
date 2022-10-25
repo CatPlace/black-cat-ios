@@ -95,6 +95,14 @@ class HomeViewController: UIViewController {
         viewModel.homeItems
             .drive(collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
+
+        viewModel.pushToGenreViewController
+            .drive(with: self) { owner, genreTitle in
+                let genreViewController = GenreViewController(genreTitle: genreTitle)
+                owner.navigationItem.backButtonTitle = ""
+                owner.navigationController?.pushViewController(genreViewController, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 
     // MARK: - Initializing
