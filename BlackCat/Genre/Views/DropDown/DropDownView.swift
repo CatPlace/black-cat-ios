@@ -16,18 +16,13 @@ class DropDownView: UIView {
 
     // MARK: - Properties
 
-    var separatorBackgroundColor: UIColor = .black {
-        didSet {
-            separatorView.backgroundColor = separatorBackgroundColor
-        }
-    }
-
     var listBackgroundColor: UIColor = UIColor(red: 244/255, green: 244/255, blue: 244/255, alpha: 1) {
         didSet {
             tableView.backgroundColor = listBackgroundColor
         }
     }
 
+    private var _animateDuration: TimeInterval = 0.35
     var animateDuration: TimeInterval {
         get {
             return _animateDuration
@@ -36,20 +31,27 @@ class DropDownView: UIView {
         }
     }
 
-    let titleFrame: CGRect = CGRect(x: 0, y: 0, width: 130, height: 44)
-    var tableViewFrame: CGRect = CGRect(x: 0, y: 0, width: 130, height: 0) {
+    var rowHeight: CGFloat = 28 {
         didSet {
-            print(tableViewFrame)
-            self.tableView.frame = CGRect(x: tableViewFrame.origin.x, y: tableViewFrame.origin.y + 42, width: 130, height: 0)
+            tableView.rowHeight = rowHeight
         }
     }
-    private let contentInset: UIEdgeInsets = .init(top: 5, left: 0, bottom: 5, right: 0)
-    private var _animateDuration: TimeInterval = 0.8
-    private let categoryTitleViewHeight: CGFloat = 30
-    private let rowHeight: CGFloat = 28
-    private let separatorTopPadding: CGFloat = 8
+
+    var tableViewContentInset: UIEdgeInsets = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0) {
+        didSet {
+            tableView.contentInset = tableViewContentInset
+        }
+    }
+
+    var width: CGFloat = 130
+
+    private lazy var tableViewFrame: CGRect = CGRect(x: 0, y: 0, width: width, height: 0) {
+        didSet {
+            self.tableView.frame = CGRect(x: tableViewFrame.origin.x, y: tableViewFrame.origin.y + tableViewFrame.height, width: width, height: 0)
+        }
+    }
     private var isShown: Bool = false
-    private var items: [String] = ["1", "2", "3", "4", "5", "이거 좀 단어 길다 조심해!!!"] {
+    private var items: [String] = [] {
         didSet {
             tableView.reloadData()
         }
@@ -78,10 +80,9 @@ class DropDownView: UIView {
         isShown = true
         menuWrapper.isHidden = false
         rotateArrowImage()
-        let tableViewInset = contentInset
 
-        UIView.animate(withDuration: _animateDuration, delay: 0, options: .curveEaseInOut) {
-            self.tableView.frame.size.height = self.tableView.contentSize.height + tableViewInset.top + tableViewInset.bottom
+        UIView.animate(withDuration: _animateDuration, delay: 0.1, options: .curveEaseInOut) {
+            self.tableView.frame.size.height = self.tableView.contentSize.height + self.tableViewContentInset.top + self.tableViewContentInset.bottom
             self.backgroundView.backgroundColor = .black.withAlphaComponent(0.24)
         }
     }
@@ -90,7 +91,7 @@ class DropDownView: UIView {
         isShown = false
         rotateArrowImage()
 
-        UIView.animate(withDuration: _animateDuration, delay: 0, options: .curveEaseInOut) {
+        UIView.animate(withDuration: _animateDuration, delay: 0.1, options: .curveEaseInOut) {
             self.backgroundView.backgroundColor = .black.withAlphaComponent(0)
             self.tableView.frame.size.height = 0
         } completion: { _ in
@@ -106,9 +107,8 @@ class DropDownView: UIView {
 
     // MARK: - Initializig
 
-    init() {
-
-        super.init(frame: CGRect(x: 0, y: 0, width: 130, height: 44))
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setUI()
     }
 
@@ -118,19 +118,50 @@ class DropDownView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        print(#function)
 
+        categoryTitleView.snp.updateConstraints {
+            $0.width.equalTo(width)
+        }
         tableViewFrame = self.globalFrame ?? .zero
     }
 
     // MARK: - UIComponents
 
     private let categoryTitleView = UIView()
-    private let categoryTitleLabel = UILabel()
-    private let arrowImageView = UIImageView(image: UIImage(systemName: "arrowtriangle.down.fill")?.withRenderingMode(.alwaysOriginal))
-    private let backgroundView = UIView()
+    private let categoryTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 20, weight: .semibold)
+        label.adjustsFontSizeToFitWidth = true
+        return label
+    }()
+    private let arrowImageView: UIImageView = {
+        let imageView = UIImageView()
+        let arrowImage = UIImage(systemName: "arrowtriangle.down.fill")?.withRenderingMode(.alwaysOriginal)
+        imageView.image = arrowImage
+        return imageView
+    }()
+    private let backgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black.withAlphaComponent(0)
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        return view
+    }()
     private let menuWrapper = UIView()
-    let tableView = UITableView()
-    private let separatorView = UIView()
+    lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.register(DropDownTableViewCell.self,
+                           forCellReuseIdentifier: "DropDownTableViewCell")
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.backgroundColor = listBackgroundColor
+        tableView.rowHeight = rowHeight
+        tableView.separatorStyle = .none
+        tableView.layer.cornerRadius = 15
+        tableView.contentInset = tableViewContentInset
+        tableView.isScrollEnabled = false
+        return tableView
+    }()
 }
 
 extension DropDownView {
@@ -143,11 +174,12 @@ extension DropDownView {
         addSubview(categoryTitleView)
         categoryTitleView.snp.makeConstraints {
             $0.top.bottom.leading.equalToSuperview()
-            $0.width.equalTo(130)
+            $0.width.equalTo(width)
             $0.trailing.equalToSuperview()
         }
-        categoryTitleView.addGestureRecognizer(UITapGestureRecognizer(target: self,
-                                                                      action: #selector(didTapCategoryTitleView)))
+        categoryTitleView.addGestureRecognizer(
+            UITapGestureRecognizer(target: self,action: #selector(didTapCategoryTitleView))
+        )
 
         categoryTitleView.addSubview(arrowImageView)
 
@@ -166,32 +198,15 @@ extension DropDownView {
             $0.trailing.equalTo(arrowImageView.snp.leading).offset(-10)
         }
 
-        categoryTitleLabel.text = "이거봐라~"
-        categoryTitleLabel.font = .systemFont(ofSize: 20, weight: .semibold)
-        categoryTitleLabel.adjustsFontSizeToFitWidth = true
-
-        menuWrapper.frame = CGRect(x: 0, y: 0, width: window.bounds.width, height: window.bounds.height)
         window.addSubview(menuWrapper)
+        menuWrapper.frame = window.bounds
         menuWrapper.isHidden = true
 
         menuWrapper.addSubview(backgroundView)
         backgroundView.frame = window.bounds
-        backgroundView.backgroundColor = .black.withAlphaComponent(0)
-        backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
         menuWrapper.addSubview(tableView)
         tableView.frame = tableViewFrame
-
-        tableView.register(DropDownTableViewCell.self,
-                           forCellReuseIdentifier: "DropDownTableViewCell")
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.backgroundColor = listBackgroundColor
-        tableView.rowHeight = rowHeight
-        tableView.separatorStyle = .none
-        tableView.layer.cornerRadius = 15
-        tableView.contentInset = contentInset
-        tableView.isScrollEnabled = false
     }
 }
 
