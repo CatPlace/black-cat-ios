@@ -49,7 +49,8 @@ extension DropDownTableViewCell {
         contentView.addSubview(categoryLabel)
 
         categoryLabel.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(10)
+            $0.top.bottom.equalToSuperview()
         }
     }
 }

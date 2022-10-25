@@ -118,7 +118,6 @@ class DropDownView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        print(#function)
 
         categoryTitleView.snp.updateConstraints {
             $0.width.equalTo(width)
@@ -149,18 +148,17 @@ class DropDownView: UIView {
     }()
     private let menuWrapper = UIView()
     lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.register(DropDownTableViewCell.self,
-                           forCellReuseIdentifier: "DropDownTableViewCell")
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.backgroundColor = listBackgroundColor
-        tableView.rowHeight = rowHeight
-        tableView.separatorStyle = .none
-        tableView.layer.cornerRadius = 15
-        tableView.contentInset = tableViewContentInset
-        tableView.isScrollEnabled = false
-        return tableView
+        let tv = UITableView()
+        tv.register(DropDownTableViewCell.self, forCellReuseIdentifier: "DropDownTableViewCell")
+        tv.dataSource = self
+        tv.delegate = self
+        tv.backgroundColor = listBackgroundColor
+        tv.rowHeight = rowHeight
+        tv.separatorStyle = .none
+        tv.layer.cornerRadius = 15
+        tv.contentInset = tableViewContentInset
+        tv.isScrollEnabled = false
+        return tv
     }()
 }
 
@@ -217,9 +215,10 @@ extension DropDownView: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "DropDownTableViewCell",
-                                                       for: indexPath)
-                as? DropDownTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: "DropDownTableViewCell",
+            for: indexPath
+        ) as? DropDownTableViewCell else { return UITableViewCell() }
 
         cell.configure(with: items[indexPath.row])
 

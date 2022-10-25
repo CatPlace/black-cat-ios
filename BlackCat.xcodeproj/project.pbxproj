@@ -30,6 +30,10 @@
 		8E2D8C5D28F2EE69004B514D /* HomeRecommendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C5628F2EE69004B514D /* HomeRecommendCell.swift */; };
 		8E2D8C5E28F2EE69004B514D /* HomeTattooAlbumCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C5728F2EE69004B514D /* HomeTattooAlbumCellViewModel.swift */; };
 		8E2D8C5F28F2EE69004B514D /* HomeRecommendCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C5828F2EE69004B514D /* HomeRecommendCellViewModel.swift */; };
+		8E7B4D7F2904E4A4002948F7 /* DropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7B4D7E2904E4A4002948F7 /* DropDownView.swift */; };
+		8E7B4D812904E85A002948F7 /* DropDownTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7B4D802904E85A002948F7 /* DropDownTableViewCell.swift */; };
+		8EBE70CC290783C800D52EB5 /* CommonFullImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBE70CB290783C800D52EB5 /* CommonFullImageCell.swift */; };
+		8EBE70CE2907840900D52EB5 /* CommonFullImageCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBE70CD2907840900D52EB5 /* CommonFullImageCellViewModel.swift */; };
 		8EE9A0C128F3CB0D003D7761 /* HomeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9A0C028F3CB0D003D7761 /* HomeSection.swift */; };
 		8EE9A0C328F3CD25003D7761 /* HomeCompositionalLayoutSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9A0C228F3CD25003D7761 /* HomeCompositionalLayoutSection.swift */; };
 		8EED4EDB29027E5700DA3887 /* GenreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EED4EDA29027E5700DA3887 /* GenreViewController.swift */; };
@@ -190,6 +194,10 @@
 		8E2D8C5628F2EE69004B514D /* HomeRecommendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRecommendCell.swift; sourceTree = "<group>"; };
 		8E2D8C5728F2EE69004B514D /* HomeTattooAlbumCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTattooAlbumCellViewModel.swift; sourceTree = "<group>"; };
 		8E2D8C5828F2EE69004B514D /* HomeRecommendCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRecommendCellViewModel.swift; sourceTree = "<group>"; };
+		8E7B4D7E2904E4A4002948F7 /* DropDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownView.swift; sourceTree = "<group>"; };
+		8E7B4D802904E85A002948F7 /* DropDownTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownTableViewCell.swift; sourceTree = "<group>"; };
+		8EBE70CB290783C800D52EB5 /* CommonFullImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFullImageCell.swift; sourceTree = "<group>"; };
+		8EBE70CD2907840900D52EB5 /* CommonFullImageCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFullImageCellViewModel.swift; sourceTree = "<group>"; };
 		8EE9A0C028F3CB0D003D7761 /* HomeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSection.swift; sourceTree = "<group>"; };
 		8EE9A0C228F3CD25003D7761 /* HomeCompositionalLayoutSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCompositionalLayoutSection.swift; sourceTree = "<group>"; };
 		8EED4EDA29027E5700DA3887 /* GenreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreViewController.swift; sourceTree = "<group>"; };
@@ -403,6 +411,40 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		8E7B4D7C2904E478002948F7 /* DropDown */ = {
+			isa = PBXGroup;
+			children = (
+				8E7B4D7E2904E4A4002948F7 /* DropDownView.swift */,
+				8E7B4D802904E85A002948F7 /* DropDownTableViewCell.swift */,
+			);
+			path = DropDown;
+			sourceTree = "<group>";
+		};
+		8E7B4D7D2904E486002948F7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8E7B4D7C2904E478002948F7 /* DropDown */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		8EBE70C92907829700D52EB5 /* Commons */ = {
+			isa = PBXGroup;
+			children = (
+				8EBE70CA290782A100D52EB5 /* Cells */,
+			);
+			path = Commons;
+			sourceTree = "<group>";
+		};
+		8EBE70CA290782A100D52EB5 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				8EBE70CB290783C800D52EB5 /* CommonFullImageCell.swift */,
+				8EBE70CD2907840900D52EB5 /* CommonFullImageCellViewModel.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		8EE9A0BE28F3CAED003D7761 /* HomeModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -432,6 +474,7 @@
 			children = (
 				8EED4EDA29027E5700DA3887 /* GenreViewController.swift */,
 				8EED4EDC2902817500DA3887 /* GenreViewModel.swift */,
+				8E7B4D7D2904E486002948F7 /* Views */,
 			);
 			path = Genre;
 			sourceTree = "<group>";
@@ -602,7 +645,8 @@
 				B1E986AF28FE8D5B00962F5B /* BaseArchitecture */,
 				B1D127E028F09223007E3667 /* Utils */,
 				B12C1DC528ED21830089964E /* Extension */,
-				B1D2D10A290ACBE3005B76BD /* Common */,
+				B1EE64FB28FA4E720055A4F1 /* BottomSheet */,
+				8EBE70C92907829700D52EB5 /* Commons */,
 				B1D79CB328EB0EFB008487D0 /* Assets.xcassets */,
 				B1D79CB528EB0EFB008487D0 /* LaunchScreen.storyboard */,
 				B1D79CB828EB0EFB008487D0 /* Info.plist */,
@@ -971,6 +1015,7 @@
 				B1E361E428F28C3100A29CC8 /* MagazineDetailStroyShareButtonCell.swift in Sources */,
 				B1E4985F28EE886900B469AC /* MagazineDetailSection.swift in Sources */,
 				B1E4987028EEADC900B469AC /* MagazineDetailSectionFactory.swift in Sources */,
+				8EBE70CE2907840900D52EB5 /* CommonFullImageCellViewModel.swift in Sources */,
 				8EED4EDB29027E5700DA3887 /* GenreViewController.swift in Sources */,
 				8E2D8C5C28F2EE69004B514D /* HomeTattooAlbumCell.swift in Sources */,
 				8E2D8C4A28F2ECD2004B514D /* HomeViewModel.swift in Sources */,
@@ -1036,6 +1081,8 @@
 				78B00BC028F5661000A9915D /* LastMagazineHeaderView.swift in Sources */,
 				78B00BBA28F5661000A9915D /* MagazineViewModel.dummy.swift in Sources */,
 				8EED4EDD2902817500DA3887 /* GenreViewModel.swift in Sources */,
+				8E7B4D812904E85A002948F7 /* DropDownTableViewCell.swift in Sources */,
+				8EBE70CC290783C800D52EB5 /* CommonFullImageCell.swift in Sources */,
 				78B00BBC28F5661000A9915D /* MagazineViewController.Layout.swift in Sources */,
 				B1D127DF28F09200007E3667 /* UIImage+.swift in Sources */,
 				B1E3F7D7290EDFD500005F17 /* BPSectionFactory.swift in Sources */,
@@ -1048,6 +1095,7 @@
 				B1CA040628F00CC1004A6027 /* MagazineDetailImageCell.swift in Sources */,
 				B12C1DC728ED219C0089964E /* UIVIewController+Rx.swift in Sources */,
 				78B00BB728F5661000A9915D /* RecentMagazineCell.swift in Sources */,
+				8E7B4D7F2904E4A4002948F7 /* DropDownView.swift in Sources */,
 				B1D79CAD28EB0EF9008487D0 /* SceneDelegate.swift in Sources */,
 				8E2D8C4C28F2ED03004B514D /* HomeModel.swift in Sources */,
 				78B00BBF28F5661000A9915D /* RecentMagazineFooterView.swift in Sources */,
