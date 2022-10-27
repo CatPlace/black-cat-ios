@@ -51,6 +51,8 @@
 		B1D127DD28F08DCA007E3667 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D127DC28F08DCA007E3667 /* TabBarViewController.swift */; };
 		B1D127DF28F09200007E3667 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D127DE28F09200007E3667 /* UIImage+.swift */; };
 		B1D127E228F0923C007E3667 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D127E128F0923C007E3667 /* Asset.swift */; };
+		B1D2D107290AC7B5005B76BD /* UIScrollView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D2D106290AC7B5005B76BD /* UIScrollView+Rx.swift */; };
+		B1D2D109290AC8FA005B76BD /* Observable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D2D108290AC8FA005B76BD /* Observable+.swift */; };
 		B1D3362528F142A400826636 /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3362428F142A400826636 /* CALayer+.swift */; };
 		B1D3362728F1457700826636 /* UITabBar+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3362628F1457700826636 /* UITabBar+.swift */; };
 		B1D3362928F1AC1200826636 /* MagazineDetailEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3362828F1AC1200826636 /* MagazineDetailEmptyCell.swift */; };
@@ -154,6 +156,8 @@
 		B1D127DC28F08DCA007E3667 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		B1D127DE28F09200007E3667 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		B1D127E128F0923C007E3667 /* Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
+		B1D2D106290AC7B5005B76BD /* UIScrollView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx.swift"; sourceTree = "<group>"; };
+		B1D2D108290AC8FA005B76BD /* Observable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+.swift"; sourceTree = "<group>"; };
 		B1D3362428F142A400826636 /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
 		B1D3362628F1457700826636 /* UITabBar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBar+.swift"; sourceTree = "<group>"; };
 		B1D3362828F1AC1200826636 /* MagazineDetailEmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailEmptyCell.swift; sourceTree = "<group>"; };
@@ -341,6 +345,8 @@
 				B1D127DE28F09200007E3667 /* UIImage+.swift */,
 				B1D3362428F142A400826636 /* CALayer+.swift */,
 				B1D3362628F1457700826636 /* UITabBar+.swift */,
+				B1D2D106290AC7B5005B76BD /* UIScrollView+Rx.swift */,
+				B1D2D108290AC8FA005B76BD /* Observable+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -663,6 +669,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E2D8C5E28F2EE69004B514D /* HomeTattooAlbumCellViewModel.swift in Sources */,
+				B1D2D107290AC7B5005B76BD /* UIScrollView+Rx.swift in Sources */,
 				B1E361E428F28C3100A29CC8 /* MagazineDetailStroyShareButtonCell.swift in Sources */,
 				B1E4985F28EE886900B469AC /* MagazineDetailSection.swift in Sources */,
 				B1E4987028EEADC900B469AC /* MagazineDetailSectionFactory.swift in Sources */,
@@ -689,6 +696,7 @@
 				B1E986AB28FE888800962F5B /* FilterTaskService.swift in Sources */,
 				8E2D8C4F28F2ED53004B514D /* HomeHeaderView.swift in Sources */,
 				B1EABEC128FBD83F0029B6BC /* FilterLoaction.swift in Sources */,
+				B1D2D109290AC8FA005B76BD /* Observable+.swift in Sources */,
 				78B00BBD28F5661000A9915D /* MagazineViewController.swift in Sources */,
 				8E2D8C4828F2EC27004B514D /* HomeViewController.swift in Sources */,
 				B1EE64F828FA4ABE0055A4F1 /* FilterExampleViewController.swift in Sources */,

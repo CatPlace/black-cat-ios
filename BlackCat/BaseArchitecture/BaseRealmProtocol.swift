@@ -32,8 +32,8 @@ extension BaseRealmProtocol {
     public func realmWrite(operation: (_ realm: Realm) -> Void) -> Bool {
         guard let realm = getRealm() else { return false }
         
-        // realm 파일경로
-        print("🗂️ \(Realm.Configuration.defaultConfiguration.fileURL!)")
+        // realm 파일경로 -> 기본적으로 주석처리해주세요.
+//        print("🗂️ \(Realm.Configuration.defaultConfiguration.fileURL!)")
 
         do {
             try realm.write { operation(realm) }
