@@ -21,35 +21,23 @@ class HomeViewModel {
     let didTapSearchBarButtonItem = PublishRelay<Void>()
     let didTapHeartBarButtonItem = PublishRelay<Void>()
     let didTapCollectionViewItem = PublishRelay<IndexPath>()
+    let nextFetchPage = PublishSubject<Int>()
 
     // MARK: - Output
 
     let homeItems: Driver<[HomeSection]>
 
     init() {
-        let startFetchItems = viewDidLoad.share()
+        let fetchedRecommendItems = viewDidLoad
+            .map { _ in Array(repeating: HomeModel.Recommend(imageURLString: "",
+                                                             priceString: "15,500원",
+                                                             tattooistName: "김타투"), count: 7) }
 
-        let fetchedRecommendItems = startFetchItems
-            .map { () -> [HomeModel.Recommend] in
-                // Dummy 모델
-                [HomeModel.Recommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
-                 HomeModel.Recommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
-                 HomeModel.Recommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
-                 HomeModel.Recommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투"),
-                 HomeModel.Recommend(imageURLString: "", priceString: "15,900원", tattooistName: "김타투")]
-            }
-
-        let fetchedTattooAlbumItems = startFetchItems
-            .map { () -> [HomeModel.TattooAlbum] in
-                // Dummy 모델
-                [HomeModel.TattooAlbum(imageURLString: ""),
-                 HomeModel.TattooAlbum(imageURLString: ""),
-                 HomeModel.TattooAlbum(imageURLString: ""),
-                 HomeModel.TattooAlbum(imageURLString: ""),
-                 HomeModel.TattooAlbum(imageURLString: ""),
-                 HomeModel.TattooAlbum(imageURLString: ""),
-                 HomeModel.TattooAlbum(imageURLString: ""),
-                 HomeModel.TattooAlbum(imageURLString: "")]
+        let fetchedTattooAlbumItems = nextFetchPage
+            .distinct()
+            .flatMap { nextFetchPage in fetchTattoAlbumItems(at: nextFetchPage) }
+            .scan([HomeModel.TattooAlbum]()) { previousItems, nextFetchPageItems in
+                previousItems + nextFetchPageItems
             }
 
         homeItems = Observable
@@ -66,5 +54,26 @@ class HomeViewModel {
                              items: tattooAlbumItems.map { .allTattoosCell(HomeTattooAlbumCellViewModel(with: $0)) })]
             }
             .asDriver(onErrorJustReturn: [])
+
+        // Dummy Function입니다.
+        // API가 나오는대로 SDK에서 처리할 함수입니다.
+        func fetchTattoAlbumItems(at page: Int) -> Observable<[HomeModel.TattooAlbum]> {
+            return .just(Array(repeating: HomeModel.TattooAlbum(imageURLString: ""), count: 15))
+        }
+    }
+}
+
+private extension Observable where Element: Hashable {
+    /// 이전에 발생한 이벤트가 새로 발생할 경우 해당 이벤트는 무시합니다
+    func distinct() -> Observable<Element> {
+        var cache = Set<Element>()
+        return flatMap { element -> Observable<Element> in
+            if cache.contains(element) {
+                return Observable<Element>.empty()
+            } else {
+                cache.insert(element)
+                return Observable<Element>.just(element)
+            }
+        }
     }
 }
