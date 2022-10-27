@@ -375,6 +375,14 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		B1D2D10A290ACBE3005B76BD /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				B1EE64FB28FA4E720055A4F1 /* BottomSheet */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		B1D79C9E28EB0EF8008487D0 = {
 			isa = PBXGroup;
 			children = (
@@ -407,7 +415,7 @@
 				B1E986AF28FE8D5B00962F5B /* BaseArchitecture */,
 				B1D127E028F09223007E3667 /* Utils */,
 				B12C1DC528ED21830089964E /* Extension */,
-				B1EE64FB28FA4E720055A4F1 /* BottomSheet */,
+				B1D2D10A290ACBE3005B76BD /* Common */,
 				B1D79CB328EB0EFB008487D0 /* Assets.xcassets */,
 				B1D79CB528EB0EFB008487D0 /* LaunchScreen.storyboard */,
 				B1D79CB828EB0EFB008487D0 /* Info.plist */,
