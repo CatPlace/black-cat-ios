@@ -8,21 +8,8 @@
 import UIKit
 import RxSwift
 
-class MagazineDetailBaseCell: UITableViewCell {
+class MagazineDetailBaseCell: BaseTableViewCell {
     var disposeBag: DisposeBag = DisposeBag()
-    
-    // MARK: - Initializing
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        initialize()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func initialize() { /* override point */ }
     
     // MARK: - textBuilder
     func contentTextLabelBuilder(_ sender: UILabel, _ item: MagazineDetailModel) {
