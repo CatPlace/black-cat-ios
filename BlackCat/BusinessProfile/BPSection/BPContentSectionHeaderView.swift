@@ -104,6 +104,9 @@ class BPContentSectionHeaderView: BPBaseCollectionReusableView, View {
                 flex.addItem(reviewButton).grow(1)
                 flex.addItem(infoButton).grow(1)
             }
+        
+        // MARK: - 멀티캐스트 딜리게이트 추가
+        BPDispatchSystem.dispatch.multicastDelegate.addDelegate(self)
     }
     
     override func layoutSubviews() {
@@ -163,7 +166,7 @@ class BPContentSectionHeaderView: BPBaseCollectionReusableView, View {
 }
 
 extension BPContentSectionHeaderView: BPMulticastDelegate {
-    func notifyContentHeader(indexPath: IndexPath, forType: type) {
+    func notifyContentHeader(indexPath: IndexPath, forType: type) { 
         print("🐬")
         var forType = forType
         // MARK: - 싱크 맞추기

@@ -58,8 +58,10 @@ final class BusinessProfileViewController: UIViewController, View {
             .withLatestFrom(collectionView.rx.willDisplayCell) { didEnd, will -> (IndexPath, IndexPath) in
                 return (didEnd.at, will.at)
             }
+            .debug("💕")
             .filter { didEnd, will in return (didEnd != will) && (didEnd.section != 0) }
             .map { didEnd, will in return will }
+            .debug("💕💕")
             .bind { indexPath in
                 var type: BPContentSectionHeaderView.BPContentHeaderButtonType
                 
@@ -71,6 +73,7 @@ final class BusinessProfileViewController: UIViewController, View {
                 default: type = .profile
                 }
                 
+                print("💕💕💕 \(indexPath) : \(type)")
                 BPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
                     delegate.notifyContentHeader(indexPath: indexPath, forType: type)
                 }
