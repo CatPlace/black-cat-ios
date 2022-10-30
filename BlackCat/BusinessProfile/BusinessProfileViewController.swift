@@ -58,9 +58,7 @@ final class BusinessProfileViewController: UIViewController, View {
             .withLatestFrom(collectionView.rx.willDisplayCell) { didEnd, will -> (IndexPath, IndexPath) in
                 return (didEnd.at, will.at)
             }
-            .filter { didEnd, will in
-                (didEnd != will) && (didEnd.section != 0)
-            }
+            .filter { didEnd, will in return (didEnd != will) && (didEnd.section != 0) }
             .map { didEnd, will in return will }
             .bind { indexPath in
                 var type: BPContentSectionHeaderView.BPContentHeaderButtonType
@@ -100,7 +98,7 @@ final class BusinessProfileViewController: UIViewController, View {
         super.viewDidLoad()
         
         setUI()
-//        dispatch.multicastDelegate.addDelegate(self)
+        BPDispatchSystem.dispatch.multicastDelegate.addDelegate(self)
     }
     
     // MARK: - UIComponents

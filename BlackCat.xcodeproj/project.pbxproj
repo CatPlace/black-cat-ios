@@ -91,6 +91,7 @@
 		B1E3F7D7290EDFD500005F17 /* BPSectionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7D6290EDFD500005F17 /* BPSectionFactory.swift */; };
 		B1E3F7D9290EE8CE00005F17 /* BPMultiCastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7D8290EE8CE00005F17 /* BPMultiCastDelegate.swift */; };
 		B1E3F7DC290EE9D500005F17 /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7DB290EE9D500005F17 /* MulticastDelegate.swift */; };
+		B1E3F7DE290F009F00005F17 /* BusinessProfileViewController.BPMulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7DD290F009F00005F17 /* BusinessProfileViewController.BPMulticastDelegate.swift */; };
 		B1E4983828EE838700B469AC /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B1E4983728EE838700B469AC /* SnapKit */; };
 		B1E4984628EE83BD00B469AC /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = B1E4984528EE83BD00B469AC /* Realm */; };
 		B1E4984828EE83BD00B469AC /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B1E4984728EE83BD00B469AC /* RealmSwift */; };
@@ -218,6 +219,7 @@
 		B1E3F7D6290EDFD500005F17 /* BPSectionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPSectionFactory.swift; sourceTree = "<group>"; };
 		B1E3F7D8290EE8CE00005F17 /* BPMultiCastDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPMultiCastDelegate.swift; sourceTree = "<group>"; };
 		B1E3F7DB290EE9D500005F17 /* MulticastDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MulticastDelegate.swift; sourceTree = "<group>"; };
+		B1E3F7DD290F009F00005F17 /* BusinessProfileViewController.BPMulticastDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessProfileViewController.BPMulticastDelegate.swift; sourceTree = "<group>"; };
 		B1E4985728EE85A800B469AC /* MagazineDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailViewController.swift; sourceTree = "<group>"; };
 		B1E4985E28EE886900B469AC /* MagazineDetailSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailSection.swift; sourceTree = "<group>"; };
 		B1E4986128EE8BFE00B469AC /* MagazineDetailTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailTextCell.swift; sourceTree = "<group>"; };
@@ -481,6 +483,7 @@
 				B1D89C86290E78AF00C8B7F1 /* BusinessProfileViewController.swift */,
 				B1E3F7BF290EC1AD00005F17 /* BusinessProfileReactor.swift */,
 				B1D89C92290E810000C8B7F1 /* BusinessProfileViewController.Layout.swift */,
+				B1E3F7DD290F009F00005F17 /* BusinessProfileViewController.BPMulticastDelegate.swift */,
 				B1E3F7DA290EE91300005F17 /* BPMultiCast */,
 				B1D89C94290E844300C8B7F1 /* BPModels */,
 				B1D89C89290E7C3300C8B7F1 /* BPSection */,
@@ -824,6 +827,7 @@
 				B160DBFB28FF3D8E00C0D682 /* BaseTableViewCell.swift in Sources */,
 				B1E3F7BA290EBAB100005F17 /* BPProductCell.swift in Sources */,
 				B1E4986528EE957E00B469AC /* MagazineDetailModel.swift in Sources */,
+				B1E3F7DE290F009F00005F17 /* BusinessProfileViewController.BPMulticastDelegate.swift in Sources */,
 				B1E4986728EE9BE800B469AC /* MagazineDetailBaseCell.swift in Sources */,
 				B1E3F7DC290EE9D500005F17 /* MulticastDelegate.swift in Sources */,
 				8E2D8C5928F2EE69004B514D /* HomeEmptyCell.swift in Sources */,
