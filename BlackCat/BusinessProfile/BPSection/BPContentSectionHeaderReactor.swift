@@ -8,25 +8,24 @@
 import ReactorKit
 
 final class BPContentSectionHeaderReactor: Reactor {
-    typealias CafeHeaderButtonType = CafeSectionHeaderView.CafeHeaderButtonType
+    typealias BPContentHeaderButtonType = BPContentSectionHeaderView.BPContentHeaderButtonType
     
     enum Action {
-        case didTapButton1
-        case didTapButton2
-        case didTapButton3
-        case didTapButton4
+        case didTapProfile
+        case didTapProduct
+        case didTapReview
+        case didTapInfo
     }
     
     enum Mutation {
-        case selectedButton(CafeHeaderButtonType) // 선택된 버튼들
-        // 컬렉션 뷰 페이지 변경
+        case selectedButton(BPContentHeaderButtonType)
     }
 
     struct State {
-        @Pulse var selectedButton: CafeHeaderButtonType
+        @Pulse var selectedButton: BPContentHeaderButtonType
         
-        init(selectedButton: CafeHeaderButtonType = .button1) {
-            self.selectedButton = .button1
+        init(selectedButton: BPContentHeaderButtonType = .profile) {
+            self.selectedButton = .profile
         }
     }
     
@@ -38,14 +37,14 @@ final class BPContentSectionHeaderReactor: Reactor {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .didTapButton1:
-            return .just(.selectedButton(.button1))
-        case .didTapButton2:
-            return .just(.selectedButton(.button2))
-        case .didTapButton3:
-            return .just(.selectedButton(.button3))
-        case .didTapButton4:
-            return .just(.selectedButton(.button4))
+        case .didTapProfile:
+            return .just(.selectedButton(.profile))
+        case .didTapProduct:
+            return .just(.selectedButton(.product))
+        case .didTapReview:
+            return .just(.selectedButton(.review))
+        case .didTapInfo:
+            return .just(.selectedButton(.info))
         }
     }
     

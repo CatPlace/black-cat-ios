@@ -70,7 +70,11 @@ final class BPContentCellReactor: Reactor {
     }
     
     struct State {
+        var contentModel: BPContentModel
         
+        init(contentModel: BPContentModel) {
+            self.contentModel = contentModel
+        }
     }
     
     var initialState: State

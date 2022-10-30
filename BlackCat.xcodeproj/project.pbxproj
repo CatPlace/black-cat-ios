@@ -88,6 +88,7 @@
 		B1E3F7D1290ECC0500005F17 /* FlexLayout in Frameworks */ = {isa = PBXBuildFile; productRef = B1E3F7D0290ECC0500005F17 /* FlexLayout */; };
 		B1E3F7D3290ECC0500005F17 /* FlexLayoutYoga in Frameworks */ = {isa = PBXBuildFile; productRef = B1E3F7D2290ECC0500005F17 /* FlexLayoutYoga */; };
 		B1E3F7D5290ECC0500005F17 /* FlexLayoutYogaKit in Frameworks */ = {isa = PBXBuildFile; productRef = B1E3F7D4290ECC0500005F17 /* FlexLayoutYogaKit */; };
+		B1E3F7D7290EDFD500005F17 /* BPSectionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7D6290EDFD500005F17 /* BPSectionFactory.swift */; };
 		B1E4983828EE838700B469AC /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B1E4983728EE838700B469AC /* SnapKit */; };
 		B1E4984628EE83BD00B469AC /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = B1E4984528EE83BD00B469AC /* Realm */; };
 		B1E4984828EE83BD00B469AC /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B1E4984728EE83BD00B469AC /* RealmSwift */; };
@@ -212,6 +213,7 @@
 		B1E3F7C3290EC95100005F17 /* BPContentSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPContentSectionHeaderView.swift; sourceTree = "<group>"; };
 		B1E3F7C5290EC98600005F17 /* BPBaseCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPBaseCollectionReusableView.swift; sourceTree = "<group>"; };
 		B1E3F7C7290ECAA100005F17 /* BPContentSectionHeaderReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPContentSectionHeaderReactor.swift; sourceTree = "<group>"; };
+		B1E3F7D6290EDFD500005F17 /* BPSectionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPSectionFactory.swift; sourceTree = "<group>"; };
 		B1E4985728EE85A800B469AC /* MagazineDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailViewController.swift; sourceTree = "<group>"; };
 		B1E4985E28EE886900B469AC /* MagazineDetailSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailSection.swift; sourceTree = "<group>"; };
 		B1E4986128EE8BFE00B469AC /* MagazineDetailTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailTextCell.swift; sourceTree = "<group>"; };
@@ -485,6 +487,7 @@
 			isa = PBXGroup;
 			children = (
 				B1D89C8A290E7C6400C8B7F1 /* BPSection.swift */,
+				B1E3F7D6290EDFD500005F17 /* BPSectionFactory.swift */,
 				B1E3F7C5290EC98600005F17 /* BPBaseCollectionReusableView.swift */,
 				B1E3F7C3290EC95100005F17 /* BPContentSectionHeaderView.swift */,
 				B1E3F7C7290ECAA100005F17 /* BPContentSectionHeaderReactor.swift */,
@@ -835,6 +838,7 @@
 				78B00BBA28F5661000A9915D /* MagazineViewModel.dummy.swift in Sources */,
 				78B00BBC28F5661000A9915D /* MagazineViewController.Layout.swift in Sources */,
 				B1D127DF28F09200007E3667 /* UIImage+.swift in Sources */,
+				B1E3F7D7290EDFD500005F17 /* BPSectionFactory.swift in Sources */,
 				B1E4986928EE9E3500B469AC /* MagazineDetailViewReactor.swift in Sources */,
 				B1D3364328F1CD1B00826636 /* UITableView+.swift in Sources */,
 				B1E3F7C8290ECAA100005F17 /* BPContentSectionHeaderReactor.swift in Sources */,

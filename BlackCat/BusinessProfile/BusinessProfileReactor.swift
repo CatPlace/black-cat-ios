@@ -19,7 +19,7 @@ final class BusinessProfileReactor: Reactor {
     struct State {
         var sections: [BusinessProfileCellSection]
         
-        init(sections: [BusinessProfileCellSection]) {
+        init(sections: [BusinessProfileCellSection] = BusinessProfileReactor.configurationSections()) {
             self.sections = sections
         }
     }
@@ -44,5 +44,22 @@ final class BusinessProfileReactor: Reactor {
             newState.sections = []
             return newState
         }
+    }
+}
+
+extension BusinessProfileReactor {
+    static func configurationSections() -> [BusinessProfileCellSection] {
+        
+        let thumbnailCell = BPSectionFactory.makeThumbnailCell()
+        let thumbnailSection = BusinessProfileCellSection.thumbnailImageCell([thumbnailCell])
+        
+        let contentProfile = BPSectionFactory.makeContentCell(order: 0)
+        let contentProduct = BPSectionFactory.makeContentCell(order: 1)
+        let contentReview = BPSectionFactory.makeContentCell(order: 2)
+        let contentInfo = BPSectionFactory.makeContentCell(order: 3)
+        
+        let contentSection = BusinessProfileCellSection.contentCell([contentProfile, contentProduct, contentReview, contentInfo])
+        
+        return [thumbnailSection, contentSection]
     }
 }

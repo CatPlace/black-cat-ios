@@ -34,7 +34,7 @@ extension BusinessProfileViewController {
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1.0),
                                                             heightDimension: .fractionalWidth(1.0)))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                                         heightDimension: .fractionalWidth(0.25)),
+                                                                         heightDimension: .fractionalWidth(1)),
                                                        subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)

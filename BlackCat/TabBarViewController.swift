@@ -24,7 +24,7 @@ final class TabBarViewController: UITabBarController {
                                                 title: "매거진",
                                                 image: .ic_board,
                                                 selectedImage: .ic_board_fill)
-    let vc4 = TabBarFactory.create(viewController: FilterExampleViewController(),
+    let vc4 = TabBarFactory.create(viewController: BusinessProfileViewController(),
                                                 title: "임시뷰",
                                                 image: .ic_board,
                                                 selectedImage: .ic_board_fill)
