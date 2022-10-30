@@ -81,6 +81,13 @@
 		B1E3F7BE290EBE3900005F17 /* BPContentCell.Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7BD290EBE3900005F17 /* BPContentCell.Layout.swift */; };
 		B1E3F7C0290EC1AD00005F17 /* BusinessProfileReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7BF290EC1AD00005F17 /* BusinessProfileReactor.swift */; };
 		B1E3F7C2290EC1F700005F17 /* BPContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7C1290EC1F700005F17 /* BPContentModel.swift */; };
+		B1E3F7C4290EC95100005F17 /* BPContentSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7C3290EC95100005F17 /* BPContentSectionHeaderView.swift */; };
+		B1E3F7C6290EC98600005F17 /* BPBaseCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7C5290EC98600005F17 /* BPBaseCollectionReusableView.swift */; };
+		B1E3F7C8290ECAA100005F17 /* BPContentSectionHeaderReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7C7290ECAA100005F17 /* BPContentSectionHeaderReactor.swift */; };
+		B1E3F7CB290ECBBB00005F17 /* PinLayout in Frameworks */ = {isa = PBXBuildFile; productRef = B1E3F7CA290ECBBB00005F17 /* PinLayout */; };
+		B1E3F7D1290ECC0500005F17 /* FlexLayout in Frameworks */ = {isa = PBXBuildFile; productRef = B1E3F7D0290ECC0500005F17 /* FlexLayout */; };
+		B1E3F7D3290ECC0500005F17 /* FlexLayoutYoga in Frameworks */ = {isa = PBXBuildFile; productRef = B1E3F7D2290ECC0500005F17 /* FlexLayoutYoga */; };
+		B1E3F7D5290ECC0500005F17 /* FlexLayoutYogaKit in Frameworks */ = {isa = PBXBuildFile; productRef = B1E3F7D4290ECC0500005F17 /* FlexLayoutYogaKit */; };
 		B1E4983828EE838700B469AC /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B1E4983728EE838700B469AC /* SnapKit */; };
 		B1E4984628EE83BD00B469AC /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = B1E4984528EE83BD00B469AC /* Realm */; };
 		B1E4984828EE83BD00B469AC /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B1E4984728EE83BD00B469AC /* RealmSwift */; };
@@ -202,6 +209,9 @@
 		B1E3F7BD290EBE3900005F17 /* BPContentCell.Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPContentCell.Layout.swift; sourceTree = "<group>"; };
 		B1E3F7BF290EC1AD00005F17 /* BusinessProfileReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessProfileReactor.swift; sourceTree = "<group>"; };
 		B1E3F7C1290EC1F700005F17 /* BPContentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPContentModel.swift; sourceTree = "<group>"; };
+		B1E3F7C3290EC95100005F17 /* BPContentSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPContentSectionHeaderView.swift; sourceTree = "<group>"; };
+		B1E3F7C5290EC98600005F17 /* BPBaseCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPBaseCollectionReusableView.swift; sourceTree = "<group>"; };
+		B1E3F7C7290ECAA100005F17 /* BPContentSectionHeaderReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPContentSectionHeaderReactor.swift; sourceTree = "<group>"; };
 		B1E4985728EE85A800B469AC /* MagazineDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailViewController.swift; sourceTree = "<group>"; };
 		B1E4985E28EE886900B469AC /* MagazineDetailSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailSection.swift; sourceTree = "<group>"; };
 		B1E4986128EE8BFE00B469AC /* MagazineDetailTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailTextCell.swift; sourceTree = "<group>"; };
@@ -244,12 +254,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1E3F7CB290ECBBB00005F17 /* PinLayout in Frameworks */,
 				B1E4984828EE83BD00B469AC /* RealmSwift in Frameworks */,
 				B1E4984E28EE83E400B469AC /* Nuke in Frameworks */,
 				B160DC1C28FF53C400C0D682 /* RxCocoa in Frameworks */,
 				B1D3363728F1CA2000826636 /* BlackCatSDK.framework in Frameworks */,
+				B1E3F7D3290ECC0500005F17 /* FlexLayoutYoga in Frameworks */,
+				B1E3F7D5290ECC0500005F17 /* FlexLayoutYogaKit in Frameworks */,
 				B1E4985D28EE873100B469AC /* RxDataSources in Frameworks */,
 				B1E4984628EE83BD00B469AC /* Realm in Frameworks */,
+				B1E3F7D1290ECC0500005F17 /* FlexLayout in Frameworks */,
 				B160DC2028FF53C400C0D682 /* RxSwift in Frameworks */,
 				B1E4985B28EE873100B469AC /* Differentiator in Frameworks */,
 				B1E4984B28EE83D800B469AC /* ReactorKit in Frameworks */,
@@ -471,6 +485,9 @@
 			isa = PBXGroup;
 			children = (
 				B1D89C8A290E7C6400C8B7F1 /* BPSection.swift */,
+				B1E3F7C5290EC98600005F17 /* BPBaseCollectionReusableView.swift */,
+				B1E3F7C3290EC95100005F17 /* BPContentSectionHeaderView.swift */,
+				B1E3F7C7290ECAA100005F17 /* BPContentSectionHeaderReactor.swift */,
 			);
 			path = BPSection;
 			sourceTree = "<group>";
@@ -667,6 +684,10 @@
 				B160DC1B28FF53C400C0D682 /* RxCocoa */,
 				B160DC1D28FF53C400C0D682 /* RxRelay */,
 				B160DC1F28FF53C400C0D682 /* RxSwift */,
+				B1E3F7CA290ECBBB00005F17 /* PinLayout */,
+				B1E3F7D0290ECC0500005F17 /* FlexLayout */,
+				B1E3F7D2290ECC0500005F17 /* FlexLayoutYoga */,
+				B1E3F7D4290ECC0500005F17 /* FlexLayoutYogaKit */,
 			);
 			productName = BlackCat;
 			productReference = B1D79CA728EB0EF9008487D0 /* BlackCat.app */;
@@ -710,6 +731,8 @@
 				B160DC1228FF535600C0D682 /* XCRemoteSwiftPackageReference "Quick" */,
 				B160DC1528FF536C00C0D682 /* XCRemoteSwiftPackageReference "Nimble" */,
 				B160DC1828FF53C400C0D682 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				B1E3F7C9290ECBBB00005F17 /* XCRemoteSwiftPackageReference "PinLayout" */,
+				B1E3F7CF290ECC0500005F17 /* XCRemoteSwiftPackageReference "FlexLayout" */,
 			);
 			productRefGroup = B1D79CA828EB0EF9008487D0 /* Products */;
 			projectDirPath = "";
@@ -802,6 +825,7 @@
 				B1D3362928F1AC1200826636 /* MagazineDetailEmptyCell.swift in Sources */,
 				B1E3F7C2290EC1F700005F17 /* BPContentModel.swift in Sources */,
 				78B00BBE28F5661000A9915D /* MagazineViewModel.swift in Sources */,
+				B1E3F7C6290EC98600005F17 /* BPBaseCollectionReusableView.swift in Sources */,
 				8E2D8C5A28F2EE69004B514D /* HomeCategoryCellViewModel.swift in Sources */,
 				B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */,
 				B1E986AE28FE8D4F00962F5B /* BaseRealmProtocol.swift in Sources */,
@@ -813,6 +837,7 @@
 				B1D127DF28F09200007E3667 /* UIImage+.swift in Sources */,
 				B1E4986928EE9E3500B469AC /* MagazineDetailViewReactor.swift in Sources */,
 				B1D3364328F1CD1B00826636 /* UITableView+.swift in Sources */,
+				B1E3F7C8290ECAA100005F17 /* BPContentSectionHeaderReactor.swift in Sources */,
 				B1EE64FA28FA4E600055A4F1 /* BottomSheetTransitioningDelegate.swift in Sources */,
 				B1CA040628F00CC1004A6027 /* MagazineDetailImageCell.swift in Sources */,
 				B12C1DC728ED219C0089964E /* UIVIewController+Rx.swift in Sources */,
@@ -822,6 +847,7 @@
 				78B00BBF28F5661000A9915D /* RecentMagazineFooterView.swift in Sources */,
 				B1D89C93290E810000C8B7F1 /* BusinessProfileViewController.Layout.swift in Sources */,
 				B1EE64F628FA48230055A4F1 /* BottomSheetController.swift in Sources */,
+				B1E3F7C4290EC95100005F17 /* BPContentSectionHeaderView.swift in Sources */,
 				B1EE651228FA872B0055A4F1 /* FilterViewController.swift in Sources */,
 				B1E3F7B8290EB85400005F17 /* BPReviewModel.swift in Sources */,
 				8EE9A0C328F3CD25003D7761 /* HomeCompositionalLayoutSection.swift in Sources */,
@@ -937,6 +963,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = "FLEXLAYOUT_SWIFT_PACKAGE=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -991,6 +1018,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = "FLEXLAYOUT_SWIFT_PACKAGE=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1119,6 +1147,22 @@
 				minimumVersion = 6.5.0;
 			};
 		};
+		B1E3F7C9290ECBBB00005F17 /* XCRemoteSwiftPackageReference "PinLayout" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/layoutBox/PinLayout";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.9.0;
+			};
+		};
+		B1E3F7CF290ECC0500005F17 /* XCRemoteSwiftPackageReference "FlexLayout" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/layoutBox/FlexLayout";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.3.0;
+			};
+		};
 		B1E4983628EE838700B469AC /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -1219,6 +1263,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B1E4984428EE83BD00B469AC /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		B1E3F7CA290ECBBB00005F17 /* PinLayout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B1E3F7C9290ECBBB00005F17 /* XCRemoteSwiftPackageReference "PinLayout" */;
+			productName = PinLayout;
+		};
+		B1E3F7D0290ECC0500005F17 /* FlexLayout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B1E3F7CF290ECC0500005F17 /* XCRemoteSwiftPackageReference "FlexLayout" */;
+			productName = FlexLayout;
+		};
+		B1E3F7D2290ECC0500005F17 /* FlexLayoutYoga */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B1E3F7CF290ECC0500005F17 /* XCRemoteSwiftPackageReference "FlexLayout" */;
+			productName = FlexLayoutYoga;
+		};
+		B1E3F7D4290ECC0500005F17 /* FlexLayoutYogaKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B1E3F7CF290ECC0500005F17 /* XCRemoteSwiftPackageReference "FlexLayout" */;
+			productName = FlexLayoutYogaKit;
 		};
 		B1E4983728EE838700B469AC /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

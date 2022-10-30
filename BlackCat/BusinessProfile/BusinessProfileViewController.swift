@@ -19,6 +19,7 @@ final class BusinessProfileViewController: UIViewController, View {
     enum Reusable {
         static let thumbnailCell = ReusableCell<BPThumbnailImageCell>()
         static let contentCell = ReusableCell<BPContentCell>()
+//        static let 
     }
     
     var disposeBag: DisposeBag = DisposeBag()
@@ -36,6 +37,16 @@ final class BusinessProfileViewController: UIViewController, View {
             cell.reactor = reactor
             return cell
         }
+    } configureSupplementaryView: { _, collectionView, kind, indexPath -> UICollectionReusableView in
+        var cafeSection1HeaderView = collectionView.dequeue(Reusable.cafeHeaderView, kind: .header, for: indexPath)
+        
+        switch indexPath.section {
+//        case 0: return UICollectionReusableView()
+        case 1: UICollectionReusableView()
+//            cafeSection1HeaderView.reactor = CafeSectionHeaderViewReactor(initialState: .init())
+//            return cafeSection1HeaderView
+        default: return UICollectionReusableView()
+        }
     }
     
     func bind(reactor: Reactor) {
@@ -49,7 +60,6 @@ final class BusinessProfileViewController: UIViewController, View {
     
     private func render(reactor: Reactor) {
         reactor.state.map { $0.sections }
-            .asObservable()
             .bind(to: self.collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
