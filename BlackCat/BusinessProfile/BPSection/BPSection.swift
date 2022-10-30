@@ -45,21 +45,3 @@ extension BusinessProfileCellSection: AnimatableSectionModelType {
         }
     }
 }
-
-// cell and reactor
-final class BPThumbnailImageCell: BaseCollectionViewCell {
-    
-}
-
-final class BPThumnailImageCellReactor {
-    
-}
-
-final class BPContentCell: BaseCollectionViewCell {
-    
-}
-
-final class BPContentCellReactor {
-    
-}
-
