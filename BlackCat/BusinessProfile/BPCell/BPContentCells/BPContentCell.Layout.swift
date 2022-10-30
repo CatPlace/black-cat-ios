@@ -15,8 +15,8 @@ extension BPContentCell {
             $0.edges.equalToSuperview()
         }
         
-        contentView.addSubview(reivewCollectionView)
-        reivewCollectionView.snp.makeConstraints {
+        contentView.addSubview(reviewCollectionView)
+        reviewCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }

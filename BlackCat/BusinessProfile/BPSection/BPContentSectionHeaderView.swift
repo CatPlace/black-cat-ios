@@ -40,7 +40,7 @@ class BPContentSectionHeaderView: BPBaseCollectionReusableView, View {
         reactor.state.map { $0.selectedButton }
             .bind(with: self) { owner, type in
                 owner.updateButtonUI(type: type)
-//                owner.notifyCollectionView(type: type)
+                owner.notifyCollectionView(type: type)
             }
             .disposed(by: self.disposeBag)
     }
@@ -59,6 +59,35 @@ class BPContentSectionHeaderView: BPBaseCollectionReusableView, View {
         if buttonTitle != productButton.title(for: .normal) { productButton.isSelected = false }
         if buttonTitle != reviewButton.title(for: .normal) { reviewButton.isSelected = false }
         if buttonTitle != infoButton.title(for: .normal) { infoButton.isSelected = false }
+    }
+    
+    private func notifyCollectionView(type: BPContentHeaderButtonType) {
+        let buttonTitle = type.rawValue
+        
+        // MARK: - 이벤트 발생시키기
+        if buttonTitle == profileButton.title(for: .normal) {
+            BPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
+                delegate.notifyContentCell(indexPath: nil, forType: .product)
+            }
+        }
+            
+        if buttonTitle == productButton.title(for: .normal) {
+            BPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
+                delegate.notifyContentCell(indexPath: nil, forType: .product)
+            }
+        }
+        
+        if buttonTitle == reviewButton.title(for: .normal) {
+            BPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
+                delegate.notifyContentCell(indexPath: nil, forType: .review)
+            }
+        }
+        
+        if buttonTitle == infoButton.title(for: .normal) {
+            BPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
+                delegate.notifyContentCell(indexPath: nil, forType: .info)
+            }
+        }
     }
     
     // MARK: - Initalize
@@ -131,4 +160,20 @@ class BPContentSectionHeaderView: BPBaseCollectionReusableView, View {
         return $0
     }(UIButton())
     
+}
+
+extension BPContentSectionHeaderView: BPMulticastDelegate {
+    func notifyContentHeader(indexPath: IndexPath, forType: type) {
+        var forType = forType
+        // MARK: - 싱크 맞추기
+        switch indexPath.row {
+        case 0: forType = .profile
+        case 1: forType = .product
+        case 2: forType = .review
+        case 3: forType = .info
+        default: forType = .profile
+        }
+        
+        updateButtonUI(type: forType)
+    }
 }

@@ -18,14 +18,14 @@ protocol BPMulticastDelegate {
     */
     
     /** to BPContentSectionHeaderView*/ func notifyContentHeader(indexPath: IndexPath, forType: type)
-    /** to notifyToContentCell*/ func notifyContentCell(indexPath: IndexPath, forType: type)
+    /** to notifyToContentCell*/ func notifyContentCell(indexPath: IndexPath?, forType: type)
     /** to notifyToViewController*/ func notifyViewController(offset: CGFloat)
     /** to notifyToCellCollectionViewOffset*/ func notifyCellCollectionView(value: Bool)
 }
 
 extension BPMulticastDelegate {
     func notifyContentHeader(indexPath: IndexPath, forType: type) { }
-    func notifyContentCell(indexPath: IndexPath, forType: type) { }
+    func notifyContentCell(indexPath: IndexPath?, forType: type) { }
     func notifyViewController(offset: CGFloat) { }
     func notifyCellCollectionView(value: Bool) { }
 }

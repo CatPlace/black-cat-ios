@@ -70,10 +70,10 @@ final class BusinessProfileViewController: UIViewController, View {
                 case 3: type = .info
                 default: type = .profile
                 }
-
-//                dispatch.multicastDelegate.invokeDelegates { delegate in
-//                    delegate.notifyHeader(indexPath: indexPath, forType: type)
-//                }
+                
+                BPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
+                    delegate.notifyContentHeader(indexPath: indexPath, forType: type)
+                }
             }.disposed(by: disposeBag)
     }
     

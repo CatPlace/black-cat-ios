@@ -9,9 +9,9 @@ import UIKit
 
 extension BusinessProfileViewController: BPMulticastDelegate {
     
-    func receiveFromContentCell(indexPath: IndexPath, forType: type) {
+    func notifyContentCell(indexPath: IndexPath?, forType: type) {
         // 🐻‍❄️ NOTE - section을 rawValue로 참조하게끔 바꾸기 sectionType으로 참조하게끔 추후에 바꾸기
-        
+        print("AB")
         var indexPath: IndexPath = IndexPath(row: 0, section: 1)
         
         switch forType {
@@ -26,7 +26,8 @@ extension BusinessProfileViewController: BPMulticastDelegate {
                                     animated: true)
     }
     
-    func receiveFromViewController(offset: CGFloat) {
+    func notifyViewController(offset: CGFloat) {
+        print("ABC")
         if offset <= 0 {
             collectionView.scrollToItem(at: IndexPath(row: 0, section: 0),
                                         at: .top,
