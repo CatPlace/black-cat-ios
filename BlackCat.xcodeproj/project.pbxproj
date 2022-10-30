@@ -89,6 +89,8 @@
 		B1E3F7D3290ECC0500005F17 /* FlexLayoutYoga in Frameworks */ = {isa = PBXBuildFile; productRef = B1E3F7D2290ECC0500005F17 /* FlexLayoutYoga */; };
 		B1E3F7D5290ECC0500005F17 /* FlexLayoutYogaKit in Frameworks */ = {isa = PBXBuildFile; productRef = B1E3F7D4290ECC0500005F17 /* FlexLayoutYogaKit */; };
 		B1E3F7D7290EDFD500005F17 /* BPSectionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7D6290EDFD500005F17 /* BPSectionFactory.swift */; };
+		B1E3F7D9290EE8CE00005F17 /* BPMultiCastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7D8290EE8CE00005F17 /* BPMultiCastDelegate.swift */; };
+		B1E3F7DC290EE9D500005F17 /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7DB290EE9D500005F17 /* MulticastDelegate.swift */; };
 		B1E4983828EE838700B469AC /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B1E4983728EE838700B469AC /* SnapKit */; };
 		B1E4984628EE83BD00B469AC /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = B1E4984528EE83BD00B469AC /* Realm */; };
 		B1E4984828EE83BD00B469AC /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B1E4984728EE83BD00B469AC /* RealmSwift */; };
@@ -214,6 +216,8 @@
 		B1E3F7C5290EC98600005F17 /* BPBaseCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPBaseCollectionReusableView.swift; sourceTree = "<group>"; };
 		B1E3F7C7290ECAA100005F17 /* BPContentSectionHeaderReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPContentSectionHeaderReactor.swift; sourceTree = "<group>"; };
 		B1E3F7D6290EDFD500005F17 /* BPSectionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPSectionFactory.swift; sourceTree = "<group>"; };
+		B1E3F7D8290EE8CE00005F17 /* BPMultiCastDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPMultiCastDelegate.swift; sourceTree = "<group>"; };
+		B1E3F7DB290EE9D500005F17 /* MulticastDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MulticastDelegate.swift; sourceTree = "<group>"; };
 		B1E4985728EE85A800B469AC /* MagazineDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailViewController.swift; sourceTree = "<group>"; };
 		B1E4985E28EE886900B469AC /* MagazineDetailSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailSection.swift; sourceTree = "<group>"; };
 		B1E4986128EE8BFE00B469AC /* MagazineDetailTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailTextCell.swift; sourceTree = "<group>"; };
@@ -424,6 +428,7 @@
 		B1D2D10A290ACBE3005B76BD /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				B1E3F7DB290EE9D500005F17 /* MulticastDelegate.swift */,
 				B1EE64FB28FA4E720055A4F1 /* BottomSheet */,
 			);
 			path = Common;
@@ -476,6 +481,7 @@
 				B1D89C86290E78AF00C8B7F1 /* BusinessProfileViewController.swift */,
 				B1E3F7BF290EC1AD00005F17 /* BusinessProfileReactor.swift */,
 				B1D89C92290E810000C8B7F1 /* BusinessProfileViewController.Layout.swift */,
+				B1E3F7DA290EE91300005F17 /* BPMultiCast */,
 				B1D89C94290E844300C8B7F1 /* BPModels */,
 				B1D89C89290E7C3300C8B7F1 /* BPSection */,
 				B1D89C8C290E7CD300C8B7F1 /* BPCell */,
@@ -518,6 +524,14 @@
 				B1E3F7B7290EB85400005F17 /* BPReviewModel.swift */,
 			);
 			path = BPModels;
+			sourceTree = "<group>";
+		};
+		B1E3F7DA290EE91300005F17 /* BPMultiCast */ = {
+			isa = PBXGroup;
+			children = (
+				B1E3F7D8290EE8CE00005F17 /* BPMultiCastDelegate.swift */,
+			);
+			path = BPMultiCast;
 			sourceTree = "<group>";
 		};
 		B1E4985628EE859600B469AC /* MagazineDetail */ = {
@@ -811,6 +825,7 @@
 				B1E3F7BA290EBAB100005F17 /* BPProductCell.swift in Sources */,
 				B1E4986528EE957E00B469AC /* MagazineDetailModel.swift in Sources */,
 				B1E4986728EE9BE800B469AC /* MagazineDetailBaseCell.swift in Sources */,
+				B1E3F7DC290EE9D500005F17 /* MulticastDelegate.swift in Sources */,
 				8E2D8C5928F2EE69004B514D /* HomeEmptyCell.swift in Sources */,
 				B1E986AB28FE888800962F5B /* FilterTaskService.swift in Sources */,
 				B1D89C91290E7D2100C8B7F1 /* BPContentCell.swift in Sources */,
@@ -830,6 +845,7 @@
 				78B00BBE28F5661000A9915D /* MagazineViewModel.swift in Sources */,
 				B1E3F7C6290EC98600005F17 /* BPBaseCollectionReusableView.swift in Sources */,
 				8E2D8C5A28F2EE69004B514D /* HomeCategoryCellViewModel.swift in Sources */,
+				B1E3F7D9290EE8CE00005F17 /* BPMultiCastDelegate.swift in Sources */,
 				B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */,
 				B1E986AE28FE8D4F00962F5B /* BaseRealmProtocol.swift in Sources */,
 				B1D3362528F142A400826636 /* CALayer+.swift in Sources */,
