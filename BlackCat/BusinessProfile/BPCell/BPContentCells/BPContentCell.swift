@@ -32,7 +32,7 @@ final class BPContentCell: BPBaseCell, View {
     
     private func render(reactor: Reactor) {
         reactor.state
-            .filter { _ in reactor.currentState.contentModel.order == 0 }
+            .filter { _ in reactor.currentState.contentModel.order == 2 }
             .map { $0.reviews }
             .bind(to: reviewCollectionView.rx.items(Reusable.reviewCell)) {
                 index, item, cell in
@@ -95,6 +95,7 @@ extension BPContentCell: UIScrollViewDelegate {
 }
 
 extension BPContentCell: BPMulticastDelegate {
+    
     func notifyCellCollectionView(value: Bool) {
         print("A")
         reviewCollectionView.isScrollEnabled = value

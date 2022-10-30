@@ -67,7 +67,7 @@ class BPContentSectionHeaderView: BPBaseCollectionReusableView, View {
         // MARK: - 이벤트 발생시키기
         if buttonTitle == profileButton.title(for: .normal) {
             BPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
-                delegate.notifyContentCell(indexPath: nil, forType: .product)
+                delegate.notifyContentCell(indexPath: nil, forType: .profile)
             }
         }
             
@@ -164,6 +164,7 @@ class BPContentSectionHeaderView: BPBaseCollectionReusableView, View {
 
 extension BPContentSectionHeaderView: BPMulticastDelegate {
     func notifyContentHeader(indexPath: IndexPath, forType: type) {
+        print("🐬")
         var forType = forType
         // MARK: - 싱크 맞추기
         switch indexPath.row {
