@@ -65,6 +65,7 @@
 		B1D79CB428EB0EFB008487D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1D79CB328EB0EFB008487D0 /* Assets.xcassets */; };
 		B1D79CB728EB0EFB008487D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1D79CB528EB0EFB008487D0 /* LaunchScreen.storyboard */; };
 		B1D89C87290E78AF00C8B7F1 /* BusinessProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D89C86290E78AF00C8B7F1 /* BusinessProfileViewController.swift */; };
+		B1D89C8B290E7C6400C8B7F1 /* BPSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D89C8A290E7C6400C8B7F1 /* BPSection.swift */; };
 		B1DD25DD28EF0BC800103FF1 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DD25DC28EF0BC800103FF1 /* UIColor+.swift */; };
 		B1E361E428F28C3100A29CC8 /* MagazineDetailStroyShareButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E361E328F28C3100A29CC8 /* MagazineDetailStroyShareButtonCell.swift */; };
 		B1E4983828EE838700B469AC /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B1E4983728EE838700B469AC /* SnapKit */; };
@@ -172,6 +173,7 @@
 		B1D79CB628EB0EFB008487D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B1D79CB828EB0EFB008487D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B1D89C86290E78AF00C8B7F1 /* BusinessProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessProfileViewController.swift; sourceTree = "<group>"; };
+		B1D89C8A290E7C6400C8B7F1 /* BPSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPSection.swift; sourceTree = "<group>"; };
 		B1DD25DC28EF0BC800103FF1 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		B1E361E328F28C3100A29CC8 /* MagazineDetailStroyShareButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailStroyShareButtonCell.swift; sourceTree = "<group>"; };
 		B1E4985728EE85A800B469AC /* MagazineDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailViewController.swift; sourceTree = "<group>"; };
@@ -430,8 +432,17 @@
 			isa = PBXGroup;
 			children = (
 				B1D89C86290E78AF00C8B7F1 /* BusinessProfileViewController.swift */,
+				B1D89C89290E7C3300C8B7F1 /* BPSection */,
 			);
 			path = BusinessProfile;
+			sourceTree = "<group>";
+		};
+		B1D89C89290E7C3300C8B7F1 /* BPSection */ = {
+			isa = PBXGroup;
+			children = (
+				B1D89C8A290E7C6400C8B7F1 /* BPSection.swift */,
+			);
+			path = BPSection;
 			sourceTree = "<group>";
 		};
 		B1E4985628EE859600B469AC /* MagazineDetail */ = {
@@ -496,13 +507,13 @@
 			path = BaseArchitecture;
 			sourceTree = "<group>";
 		};
-		B1EABEBD28FBA88A0029B6BC /* Model */ = {
+		B1EABEBD28FBA88A0029B6BC /* FilterModels */ = {
 			isa = PBXGroup;
 			children = (
 				B1EABEBB28FBA87C0029B6BC /* FilterTask.swift */,
 				B1EABEC028FBD83F0029B6BC /* FilterLoaction.swift */,
 			);
-			path = Model;
+			path = FilterModels;
 			sourceTree = "<group>";
 		};
 		B1EDD51728EB1CA400FBB722 /* Frameworks */ = {
@@ -521,7 +532,7 @@
 				B1EE651128FA872B0055A4F1 /* FilterViewController.swift */,
 				B1EABEBE28FBA8E10029B6BC /* FilterReactor.swift */,
 				B1E986AC28FE889200962F5B /* FilterService */,
-				B1EABEBD28FBA88A0029B6BC /* Model */,
+				B1EABEBD28FBA88A0029B6BC /* FilterModels */,
 				B1EE651528FA8B190055A4F1 /* FilterCell */,
 			);
 			path = Filter;
@@ -700,6 +711,7 @@
 				8E2D8C5D28F2EE69004B514D /* HomeRecommendCell.swift in Sources */,
 				B1D127DD28F08DCA007E3667 /* TabBarViewController.swift in Sources */,
 				B1E4986228EE8BFE00B469AC /* MagazineDetailTextCell.swift in Sources */,
+				B1D89C8B290E7C6400C8B7F1 /* BPSection.swift in Sources */,
 				B1E4985828EE85A800B469AC /* MagazineDetailViewController.swift in Sources */,
 				8E2D8C5F28F2EE69004B514D /* HomeRecommendCellViewModel.swift in Sources */,
 				78B00BB828F5661000A9915D /* LastMagazineCell.swift in Sources */,

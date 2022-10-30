@@ -5,4 +5,12 @@
 //  Created by Hamlit Jason on 2022/10/30.
 //
 
-import Foundation
+import UIKit
+import ReactorKit
+import RxSwift
+import RxCocoa
+import RxDataSources
+
+final class BusinessProfileViewController: UIViewController {
+    
+}
