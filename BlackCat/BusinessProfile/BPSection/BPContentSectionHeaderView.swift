@@ -166,8 +166,8 @@ class BPContentSectionHeaderView: BPBaseCollectionReusableView, View {
 }
 
 extension BPContentSectionHeaderView: BPMulticastDelegate {
-    func notifyContentHeader(indexPath: IndexPath, forType: type) { 
-        print("🐬")
+    func notifyContentHeader(indexPath: IndexPath, forType: type) {
+        
         var forType = forType
         // MARK: - 싱크 맞추기
         switch indexPath.row {

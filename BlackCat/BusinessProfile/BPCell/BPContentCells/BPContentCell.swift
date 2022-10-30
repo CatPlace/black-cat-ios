@@ -31,16 +31,6 @@ final class BPContentCell: BPBaseCell, View {
     }
     
     private func render(reactor: Reactor) {
-        reactor.state
-            .filter { _ in reactor.currentState.contentModel.order == 2 }
-            .map { $0.reviews }
-            .bind(to: reviewCollectionView.rx.items(Reusable.reviewCell)) {
-                index, item, cell in
-                self.reviewCollectionView.isHidden = false
-                self.productCollectionView.isHidden = true
-                
-                cell.configureCell(with: item)
-            }.disposed(by: self.disposeBag)
         
         reactor.state
             .filter { _ in reactor.currentState.contentModel.order == 1 }
@@ -49,6 +39,17 @@ final class BPContentCell: BPBaseCell, View {
                 index, item, cell in
                 self.reviewCollectionView.isHidden = true
                 self.productCollectionView.isHidden = false
+                
+                cell.configureCell(with: item)
+            }.disposed(by: self.disposeBag)
+        
+        reactor.state
+            .filter { _ in reactor.currentState.contentModel.order == 2 }
+            .map { $0.reviews }
+            .bind(to: reviewCollectionView.rx.items(Reusable.reviewCell)) {
+                index, item, cell in
+                self.reviewCollectionView.isHidden = false
+                self.productCollectionView.isHidden = true
                 
                 cell.configureCell(with: item)
             }.disposed(by: self.disposeBag)
@@ -97,7 +98,7 @@ extension BPContentCell: UIScrollViewDelegate {
 extension BPContentCell: BPMulticastDelegate {
     
     func notifyCellCollectionView(value: Bool) {
-        print("A")
+        
         reviewCollectionView.isScrollEnabled = value
     }
 }
