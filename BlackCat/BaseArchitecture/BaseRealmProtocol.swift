@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-// NOTE: - SDK로 이동했을 때에도 문제없이 작동할 수 있도록 구상합니다.
+// 🐻‍❄️ NOTE: - SDK로 이동했을 때에도 문제없이 작동할 수 있도록 구상합니다.
 
 public protocol BaseRealmProtocol {
     func realmWrite(operation: (_ realm: Realm) -> Void) -> Bool
@@ -16,7 +16,7 @@ public protocol BaseRealmProtocol {
 }
 
 extension BaseRealmProtocol {
-    // NOTE: - 사용방법에 대한 DocC 만들어야 합니다.
+    // 🐻‍❄️ NOTE: - 사용방법에 대한 DocC 만들어야 합니다.
     
     public func getRealm() -> Realm? {
         do {

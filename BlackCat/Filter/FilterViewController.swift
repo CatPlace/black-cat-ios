@@ -107,13 +107,13 @@ final class FilterViewController: BottomSheetController, View {
         return $0
     }(UILabel())
     
-    // NOTE: - 구분선: 0과 1
+    // 🐻‍❄️ NOTE: - 구분선: 0과 1
     private lazy var dividerView01: UIView = {
         divierViewModifier($0)
         return $0
     }(UIView())
     
-    // NOTE: - 작업 종류 선택
+    // 🐻‍❄️ NOTE: - 작업 종류 선택
     private lazy var taskSectionTitleLabel: UILabel = {
         sectionTitleModifier($0)
         $0.text = "작업 종류를 선택해주세요."
@@ -129,13 +129,13 @@ final class FilterViewController: BottomSheetController, View {
         return cv
     }()
     
-    // NOTE: - 구분선: 1과 2
+    // 🐻‍❄️ NOTE: - 구분선: 1과 2
     private lazy var dividerView12: UIView = {
         divierViewModifier($0)
         return $0
     }(UIView())
     
-    // NOTE: - 지역 선택
+    // 🐻‍❄️ NOTE: - 지역 선택
     private lazy var locationSectionTitleLabel: UILabel = {
         sectionTitleModifier($0)
         $0.text = "작업 종류를 선택해주세요."
@@ -150,7 +150,7 @@ final class FilterViewController: BottomSheetController, View {
         cv.rx.setDelegate(self).disposed(by: disposeBag)
         return cv
     }()
-    // NOTE: - 완료 버튼
+    // 🐻‍❄️NOTE: - 완료 버튼
     private lazy var applyTextLabel: UILabel = {
         $0.text = "필터 적용"
         $0.textAlignment = .center
@@ -173,7 +173,7 @@ extension FilterViewController: UICollectionViewDelegateFlowLayout {
 extension FilterViewController {
     func setUI() {
         view.backgroundColor = .white
-        // NOTE: - UI에 그려지는 상태대로 정렬
+        // 🐻‍❄️ NOTE: - UI에 그려지는 상태대로 정렬
         [titleLabel,
          dividerView01,
          taskSectionTitleLabel, taskCollectionView,

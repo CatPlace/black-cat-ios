@@ -28,7 +28,7 @@ final class BusinessProfileViewController: UIViewController, View {
         case .thumbnailImageItem(let reactor):
             let cell = collectionView.dequeue(Reusable.thumbnailCell, for: indexPath)
             
-            // NOTE: - reactor를 장착해야 합나다.
+            // 🐻‍❄️ NOTE: - reactor를 장착해야 합나다.
             return cell
         case .contentItem(let reactor):
             let cell = collectionView.dequeue(Reusable.contentCell, for: indexPath)
@@ -49,6 +49,18 @@ final class BusinessProfileViewController: UIViewController, View {
     private func render(reactor: Reactor) {
         
     }
+    
+    // MARK: - UIComponents
+    lazy var collectionView: UICollectionView = {
+        let layout = createLayout()
+        var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.contentInsetAdjustmentBehavior = .never
+        
+        cv.register(Reusable.thumbnailCell)
+        cv.register(Reusable.contentCell)
+        
+        return cv
+    }()
 }
 
 final class BusinessProfileReactor: Reactor {

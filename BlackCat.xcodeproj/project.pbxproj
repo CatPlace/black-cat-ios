@@ -68,6 +68,9 @@
 		B1D89C8B290E7C6400C8B7F1 /* BPSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D89C8A290E7C6400C8B7F1 /* BPSection.swift */; };
 		B1D89C8E290E7CEE00C8B7F1 /* BPThumbnailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D89C8D290E7CEE00C8B7F1 /* BPThumbnailImageCell.swift */; };
 		B1D89C91290E7D2100C8B7F1 /* BPContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D89C90290E7D2100C8B7F1 /* BPContentCell.swift */; };
+		B1D89C93290E810000C8B7F1 /* BusinessProfileViewController.Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D89C92290E810000C8B7F1 /* BusinessProfileViewController.Layout.swift */; };
+		B1D89C96290E845700C8B7F1 /* BPThumbnailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D89C95290E845700C8B7F1 /* BPThumbnailModel.swift */; };
+		B1D89C98290E879B00C8B7F1 /* BPBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D89C97290E879B00C8B7F1 /* BPBaseCell.swift */; };
 		B1DD25DD28EF0BC800103FF1 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DD25DC28EF0BC800103FF1 /* UIColor+.swift */; };
 		B1E361E428F28C3100A29CC8 /* MagazineDetailStroyShareButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E361E328F28C3100A29CC8 /* MagazineDetailStroyShareButtonCell.swift */; };
 		B1E4983828EE838700B469AC /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B1E4983728EE838700B469AC /* SnapKit */; };
@@ -178,6 +181,9 @@
 		B1D89C8A290E7C6400C8B7F1 /* BPSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPSection.swift; sourceTree = "<group>"; };
 		B1D89C8D290E7CEE00C8B7F1 /* BPThumbnailImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPThumbnailImageCell.swift; sourceTree = "<group>"; };
 		B1D89C90290E7D2100C8B7F1 /* BPContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPContentCell.swift; sourceTree = "<group>"; };
+		B1D89C92290E810000C8B7F1 /* BusinessProfileViewController.Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessProfileViewController.Layout.swift; sourceTree = "<group>"; };
+		B1D89C95290E845700C8B7F1 /* BPThumbnailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPThumbnailModel.swift; sourceTree = "<group>"; };
+		B1D89C97290E879B00C8B7F1 /* BPBaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPBaseCell.swift; sourceTree = "<group>"; };
 		B1DD25DC28EF0BC800103FF1 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		B1E361E328F28C3100A29CC8 /* MagazineDetailStroyShareButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailStroyShareButtonCell.swift; sourceTree = "<group>"; };
 		B1E4985728EE85A800B469AC /* MagazineDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailViewController.swift; sourceTree = "<group>"; };
@@ -436,6 +442,8 @@
 			isa = PBXGroup;
 			children = (
 				B1D89C86290E78AF00C8B7F1 /* BusinessProfileViewController.swift */,
+				B1D89C92290E810000C8B7F1 /* BusinessProfileViewController.Layout.swift */,
+				B1D89C94290E844300C8B7F1 /* BPModels */,
 				B1D89C89290E7C3300C8B7F1 /* BPSection */,
 				B1D89C8C290E7CD300C8B7F1 /* BPCell */,
 			);
@@ -453,10 +461,19 @@
 		B1D89C8C290E7CD300C8B7F1 /* BPCell */ = {
 			isa = PBXGroup;
 			children = (
+				B1D89C97290E879B00C8B7F1 /* BPBaseCell.swift */,
 				B1D89C8D290E7CEE00C8B7F1 /* BPThumbnailImageCell.swift */,
 				B1D89C90290E7D2100C8B7F1 /* BPContentCell.swift */,
 			);
 			path = BPCell;
+			sourceTree = "<group>";
+		};
+		B1D89C94290E844300C8B7F1 /* BPModels */ = {
+			isa = PBXGroup;
+			children = (
+				B1D89C95290E845700C8B7F1 /* BPThumbnailModel.swift */,
+			);
+			path = BPModels;
 			sourceTree = "<group>";
 		};
 		B1E4985628EE859600B469AC /* MagazineDetail */ = {
@@ -714,6 +731,8 @@
 			files = (
 				8E2D8C5E28F2EE69004B514D /* HomeTattooAlbumCellViewModel.swift in Sources */,
 				B1D2D107290AC7B5005B76BD /* UIScrollView+Rx.swift in Sources */,
+				B1D89C96290E845700C8B7F1 /* BPThumbnailModel.swift in Sources */,
+				B1D89C98290E879B00C8B7F1 /* BPBaseCell.swift in Sources */,
 				B1E361E428F28C3100A29CC8 /* MagazineDetailStroyShareButtonCell.swift in Sources */,
 				B1E4985F28EE886900B469AC /* MagazineDetailSection.swift in Sources */,
 				B1E4987028EEADC900B469AC /* MagazineDetailSectionFactory.swift in Sources */,
@@ -770,6 +789,7 @@
 				B1D79CAD28EB0EF9008487D0 /* SceneDelegate.swift in Sources */,
 				8E2D8C4C28F2ED03004B514D /* HomeModel.swift in Sources */,
 				78B00BBF28F5661000A9915D /* RecentMagazineFooterView.swift in Sources */,
+				B1D89C93290E810000C8B7F1 /* BusinessProfileViewController.Layout.swift in Sources */,
 				B1EE64F628FA48230055A4F1 /* BottomSheetController.swift in Sources */,
 				B1EE651228FA872B0055A4F1 /* FilterViewController.swift in Sources */,
 				8EE9A0C328F3CD25003D7761 /* HomeCompositionalLayoutSection.swift in Sources */,
