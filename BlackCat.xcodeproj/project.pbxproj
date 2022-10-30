@@ -71,8 +71,16 @@
 		B1D89C93290E810000C8B7F1 /* BusinessProfileViewController.Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D89C92290E810000C8B7F1 /* BusinessProfileViewController.Layout.swift */; };
 		B1D89C96290E845700C8B7F1 /* BPThumbnailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D89C95290E845700C8B7F1 /* BPThumbnailModel.swift */; };
 		B1D89C98290E879B00C8B7F1 /* BPBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D89C97290E879B00C8B7F1 /* BPBaseCell.swift */; };
+		B1D89C9A290E888200C8B7F1 /* BPThumbnailImageCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D89C99290E888200C8B7F1 /* BPThumbnailImageCellReactor.swift */; };
 		B1DD25DD28EF0BC800103FF1 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DD25DC28EF0BC800103FF1 /* UIColor+.swift */; };
 		B1E361E428F28C3100A29CC8 /* MagazineDetailStroyShareButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E361E328F28C3100A29CC8 /* MagazineDetailStroyShareButtonCell.swift */; };
+		B1E3F7B6290EB7E700005F17 /* BPProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7B5290EB7E700005F17 /* BPProductModel.swift */; };
+		B1E3F7B8290EB85400005F17 /* BPReviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7B7290EB85400005F17 /* BPReviewModel.swift */; };
+		B1E3F7BA290EBAB100005F17 /* BPProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7B9290EBAB100005F17 /* BPProductCell.swift */; };
+		B1E3F7BC290EBABE00005F17 /* BPReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7BB290EBABE00005F17 /* BPReviewCell.swift */; };
+		B1E3F7BE290EBE3900005F17 /* BPContentCell.Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7BD290EBE3900005F17 /* BPContentCell.Layout.swift */; };
+		B1E3F7C0290EC1AD00005F17 /* BusinessProfileReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7BF290EC1AD00005F17 /* BusinessProfileReactor.swift */; };
+		B1E3F7C2290EC1F700005F17 /* BPContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7C1290EC1F700005F17 /* BPContentModel.swift */; };
 		B1E4983828EE838700B469AC /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B1E4983728EE838700B469AC /* SnapKit */; };
 		B1E4984628EE83BD00B469AC /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = B1E4984528EE83BD00B469AC /* Realm */; };
 		B1E4984828EE83BD00B469AC /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B1E4984728EE83BD00B469AC /* RealmSwift */; };
@@ -184,8 +192,16 @@
 		B1D89C92290E810000C8B7F1 /* BusinessProfileViewController.Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessProfileViewController.Layout.swift; sourceTree = "<group>"; };
 		B1D89C95290E845700C8B7F1 /* BPThumbnailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPThumbnailModel.swift; sourceTree = "<group>"; };
 		B1D89C97290E879B00C8B7F1 /* BPBaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPBaseCell.swift; sourceTree = "<group>"; };
+		B1D89C99290E888200C8B7F1 /* BPThumbnailImageCellReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPThumbnailImageCellReactor.swift; sourceTree = "<group>"; };
 		B1DD25DC28EF0BC800103FF1 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		B1E361E328F28C3100A29CC8 /* MagazineDetailStroyShareButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailStroyShareButtonCell.swift; sourceTree = "<group>"; };
+		B1E3F7B5290EB7E700005F17 /* BPProductModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPProductModel.swift; sourceTree = "<group>"; };
+		B1E3F7B7290EB85400005F17 /* BPReviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPReviewModel.swift; sourceTree = "<group>"; };
+		B1E3F7B9290EBAB100005F17 /* BPProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPProductCell.swift; sourceTree = "<group>"; };
+		B1E3F7BB290EBABE00005F17 /* BPReviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPReviewCell.swift; sourceTree = "<group>"; };
+		B1E3F7BD290EBE3900005F17 /* BPContentCell.Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPContentCell.Layout.swift; sourceTree = "<group>"; };
+		B1E3F7BF290EC1AD00005F17 /* BusinessProfileReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessProfileReactor.swift; sourceTree = "<group>"; };
+		B1E3F7C1290EC1F700005F17 /* BPContentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPContentModel.swift; sourceTree = "<group>"; };
 		B1E4985728EE85A800B469AC /* MagazineDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailViewController.swift; sourceTree = "<group>"; };
 		B1E4985E28EE886900B469AC /* MagazineDetailSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailSection.swift; sourceTree = "<group>"; };
 		B1E4986128EE8BFE00B469AC /* MagazineDetailTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailTextCell.swift; sourceTree = "<group>"; };
@@ -442,6 +458,7 @@
 			isa = PBXGroup;
 			children = (
 				B1D89C86290E78AF00C8B7F1 /* BusinessProfileViewController.swift */,
+				B1E3F7BF290EC1AD00005F17 /* BusinessProfileReactor.swift */,
 				B1D89C92290E810000C8B7F1 /* BusinessProfileViewController.Layout.swift */,
 				B1D89C94290E844300C8B7F1 /* BPModels */,
 				B1D89C89290E7C3300C8B7F1 /* BPSection */,
@@ -463,7 +480,11 @@
 			children = (
 				B1D89C97290E879B00C8B7F1 /* BPBaseCell.swift */,
 				B1D89C8D290E7CEE00C8B7F1 /* BPThumbnailImageCell.swift */,
+				B1D89C99290E888200C8B7F1 /* BPThumbnailImageCellReactor.swift */,
 				B1D89C90290E7D2100C8B7F1 /* BPContentCell.swift */,
+				B1E3F7BD290EBE3900005F17 /* BPContentCell.Layout.swift */,
+				B1E3F7B9290EBAB100005F17 /* BPProductCell.swift */,
+				B1E3F7BB290EBABE00005F17 /* BPReviewCell.swift */,
 			);
 			path = BPCell;
 			sourceTree = "<group>";
@@ -472,6 +493,9 @@
 			isa = PBXGroup;
 			children = (
 				B1D89C95290E845700C8B7F1 /* BPThumbnailModel.swift */,
+				B1E3F7C1290EC1F700005F17 /* BPContentModel.swift */,
+				B1E3F7B5290EB7E700005F17 /* BPProductModel.swift */,
+				B1E3F7B7290EB85400005F17 /* BPReviewModel.swift */,
 			);
 			path = BPModels;
 			sourceTree = "<group>";
@@ -733,14 +757,17 @@
 				B1D2D107290AC7B5005B76BD /* UIScrollView+Rx.swift in Sources */,
 				B1D89C96290E845700C8B7F1 /* BPThumbnailModel.swift in Sources */,
 				B1D89C98290E879B00C8B7F1 /* BPBaseCell.swift in Sources */,
+				B1E3F7C0290EC1AD00005F17 /* BusinessProfileReactor.swift in Sources */,
 				B1E361E428F28C3100A29CC8 /* MagazineDetailStroyShareButtonCell.swift in Sources */,
 				B1E4985F28EE886900B469AC /* MagazineDetailSection.swift in Sources */,
 				B1E4987028EEADC900B469AC /* MagazineDetailSectionFactory.swift in Sources */,
 				8E2D8C5C28F2EE69004B514D /* HomeTattooAlbumCell.swift in Sources */,
 				8E2D8C4A28F2ECD2004B514D /* HomeViewModel.swift in Sources */,
+				B1E3F7B6290EB7E700005F17 /* BPProductModel.swift in Sources */,
 				B1EE651728FA8DDE0055A4F1 /* FilterBaseCell.swift in Sources */,
 				B1D3364128F1CCFA00826636 /* UICollectionView+.swift in Sources */,
 				B1E986B128FE975C00962F5B /* FilterServiceProvider.swift in Sources */,
+				B1D89C9A290E888200C8B7F1 /* BPThumbnailImageCellReactor.swift in Sources */,
 				8E2D8C5D28F2EE69004B514D /* HomeRecommendCell.swift in Sources */,
 				B1D127DD28F08DCA007E3667 /* TabBarViewController.swift in Sources */,
 				B1E4986228EE8BFE00B469AC /* MagazineDetailTextCell.swift in Sources */,
@@ -753,12 +780,15 @@
 				B1D127E228F0923C007E3667 /* Asset.swift in Sources */,
 				B1E986B328FE9E0B00962F5B /* FilterLoactionService.swift in Sources */,
 				78B00BB928F5661000A9915D /* MagazineTestUseCase.swift in Sources */,
+				B1E3F7BE290EBE3900005F17 /* BPContentCell.Layout.swift in Sources */,
 				B160DBFB28FF3D8E00C0D682 /* BaseTableViewCell.swift in Sources */,
+				B1E3F7BA290EBAB100005F17 /* BPProductCell.swift in Sources */,
 				B1E4986528EE957E00B469AC /* MagazineDetailModel.swift in Sources */,
 				B1E4986728EE9BE800B469AC /* MagazineDetailBaseCell.swift in Sources */,
 				8E2D8C5928F2EE69004B514D /* HomeEmptyCell.swift in Sources */,
 				B1E986AB28FE888800962F5B /* FilterTaskService.swift in Sources */,
 				B1D89C91290E7D2100C8B7F1 /* BPContentCell.swift in Sources */,
+				B1E3F7BC290EBABE00005F17 /* BPReviewCell.swift in Sources */,
 				8E2D8C4F28F2ED53004B514D /* HomeHeaderView.swift in Sources */,
 				B1EABEC128FBD83F0029B6BC /* FilterLoaction.swift in Sources */,
 				B1D2D109290AC8FA005B76BD /* Observable+.swift in Sources */,
@@ -770,6 +800,7 @@
 				78858BEC28F6F4E400EC7BF7 /* MagazineSection.swift in Sources */,
 				78B00BBB28F5661000A9915D /* MagazineModel.swift in Sources */,
 				B1D3362928F1AC1200826636 /* MagazineDetailEmptyCell.swift in Sources */,
+				B1E3F7C2290EC1F700005F17 /* BPContentModel.swift in Sources */,
 				78B00BBE28F5661000A9915D /* MagazineViewModel.swift in Sources */,
 				8E2D8C5A28F2EE69004B514D /* HomeCategoryCellViewModel.swift in Sources */,
 				B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */,
@@ -792,6 +823,7 @@
 				B1D89C93290E810000C8B7F1 /* BusinessProfileViewController.Layout.swift in Sources */,
 				B1EE64F628FA48230055A4F1 /* BottomSheetController.swift in Sources */,
 				B1EE651228FA872B0055A4F1 /* FilterViewController.swift in Sources */,
+				B1E3F7B8290EB85400005F17 /* BPReviewModel.swift in Sources */,
 				8EE9A0C328F3CD25003D7761 /* HomeCompositionalLayoutSection.swift in Sources */,
 				8E2D8C5B28F2EE69004B514D /* HomeCategoryCell.swift in Sources */,
 				B1D127DB28F047A9007E3667 /* MagazineDetailBulletedCell.swift in Sources */,

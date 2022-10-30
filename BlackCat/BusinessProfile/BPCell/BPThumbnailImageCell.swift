@@ -11,10 +11,16 @@ import SnapKit
 import Nuke
 
 final class BPThumbnailImageCell: BPBaseCell, View {
-    typealias Reactor = BPThumnailImageCellReactor
+    typealias Reactor = BPThumbnailImageCellReactor
     
     func bind(reactor: Reactor) {
-        //
+        reactor.state.map { $0.urlString }
+            .withUnretained(self)
+            .bind { owner, urlString in
+                // 🐻‍❄️ NOTE: NUKE를 적용하여 변경
+                owner.thumnailImageView.image = UIImage(named: urlString)
+            }
+            .disposed(by: self.disposeBag)
     }
     
     // MARK: - initialize
@@ -34,14 +40,4 @@ final class BPThumbnailImageCell: BPBaseCell, View {
         $0.backgroundColor = .gray
         return $0
     }(UIImageView())
-}
-
-final class BPThumnailImageCellReactor: Reactor {
-    typealias Action = NoAction
-
-    var initialState: BPThumbnailModel
-
-    init(initialState: BPThumbnailModel) {
-        self.initialState = initialState
-    }
 }

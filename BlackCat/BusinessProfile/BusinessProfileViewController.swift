@@ -28,11 +28,12 @@ final class BusinessProfileViewController: UIViewController, View {
         case .thumbnailImageItem(let reactor):
             let cell = collectionView.dequeue(Reusable.thumbnailCell, for: indexPath)
             
-            // 🐻‍❄️ NOTE: - reactor를 장착해야 합나다.
+            cell.reactor = reactor
             return cell
         case .contentItem(let reactor):
             let cell = collectionView.dequeue(Reusable.contentCell, for: indexPath)
             
+            cell.reactor = reactor
             return cell
         }
     }
@@ -47,7 +48,10 @@ final class BusinessProfileViewController: UIViewController, View {
     }
     
     private func render(reactor: Reactor) {
-        
+        reactor.state.map { $0.sections }
+            .asObservable()
+            .bind(to: self.collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
     }
     
     // MARK: - UIComponents
@@ -61,44 +65,4 @@ final class BusinessProfileViewController: UIViewController, View {
         
         return cv
     }()
-}
-
-final class BusinessProfileReactor: Reactor {
-    enum Action {
-        case viewDidLoad
-    }
-    
-    enum Mutation {
-        case fetchSection
-    }
-    
-    struct State {
-        var sections: [BusinessProfileItem]
-        
-        init(sections: [BusinessProfileItem]) {
-            self.sections = sections
-        }
-    }
-    
-    var initialState: State
-    
-    init(initialState: State) {
-        self.initialState = initialState
-    }
-    
-    func mutate(action: Action) -> Observable<Mutation> {
-        switch action {
-        case .viewDidLoad:
-            return .just(.fetchSection)
-        }
-    }
-    
-    func reduce(state: State, mutation: Mutation) -> State {
-        var newState = state
-        switch mutation {
-        case .fetchSection:
-            newState.sections = []
-            return newState
-        }
-    }
 }

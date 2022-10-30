@@ -7,13 +7,11 @@
 
 import Foundation
 import RxDataSources
-import Differentiator
-
 
 enum BusinessProfileItem: Equatable, IdentifiableType {
     var identity: some Hashable { UUID().uuidString }
     
-    case thumbnailImageItem(BPThumnailImageCellReactor)
+    case thumbnailImageItem(BPThumbnailImageCellReactor)
     case contentItem(BPContentCellReactor)
     
     static func == (lhs: BusinessProfileItem, rhs: BusinessProfileItem) -> Bool {

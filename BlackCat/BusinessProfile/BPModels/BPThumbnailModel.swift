@@ -9,11 +9,9 @@ import Foundation
 
 struct BPThumbnailModel {
     /** thumbnail 이미지 urlString */ var urlString: String
-    var order: Int
     
-    init(urlString: String, order: Int) {
+    init(urlString: String) {
         self.urlString = urlString
-        self.order = order
     }
 }
 
@@ -22,7 +20,7 @@ extension BPThumbnailModel {
     static func fetch() -> [BPThumbnailModel] {
         var result: [BPThumbnailModel] = []
         (0...4).forEach { _ in
-            result += [BPThumbnailModel(urlString: String.createRandomString(length: 5), order: result.count)]
+            result += [BPThumbnailModel(urlString: String.createRandomString(length: 5))]
         }
         return result
     }
