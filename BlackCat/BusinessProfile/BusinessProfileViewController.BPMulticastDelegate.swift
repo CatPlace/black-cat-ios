@@ -26,15 +26,16 @@ extension BusinessProfileViewController: BPMulticastDelegate {
     }
     
     func notifyViewController(offset: CGFloat) {
-        print("🤛🏻 offset VC \(offset)")
-        // 🐻‍❄️ NOTE: - 현재 여기 버그 존재 로직 재작성 필요.
+        
+        // 🐻‍❄️ NOTE: - 'offset <= ?' ?를 정해 볼까요?
         if offset <= 0 {
-            collectionView.scrollToItem(at: IndexPath(row: 0, section: 0),
-                                        at: .top,
-                                        animated: true)
+            UIView.animate(withDuration: 0.3) {
+                self.collectionView.contentOffset = CGPoint(x: 0, y: 0)
+            }
         } else {
             UIView.animate(withDuration: 0.3) {
-                self.collectionView.contentOffset = CGPoint(x: 0, y: 500)
+                // 위쪽으로 y만큼 당긴다고 생각하기
+                self.collectionView.contentOffset = CGPoint(x: 0, y: 200)
             }
         }
     }

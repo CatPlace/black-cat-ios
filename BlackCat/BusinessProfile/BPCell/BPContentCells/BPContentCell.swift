@@ -86,7 +86,7 @@ final class BPContentCell: BPBaseCell, View {
 
 extension BPContentCell: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        scrollView.bounces = scrollView.contentOffset.y > 0
+        scrollView.bounces = scrollView.contentOffset.y >= 0
         
         print("scrollView \(scrollView.contentOffset.y)")
         BPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
@@ -98,7 +98,8 @@ extension BPContentCell: UIScrollViewDelegate {
 extension BPContentCell: BPMulticastDelegate {
     
     func notifyCellCollectionView(value: Bool) {
-        
+        print("🚴🏿‍♀️ -> value \(value)")
         reviewCollectionView.isScrollEnabled = value
+        productCollectionView.isScrollEnabled = value
     }
 }

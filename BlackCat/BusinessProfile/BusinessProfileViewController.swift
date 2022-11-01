@@ -106,6 +106,7 @@ final class BusinessProfileViewController: UIViewController, View {
         let layout = createLayout()
         var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.contentInsetAdjustmentBehavior = .never
+        cv.isScrollEnabled = false
         
         cv.register(Reusable.thumbnailCell)
         cv.register(Reusable.contentCell)
