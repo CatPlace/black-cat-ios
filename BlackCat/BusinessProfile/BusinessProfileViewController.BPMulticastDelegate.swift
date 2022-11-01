@@ -28,7 +28,7 @@ extension BusinessProfileViewController: BPMulticastDelegate {
     func notifyViewController(offset: CGFloat) {
         
         // 🐻‍❄️ NOTE: - 'offset <= ?' ?를 정해 볼까요?
-        if offset <= 0 {
+        if offset <= UIScreen.main.bounds.height / 3 {
             UIView.animate(withDuration: 0.3) {
                 self.collectionView.contentOffset = CGPoint(x: 0, y: 0)
             }

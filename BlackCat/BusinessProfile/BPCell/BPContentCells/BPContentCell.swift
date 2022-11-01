@@ -18,6 +18,13 @@ final class BPContentCell: BPBaseCell, View {
         static let productCell = ReusableCell<BPProductCell>()
     }
     
+    enum BPContentType {
+        case profile
+        case product
+        case review
+        case info
+    }
+    
     func bind(reactor: Reactor) {
         dispatch(reactor: reactor)
         render(reactor: reactor)
@@ -60,14 +67,12 @@ final class BPContentCell: BPBaseCell, View {
     // MARK: - Initialize
     override func initialize() {
         setUI()
-        
-        BPDispatchSystem.dispatch.multicastDelegate.addDelegate(self)
     }
     
     // MARK: - UIComponents
     
     lazy var productCollectionView: UICollectionView = {
-        let layout = createLayout()
+        let layout = createLayout(forType: .product)
         var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
         cv.register(Reusable.productCell)
@@ -75,7 +80,7 @@ final class BPContentCell: BPBaseCell, View {
     }()
     
     lazy var reviewCollectionView: UICollectionView = {
-        let layout = createLayout()
+        let layout = createLayout(forType: .review)
         var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
         cv.contentInsetAdjustmentBehavior = .never
@@ -92,14 +97,5 @@ extension BPContentCell: UIScrollViewDelegate {
         BPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
             delegate.notifyViewController(offset: scrollView.contentOffset.y)
         }
-    }
-}
-
-extension BPContentCell: BPMulticastDelegate {
-    
-    func notifyCellCollectionView(value: Bool) {
-        print("🚴🏿‍♀️ -> value \(value)")
-        reviewCollectionView.isScrollEnabled = value
-        productCollectionView.isScrollEnabled = value
     }
 }

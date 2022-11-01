@@ -48,6 +48,7 @@ extension BusinessProfileViewController {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                                          heightDimension: .fractionalHeight(1.0)),
                                                        subitems: [item])
+        
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
         
