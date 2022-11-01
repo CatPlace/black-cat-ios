@@ -18,11 +18,8 @@ final class BPContentCell: BPBaseCell, View {
         static let productCell = ReusableCell<BPProductCell>()
     }
     
-    enum BPContentType {
-        case profile
-        case product
-        case review
-        case info
+    enum BPContentType: CaseIterable {
+        case profile, product, review, info
     }
     
     func bind(reactor: Reactor) {
@@ -42,10 +39,10 @@ final class BPContentCell: BPBaseCell, View {
         reactor.state
             .filter { _ in reactor.currentState.contentModel.order == 1 }
             .map { $0.products }
-            .bind(to: productCollectionView.rx.items(Reusable.productCell)) {
+            .bind(to: productCollectionView.rx.items(Reusable.productCell)) { [weak self]
                 index, item, cell in
-                self.reviewCollectionView.isHidden = true
-                self.productCollectionView.isHidden = false
+                guard let self = self else { return }
+                self.setCollectionViewHidden(forType: .product)
                 
                 cell.configureCell(with: item)
             }.disposed(by: self.disposeBag)
@@ -53,16 +50,23 @@ final class BPContentCell: BPBaseCell, View {
         reactor.state
             .filter { _ in reactor.currentState.contentModel.order == 2 }
             .map { $0.reviews }
-            .bind(to: reviewCollectionView.rx.items(Reusable.reviewCell)) {
+            .bind(to: reviewCollectionView.rx.items(Reusable.reviewCell)) { [weak self]
                 index, item, cell in
-                self.reviewCollectionView.isHidden = false
-                self.productCollectionView.isHidden = true
+                guard let self = self else { return }
+                self.setCollectionViewHidden(forType: .review)
                 
                 cell.configureCell(with: item)
             }.disposed(by: self.disposeBag)
     }
     
-    func isHiddenCollectionView(forType: Reusable) { }
+    func setCollectionViewHidden(forType type: BPContentType) {
+        [productCollectionView, reviewCollectionView].forEach { $0.isHidden = true }
+        
+        if type == .profile { }
+        else if type == .product { productCollectionView.isHidden = false }
+        else if type == .review { reviewCollectionView.isHidden = false }
+        else if type == .info { }
+    }
     
     // MARK: - Initialize
     override func initialize() {
