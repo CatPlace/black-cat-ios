@@ -20,7 +20,7 @@ final class BPProductCell: BPBaseCell {
         contentView.addSubview(productImageView)
         
         productImageView.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(10)
+            $0.edges.equalToSuperview()
         }
     }
     
