@@ -20,7 +20,7 @@ extension BPProductModel {
     static func fetch() -> [BPProductModel] {
         var result: [BPProductModel] = []
         (0...4).forEach { _ in
-            result += [BPProductModel(imageUrlString: String.createRandomString(length: 5))]
+            result += [BPProductModel(imageUrlString: "https://raw.githubusercontent.com/kean/Nuke/master/Documentation/NukeUI.docc/Resources/nukeui-preview.png")]
         }
         return result
     }
