@@ -47,6 +47,7 @@
 		B160DC2628FF570B00C0D682 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B160DC2528FF570B00C0D682 /* RxSwift */; settings = {ATTRIBUTES = (Weak, ); }; };
 		B160DC2828FF573E00C0D682 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B160DC2728FF573E00C0D682 /* RealmSwift */; };
 		B1CA040628F00CC1004A6027 /* MagazineDetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CA040528F00CC1004A6027 /* MagazineDetailImageCell.swift */; };
+		B1CEF7332913A0EC00814113 /* BPProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CEF7322913A0EC00814113 /* BPProfileCell.swift */; };
 		B1D127DB28F047A9007E3667 /* MagazineDetailBulletedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D127DA28F047A9007E3667 /* MagazineDetailBulletedCell.swift */; };
 		B1D127DD28F08DCA007E3667 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D127DC28F08DCA007E3667 /* TabBarViewController.swift */; };
 		B1D127DF28F09200007E3667 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D127DE28F09200007E3667 /* UIImage+.swift */; };
@@ -180,6 +181,7 @@
 		B160DC0628FF523C00C0D682 /* BlackCatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlackCatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B160DC0828FF523C00C0D682 /* FilterReactorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterReactorTests.swift; sourceTree = "<group>"; };
 		B1CA040528F00CC1004A6027 /* MagazineDetailImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailImageCell.swift; sourceTree = "<group>"; };
+		B1CEF7322913A0EC00814113 /* BPProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPProfileCell.swift; sourceTree = "<group>"; };
 		B1D127DA28F047A9007E3667 /* MagazineDetailBulletedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailBulletedCell.swift; sourceTree = "<group>"; };
 		B1D127DC28F08DCA007E3667 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		B1D127DE28F09200007E3667 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
@@ -415,6 +417,22 @@
 			path = BlackCatTests;
 			sourceTree = "<group>";
 		};
+		B1CEF7302913A07300814113 /* BPProductsCells */ = {
+			isa = PBXGroup;
+			children = (
+				B1E3F7B9290EBAB100005F17 /* BPProductCell.swift */,
+			);
+			path = BPProductsCells;
+			sourceTree = "<group>";
+		};
+		B1CEF7312913A08300814113 /* BPReviewCells */ = {
+			isa = PBXGroup;
+			children = (
+				B1E3F7BB290EBABE00005F17 /* BPReviewCell.swift */,
+			);
+			path = BPReviewCells;
+			sourceTree = "<group>";
+		};
 		B1D0FAEB29039B3F00DFF336 /* FilterTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -514,8 +532,6 @@
 				B1D89C97290E879B00C8B7F1 /* BPBaseCell.swift */,
 				B1E3F7E4290F0B5600005F17 /* BPThumbnailImageCells */,
 				B1E3F7E3290F0B3D00005F17 /* BPContentCells */,
-				B1E3F7B9290EBAB100005F17 /* BPProductCell.swift */,
-				B1E3F7BB290EBABE00005F17 /* BPReviewCell.swift */,
 			);
 			path = BPCell;
 			sourceTree = "<group>";
@@ -546,6 +562,9 @@
 				B1E3F7DF290F042B00005F17 /* BPContentCellReactor.swift */,
 				B1E3F7E1290F098400005F17 /* BPContentCellService.swift */,
 				B1E3F7BD290EBE3900005F17 /* BPContentCell.Layout.swift */,
+				B1CEF7302913A07300814113 /* BPProductsCells */,
+				B1CEF7312913A08300814113 /* BPReviewCells */,
+				B1CEF7322913A0EC00814113 /* BPProfileCell.swift */,
 			);
 			path = BPContentCells;
 			sourceTree = "<group>";
@@ -906,6 +925,7 @@
 				B1EABEBF28FBA8E10029B6BC /* FilterReactor.swift in Sources */,
 				B1EABEBC28FBA87C0029B6BC /* FilterTask.swift in Sources */,
 				B1D3362728F1457700826636 /* UITabBar+.swift in Sources */,
+				B1CEF7332913A0EC00814113 /* BPProfileCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

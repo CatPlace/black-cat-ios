@@ -54,7 +54,6 @@ extension BPContentCell {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                                          heightDimension:.absolute(112)),
                                                        subitems: [item])
-//        group.contentInsets = .init(top: 6, leading: 0, bottom: 6, trailing: 0)
         let section = NSCollectionLayoutSection(group: group)
         
         return section
