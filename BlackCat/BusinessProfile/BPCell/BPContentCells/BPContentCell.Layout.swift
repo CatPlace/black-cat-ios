@@ -47,12 +47,14 @@ extension BPContentCell {
     }
     
     private func reviewLayoutSection() -> NSCollectionLayoutSection {
-        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.33),
+        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1.0),
                                                             heightDimension: .absolute(100)))
+        item.contentInsets = .init(top: 6, leading: 20, bottom: 6, trailing: 20)
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                                         heightDimension: .fractionalWidth(0.33)),
+                                                                         heightDimension:.absolute(100)),
                                                        subitems: [item])
+        group.contentInsets = .init(top: 6, leading: 0, bottom: 6, trailing: 0)
         let section = NSCollectionLayoutSection(group: group)
         
         return section

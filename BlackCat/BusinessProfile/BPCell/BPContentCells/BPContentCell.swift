@@ -79,7 +79,9 @@ final class BPContentCell: BPBaseCell, View {
         let layout = createLayout(forType: .product)
         var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
+        cv.backgroundColor = .white
         cv.register(Reusable.productCell)
+        
         return cv
     }()
     
@@ -87,7 +89,7 @@ final class BPContentCell: BPBaseCell, View {
         let layout = createLayout(forType: .review)
         var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
-        cv.contentInsetAdjustmentBehavior = .never
+        cv.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
         cv.register(Reusable.reviewCell)
         return cv
     }()
@@ -95,6 +97,8 @@ final class BPContentCell: BPBaseCell, View {
 
 extension BPContentCell: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // 🐻‍❄️ NOTE: - 막지말고, 차라리 당겨서 해당 셀을 refresh하는건 어떨까요?
+        
         scrollView.bounces = scrollView.contentOffset.y >= 0
         
         print("scrollView \(scrollView.contentOffset.y)")
