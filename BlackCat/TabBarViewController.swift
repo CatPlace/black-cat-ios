@@ -28,6 +28,10 @@ final class TabBarViewController: UITabBarController {
                                                 title: "임시뷰",
                                                 image: .ic_board,
                                                 selectedImage: .ic_board_fill)
+    let vc5 = TabBarFactory.create(viewController: BPEditTempViewController(),
+                                                title: "에딧",
+                                                image: .ic_board,
+                                                selectedImage: .ic_board_fill)
 //    var homeViewController: UINavigationController
 //    var magazineViewController: UINavigationController
 //    var chatViewController: UINavigationController
@@ -41,7 +45,7 @@ final class TabBarViewController: UITabBarController {
         
         UITabBar.clearShadow()
         tabBar.layer.applyShadow(color: .gray, alpha: 0.3, x: 0, y: 0, blur: 12)
-        viewControllers = [vc, vc2, vc3, vc4]
+        viewControllers = [vc, vc2, vc3, vc4, vc5]
     }
 
 }
