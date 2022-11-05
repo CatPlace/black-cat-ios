@@ -14,8 +14,9 @@ final class BPContentCell: BPBaseCell, View {
     typealias Reactor = BPContentCellReactor
     
     enum Reusable {
-        static let reviewCell = ReusableCell<BPReviewCell>()
+        static let profileCell = ReusableCell<BPProfileCell>()
         static let productCell = ReusableCell<BPProductCell>()
+        static let reviewCell = ReusableCell<BPReviewCell>()
     }
     
     enum BPContentType: CaseIterable {
@@ -30,6 +31,7 @@ final class BPContentCell: BPBaseCell, View {
     private func dispatch(reactor: Reactor) {
         productCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
         reviewCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
+        profileCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
         
         reactor.action.onNext(.initialize)
     }
@@ -37,10 +39,19 @@ final class BPContentCell: BPBaseCell, View {
     private func render(reactor: Reactor) {
         
         reactor.state
+            .filter { _ in reactor.currentState.contentModel.order == 0 }
+            .map { $0.profiles }
+            .bind(to: profileCollectionView.rx.items(Reusable.profileCell)) { [weak self] index, item, cell in
+                guard let self = self else { return }
+                self.setCollectionViewHidden(forType: .profile)
+                print(" 👍 itme \(item)")
+                cell.configureCell(with: item)
+            }.disposed(by: self.disposeBag)
+        
+        reactor.state
             .filter { _ in reactor.currentState.contentModel.order == 1 }
             .map { $0.products }
-            .bind(to: productCollectionView.rx.items(Reusable.productCell)) { [weak self]
-                index, item, cell in
+            .bind(to: productCollectionView.rx.items(Reusable.productCell)) { [weak self] index, item, cell in
                 guard let self = self else { return }
                 self.setCollectionViewHidden(forType: .product)
                 
@@ -50,8 +61,7 @@ final class BPContentCell: BPBaseCell, View {
         reactor.state
             .filter { _ in reactor.currentState.contentModel.order == 2 }
             .map { $0.reviews }
-            .bind(to: reviewCollectionView.rx.items(Reusable.reviewCell)) { [weak self]
-                index, item, cell in
+            .bind(to: reviewCollectionView.rx.items(Reusable.reviewCell)) { [weak self] index, item, cell in
                 guard let self = self else { return }
                 self.setCollectionViewHidden(forType: .review)
                 
@@ -60,9 +70,10 @@ final class BPContentCell: BPBaseCell, View {
     }
     
     func setCollectionViewHidden(forType type: BPContentType) {
+        // 🐻‍❄️ NOTE: - 알고리즘 리팩토링 가능
         [productCollectionView, reviewCollectionView].forEach { $0.isHidden = true }
         
-        if type == .profile { }
+        if type == .profile { profileCollectionView.isHidden = false }
         else if type == .product { productCollectionView.isHidden = false }
         else if type == .review { reviewCollectionView.isHidden = false }
         else if type == .info { }
@@ -91,6 +102,15 @@ final class BPContentCell: BPBaseCell, View {
         
         cv.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
         cv.register(Reusable.reviewCell)
+        return cv
+    }()
+    
+    lazy var profileCollectionView: UICollectionView = {
+        let layout = createLayout(forType: .profile)
+        var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        
+        cv.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
+        cv.register(Reusable.profileCell)
         return cv
     }()
 }

@@ -13,12 +13,14 @@ final class BPContentCellReactor: Reactor {
     }
     
     enum Mutation {
+        /** 프로필 */ case fetchProfiles([BPProfileModel])
         /** 작품보기 */ case fetchProducts([BPProductModel])
         /** 후기 */ case fetchReviews([BPReviewModel])
     }
     
     struct State {
-        var contentModel: BPContentModel
+        var contentModel: BPContentModel // 🐻‍❄️ NOTE: - 이거 enum으로 개선가능
+        var profiles: [BPProfileModel] = []
         var products: [BPProductModel] = []
         var reviews: [BPReviewModel] = []
         
@@ -38,6 +40,7 @@ final class BPContentCellReactor: Reactor {
         switch action {
         case .initialize:
             return .concat([
+                .just(.fetchProfiles(provider.fetchProfiles())),
                 .just(.fetchProducts(provider.fetchProducts())),
                 .just(.fetchReviews(provider.fetchReviews()))
             ])
@@ -47,6 +50,9 @@ final class BPContentCellReactor: Reactor {
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state
         switch mutation {
+        case .fetchProfiles(let profiles):
+            newState.profiles = profiles
+            return newState
         case .fetchProducts(let products):
             newState.products = products
             return newState

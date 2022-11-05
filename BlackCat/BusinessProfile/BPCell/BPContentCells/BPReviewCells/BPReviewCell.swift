@@ -62,7 +62,7 @@ final class BPReviewCell: BPBaseCell {
     }(UIImageView())
     
     // 🐻‍❄️ NOTE: - https://github.com/evgenyneu/Cosmos
-    // NOTE: - (기획 요구사항0 이미지로 처리하기로.
+    // NOTE: - (기획 요구사항0 이미지로 처리하기로.)
     lazy var ratingImageView = UIImageView()
     lazy var reviewTitleLabel: UILabel = {
         $0.textColor = .black

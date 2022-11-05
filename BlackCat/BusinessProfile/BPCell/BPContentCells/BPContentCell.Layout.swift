@@ -10,6 +10,12 @@ import UIKit
 extension BPContentCell {
     func setUI() {
         // 🐻‍❄️ NOTE: - Pin + Flex로 추후에 넘어가기
+        
+        contentView.addSubview(profileCollectionView)
+        profileCollectionView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
         contentView.addSubview(productCollectionView)
         productCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -26,6 +32,7 @@ extension BPContentCell {
             
             // 🐻‍❄️ NOTE: - Int값으로 Section 반환하도록 나중에 리팩토링하기
             switch type {
+            case .profile: return self.profileLayoutSection()
             case .product: return self.productLayoutSection()
             case .review: return self.reviewLayoutSection()
             default: return self.productLayoutSection()
@@ -53,6 +60,18 @@ extension BPContentCell {
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                                          heightDimension:.absolute(112)),
+                                                       subitems: [item])
+        let section = NSCollectionLayoutSection(group: group)
+        
+        return section
+    }
+    
+    private func profileLayoutSection() -> NSCollectionLayoutSection {
+        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1.0),
+                                                            heightDimension: .estimated(100)))
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1),
+                                                                         heightDimension: .estimated(100)),
                                                        subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         
