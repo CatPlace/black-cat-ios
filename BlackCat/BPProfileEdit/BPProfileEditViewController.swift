@@ -19,29 +19,35 @@ final class BPProfileEditViewController: UIViewController, View {
         render(reactor: reactor)
     }
     
-    func dispatch(reactor: Reactor) {
+    private func dispatch(reactor: Reactor) {
         closeBarButtonItem.rx.tap
-            .map { Reactor.Action.didTapClose }
+            .map { Reactor.Action.didTapCloseItem }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        photoBarButtonItem.rx.tap
+            .map { Reactor.Action.didTapPhotoItem }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
-    func render(reactor: Reactor) {
+    private func render(reactor: Reactor) {
         reactor.state.map { $0.isDismiss }
             .filter { $0 == true }
             .withUnretained(self)
             .subscribe { owner, isDissmiss in
-                print("🐬 isDismiss \(isDissmiss)")
+                owner.dismiss(animated: isDissmiss)
+            }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isOpenPhotoLibrary }
+            .filter { $0 == true }
+            .withUnretained(self)
+            .subscribe { owenr, _ in
+                
             }.disposed(by: disposeBag)
     }
     
-    // MARK: - Life Cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setUI()
-    }
+    // MARK: - initilaize
     
     init(reactor: Reactor) {
         super.init(nibName: nil, bundle: nil)
@@ -63,7 +69,7 @@ final class BPProfileEditViewController: UIViewController, View {
         return $0
     }(UIBarButtonItem())
     
-    lazy var imageBarButtonItem: UIBarButtonItem = {
+    lazy var photoBarButtonItem: UIBarButtonItem = {
         $0.image = UIImage(systemName: "photo")
         $0.style = .plain
         $0.target = self
@@ -79,48 +85,12 @@ final class BPProfileEditViewController: UIViewController, View {
 
 extension BPProfileEditViewController {
     func setUI() {
-        navigationController?.isToolbarHidden = false
         self.navigationItem.leftBarButtonItems = [closeBarButtonItem]
-        self.toolbarItems = [imageBarButtonItem]
+        self.toolbarItems = [photoBarButtonItem]
         
         view.addSubview(BPEditTextView)
         BPEditTextView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
-        }
-    }
-}
-
-final class BPProfileEditReactor: Reactor {
-    enum Action {
-        case didTapClose
-    }
-    
-    enum Mutation {
-        case isDismiss
-    }
-    
-    struct State {
-        var isDismiss = false
-    }
-    
-    var initialState: State
-    
-    init(initialState: State) {
-        self.initialState = initialState
-    }
-    
-    func mutate(action: Action) -> Observable<Mutation> {
-        switch action {
-        case .didTapClose: return .just(.isDismiss)
-        }
-    }
-    
-    func reduce(state: State, mutation: Mutation) -> State {
-        var newState = state
-        switch mutation {
-        case .isDismiss:
-            newState.isDismiss = true
-            return newState
+            $0.edges.equalTo(view.safeAreaLayoutGuide).inset(100)
         }
     }
 }

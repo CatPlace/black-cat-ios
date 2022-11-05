@@ -50,6 +50,10 @@
 		B1CDE8E02916088F00ACB9AC /* BPProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDE8DF2916088F00ACB9AC /* BPProfileModel.swift */; };
 		B1CDE8F4291659EF00ACB9AC /* BPProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDE8F3291659EF00ACB9AC /* BPProfileEditViewController.swift */; };
 		B1CDE8F729165E6A00ACB9AC /* BPEditTempViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDE8F629165E6A00ACB9AC /* BPEditTempViewController.swift */; };
+		B1CDE8F929166AFB00ACB9AC /* BPProfileEditReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDE8F829166AFB00ACB9AC /* BPProfileEditReactor.swift */; };
+		B1CDE8FB29166C7E00ACB9AC /* BPProfileEditServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDE8FA29166C7E00ACB9AC /* BPProfileEditServiceProvider.swift */; };
+		B1CDE90129169F8E00ACB9AC /* URLMatcher in Frameworks */ = {isa = PBXBuildFile; productRef = B1CDE90029169F8E00ACB9AC /* URLMatcher */; };
+		B1CDE90329169F8E00ACB9AC /* URLNavigator in Frameworks */ = {isa = PBXBuildFile; productRef = B1CDE90229169F8E00ACB9AC /* URLNavigator */; };
 		B1CEF7332913A0EC00814113 /* BPProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CEF7322913A0EC00814113 /* BPProfileCell.swift */; };
 		B1D127DB28F047A9007E3667 /* MagazineDetailBulletedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D127DA28F047A9007E3667 /* MagazineDetailBulletedCell.swift */; };
 		B1D127DD28F08DCA007E3667 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D127DC28F08DCA007E3667 /* TabBarViewController.swift */; };
@@ -187,6 +191,8 @@
 		B1CDE8DF2916088F00ACB9AC /* BPProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPProfileModel.swift; sourceTree = "<group>"; };
 		B1CDE8F3291659EF00ACB9AC /* BPProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPProfileEditViewController.swift; sourceTree = "<group>"; };
 		B1CDE8F629165E6A00ACB9AC /* BPEditTempViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPEditTempViewController.swift; sourceTree = "<group>"; };
+		B1CDE8F829166AFB00ACB9AC /* BPProfileEditReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPProfileEditReactor.swift; sourceTree = "<group>"; };
+		B1CDE8FA29166C7E00ACB9AC /* BPProfileEditServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPProfileEditServiceProvider.swift; sourceTree = "<group>"; };
 		B1CEF7322913A0EC00814113 /* BPProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPProfileCell.swift; sourceTree = "<group>"; };
 		B1D127DA28F047A9007E3667 /* MagazineDetailBulletedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailBulletedCell.swift; sourceTree = "<group>"; };
 		B1D127DC28F08DCA007E3667 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
@@ -278,6 +284,7 @@
 				B1E4984828EE83BD00B469AC /* RealmSwift in Frameworks */,
 				B1E4984E28EE83E400B469AC /* Nuke in Frameworks */,
 				B160DC1C28FF53C400C0D682 /* RxCocoa in Frameworks */,
+				B1CDE90329169F8E00ACB9AC /* URLNavigator in Frameworks */,
 				B1D3363728F1CA2000826636 /* BlackCatSDK.framework in Frameworks */,
 				B1E3F7D3290ECC0500005F17 /* FlexLayoutYoga in Frameworks */,
 				B1E3F7D5290ECC0500005F17 /* FlexLayoutYogaKit in Frameworks */,
@@ -289,6 +296,7 @@
 				B1E4984B28EE83D800B469AC /* ReactorKit in Frameworks */,
 				B1EABEC428FBE0400029B6BC /* RxGesture in Frameworks */,
 				B1E4983828EE838700B469AC /* SnapKit in Frameworks */,
+				B1CDE90129169F8E00ACB9AC /* URLMatcher in Frameworks */,
 				B160DC1E28FF53C400C0D682 /* RxRelay in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -436,8 +444,18 @@
 			children = (
 				B1CDE8F629165E6A00ACB9AC /* BPEditTempViewController.swift */,
 				B1CDE8F3291659EF00ACB9AC /* BPProfileEditViewController.swift */,
+				B1CDE8F829166AFB00ACB9AC /* BPProfileEditReactor.swift */,
+				B1CDE8FC29166C8C00ACB9AC /* BPProfileEditService */,
 			);
 			path = BPProfileEdit;
+			sourceTree = "<group>";
+		};
+		B1CDE8FC29166C8C00ACB9AC /* BPProfileEditService */ = {
+			isa = PBXGroup;
+			children = (
+				B1CDE8FA29166C7E00ACB9AC /* BPProfileEditServiceProvider.swift */,
+			);
+			path = BPProfileEditService;
 			sourceTree = "<group>";
 		};
 		B1CEF7302913A07300814113 /* BPProductsCells */ = {
@@ -774,6 +792,8 @@
 				B1E3F7D0290ECC0500005F17 /* FlexLayout */,
 				B1E3F7D2290ECC0500005F17 /* FlexLayoutYoga */,
 				B1E3F7D4290ECC0500005F17 /* FlexLayoutYogaKit */,
+				B1CDE90029169F8E00ACB9AC /* URLMatcher */,
+				B1CDE90229169F8E00ACB9AC /* URLNavigator */,
 			);
 			productName = BlackCat;
 			productReference = B1D79CA728EB0EF9008487D0 /* BlackCat.app */;
@@ -819,6 +839,7 @@
 				B160DC1828FF53C400C0D682 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				B1E3F7C9290ECBBB00005F17 /* XCRemoteSwiftPackageReference "PinLayout" */,
 				B1E3F7CF290ECC0500005F17 /* XCRemoteSwiftPackageReference "FlexLayout" */,
+				B1CDE8FF29169F8D00ACB9AC /* XCRemoteSwiftPackageReference "URLNavigator" */,
 			);
 			productRefGroup = B1D79CA828EB0EF9008487D0 /* Products */;
 			projectDirPath = "";
@@ -899,6 +920,7 @@
 				B1E3F7DC290EE9D500005F17 /* MulticastDelegate.swift in Sources */,
 				8E2D8C5928F2EE69004B514D /* HomeEmptyCell.swift in Sources */,
 				B1E986AB28FE888800962F5B /* FilterTaskService.swift in Sources */,
+				B1CDE8FB29166C7E00ACB9AC /* BPProfileEditServiceProvider.swift in Sources */,
 				B1D89C91290E7D2100C8B7F1 /* BPContentCell.swift in Sources */,
 				B1E3F7BC290EBABE00005F17 /* BPReviewCell.swift in Sources */,
 				8E2D8C4F28F2ED53004B514D /* HomeHeaderView.swift in Sources */,
@@ -933,6 +955,7 @@
 				B1E4986928EE9E3500B469AC /* MagazineDetailViewReactor.swift in Sources */,
 				B1D3364328F1CD1B00826636 /* UITableView+.swift in Sources */,
 				B1E3F7C8290ECAA100005F17 /* BPContentSectionHeaderReactor.swift in Sources */,
+				B1CDE8F929166AFB00ACB9AC /* BPProfileEditReactor.swift in Sources */,
 				B1EE64FA28FA4E600055A4F1 /* BottomSheetTransitioningDelegate.swift in Sources */,
 				B1CA040628F00CC1004A6027 /* MagazineDetailImageCell.swift in Sources */,
 				B12C1DC728ED219C0089964E /* UIVIewController+Rx.swift in Sources */,
@@ -1243,6 +1266,14 @@
 				minimumVersion = 6.5.0;
 			};
 		};
+		B1CDE8FF29169F8D00ACB9AC /* XCRemoteSwiftPackageReference "URLNavigator" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/URLNavigator";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 2.4.0;
+			};
+		};
 		B1E3F7C9290ECBBB00005F17 /* XCRemoteSwiftPackageReference "PinLayout" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/layoutBox/PinLayout";
@@ -1359,6 +1390,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B1E4984428EE83BD00B469AC /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		B1CDE90029169F8E00ACB9AC /* URLMatcher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B1CDE8FF29169F8D00ACB9AC /* XCRemoteSwiftPackageReference "URLNavigator" */;
+			productName = URLMatcher;
+		};
+		B1CDE90229169F8E00ACB9AC /* URLNavigator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B1CDE8FF29169F8D00ACB9AC /* XCRemoteSwiftPackageReference "URLNavigator" */;
+			productName = URLNavigator;
 		};
 		B1E3F7CA290ECBBB00005F17 /* PinLayout */ = {
 			isa = XCSwiftPackageProductDependency;
