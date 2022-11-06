@@ -32,7 +32,7 @@ final class BPPriceInfoEditViewController: UIViewController, View {
             .disposed(by: disposeBag)
         
         confirmBarButtonItem.rx.tap
-            .map { [weak self] _ in self?.BPEditTextView.text ?? "" }
+            .compactMap { [weak self] _ in self?.BPEditTextView.textStorage.description }
             .map { Reactor.Action.didTapConfirmItem($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -135,7 +135,7 @@ extension BPPriceInfoEditViewController: UIImagePickerControllerDelegate, UINavi
             
             attachment.image = image.resize(newWidth: BPEditTextView.frame.width - 10)
             let attributedString = NSAttributedString(attachment: attachment)
-            
+            print("🌳 \(attachment)")
             self.BPEditTextView.textStorage.insert(attributedString,
                                                    at: self.BPEditTextView.selectedRange.location) // 현재 커서의 위치에 이미지 삽입
         } else {
