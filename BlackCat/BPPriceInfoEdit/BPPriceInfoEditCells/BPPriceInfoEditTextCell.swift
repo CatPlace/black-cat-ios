@@ -37,10 +37,9 @@ final class BPPriceInfoEditTextCell: BaseTableViewCell {
     }
     
     func setUI() {
-        contentView.backgroundColor = .green
         contentView.addSubview(editTextView)
         editTextView.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(50)
+            $0.edges.equalToSuperview()
         }
     }
     

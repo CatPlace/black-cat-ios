@@ -10,14 +10,14 @@ import UIKit
 final class BPPriceInfoEditImageCell: BaseTableViewCell {
     
     func configureCell(with item: BPPriceInfoEditModel) {
-        editImageView.image = item.image
+//        profileTitleLabel.text = item.title
+//        profileDescriptionLabel.text = item.description
     }
     
     func setUI() {
-        contentView.backgroundColor = .blue
         contentView.addSubview(editImageView)
         editImageView.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(50)
+            $0.edges.equalToSuperview()
         }
     }
     
