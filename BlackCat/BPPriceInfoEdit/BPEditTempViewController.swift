@@ -23,7 +23,7 @@ class BPEditTempViewController: UIViewController {
         
         button.rx.tap
             .bind {
-                let vc = UINavigationController(rootViewController: BPProfileEditViewController(reactor: BPProfileEditReactor()))
+                let vc = UINavigationController(rootViewController: BPPriceInfoEditViewController(reactor: BPPriceInfoEditReactor()))
                 vc.modalPresentationStyle = .fullScreen
                 vc.setToolbarHidden(false, animated: true)
                 self.present(vc, animated: true)

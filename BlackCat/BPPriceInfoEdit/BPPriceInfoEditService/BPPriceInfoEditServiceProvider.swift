@@ -8,10 +8,10 @@
 import UIKit
 import RxSwift
 
-protocol BPProfileEditServiceProtocol {
+protocol BPPriceInfoEditServiceProtocol {
     var alertService: AlertServiceProtocol { get }
 }
 
-final class BPProfileEditServiceProvider: BPProfileEditServiceProtocol {
+final class BPPriceInfoEditService: BPPriceInfoEditServiceProtocol {
     lazy var alertService: AlertServiceProtocol = AlertService()
 }

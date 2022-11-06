@@ -48,10 +48,10 @@
 		B160DC2828FF573E00C0D682 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B160DC2728FF573E00C0D682 /* RealmSwift */; };
 		B1CA040628F00CC1004A6027 /* MagazineDetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CA040528F00CC1004A6027 /* MagazineDetailImageCell.swift */; };
 		B1CDE8E02916088F00ACB9AC /* BPProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDE8DF2916088F00ACB9AC /* BPProfileModel.swift */; };
-		B1CDE8F4291659EF00ACB9AC /* BPProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDE8F3291659EF00ACB9AC /* BPProfileEditViewController.swift */; };
+		B1CDE8F4291659EF00ACB9AC /* BPPriceInfoEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDE8F3291659EF00ACB9AC /* BPPriceInfoEditViewController.swift */; };
 		B1CDE8F729165E6A00ACB9AC /* BPEditTempViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDE8F629165E6A00ACB9AC /* BPEditTempViewController.swift */; };
-		B1CDE8F929166AFB00ACB9AC /* BPProfileEditReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDE8F829166AFB00ACB9AC /* BPProfileEditReactor.swift */; };
-		B1CDE8FB29166C7E00ACB9AC /* BPProfileEditServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDE8FA29166C7E00ACB9AC /* BPProfileEditServiceProvider.swift */; };
+		B1CDE8F929166AFB00ACB9AC /* BPPriceInfoEditReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDE8F829166AFB00ACB9AC /* BPPriceInfoEditReactor.swift */; };
+		B1CDE8FB29166C7E00ACB9AC /* BPPriceInfoEditServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDE8FA29166C7E00ACB9AC /* BPPriceInfoEditServiceProvider.swift */; };
 		B1CDE90129169F8E00ACB9AC /* URLMatcher in Frameworks */ = {isa = PBXBuildFile; productRef = B1CDE90029169F8E00ACB9AC /* URLMatcher */; };
 		B1CDE90329169F8E00ACB9AC /* URLNavigator in Frameworks */ = {isa = PBXBuildFile; productRef = B1CDE90229169F8E00ACB9AC /* URLNavigator */; };
 		B1CDE90529169FD500ACB9AC /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDE90429169FD500ACB9AC /* AlertService.swift */; };
@@ -120,7 +120,7 @@
 		B1E4987028EEADC900B469AC /* MagazineDetailSectionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E4986F28EEADC900B469AC /* MagazineDetailSectionFactory.swift */; };
 		B1E986AB28FE888800962F5B /* FilterTaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E986AA28FE888800962F5B /* FilterTaskService.swift */; };
 		B1E986AE28FE8D4F00962F5B /* BaseRealmProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E986AD28FE8D4F00962F5B /* BaseRealmProtocol.swift */; };
-		B1E986B128FE975C00962F5B /* FilterServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E986B028FE975C00962F5B /* FilterServiceProvider.swift */; };
+		B1E986B128FE975C00962F5B /* FilterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E986B028FE975C00962F5B /* FilterService.swift */; };
 		B1E986B328FE9E0B00962F5B /* FilterLoactionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E986B228FE9E0B00962F5B /* FilterLoactionService.swift */; };
 		B1EABEBC28FBA87C0029B6BC /* FilterTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EABEBB28FBA87C0029B6BC /* FilterTask.swift */; };
 		B1EABEBF28FBA8E10029B6BC /* FilterReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EABEBE28FBA8E10029B6BC /* FilterReactor.swift */; };
@@ -191,10 +191,10 @@
 		B160DC0828FF523C00C0D682 /* FilterReactorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterReactorTests.swift; sourceTree = "<group>"; };
 		B1CA040528F00CC1004A6027 /* MagazineDetailImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailImageCell.swift; sourceTree = "<group>"; };
 		B1CDE8DF2916088F00ACB9AC /* BPProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPProfileModel.swift; sourceTree = "<group>"; };
-		B1CDE8F3291659EF00ACB9AC /* BPProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPProfileEditViewController.swift; sourceTree = "<group>"; };
+		B1CDE8F3291659EF00ACB9AC /* BPPriceInfoEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPPriceInfoEditViewController.swift; sourceTree = "<group>"; };
 		B1CDE8F629165E6A00ACB9AC /* BPEditTempViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPEditTempViewController.swift; sourceTree = "<group>"; };
-		B1CDE8F829166AFB00ACB9AC /* BPProfileEditReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPProfileEditReactor.swift; sourceTree = "<group>"; };
-		B1CDE8FA29166C7E00ACB9AC /* BPProfileEditServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPProfileEditServiceProvider.swift; sourceTree = "<group>"; };
+		B1CDE8F829166AFB00ACB9AC /* BPPriceInfoEditReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPPriceInfoEditReactor.swift; sourceTree = "<group>"; };
+		B1CDE8FA29166C7E00ACB9AC /* BPPriceInfoEditServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPPriceInfoEditServiceProvider.swift; sourceTree = "<group>"; };
 		B1CDE90429169FD500ACB9AC /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		B1CEF7322913A0EC00814113 /* BPProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPProfileCell.swift; sourceTree = "<group>"; };
 		B1D127DA28F047A9007E3667 /* MagazineDetailBulletedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailBulletedCell.swift; sourceTree = "<group>"; };
@@ -251,7 +251,7 @@
 		B1E4986F28EEADC900B469AC /* MagazineDetailSectionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailSectionFactory.swift; sourceTree = "<group>"; };
 		B1E986AA28FE888800962F5B /* FilterTaskService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTaskService.swift; sourceTree = "<group>"; };
 		B1E986AD28FE8D4F00962F5B /* BaseRealmProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRealmProtocol.swift; sourceTree = "<group>"; };
-		B1E986B028FE975C00962F5B /* FilterServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterServiceProvider.swift; sourceTree = "<group>"; };
+		B1E986B028FE975C00962F5B /* FilterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterService.swift; sourceTree = "<group>"; };
 		B1E986B228FE9E0B00962F5B /* FilterLoactionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterLoactionService.swift; sourceTree = "<group>"; };
 		B1EABEBB28FBA87C0029B6BC /* FilterTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTask.swift; sourceTree = "<group>"; };
 		B1EABEBE28FBA8E10029B6BC /* FilterReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterReactor.swift; sourceTree = "<group>"; };
@@ -444,23 +444,23 @@
 			path = BPProfileCells;
 			sourceTree = "<group>";
 		};
-		B1CDE8F529165A1000ACB9AC /* BPProfileEdit */ = {
+		B1CDE8F529165A1000ACB9AC /* BPPriceInfoEdit */ = {
 			isa = PBXGroup;
 			children = (
 				B1CDE8F629165E6A00ACB9AC /* BPEditTempViewController.swift */,
-				B1CDE8F3291659EF00ACB9AC /* BPProfileEditViewController.swift */,
-				B1CDE8F829166AFB00ACB9AC /* BPProfileEditReactor.swift */,
-				B1CDE8FC29166C8C00ACB9AC /* BPProfileEditService */,
+				B1CDE8F3291659EF00ACB9AC /* BPPriceInfoEditViewController.swift */,
+				B1CDE8F829166AFB00ACB9AC /* BPPriceInfoEditReactor.swift */,
+				B1CDE8FC29166C8C00ACB9AC /* BPPriceInfoEditService */,
 			);
-			path = BPProfileEdit;
+			path = BPPriceInfoEdit;
 			sourceTree = "<group>";
 		};
-		B1CDE8FC29166C8C00ACB9AC /* BPProfileEditService */ = {
+		B1CDE8FC29166C8C00ACB9AC /* BPPriceInfoEditService */ = {
 			isa = PBXGroup;
 			children = (
-				B1CDE8FA29166C7E00ACB9AC /* BPProfileEditServiceProvider.swift */,
+				B1CDE8FA29166C7E00ACB9AC /* BPPriceInfoEditServiceProvider.swift */,
 			);
-			path = BPProfileEditService;
+			path = BPPriceInfoEditService;
 			sourceTree = "<group>";
 		};
 		B1CDE9082916A00800ACB9AC /* Service */ = {
@@ -543,7 +543,7 @@
 				B1E4985628EE859600B469AC /* MagazineDetail */,
 				B1EE64F428FA48170055A4F1 /* Filter */,
 				B1D89C88290E78B300C8B7F1 /* BusinessProfile */,
-				B1CDE8F529165A1000ACB9AC /* BPProfileEdit */,
+				B1CDE8F529165A1000ACB9AC /* BPPriceInfoEdit */,
 				B1E986AF28FE8D5B00962F5B /* BaseArchitecture */,
 				B1D127E028F09223007E3667 /* Utils */,
 				B12C1DC528ED21830089964E /* Extension */,
@@ -680,7 +680,7 @@
 		B1E986AC28FE889200962F5B /* FilterService */ = {
 			isa = PBXGroup;
 			children = (
-				B1E986B028FE975C00962F5B /* FilterServiceProvider.swift */,
+				B1E986B028FE975C00962F5B /* FilterService.swift */,
 				B1E986AA28FE888800962F5B /* FilterTaskService.swift */,
 				B1E986B228FE9E0B00962F5B /* FilterLoactionService.swift */,
 			);
@@ -910,7 +910,7 @@
 				B1E3F7B6290EB7E700005F17 /* BPProductModel.swift in Sources */,
 				B1EE651728FA8DDE0055A4F1 /* FilterBaseCell.swift in Sources */,
 				B1D3364128F1CCFA00826636 /* UICollectionView+.swift in Sources */,
-				B1E986B128FE975C00962F5B /* FilterServiceProvider.swift in Sources */,
+				B1E986B128FE975C00962F5B /* FilterService.swift in Sources */,
 				B1D89C9A290E888200C8B7F1 /* BPThumbnailImageCellReactor.swift in Sources */,
 				8E2D8C5D28F2EE69004B514D /* HomeRecommendCell.swift in Sources */,
 				B1D127DD28F08DCA007E3667 /* TabBarViewController.swift in Sources */,
@@ -935,7 +935,7 @@
 				B1E3F7DC290EE9D500005F17 /* MulticastDelegate.swift in Sources */,
 				8E2D8C5928F2EE69004B514D /* HomeEmptyCell.swift in Sources */,
 				B1E986AB28FE888800962F5B /* FilterTaskService.swift in Sources */,
-				B1CDE8FB29166C7E00ACB9AC /* BPProfileEditServiceProvider.swift in Sources */,
+				B1CDE8FB29166C7E00ACB9AC /* BPPriceInfoEditServiceProvider.swift in Sources */,
 				B1D89C91290E7D2100C8B7F1 /* BPContentCell.swift in Sources */,
 				B1E3F7BC290EBABE00005F17 /* BPReviewCell.swift in Sources */,
 				8E2D8C4F28F2ED53004B514D /* HomeHeaderView.swift in Sources */,
@@ -958,7 +958,7 @@
 				B1CDE8E02916088F00ACB9AC /* BPProfileModel.swift in Sources */,
 				B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */,
 				B1E986AE28FE8D4F00962F5B /* BaseRealmProtocol.swift in Sources */,
-				B1CDE8F4291659EF00ACB9AC /* BPProfileEditViewController.swift in Sources */,
+				B1CDE8F4291659EF00ACB9AC /* BPPriceInfoEditViewController.swift in Sources */,
 				B1D3362528F142A400826636 /* CALayer+.swift in Sources */,
 				B1D89C87290E78AF00C8B7F1 /* BusinessProfileViewController.swift in Sources */,
 				B1E3F7E2290F098400005F17 /* BPContentCellService.swift in Sources */,
@@ -971,7 +971,7 @@
 				B1E4986928EE9E3500B469AC /* MagazineDetailViewReactor.swift in Sources */,
 				B1D3364328F1CD1B00826636 /* UITableView+.swift in Sources */,
 				B1E3F7C8290ECAA100005F17 /* BPContentSectionHeaderReactor.swift in Sources */,
-				B1CDE8F929166AFB00ACB9AC /* BPProfileEditReactor.swift in Sources */,
+				B1CDE8F929166AFB00ACB9AC /* BPPriceInfoEditReactor.swift in Sources */,
 				B1EE64FA28FA4E600055A4F1 /* BottomSheetTransitioningDelegate.swift in Sources */,
 				B1CA040628F00CC1004A6027 /* MagazineDetailImageCell.swift in Sources */,
 				B12C1DC728ED219C0089964E /* UIVIewController+Rx.swift in Sources */,

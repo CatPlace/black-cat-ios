@@ -1,5 +1,5 @@
 //
-//  BPProfileEditReactor.swift
+//  BPPriceInfoEditReactor.swift
 //  BlackCat
 //
 //  Created by Hamlit Jason on 2022/11/05.
@@ -7,29 +7,29 @@
 
 import ReactorKit
 
-final class BPProfileEditReactor: Reactor {
+final class BPPriceInfoEditReactor: Reactor {
     enum Action {
         case didTapCloseItem
         case didTapPhotoItem
-        case didTapTextformatSize
+        case didTapConfirmItem(String)
     }
     
     enum Mutation {
         case isDismiss
         case openPhotoLibrary
-        case isShowingFormatSizeView
+        case sendProfile(String)
     }
     
     struct State {
         var isDismiss = false
         var isOpenPhotoLibrary = false
-        var isShowingFormatSizeView = false
+//        var isShowingFormatSizeView = false
     }
     
     var initialState: State
-    var provider: BPProfileEditServiceProtocol
+    var provider: BPPriceInfoEditServiceProtocol
     
-    init(provider: BPProfileEditServiceProtocol = BPProfileEditServiceProvider()) {
+    init(provider: BPPriceInfoEditServiceProtocol = BPPriceInfoEditService()) {
         self.provider = provider
         self.initialState = State()
     }
@@ -40,8 +40,8 @@ final class BPProfileEditReactor: Reactor {
             return .just(.isDismiss)
         case .didTapPhotoItem:
             return .just(.openPhotoLibrary)
-        case .didTapTextformatSize:
-            return .just(.isShowingFormatSizeView)
+        case .didTapConfirmItem(let string):
+            return .just(.sendProfile(string))
         }
     }
     
@@ -54,8 +54,8 @@ final class BPProfileEditReactor: Reactor {
         case .openPhotoLibrary:
             newState.isOpenPhotoLibrary = true
             return newState
-        case .isShowingFormatSizeView:
-            newState.isShowingFormatSizeView = !currentState.isShowingFormatSizeView
+        case .sendProfile(let string):
+//            newState.isShowingFormatSizeView = !currentState.isShowingFormatSizeView
             return newState
         }
     }

@@ -1,5 +1,5 @@
 //
-//  BPProfileEditViewController.swift
+//  BPPriceInfoEditViewController.swift
 //  BlackCat
 //
 //  Created by Hamlit Jason on 2022/11/05.
@@ -8,12 +8,11 @@
 import UIKit
 import SnapKit
 import ReactorKit
-import Photos
 
-final class BPProfileEditViewController: UIViewController, View {
+final class BPPriceInfoEditViewController: UIViewController, View {
     var disposeBag: DisposeBag = DisposeBag()
     
-    typealias Reactor = BPProfileEditReactor
+    typealias Reactor = BPPriceInfoEditReactor
     
     func bind(reactor: Reactor) {
         dispatch(reactor: reactor)
@@ -28,6 +27,11 @@ final class BPProfileEditViewController: UIViewController, View {
             }.disposed(by: disposeBag)
         
         closeBarButtonItem.rx.tap
+            .map { Reactor.Action.didTapCloseItem }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        confirmBarButtonItem.rx.tap
             .map { Reactor.Action.didTapCloseItem }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -70,6 +74,15 @@ final class BPProfileEditViewController: UIViewController, View {
     // MARK: - UIComponents
     private func barButtonItemModifier(_ sender: UIBarButtonItem, systemName: String) {
         sender.image = UIImage(systemName: systemName)
+        configureBarButtonItem(sender: sender)
+    }
+    
+    private func barButtonItemModifier(_ sender: UIBarButtonItem, title: String) {
+        sender.title = title
+        configureBarButtonItem(sender: sender)
+    }
+    
+    private func configureBarButtonItem(sender: UIBarButtonItem) {
         sender.style = .plain
         sender.target = self
         sender.tintColor = .black
@@ -77,6 +90,11 @@ final class BPProfileEditViewController: UIViewController, View {
     
     lazy var closeBarButtonItem: UIBarButtonItem = {
         barButtonItemModifier($0, systemName: "xmark")
+        return $0
+    }(UIBarButtonItem())
+    
+    lazy var confirmBarButtonItem: UIBarButtonItem = {
+        barButtonItemModifier($0, title: "완료")
         return $0
     }(UIBarButtonItem())
     
@@ -91,9 +109,10 @@ final class BPProfileEditViewController: UIViewController, View {
     }(UITextView())
 }
 
-extension BPProfileEditViewController {
+extension BPPriceInfoEditViewController {
     func setUI() {
         self.navigationItem.leftBarButtonItems = [closeBarButtonItem]
+        self.navigationItem.rightBarButtonItems = [confirmBarButtonItem]
         self.toolbarItems = [photoBarButtonItem]
         
         view.addSubview(BPEditTextView)
@@ -103,7 +122,7 @@ extension BPProfileEditViewController {
     }
 }
 
-extension BPProfileEditViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension BPPriceInfoEditViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     // 🐻‍❄️ NOTE: PHPicker는 iOS 14+ 에서 사용가능합니다.
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
