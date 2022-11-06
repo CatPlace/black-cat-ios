@@ -73,6 +73,7 @@
 		B1D5BD26291796F700A85D4A /* BPPriceInfoEditStringService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D5BD25291796F700A85D4A /* BPPriceInfoEditStringService.swift */; };
 		B1D5BD282917C5C300A85D4A /* BPPriceInfoEditTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D5BD272917C5C300A85D4A /* BPPriceInfoEditTextCell.swift */; };
 		B1D5BD2B2917C80A00A85D4A /* BPPriceInfoEditImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D5BD2A2917C80A00A85D4A /* BPPriceInfoEditImageCell.swift */; };
+		B1D5BD2E2917D94700A85D4A /* BPPriceInfoEditModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D5BD2D2917D94700A85D4A /* BPPriceInfoEditModel.swift */; };
 		B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */; };
 		B1D79CAD28EB0EF9008487D0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */; };
 		B1D79CB428EB0EFB008487D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1D79CB328EB0EFB008487D0 /* Assets.xcassets */; };
@@ -216,6 +217,7 @@
 		B1D5BD25291796F700A85D4A /* BPPriceInfoEditStringService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPPriceInfoEditStringService.swift; sourceTree = "<group>"; };
 		B1D5BD272917C5C300A85D4A /* BPPriceInfoEditTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPPriceInfoEditTextCell.swift; sourceTree = "<group>"; };
 		B1D5BD2A2917C80A00A85D4A /* BPPriceInfoEditImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPPriceInfoEditImageCell.swift; sourceTree = "<group>"; };
+		B1D5BD2D2917D94700A85D4A /* BPPriceInfoEditModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPPriceInfoEditModel.swift; sourceTree = "<group>"; };
 		B1D79CA728EB0EF9008487D0 /* BlackCat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlackCat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -456,6 +458,7 @@
 				B1CDE8F629165E6A00ACB9AC /* BPEditTempViewController.swift */,
 				B1CDE8F3291659EF00ACB9AC /* BPPriceInfoEditViewController.swift */,
 				B1CDE8F829166AFB00ACB9AC /* BPPriceInfoEditReactor.swift */,
+				B1D5BD2F2917D9E500A85D4A /* BPPriceInfoEditModels */,
 				B1CDE8FC29166C8C00ACB9AC /* BPPriceInfoEditService */,
 				B1D5BD292917C5C700A85D4A /* BPPriceInfoEditCells */,
 			);
@@ -528,6 +531,14 @@
 				B1D5BD2A2917C80A00A85D4A /* BPPriceInfoEditImageCell.swift */,
 			);
 			path = BPPriceInfoEditCells;
+			sourceTree = "<group>";
+		};
+		B1D5BD2F2917D9E500A85D4A /* BPPriceInfoEditModels */ = {
+			isa = PBXGroup;
+			children = (
+				B1D5BD2D2917D94700A85D4A /* BPPriceInfoEditModel.swift */,
+			);
+			path = BPPriceInfoEditModels;
 			sourceTree = "<group>";
 		};
 		B1D79C9E28EB0EF8008487D0 = {
@@ -975,6 +986,7 @@
 				B1E3F7C6290EC98600005F17 /* BPBaseCollectionReusableView.swift in Sources */,
 				8E2D8C5A28F2EE69004B514D /* HomeCategoryCellViewModel.swift in Sources */,
 				B1E3F7D9290EE8CE00005F17 /* BPMultiCastDelegate.swift in Sources */,
+				B1D5BD2E2917D94700A85D4A /* BPPriceInfoEditModel.swift in Sources */,
 				B1CDE8E02916088F00ACB9AC /* BPProfileModel.swift in Sources */,
 				B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */,
 				B1E986AE28FE8D4F00962F5B /* BaseRealmProtocol.swift in Sources */,

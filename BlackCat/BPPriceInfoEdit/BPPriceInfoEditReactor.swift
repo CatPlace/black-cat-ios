@@ -5,35 +5,23 @@
 //  Created by Hamlit Jason on 2022/11/05.
 //
 
+import UIKit
 import ReactorKit
 import RxRelay
-
-struct BPPriceInfoEditModel { // CellVIewmodel
-    enum EditType {
-        case text
-        case image
-    }
-    
-    var type: EditType
-    var input: String
-    
-    init(type: EditType, input: String) {
-        self.type = type
-        self.input = input
-    }
-}
 
 final class BPPriceInfoEditReactor: Reactor {
     enum Action {
         case didTapCloseItem
         case didTapPhotoItem
         case didTapConfirmItem(String)
+        case appendImage(UIImage)
     }
     
     enum Mutation {
         case isDismiss
         case openPhotoLibrary
         case sendProfile(String)
+        case appendImage(UIImage)
     }
     
     struct State {
@@ -65,6 +53,8 @@ final class BPPriceInfoEditReactor: Reactor {
         case .didTapConfirmItem(let string):
             provider.priceEditStringService.convertToArray(string)
             return .just(.sendProfile(string))
+        case .appendImage(let image):
+            return .just(.appendImage(image))
         }
     }
     
@@ -79,6 +69,13 @@ final class BPPriceInfoEditReactor: Reactor {
             return newState
         case .sendProfile(let string):
             // NOTE: - 서버로 보내기
+            return newState
+        case .appendImage(let image):
+            var newValue = currentState.dataSource.value
+            newValue.append(.init(type: .image, image: image))
+            newValue.append(.init(type: .text, input: ""))
+            newState.dataSource.accept(newValue)
+            
             return newState
         }
     }

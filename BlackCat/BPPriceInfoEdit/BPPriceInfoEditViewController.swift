@@ -157,9 +157,10 @@ extension BPPriceInfoEditViewController: UIImagePickerControllerDelegate, UINavi
         
         // 🐻‍❄️ NOTE: - editedImage를 사용합니다. 이미지 사이즈는 0 < height <= width 입니다.
         if let image = info[.editedImage] as? UIImage {
-            let attachment = NSTextAttachment()
+
+            reactor?.action.onNext(.appendImage(image))
             
-            
+            //            let attachment = NSTextAttachment()
 //            attachment.image = image.resize(newWidth: BPEditTextView.frame.width - 10)
 //            let attributedString = NSAttributedString(attachment: attachment)
 //            print("🌳 \(attachment)")
