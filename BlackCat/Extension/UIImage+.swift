@@ -19,7 +19,7 @@ extension UIImage {
     /// 이미지 리사이징하는 함수입니다.
     func resize(newWidth: CGFloat) -> UIImage {
         let scale = newWidth / self.size.width
-        let newHeight = newWidth // self.size.height * scale
+        let newHeight = self.size.height * scale
 
         let size = CGSize(width: newWidth, height: newHeight)
         let render = UIGraphicsImageRenderer(size: size)
@@ -27,8 +27,6 @@ extension UIImage {
             self.draw(in: CGRect(origin: .zero, size: size))
         }
         
-        print("화면 배율: \(UIScreen.main.scale)")// 배수
-        print("origin: \(self), resize: \(renderImage)")
         return renderImage
     }
 }

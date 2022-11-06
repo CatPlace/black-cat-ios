@@ -97,21 +97,23 @@ extension BPProfileEditViewController {
 }
 
 extension BPProfileEditViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    // 🐻‍❄️ NOTE: PHPicker는 iOS 14+ 에서 사용가능합니다.
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true)
         
-        // 🐻‍❄️ NOTE: - edit 속성을 사용하고 있습니다. 따라서 0 < heigth <= width 입니다.
+        // 🐻‍❄️ NOTE: - editedImage를 사용합니다. 이미지 사이즈는 0 < height <= width 입니다.
         if let image = info[.editedImage] as? UIImage {
             let attachment = NSTextAttachment()
             
             attachment.image = image.resize(newWidth: BPEditTextView.frame.width - 10)
+            
             let attributedString = NSAttributedString(attachment: attachment)
             
             self.BPEditTextView.textStorage.insert(attributedString,
                                                    at: self.BPEditTextView.selectedRange.location) // 현재 커서의 위치에 이미지 삽입
         } else {
-            print("이미지는 이미진데, 파싱을 실패했나봐용")
+            print("🚨 오잉? \(#function)에 문제가 있어요")
             // 🐻‍❄️ NOTE: - Error Handling
         }
     }
