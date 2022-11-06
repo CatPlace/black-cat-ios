@@ -11,16 +11,19 @@ final class BPProfileEditReactor: Reactor {
     enum Action {
         case didTapCloseItem
         case didTapPhotoItem
+        case didTapTextformatSize
     }
     
     enum Mutation {
         case isDismiss
         case openPhotoLibrary
+        case isShowingFormatSizeView
     }
     
     struct State {
         var isDismiss = false
         var isOpenPhotoLibrary = false
+        var isShowingFormatSizeView = false
     }
     
     var initialState: State
@@ -37,6 +40,8 @@ final class BPProfileEditReactor: Reactor {
             return .just(.isDismiss)
         case .didTapPhotoItem:
             return .just(.openPhotoLibrary)
+        case .didTapTextformatSize:
+            return .just(.isShowingFormatSizeView)
         }
     }
     
@@ -48,6 +53,9 @@ final class BPProfileEditReactor: Reactor {
             return newState
         case .openPhotoLibrary:
             newState.isOpenPhotoLibrary = true
+            return newState
+        case .isShowingFormatSizeView:
+            newState.isShowingFormatSizeView = !currentState.isShowingFormatSizeView
             return newState
         }
     }

@@ -26,7 +26,7 @@ extension UIImage {
         let renderImage = render.image { context in
             self.draw(in: CGRect(origin: .zero, size: size))
         }
-        
+
         return renderImage
     }
 }

@@ -21,6 +21,12 @@ final class BPProfileEditViewController: UIViewController, View {
     }
     
     private func dispatch(reactor: Reactor) {
+        BPEditTextView.rx.didBeginEditing
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.BPEditTextView.font = UIFont.boldSystemFont(ofSize: 16)
+            }.disposed(by: disposeBag)
+        
         closeBarButtonItem.rx.tap
             .map { Reactor.Action.didTapCloseItem }
             .bind(to: reactor.action)
@@ -28,6 +34,11 @@ final class BPProfileEditViewController: UIViewController, View {
         
         photoBarButtonItem.rx.tap
             .map { Reactor.Action.didTapPhotoItem }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        textformatSizeBarButtonItem.rx.tap
+            .map { Reactor.Action.didTapTextformatSize }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
@@ -46,6 +57,9 @@ final class BPProfileEditViewController: UIViewController, View {
             .subscribe { owner, _ in
                 owner.openPhotoLibrary()
             }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isShowingFormatSizeView }
+            
     }
     
     // MARK: - initilaize
@@ -62,19 +76,25 @@ final class BPProfileEditViewController: UIViewController, View {
     }
     
     // MARK: - UIComponents
+    private func barButtonItemModifier(_ sender: UIBarButtonItem, systemName: String) {
+        sender.image = UIImage(systemName: systemName)
+        sender.style = .plain
+        sender.target = self
+        sender.tintColor = .black
+    }
+    
     lazy var closeBarButtonItem: UIBarButtonItem = {
-        $0.image = UIImage(systemName: "xmark")
-        $0.style = .plain
-        $0.target = self
-        $0.tintColor = .black
+        barButtonItemModifier($0, systemName: "xmark")
         return $0
     }(UIBarButtonItem())
     
     lazy var photoBarButtonItem: UIBarButtonItem = {
-        $0.image = UIImage(systemName: "photo")
-        $0.style = .plain
-        $0.target = self
-        $0.tintColor = .black
+        barButtonItemModifier($0, systemName: "photo")
+        return $0
+    }(UIBarButtonItem())
+    
+    lazy var textformatSizeBarButtonItem: UIBarButtonItem = {
+        barButtonItemModifier($0, systemName: "textformat.size")
         return $0
     }(UIBarButtonItem())
     
@@ -82,17 +102,56 @@ final class BPProfileEditViewController: UIViewController, View {
         $0.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
         return $0
     }(UITextView())
+    
+    lazy var formatSizeView: UIStackView = {
+        $0.backgroundColor = .red
+        $0.alignment = .leading
+        $0.distribution = .fillProportionally
+        return $0
+    }(UIStackView())
+    
+    private func fontSizeLabelModifier(_ sender: UILabel, fontSize: CGFloat) {
+        sender.text = "\(fontSize)"
+        sender.textColor = .black
+    }
+    
+    lazy var fontSizeLabel16: UILabel = {
+        fontSizeLabelModifier($0, fontSize: 16)
+        return $0
+    }(UILabel())
+    
+    lazy var fontSizeLabel24: UILabel = {
+        fontSizeLabelModifier($0, fontSize: 24)
+        return $0
+    }(UILabel())
 }
 
 extension BPProfileEditViewController {
     func setUI() {
         self.navigationItem.leftBarButtonItems = [closeBarButtonItem]
-        self.toolbarItems = [photoBarButtonItem]
+        self.toolbarItems = [photoBarButtonItem, textformatSizeBarButtonItem]
         
         view.addSubview(BPEditTextView)
         BPEditTextView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
+        
+        view.addSubview(formatSizeView)
+        formatSizeView.snp.makeConstraints {
+            $0.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(50)
+        }
+        
+        [fontSizeLabel16, fontSizeLabel24, UIView()].forEach { formatSizeView.addArrangedSubview($0) }
+        fontSizeLabel16.snp.makeConstraints {
+            $0.width.equalTo(formatSizeView.snp.height)
+            $0.height.equalToSuperview()
+        }
+        fontSizeLabel24.snp.makeConstraints {
+            $0.width.equalTo(formatSizeView.snp.height)
+            $0.height.equalToSuperview()
+        }
+        
     }
 }
 
@@ -107,7 +166,6 @@ extension BPProfileEditViewController: UIImagePickerControllerDelegate, UINaviga
             let attachment = NSTextAttachment()
             
             attachment.image = image.resize(newWidth: BPEditTextView.frame.width - 10)
-            
             let attributedString = NSAttributedString(attachment: attachment)
             
             self.BPEditTextView.textStorage.insert(attributedString,
