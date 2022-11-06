@@ -32,7 +32,9 @@ final class BPPriceInfoEditViewController: UIViewController, View {
             .disposed(by: disposeBag)
         
         confirmBarButtonItem.rx.tap
-            .compactMap { [weak self] _ in self?.BPEditTextView.textStorage.description }
+            .compactMap { [weak self] _ in
+                return self?.BPEditTextView.textStorage.description
+            }
             .map { Reactor.Action.didTapConfirmItem($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)

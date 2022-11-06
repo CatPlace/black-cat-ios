@@ -18,32 +18,19 @@ final class BPPriceInfoEditStringService: BPPriceInfoEditStringServiceProtocol {
         print(text)
         
         let rawData = text.components(separatedBy: ["{", "}"])
+        
         print("💕 \(rawData)")
         
         // result is DTO
         var result = [String]()
+        
         rawData.forEach { data in
             if data.contains("NSAttachment") {
-                let imageKey = data.components(separatedBy:["<", ">"])
-                    .forEach {
-                        if $0.contains("NSTextAttachment") {
-                            print($0, "asd")
-                        } else {
-                            print($0, "🌹")
-                        }
-                    }
-//                .filter { $0.contains("NSTextAttachment") }
-//                .first
                 
-//                result.append(imageKey == nil ? "NSAttachment" : "<\(imageKey!)>")
             } else {
-                print("🍕 data \(data)")
-                result.append(data)
+//                result.append(data)
             }
         }
-//
-//        print("🍕 result \(result)")
-        
     }
 }
 
