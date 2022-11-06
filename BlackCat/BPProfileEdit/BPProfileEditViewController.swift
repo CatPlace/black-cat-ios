@@ -59,6 +59,18 @@ final class BPProfileEditViewController: UIViewController, View {
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.isShowingFormatSizeView }
+            .withUnretained(self)
+            .bind { owner, isShowing in
+                UIView.animate(withDuration: 0.3/*Animation Duration second*/, animations: {
+                    if !isShowing {
+                        owner.formatSizeView.alpha = 1
+                    } else {
+                        owner.formatSizeView.alpha = 0
+                    }
+                }, completion: { (value: Bool) in
+                    owner.formatSizeView.isHidden = isShowing
+                })
+            }.disposed(by: disposeBag)
             
     }
     
@@ -103,12 +115,10 @@ final class BPProfileEditViewController: UIViewController, View {
         return $0
     }(UITextView())
     
-    lazy var formatSizeView: UIStackView = {
+    lazy var formatSizeView: UIView = {
         $0.backgroundColor = .red
-        $0.alignment = .leading
-        $0.distribution = .fillProportionally
         return $0
-    }(UIStackView())
+    }(UIView())
     
     private func fontSizeLabelModifier(_ sender: UILabel, fontSize: CGFloat) {
         sender.text = "\(fontSize)"
@@ -142,12 +152,15 @@ extension BPProfileEditViewController {
             $0.height.equalTo(50)
         }
         
-        [fontSizeLabel16, fontSizeLabel24, UIView()].forEach { formatSizeView.addArrangedSubview($0) }
+        [fontSizeLabel16, fontSizeLabel24].forEach { formatSizeView.addSubview($0) }
         fontSizeLabel16.snp.makeConstraints {
+            $0.top.leading.equalToSuperview()
             $0.width.equalTo(formatSizeView.snp.height)
             $0.height.equalToSuperview()
         }
         fontSizeLabel24.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalTo(fontSizeLabel16.snp.trailing)
             $0.width.equalTo(formatSizeView.snp.height)
             $0.height.equalToSuperview()
         }
