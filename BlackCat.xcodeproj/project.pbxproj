@@ -51,7 +51,7 @@
 		B1CDE8F4291659EF00ACB9AC /* BPPriceInfoEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDE8F3291659EF00ACB9AC /* BPPriceInfoEditViewController.swift */; };
 		B1CDE8F729165E6A00ACB9AC /* BPEditTempViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDE8F629165E6A00ACB9AC /* BPEditTempViewController.swift */; };
 		B1CDE8F929166AFB00ACB9AC /* BPPriceInfoEditReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDE8F829166AFB00ACB9AC /* BPPriceInfoEditReactor.swift */; };
-		B1CDE8FB29166C7E00ACB9AC /* BPPriceInfoEditServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDE8FA29166C7E00ACB9AC /* BPPriceInfoEditServiceProvider.swift */; };
+		B1CDE8FB29166C7E00ACB9AC /* BPPriceInfoEditService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDE8FA29166C7E00ACB9AC /* BPPriceInfoEditService.swift */; };
 		B1CDE90129169F8E00ACB9AC /* URLMatcher in Frameworks */ = {isa = PBXBuildFile; productRef = B1CDE90029169F8E00ACB9AC /* URLMatcher */; };
 		B1CDE90329169F8E00ACB9AC /* URLNavigator in Frameworks */ = {isa = PBXBuildFile; productRef = B1CDE90229169F8E00ACB9AC /* URLNavigator */; };
 		B1CDE90529169FD500ACB9AC /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDE90429169FD500ACB9AC /* AlertService.swift */; };
@@ -70,6 +70,7 @@
 		B1D3364128F1CCFA00826636 /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3364028F1CCFA00826636 /* UICollectionView+.swift */; };
 		B1D3364328F1CD1B00826636 /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3364228F1CD1B00826636 /* UITableView+.swift */; };
 		B1D5BD2429174EEC00A85D4A /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D5BD2329174EEC00A85D4A /* UIViewController+.swift */; };
+		B1D5BD26291796F700A85D4A /* BPPriceInfoEditStringService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D5BD25291796F700A85D4A /* BPPriceInfoEditStringService.swift */; };
 		B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */; };
 		B1D79CAD28EB0EF9008487D0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */; };
 		B1D79CB428EB0EFB008487D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1D79CB328EB0EFB008487D0 /* Assets.xcassets */; };
@@ -194,7 +195,7 @@
 		B1CDE8F3291659EF00ACB9AC /* BPPriceInfoEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPPriceInfoEditViewController.swift; sourceTree = "<group>"; };
 		B1CDE8F629165E6A00ACB9AC /* BPEditTempViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPEditTempViewController.swift; sourceTree = "<group>"; };
 		B1CDE8F829166AFB00ACB9AC /* BPPriceInfoEditReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPPriceInfoEditReactor.swift; sourceTree = "<group>"; };
-		B1CDE8FA29166C7E00ACB9AC /* BPPriceInfoEditServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPPriceInfoEditServiceProvider.swift; sourceTree = "<group>"; };
+		B1CDE8FA29166C7E00ACB9AC /* BPPriceInfoEditService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPPriceInfoEditService.swift; sourceTree = "<group>"; };
 		B1CDE90429169FD500ACB9AC /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		B1CEF7322913A0EC00814113 /* BPProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPProfileCell.swift; sourceTree = "<group>"; };
 		B1D127DA28F047A9007E3667 /* MagazineDetailBulletedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailBulletedCell.swift; sourceTree = "<group>"; };
@@ -210,6 +211,7 @@
 		B1D3364028F1CCFA00826636 /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		B1D3364228F1CD1B00826636 /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
 		B1D5BD2329174EEC00A85D4A /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
+		B1D5BD25291796F700A85D4A /* BPPriceInfoEditStringService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPPriceInfoEditStringService.swift; sourceTree = "<group>"; };
 		B1D79CA728EB0EF9008487D0 /* BlackCat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlackCat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -458,7 +460,8 @@
 		B1CDE8FC29166C8C00ACB9AC /* BPPriceInfoEditService */ = {
 			isa = PBXGroup;
 			children = (
-				B1CDE8FA29166C7E00ACB9AC /* BPPriceInfoEditServiceProvider.swift */,
+				B1CDE8FA29166C7E00ACB9AC /* BPPriceInfoEditService.swift */,
+				B1D5BD25291796F700A85D4A /* BPPriceInfoEditStringService.swift */,
 			);
 			path = BPPriceInfoEditService;
 			sourceTree = "<group>";
@@ -935,13 +938,14 @@
 				B1E3F7DC290EE9D500005F17 /* MulticastDelegate.swift in Sources */,
 				8E2D8C5928F2EE69004B514D /* HomeEmptyCell.swift in Sources */,
 				B1E986AB28FE888800962F5B /* FilterTaskService.swift in Sources */,
-				B1CDE8FB29166C7E00ACB9AC /* BPPriceInfoEditServiceProvider.swift in Sources */,
+				B1CDE8FB29166C7E00ACB9AC /* BPPriceInfoEditService.swift in Sources */,
 				B1D89C91290E7D2100C8B7F1 /* BPContentCell.swift in Sources */,
 				B1E3F7BC290EBABE00005F17 /* BPReviewCell.swift in Sources */,
 				8E2D8C4F28F2ED53004B514D /* HomeHeaderView.swift in Sources */,
 				B1E3F7E0290F042B00005F17 /* BPContentCellReactor.swift in Sources */,
 				B1EABEC128FBD83F0029B6BC /* FilterLoaction.swift in Sources */,
 				B1D2D109290AC8FA005B76BD /* Observable+.swift in Sources */,
+				B1D5BD26291796F700A85D4A /* BPPriceInfoEditStringService.swift in Sources */,
 				78B00BBD28F5661000A9915D /* MagazineViewController.swift in Sources */,
 				8E2D8C4828F2EC27004B514D /* HomeViewController.swift in Sources */,
 				B1EE64F828FA4ABE0055A4F1 /* FilterExampleViewController.swift in Sources */,

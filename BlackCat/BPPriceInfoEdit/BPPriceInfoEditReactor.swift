@@ -22,7 +22,7 @@ final class BPPriceInfoEditReactor: Reactor {
     
     struct State {
         var isDismiss = false
-        var isOpenPhotoLibrary = false
+        @Pulse var isOpenPhotoLibrary = false
 //        var isShowingFormatSizeView = false
     }
     
@@ -41,6 +41,7 @@ final class BPPriceInfoEditReactor: Reactor {
         case .didTapPhotoItem:
             return .just(.openPhotoLibrary)
         case .didTapConfirmItem(let string):
+            provider.priceEditStringService.convertToArray(string)
             return .just(.sendProfile(string))
         }
     }

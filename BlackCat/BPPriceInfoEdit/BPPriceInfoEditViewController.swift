@@ -32,7 +32,8 @@ final class BPPriceInfoEditViewController: UIViewController, View {
             .disposed(by: disposeBag)
         
         confirmBarButtonItem.rx.tap
-            .map { Reactor.Action.didTapCloseItem }
+            .map { [weak self] _ in self?.BPEditTextView.text ?? "" }
+            .map { Reactor.Action.didTapConfirmItem($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -50,7 +51,7 @@ final class BPPriceInfoEditViewController: UIViewController, View {
                 owner.dismiss(animated: isDissmiss)
             }.disposed(by: disposeBag)
         
-        reactor.state.map { $0.isOpenPhotoLibrary }
+        reactor.pulse(\.$isOpenPhotoLibrary)
             .filter { $0 == true }
             .withUnretained(self)
             .subscribe { owner, _ in
