@@ -8,11 +8,20 @@
 import UIKit
 import SnapKit
 import ReactorKit
+import RxDataSources
+import BlackCatSDK
 
 final class BPPriceInfoEditViewController: UIViewController, View {
+    typealias Reactor = BPPriceInfoEditReactor
+    typealias ManageMentDataSource = RxCollectionViewSectionedAnimatedDataSource<BusinessProfileCellSection>
+    
+    enum Reusable {
+        static let textViewCell = ReusableCell<BPPriceInfoEditTextCell>()
+        static let imageViewCell = ReusableCell<BPPriceInfoEditImageCell>()
+    }
+    
     var disposeBag: DisposeBag = DisposeBag()
     
-    typealias Reactor = BPPriceInfoEditReactor
     
     func bind(reactor: Reactor) {
         dispatch(reactor: reactor)
@@ -20,11 +29,12 @@ final class BPPriceInfoEditViewController: UIViewController, View {
     }
     
     private func dispatch(reactor: Reactor) {
-        BPEditTextView.rx.didBeginEditing
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.BPEditTextView.font = UIFont.boldSystemFont(ofSize: 16)
-            }.disposed(by: disposeBag)
+        // NOTE: - Cell로 코드를 옮기자!
+//        BPEditTextView.rx.didBeginEditing
+//            .withUnretained(self)
+//            .bind { owner, _ in
+//                owner.BPEditTextView.font = UIFont.boldSystemFont(ofSize: 16)
+//            }.disposed(by: disposeBag)
         
         closeBarButtonItem.rx.tap
             .map { Reactor.Action.didTapCloseItem }
@@ -33,7 +43,8 @@ final class BPPriceInfoEditViewController: UIViewController, View {
         
         confirmBarButtonItem.rx.tap
             .compactMap { [weak self] _ in
-                return self?.BPEditTextView.textStorage.description
+//                return self?.BPEditTextView.textStorage.description
+                return ""
             }
             .map { Reactor.Action.didTapConfirmItem($0) }
             .bind(to: reactor.action)
@@ -59,6 +70,25 @@ final class BPPriceInfoEditViewController: UIViewController, View {
             .subscribe { owner, _ in
                 owner.openPhotoLibrary()
             }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.dataSource.value }
+            .asDriver(onErrorJustReturn: [])
+            .drive(BPPriceInfoEditTableView.rx.items) { tv, row, data in
+                switch data.value.type {
+                case .text:
+                    let cell = tv.dequeue(Reusable.textViewCell, for: IndexPath(row: row, section: 0))
+                    
+                    return cell
+                case .image:
+                    let cell = tv.dequeue(Reusable.imageViewCell, for: IndexPath(row: row, section: 0))
+                    cell.configureCell(with: item)
+                    return cell
+                }
+
+            }.disposed(by: disposeBag)
+            
+        
+        
     }
     
     // MARK: - initilaize
@@ -106,10 +136,18 @@ final class BPPriceInfoEditViewController: UIViewController, View {
         return $0
     }(UIBarButtonItem())
     
-    lazy var BPEditTextView: UITextView = {
-        $0.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
+    lazy var BPPriceInfoEditTableView: UITableView = {
+        $0.backgroundColor = .blue
+        $0.register(Reusable.textViewCell)
+        $0.register(Reusable.imageViewCell)
+        
         return $0
-    }(UITextView())
+    }(UITableView())
+    
+//    lazy var BPEditTextView: UITextView = {
+//        $0.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
+//        return $0
+//    }(UITextView())
 }
 
 extension BPPriceInfoEditViewController {
@@ -118,8 +156,8 @@ extension BPPriceInfoEditViewController {
         self.navigationItem.rightBarButtonItems = [confirmBarButtonItem]
         self.toolbarItems = [photoBarButtonItem]
         
-        view.addSubview(BPEditTextView)
-        BPEditTextView.snp.makeConstraints {
+        view.addSubview(BPPriceInfoEditTableView)
+        BPPriceInfoEditTableView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
@@ -135,11 +173,11 @@ extension BPPriceInfoEditViewController: UIImagePickerControllerDelegate, UINavi
         if let image = info[.editedImage] as? UIImage {
             let attachment = NSTextAttachment()
             
-            attachment.image = image.resize(newWidth: BPEditTextView.frame.width - 10)
-            let attributedString = NSAttributedString(attachment: attachment)
-            print("🌳 \(attachment)")
-            self.BPEditTextView.textStorage.insert(attributedString,
-                                                   at: self.BPEditTextView.selectedRange.location) // 현재 커서의 위치에 이미지 삽입
+//            attachment.image = image.resize(newWidth: BPEditTextView.frame.width - 10)
+//            let attributedString = NSAttributedString(attachment: attachment)
+//            print("🌳 \(attachment)")
+//            self.BPEditTextView.textStorage.insert(attributedString,
+//                                                   at: self.BPEditTextView.selectedRange.location) // 현재 커서의 위치에 이미지 삽입
         } else {
             print("🚨 오잉? \(#function)에 문제가 있어요")
             // 🐻‍❄️ NOTE: - Error Handling

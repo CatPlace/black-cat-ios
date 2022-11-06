@@ -71,6 +71,8 @@
 		B1D3364328F1CD1B00826636 /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3364228F1CD1B00826636 /* UITableView+.swift */; };
 		B1D5BD2429174EEC00A85D4A /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D5BD2329174EEC00A85D4A /* UIViewController+.swift */; };
 		B1D5BD26291796F700A85D4A /* BPPriceInfoEditStringService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D5BD25291796F700A85D4A /* BPPriceInfoEditStringService.swift */; };
+		B1D5BD282917C5C300A85D4A /* BPPriceInfoEditTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D5BD272917C5C300A85D4A /* BPPriceInfoEditTextCell.swift */; };
+		B1D5BD2B2917C80A00A85D4A /* BPPriceInfoEditImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D5BD2A2917C80A00A85D4A /* BPPriceInfoEditImageCell.swift */; };
 		B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */; };
 		B1D79CAD28EB0EF9008487D0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */; };
 		B1D79CB428EB0EFB008487D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1D79CB328EB0EFB008487D0 /* Assets.xcassets */; };
@@ -212,6 +214,8 @@
 		B1D3364228F1CD1B00826636 /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
 		B1D5BD2329174EEC00A85D4A /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		B1D5BD25291796F700A85D4A /* BPPriceInfoEditStringService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPPriceInfoEditStringService.swift; sourceTree = "<group>"; };
+		B1D5BD272917C5C300A85D4A /* BPPriceInfoEditTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPPriceInfoEditTextCell.swift; sourceTree = "<group>"; };
+		B1D5BD2A2917C80A00A85D4A /* BPPriceInfoEditImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPPriceInfoEditImageCell.swift; sourceTree = "<group>"; };
 		B1D79CA728EB0EF9008487D0 /* BlackCat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlackCat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -453,6 +457,7 @@
 				B1CDE8F3291659EF00ACB9AC /* BPPriceInfoEditViewController.swift */,
 				B1CDE8F829166AFB00ACB9AC /* BPPriceInfoEditReactor.swift */,
 				B1CDE8FC29166C8C00ACB9AC /* BPPriceInfoEditService */,
+				B1D5BD292917C5C700A85D4A /* BPPriceInfoEditCells */,
 			);
 			path = BPPriceInfoEdit;
 			sourceTree = "<group>";
@@ -514,6 +519,15 @@
 				B1EE64FB28FA4E720055A4F1 /* BottomSheet */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		B1D5BD292917C5C700A85D4A /* BPPriceInfoEditCells */ = {
+			isa = PBXGroup;
+			children = (
+				B1D5BD272917C5C300A85D4A /* BPPriceInfoEditTextCell.swift */,
+				B1D5BD2A2917C80A00A85D4A /* BPPriceInfoEditImageCell.swift */,
+			);
+			path = BPPriceInfoEditCells;
 			sourceTree = "<group>";
 		};
 		B1D79C9E28EB0EF8008487D0 = {
@@ -946,11 +960,13 @@
 				B1EABEC128FBD83F0029B6BC /* FilterLoaction.swift in Sources */,
 				B1D2D109290AC8FA005B76BD /* Observable+.swift in Sources */,
 				B1D5BD26291796F700A85D4A /* BPPriceInfoEditStringService.swift in Sources */,
+				B1D5BD2B2917C80A00A85D4A /* BPPriceInfoEditImageCell.swift in Sources */,
 				78B00BBD28F5661000A9915D /* MagazineViewController.swift in Sources */,
 				8E2D8C4828F2EC27004B514D /* HomeViewController.swift in Sources */,
 				B1EE64F828FA4ABE0055A4F1 /* FilterExampleViewController.swift in Sources */,
 				B1EE651428FA8B160055A4F1 /* FilterCell.swift in Sources */,
 				B160DBF928FF3CBD00C0D682 /* BaseCollectionViewCell.swift in Sources */,
+				B1D5BD282917C5C300A85D4A /* BPPriceInfoEditTextCell.swift in Sources */,
 				78858BEC28F6F4E400EC7BF7 /* MagazineSection.swift in Sources */,
 				78B00BBB28F5661000A9915D /* MagazineModel.swift in Sources */,
 				B1D3362928F1AC1200826636 /* MagazineDetailEmptyCell.swift in Sources */,

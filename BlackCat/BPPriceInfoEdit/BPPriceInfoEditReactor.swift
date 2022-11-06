@@ -6,6 +6,22 @@
 //
 
 import ReactorKit
+import RxRelay
+
+struct BPPriceInfoEditModel {
+    enum EditType {
+        case text
+        case image
+    }
+    
+    var type: EditType
+    var input: String
+    
+    init(type: EditType, input: String) {
+        self.type = type
+        self.input = input
+    }
+}
 
 final class BPPriceInfoEditReactor: Reactor {
     enum Action {
@@ -23,7 +39,13 @@ final class BPPriceInfoEditReactor: Reactor {
     struct State {
         var isDismiss = false
         @Pulse var isOpenPhotoLibrary = false
-//        var isShowingFormatSizeView = false
+        
+        var dataSource: BehaviorRelay<[BehaviorRelay<BPPriceInfoEditModel>]>
+        
+        init(dataSource: BehaviorRelay<[BehaviorRelay<BPPriceInfoEditModel>]>) {
+            self.dataSource = dataSource
+        }
+        
     }
     
     var initialState: State
@@ -31,7 +53,7 @@ final class BPPriceInfoEditReactor: Reactor {
     
     init(provider: BPPriceInfoEditServiceProtocol = BPPriceInfoEditService()) {
         self.provider = provider
-        self.initialState = State()
+        self.initialState = State(dataSource: .init(value: [.init(value: .init(type: .text, input: ""))]))
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -56,7 +78,7 @@ final class BPPriceInfoEditReactor: Reactor {
             newState.isOpenPhotoLibrary = true
             return newState
         case .sendProfile(let string):
-//            newState.isShowingFormatSizeView = !currentState.isShowingFormatSizeView
+            // NOTE: - 서버로 보내기
             return newState
         }
     }
