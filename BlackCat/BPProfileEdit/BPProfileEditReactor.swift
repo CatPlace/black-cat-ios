@@ -24,9 +24,11 @@ final class BPProfileEditReactor: Reactor {
     }
     
     var initialState: State
+    var provider: BPProfileEditServiceProtocol
     
-    init(initialState: State) {
-        self.initialState = initialState
+    init(provider: BPProfileEditServiceProtocol = BPProfileEditServiceProvider()) {
+        self.provider = provider
+        self.initialState = State()
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
