@@ -7,19 +7,21 @@
 
 import UIKit
 
-struct BPPriceInfoEditModel {
-    enum EditType {
-        case text
-        case image
-    }
-    
-    var type: EditType
-    var input: String?
-    var image: UIImage?
-    
-    init(type: EditType, input: String? = nil, image: UIImage? = nil) {
-        self.type = type
-        self.input = input
-        self.image = image
-    }
-}
+//struct BPPriceInfoEditModel {
+//    enum EditType {
+//        case text
+//        case image
+//    }
+//
+//    var type: EditType
+//    var input: String?
+//    var image: UIImage?
+//
+//    init(type: EditType, input: String? = nil, image: UIImage? = nil) {
+//        self.type = type
+//        self.input = input
+//        self.image = image
+//    }
+//}
+
+

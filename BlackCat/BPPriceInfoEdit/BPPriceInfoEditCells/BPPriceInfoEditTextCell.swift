@@ -7,13 +7,33 @@
 
 import Foundation
 import UIKit
+import RxSwift
+import RxRelay
+import RxCocoa
+struct TextCellViewModel {
+    let inpurString: BehaviorRelay<String>
+    
+    init(inpurString: BehaviorRelay<String>) {
+        self.inpurString = inpurString
+    }
+}
 
 // 🐻‍❄️ NOTE: - 다른 개발자님이 feature 이어 받으시도록 스타일로 맞춤.
 final class BPPriceInfoEditTextCell: BaseTableViewCell {
-    
+    var disposeBag = DisposeBag()
+    override func prepareForReuse() {
+        editTextView.text = ""
+    }
     func configureCell(with item: BPPriceInfoEditModel) {
 //        profileTitleLabel.text = item.title
 //        profileDescriptionLabel.text = item.description
+    }
+    
+    func bind(to viewModel: TextCellViewModel) {
+        editTextView.rx.text.orEmpty
+            .bind(to: viewModel.inpurString)
+            .disposed(by: disposeBag)
+        
     }
     
     func setUI() {

@@ -62,20 +62,21 @@ final class BPPriceInfoEditViewController: UIViewController, View {
                 owner.openPhotoLibrary()
             }.disposed(by: disposeBag)
         
-        reactor.state.map { $0.dataSource.value }
+        reactor.state.map { $0.dataSource }
             .asDriver(onErrorJustReturn: [])
             .drive(BPPriceInfoEditTableView.rx.items) { tv, row, item in
-                switch item.type {
+                switch item.value.type {
                 case .text:
                     let cell = tv.dequeue(Reusable.textViewCell, for: IndexPath(row: row, section: 0))
-                    
-                    cell.configureCell(with: item)
+//                    cell.bind(to: .init(inpurString: item.))
+                    print(item.value)
+                    cell.bind(to: .init(inpurString: .init(value: item.value.input!)))
                     cell.editTextView.delegate = self
                     
                     return cell
                 case .image:
                     let cell = tv.dequeue(Reusable.imageViewCell, for: IndexPath(row: row, section: 0))
-                    cell.configureCell(with: item)
+                    cell.configureCell(with: .init(type: .image, image: item.value.image))
                     return cell
                 }
 

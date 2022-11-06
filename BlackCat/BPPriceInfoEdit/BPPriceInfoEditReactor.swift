@@ -28,9 +28,9 @@ final class BPPriceInfoEditReactor: Reactor {
         var isDismiss = false
         @Pulse var isOpenPhotoLibrary = false
         
-        var dataSource: BehaviorRelay<[BPPriceInfoEditModel]>
+        var dataSource: [BehaviorRelay<BPPriceInfoEditModel>]
         
-        init(dataSource: BehaviorRelay<[BPPriceInfoEditModel]>) {
+        init(dataSource: [BehaviorRelay<BPPriceInfoEditModel>]) {
             self.dataSource = dataSource
         }
         
@@ -41,7 +41,7 @@ final class BPPriceInfoEditReactor: Reactor {
     
     init(provider: BPPriceInfoEditServiceProtocol = BPPriceInfoEditService()) {
         self.provider = provider
-        self.initialState = State(dataSource: .init(value: [.init(type: .text, input: "안녕하세요.")]))
+        self.initialState = State(dataSource: [.init(value: .init(type: .text, input: ""))])
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -71,10 +71,11 @@ final class BPPriceInfoEditReactor: Reactor {
             // NOTE: - 서버로 보내기
             return newState
         case .appendImage(let image):
-            var newValue = currentState.dataSource.value
-            newValue.append(.init(type: .image, image: image))
-            newValue.append(.init(type: .text, input: ""))
-            newState.dataSource.accept(newValue)
+            var newValue = currentState.dataSource
+            
+            newValue.append(BehaviorRelay(value: .init(type: .image, image: image)))
+            newValue.append(BehaviorRelay(value: .init(type: .text, input: "")))
+            newState.dataSource = newValue
             
             return newState
         }
