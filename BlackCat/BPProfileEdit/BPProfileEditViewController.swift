@@ -36,11 +36,6 @@ final class BPProfileEditViewController: UIViewController, View {
             .map { Reactor.Action.didTapPhotoItem }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
-        
-        textformatSizeBarButtonItem.rx.tap
-            .map { Reactor.Action.didTapTextformatSize }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
     }
     
     private func render(reactor: Reactor) {
@@ -57,21 +52,6 @@ final class BPProfileEditViewController: UIViewController, View {
             .subscribe { owner, _ in
                 owner.openPhotoLibrary()
             }.disposed(by: disposeBag)
-        
-        reactor.state.map { $0.isShowingFormatSizeView }
-            .withUnretained(self)
-            .bind { owner, isShowing in
-                UIView.animate(withDuration: 0.3/*Animation Duration second*/, animations: {
-                    if !isShowing {
-                        owner.formatSizeView.alpha = 1
-                    } else {
-                        owner.formatSizeView.alpha = 0
-                    }
-                }, completion: { (value: Bool) in
-                    owner.formatSizeView.isHidden = isShowing
-                })
-            }.disposed(by: disposeBag)
-            
     }
     
     // MARK: - initilaize
@@ -105,66 +85,21 @@ final class BPProfileEditViewController: UIViewController, View {
         return $0
     }(UIBarButtonItem())
     
-    lazy var textformatSizeBarButtonItem: UIBarButtonItem = {
-        barButtonItemModifier($0, systemName: "textformat.size")
-        return $0
-    }(UIBarButtonItem())
-    
     lazy var BPEditTextView: UITextView = {
         $0.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
         return $0
     }(UITextView())
-    
-    lazy var formatSizeView: UIView = {
-        $0.backgroundColor = .red
-        return $0
-    }(UIView())
-    
-    private func fontSizeLabelModifier(_ sender: UILabel, fontSize: CGFloat) {
-        sender.text = "\(fontSize)"
-        sender.textColor = .black
-    }
-    
-    lazy var fontSizeLabel16: UILabel = {
-        fontSizeLabelModifier($0, fontSize: 16)
-        return $0
-    }(UILabel())
-    
-    lazy var fontSizeLabel24: UILabel = {
-        fontSizeLabelModifier($0, fontSize: 24)
-        return $0
-    }(UILabel())
 }
 
 extension BPProfileEditViewController {
     func setUI() {
         self.navigationItem.leftBarButtonItems = [closeBarButtonItem]
-        self.toolbarItems = [photoBarButtonItem, textformatSizeBarButtonItem]
+        self.toolbarItems = [photoBarButtonItem]
         
         view.addSubview(BPEditTextView)
         BPEditTextView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
-        
-        view.addSubview(formatSizeView)
-        formatSizeView.snp.makeConstraints {
-            $0.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(50)
-        }
-        
-        [fontSizeLabel16, fontSizeLabel24].forEach { formatSizeView.addSubview($0) }
-        fontSizeLabel16.snp.makeConstraints {
-            $0.top.leading.equalToSuperview()
-            $0.width.equalTo(formatSizeView.snp.height)
-            $0.height.equalToSuperview()
-        }
-        fontSizeLabel24.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalTo(fontSizeLabel16.snp.trailing)
-            $0.width.equalTo(formatSizeView.snp.height)
-            $0.height.equalToSuperview()
-        }
-        
     }
 }
 
