@@ -29,6 +29,9 @@ final class BPPriceInfoEditTextCell: BaseTableViewCell {
     
     lazy var editTextView: UITextView = {
         $0.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
+        $0.isScrollEnabled = false
+        $0.font = UIFont.boldSystemFont(ofSize: 16)
+        
         return $0
     }(UITextView())
 }

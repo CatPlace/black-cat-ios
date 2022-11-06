@@ -8,7 +8,7 @@
 import ReactorKit
 import RxRelay
 
-struct BPPriceInfoEditModel {
+struct BPPriceInfoEditModel { // CellVIewmodel
     enum EditType {
         case text
         case image
@@ -40,9 +40,9 @@ final class BPPriceInfoEditReactor: Reactor {
         var isDismiss = false
         @Pulse var isOpenPhotoLibrary = false
         
-        var dataSource: BehaviorRelay<[BehaviorRelay<BPPriceInfoEditModel>]>
+        var dataSource: BehaviorRelay<[BPPriceInfoEditModel]>
         
-        init(dataSource: BehaviorRelay<[BehaviorRelay<BPPriceInfoEditModel>]>) {
+        init(dataSource: BehaviorRelay<[BPPriceInfoEditModel]>) {
             self.dataSource = dataSource
         }
         
@@ -53,7 +53,7 @@ final class BPPriceInfoEditReactor: Reactor {
     
     init(provider: BPPriceInfoEditServiceProtocol = BPPriceInfoEditService()) {
         self.provider = provider
-        self.initialState = State(dataSource: .init(value: [.init(value: .init(type: .text, input: ""))]))
+        self.initialState = State(dataSource: .init(value: [.init(type: .text, input: "안녕하세요.")]))
     }
     
     func mutate(action: Action) -> Observable<Mutation> {

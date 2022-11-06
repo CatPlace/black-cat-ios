@@ -13,7 +13,6 @@ import BlackCatSDK
 
 final class BPPriceInfoEditViewController: UIViewController, View {
     typealias Reactor = BPPriceInfoEditReactor
-    typealias ManageMentDataSource = RxCollectionViewSectionedAnimatedDataSource<BusinessProfileCellSection>
     
     enum Reusable {
         static let textViewCell = ReusableCell<BPPriceInfoEditTextCell>()
@@ -21,21 +20,13 @@ final class BPPriceInfoEditViewController: UIViewController, View {
     }
     
     var disposeBag: DisposeBag = DisposeBag()
-    
-    
+        
     func bind(reactor: Reactor) {
         dispatch(reactor: reactor)
         render(reactor: reactor)
     }
     
     private func dispatch(reactor: Reactor) {
-        // NOTE: - Cell로 코드를 옮기자!
-//        BPEditTextView.rx.didBeginEditing
-//            .withUnretained(self)
-//            .bind { owner, _ in
-//                owner.BPEditTextView.font = UIFont.boldSystemFont(ofSize: 16)
-//            }.disposed(by: disposeBag)
-        
         closeBarButtonItem.rx.tap
             .map { Reactor.Action.didTapCloseItem }
             .bind(to: reactor.action)
@@ -73,10 +64,13 @@ final class BPPriceInfoEditViewController: UIViewController, View {
         
         reactor.state.map { $0.dataSource.value }
             .asDriver(onErrorJustReturn: [])
-            .drive(BPPriceInfoEditTableView.rx.items) { tv, row, data in
-                switch data.value.type {
+            .drive(BPPriceInfoEditTableView.rx.items) { tv, row, item in
+                switch item.type {
                 case .text:
                     let cell = tv.dequeue(Reusable.textViewCell, for: IndexPath(row: row, section: 0))
+                    
+                    cell.configureCell(with: item)
+                    cell.editTextView.delegate = self
                     
                     return cell
                 case .image:
@@ -86,9 +80,6 @@ final class BPPriceInfoEditViewController: UIViewController, View {
                 }
 
             }.disposed(by: disposeBag)
-            
-        
-        
     }
     
     // MARK: - initilaize
@@ -143,11 +134,6 @@ final class BPPriceInfoEditViewController: UIViewController, View {
         
         return $0
     }(UITableView())
-    
-//    lazy var BPEditTextView: UITextView = {
-//        $0.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
-//        return $0
-//    }(UITextView())
 }
 
 extension BPPriceInfoEditViewController {
@@ -173,6 +159,7 @@ extension BPPriceInfoEditViewController: UIImagePickerControllerDelegate, UINavi
         if let image = info[.editedImage] as? UIImage {
             let attachment = NSTextAttachment()
             
+            
 //            attachment.image = image.resize(newWidth: BPEditTextView.frame.width - 10)
 //            let attributedString = NSAttributedString(attachment: attachment)
 //            print("🌳 \(attachment)")
@@ -196,5 +183,13 @@ extension BPPriceInfoEditViewController: UIImagePickerControllerDelegate, UINavi
             print("🚨 권한 없어요 \(#function)")
             // 🐻‍❄️ NOTE: - Authorize Handling
         }
+    }
+}
+
+
+extension BPPriceInfoEditViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        BPPriceInfoEditTableView.beginUpdates()
+        BPPriceInfoEditTableView.endUpdates()
     }
 }
