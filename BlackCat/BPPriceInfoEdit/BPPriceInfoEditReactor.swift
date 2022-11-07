@@ -8,21 +8,6 @@
 import ReactorKit
 import RxRelay
 
-struct BPPriceInfoEditModel { // CellVIewmodel
-    enum EditType {
-        case text
-        case image
-    }
-    
-    var type: EditType
-    var input: String
-    
-    init(type: EditType, input: String) {
-        self.type = type
-        self.input = input
-    }
-}
-
 final class BPPriceInfoEditReactor: Reactor {
     enum Action {
         case didTapCloseItem
@@ -40,12 +25,11 @@ final class BPPriceInfoEditReactor: Reactor {
         var isDismiss = false
         @Pulse var isOpenPhotoLibrary = false
         
-        var dataSource: [BehaviorRelay<BPPriceInfoEditModel>]
+        var dataSource: [BPPriceInfoEditModel]
         
-        init(dataSource: [BehaviorRelay<BPPriceInfoEditModel>]) {
+        init(dataSource: [BPPriceInfoEditModel]) {
             self.dataSource = dataSource
         }
-        
     }
     
     var initialState: State
@@ -53,7 +37,7 @@ final class BPPriceInfoEditReactor: Reactor {
     
     init(provider: BPPriceInfoEditServiceProtocol = BPPriceInfoEditService()) {
         self.provider = provider
-        self.initialState = State(dataSource: [.init(value: .init(type: .text, input: ""))])
+        self.initialState = State(dataSource: [.init(row: 0, type: .text, input: "처음")])
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -80,17 +64,14 @@ final class BPPriceInfoEditReactor: Reactor {
         case .sendProfile(let string):
             // NOTE: - 서버로 보내기
             return newState
-<<<<<<< HEAD
-        case .appendImage(let image):
-            var newValue = currentState.dataSource
-            
-            newValue.append(BehaviorRelay(value: .init(type: .image, image: image)))
-            newValue.append(BehaviorRelay(value: .init(type: .text, input: "")))
-            newState.dataSource = newValue
-            
-            return newState
-=======
->>>>>>> parent of 27e68a3 ([추가] 재사용이슈는 있으나 성공)
+//        case .appendImage(let image):
+//            var newValue = currentState.dataSource
+//
+//            newValue.append(BehaviorRelay(value: .init(type: .image, image: image)))
+//            newValue.append(BehaviorRelay(value: .init(type: .text, input: "")))
+//            newState.dataSource = newValue
+//
+//            return newState
         }
     }
 }

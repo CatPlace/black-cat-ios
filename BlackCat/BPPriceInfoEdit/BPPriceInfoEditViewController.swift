@@ -62,24 +62,26 @@ final class BPPriceInfoEditViewController: UIViewController, View {
                 owner.openPhotoLibrary()
             }.disposed(by: disposeBag)
         
+        // 🐻‍❄️ NOTE: - 지훈이형이랑 논의에 따라 이 부분은 단일 섹션으로 구현
+        // 주의점: 단일 섹션으로 구현하면서 셀 재사용 문제를 고민해보기
         reactor.state.map { $0.dataSource }
             .asDriver(onErrorJustReturn: [])
             .drive(BPPriceInfoEditTableView.rx.items) { tv, row, item in
-                switch item.value.type {
+                let indexPath = IndexPath(row: row, section: 0)
+                
+                switch item.type {
                 case .text:
-                    let cell = tv.dequeue(Reusable.textViewCell, for: IndexPath(row: row, section: 0))
-//                    cell.bind(to: .init(inpurString: item.))
-                    print(item.value)
-                    cell.bind(to: .init(inpurString: .init(value: item.value.input!)))
-                    cell.editTextView.delegate = self
+                    let cell = tv.dequeue(Reusable.textViewCell, for: indexPath)
+                    cell.editTextView.delegate = self // NOTE: - 동적 height를 구현하기 위함.
                     
+//                    cell.item = item
                     return cell
                 case .image:
-                    let cell = tv.dequeue(Reusable.imageViewCell, for: IndexPath(row: row, section: 0))
-                    cell.configureCell(with: .init(type: .image, image: item.value.image))
+                    let cell = tv.dequeue(Reusable.imageViewCell, for: indexPath)
+                    
+                    
                     return cell
                 }
-
             }.disposed(by: disposeBag)
     }
     
