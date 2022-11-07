@@ -8,18 +8,19 @@
 import UIKit
 import ReactorKit
 
-final class BPPriceInfoEditImageCell: BaseTableViewCell, View {
-    typealias Reactor = BPPriceInfoEditImageCellReactor
-    
+final class BPPriceInfoEditImageCell: BaseTableViewCell {
     var disposeBag = DisposeBag()
-    
-    func bind(reactor: Reactor) {
-        reactor.state.map { $0.image }
-            .withUnretained(self)
-            .bind { owner, image in owner.editImageView.image = image }
-            .disposed(by: disposeBag)
+    var viewModel: BPPriceInfoEditCellViewModel? {
+        didSet {
+            guard let viewModel else { print("💀 guard에 걸렸네요,,"); return; }
+            
+            viewModel.imageDriver
+                .distinctUntilChanged() // 이건 스트림 분기
+                .drive(editImageView.rx.image)
+                .disposed(by: disposeBag)
+            
+        }
     }
-    
     func setUI() {
         contentView.addSubview(editImageView)
         editImageView.snp.makeConstraints {
@@ -35,14 +36,4 @@ final class BPPriceInfoEditImageCell: BaseTableViewCell, View {
         $0.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
         return $0
     }(UIImageView())
-}
-
-final class BPPriceInfoEditImageCellReactor: Reactor {
-    typealias Action = NoAction
-    
-    var initialState: BPPriceInfoEditModel
-    
-    init(initialState: BPPriceInfoEditModel) {
-        self.initialState = initialState
-    }
 }

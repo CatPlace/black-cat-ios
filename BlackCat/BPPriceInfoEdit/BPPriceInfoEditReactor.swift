@@ -85,6 +85,20 @@ final class BPPriceInfoEditReactor: Reactor {
             }
             return newState
         case .appendImage(let image):
+            // MARK: - 셀추가
+            let imageModel = BPPriceInfoEditModel(row: 0, type: .image, image: image)
+            let textModel = BPPriceInfoEditModel(row: 0, type: .text, input: "image다음")
+            
+            // 기존값
+            let oldValue = currentState.sampleSections.value.first?.editModelRelay.value
+            print("💕 \(oldValue)")
+            var aa = currentState.sampleSections.value
+//            aa.append(.init(editModelRelay: imageModel))
+//            aa.append(.init(editModelRelay: textModel))
+            aa.append(.init(editModelRelay: .init(value: imageModel)))
+            aa.append(.init(editModelRelay: .init(value: textModel)))
+            
+            newState.sampleSections.accept(aa)
 //            var newValue = currentState.sampleSections
 //            let imageModel = BPPriceInfoEditModel(row: 0, type: .image, image: image)
 //            let textModel = BPPriceInfoEditModel(row: 0, type: .text, input: "image다음")

@@ -19,13 +19,17 @@ final class BPPriceInfoEditTextCell: BaseTableViewCell {
             guard let viewModel else { print("💀 guard에 걸렸네요,,"); return; }
             
             viewModel.inputStringDriver
-                .debug("😐")
+                .distinctUntilChanged() // 이건 스트림 분기
+//                .debug("😐")
                 .drive(editTextView.rx.text)
                 .disposed(by: disposeBag)
             
-//            editTextView.rx.text
-//                .bind(to: viewModel.editModelRelay)
-//                .disposed(by: disposeBag)
+            editTextView.rx.text.orEmpty
+                .map { text -> BPPriceInfoEditModel in
+                        .init(row: 0, type: .text, input: text)
+                }
+                .bind(to: viewModel.editModelRelay)
+                .disposed(by: disposeBag)
         }
     }
     
@@ -62,6 +66,7 @@ final class BPPriceInfoEditCellViewModel {
     
     // MARK: - OutPut
     var inputStringDriver: Driver<String>
+    var imageDriver: Driver<UIImage>
     
     init(editModelRelay: BehaviorRelay<BPPriceInfoEditModel>) {
         self.editModelRelay = editModelRelay
@@ -69,5 +74,9 @@ final class BPPriceInfoEditCellViewModel {
         self.inputStringDriver = editModelRelay
             .map { $0.input }
             .asDriver(onErrorJustReturn: "🚨 Error")
+        
+        self.imageDriver = editModelRelay
+            .map { $0.image }
+            .asDriver(onErrorJustReturn: UIImage())
     }
 }

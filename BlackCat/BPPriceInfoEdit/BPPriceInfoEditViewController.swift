@@ -64,28 +64,7 @@ final class BPPriceInfoEditViewController: UIViewController, View {
             }.disposed(by: disposeBag)
         
 //        reactor.pulse(\.$sections)
-        reactor.state.map { $0.sections }
-            .asObservable()
-            .bind(to: BPPriceInfoEditTableView.rx.items) { tv, row, item in
-                let indexPath = IndexPath(row: row, section: 0)
-
-                switch item.editModelRelay.value.type {
-                case .text:
-                    let cell = tv.dequeue(Reusable.textCell, for: indexPath)
-                    cell.viewModel = item
-                    cell.editTextView.delegate = self
-
-                    return cell
-                case .image:
-                    let cell = tv.dequeue(Reusable.imageCell, for: indexPath)
-
-                    return cell
-                }
-            }.disposed(by: disposeBag)
-        
-//        reactor.pulse(\.$sampleSections)
-////        reactor.state.map { $0.sampleSections }
-//            .map { $0.value }
+//        reactor.state.map { $0.sections }
 //            .asObservable()
 //            .bind(to: BPPriceInfoEditTableView.rx.items) { tv, row, item in
 //                let indexPath = IndexPath(row: row, section: 0)
@@ -103,6 +82,28 @@ final class BPPriceInfoEditViewController: UIViewController, View {
 //                    return cell
 //                }
 //            }.disposed(by: disposeBag)
+        
+//        reactor.pulse(\.$sampleSections)
+        reactor.state.map { $0.sampleSections }
+            .map { $0.value }
+            .asObservable()
+            .bind(to: BPPriceInfoEditTableView.rx.items) { tv, row, item in
+                let indexPath = IndexPath(row: row, section: 0)
+
+                switch item.editModelRelay.value.type {
+                case .text:
+                    let cell = tv.dequeue(Reusable.textCell, for: indexPath)
+                    cell.viewModel = item
+                    cell.editTextView.delegate = self
+
+                    return cell
+                case .image:
+                    let cell = tv.dequeue(Reusable.imageCell, for: indexPath)
+                    cell.viewModel = item
+                    
+                    return cell
+                }
+            }.disposed(by: disposeBag)
     }
     
     // MARK: - initilaize
