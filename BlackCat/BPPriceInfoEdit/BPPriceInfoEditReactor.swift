@@ -14,7 +14,7 @@ final class BPPriceInfoEditReactor: Reactor {
         case didTapPhotoItem
         case didTapConfirmItem(String)
         case appendImage(UIImage)
-//        case updateDataSource(BPPriceInfoEditModel)
+        case updateDatasource((IndexPath, String))
     }
     
     enum Mutation {
@@ -23,6 +23,7 @@ final class BPPriceInfoEditReactor: Reactor {
         case sendProfile(String)
         
         case appendImage(UIImage)
+        case updateDatasource((IndexPath, String))
     }
     
     struct State {
@@ -58,6 +59,8 @@ final class BPPriceInfoEditReactor: Reactor {
             return .just(.sendProfile(string))
         case .appendImage(let image):
             return .just(.appendImage(image))
+        case let .updateDatasource(data):
+            return .just(.updateDatasource(data))
         }
     }
     
@@ -81,21 +84,35 @@ final class BPPriceInfoEditReactor: Reactor {
             newState.sections = newValue
             
             return newState
+        case let .updateDatasource((indexPath, text)):
+            var sasbsd = initialState.sections[indexPath.section]
+            var tempSections = currentState.sections[indexPath.section].items
+            let oldValue = currentState.sections[indexPath.section].items.last!
+            
+            switch oldValue {
+            case .imageCell(let reactor): break
+            case .textCell(let reactor):
+                reactor.initialState.input = text
+                var aa: BPPriceInfoEditCellSection.Item = .textCell(reactor)
+                newState.sections[indexPath.section].items.last
+                
+                print("✅ \(dump(oldValue))")
+                
+                return newState
+            }
+            return newState
         }
     }
     
     func appendImage(image: UIImage) -> [BPPriceInfoEditCellSection] {
-        var oldValue = currentState.sections
         let imageCell = BPPriceInfoEditSectionsFactory.makeImageCell(
             .init(row: 0, type: .image, image: image))
         let textCell = BPPriceInfoEditSectionsFactory.makeTextCell(
             .init(row: 0, type: .text, input: "이거처음줄")
         )
-        
-//        let imageSection = BPPriceInfoEditCellSection.imageCell([imageCell])
-//        let textSection = BPPriceInfoEditCellSection.textCell([textCell])
+
         let mergeSection = BPPriceInfoEditCellSection.imageCell([imageCell, textCell])
-        return oldValue + [mergeSection]
+        return currentState.sections + [mergeSection]
     }
 }
 

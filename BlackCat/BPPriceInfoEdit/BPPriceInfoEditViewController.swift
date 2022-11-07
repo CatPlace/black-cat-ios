@@ -28,26 +28,30 @@ final class BPPriceInfoEditViewController: UIViewController, View {
             let cell = tableView.dequeue(Reusable.textCell, for: indexPath)
             cell.editTextView.delegate = self // NOTE: - 셀 높이 동적대응
             
-            
             print("🐬 text row \(indexPath.row) section \(indexPath.section)")
             reactor.initialState = .init(row: indexPath.row,
                                          type: .text,
                                          input: "\(indexPath)")
-            print("🐬env :: \(reactor.initialState)")
             cell.reactor = reactor
             
-            
-//            cell.editTextView.rx.text
-//                .bind(to: reactor)
-//                .disposed(by: disposeBag)
-                
-            
+            cell.editTextView.rx.text.orEmpty
+                .map { text -> (IndexPath, String) in return (indexPath, text) }
+                .map { Reactor.Action.updateDatasource($0) }
+//                .debug("💕")
+                .bind(to: self.reactor!.action) // 🐻‍❄️ NOTE: - VC(super) Reactor
+                .disposed(by: self.disposeBag)
+        
             return cell
         case .imageCell(let reactor):
             let cell = tableView.dequeue(Reusable.imageCell, for: indexPath)
-            print("✨ image \(indexPath)")
+//            print("✨ image \(indexPath)")
             
-            print("✨ env :: \(reactor.initialState)")
+//            print("✨ env :: \(reactor.initialState)")
+//            reactor.initialState = .init(row: indexPath.row,
+//                                         type: .text,
+//                                         image: "\(indexPath)")
+//            cell.reactor = reactor
+            
             cell.reactor = reactor
             return cell
         }
@@ -95,7 +99,6 @@ final class BPPriceInfoEditViewController: UIViewController, View {
                 owner.openPhotoLibrary()
             }.disposed(by: disposeBag)
         
-//        reactor.state.map { $0.sections }
         reactor.pulse(\.$sections)
             .asObservable()
             .bind(to: BPPriceInfoEditTableView.rx.items(dataSource: dataSource))
