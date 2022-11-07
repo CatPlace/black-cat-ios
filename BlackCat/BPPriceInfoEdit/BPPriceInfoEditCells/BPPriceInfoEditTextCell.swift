@@ -19,10 +19,13 @@ final class BPPriceInfoEditTextCell: BaseTableViewCell {
             guard let viewModel else { print("💀 guard에 걸렸네요,,"); return; }
             
             viewModel.inputStringDriver
+                .debug("😐")
                 .drive(editTextView.rx.text)
                 .disposed(by: disposeBag)
             
-            
+//            editTextView.rx.text
+//                .bind(to: viewModel.editModelRelay)
+//                .disposed(by: disposeBag)
         }
     }
     

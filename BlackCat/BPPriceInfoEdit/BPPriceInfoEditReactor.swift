@@ -37,7 +37,7 @@ final class BPPriceInfoEditReactor: Reactor {
         
         @Pulse var sampleSections = BehaviorRelay<[BPPriceInfoEditCellViewModel]>(
             value: [.init(editModelRelay: .init(value: .init(row: 0, type: .text, input: "샘플의 처음값")))]
-        )
+        ) { didSet { print("👽 \(sampleSections)") } }
         
         init(sections: [BPPriceInfoEditCellViewModel]) {
             self.sections = sections
@@ -85,8 +85,25 @@ final class BPPriceInfoEditReactor: Reactor {
             }
             return newState
         case .appendImage(let image):
-//            var newValue = appendImage(image: image)
-//            newState.sections = newValue
+//            var newValue = currentState.sampleSections
+//            let imageModel = BPPriceInfoEditModel(row: 0, type: .image, image: image)
+//            let textModel = BPPriceInfoEditModel(row: 0, type: .text, input: "image다음")
+//
+//            var oldValue = currentState.sampleSections.value
+////            newValue.accept(oldValue)
+//            newState.sampleSections.accept(
+//                oldValue +
+//                [
+//                    .init(editModelRelay: .init(value: imageModel)),
+//                    .init(editModelRelay: .init(value: textModel)),
+//                ]
+//            )
+            
+            print("포토아이템 들어왔어요.")
+//            newState.$sampleSections
+//            newState.sampleSections.accept([.init(editModelRelay: .init(value: .init(row: 0, type: .image, image: image)))])
+//
+//            newState.sampleSections.accept(<#T##event: [BPPriceInfoEditCellViewModel]##[BPPriceInfoEditCellViewModel]#>)
             
             return newState
         case let .updateDatasource((indexPath, text)):
