@@ -5,7 +5,7 @@
 //  Created by Hamlit Jason on 2022/11/07.
 //
 
-import Foundation
+import UIKit
 
 struct BPPriceInfoEditModel {
     enum EditType {
@@ -15,11 +15,13 @@ struct BPPriceInfoEditModel {
     
     var row: Int
     var type: EditType
-    var input: String
+    var input: String = ""
+    var image: UIImage
     
-    init(row: Int, type: EditType, input: String) {
+    init(row: Int, type: EditType, input: String = "", image: UIImage = UIImage()) {
         self.row = row
         self.type = type
         self.input = input
+        self.image = image
     }
 }

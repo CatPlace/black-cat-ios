@@ -21,11 +21,12 @@ final class BPPriceInfoEditViewController: UIViewController, View {
     }
     
     var disposeBag: DisposeBag = DisposeBag()
-    let dataSource: ManageMentDataSource = ManageMentDataSource { _, tableView, indexPath, items in
+    lazy var dataSource: ManageMentDataSource = ManageMentDataSource { _, tableView, indexPath, items in
         
         switch items {
         case .textCell(let reactor):
             let cell = tableView.dequeue(Reusable.textCell, for: indexPath)
+            cell.editTextView.delegate = self // NOTE: - 셀 높이 동적대응
             
             cell.reactor = reactor
             return cell
@@ -79,10 +80,10 @@ final class BPPriceInfoEditViewController: UIViewController, View {
                 owner.openPhotoLibrary()
             }.disposed(by: disposeBag)
         
-//        reactor.state.map { $0.sections }
-//            .asObservable()
-//            .bind(to: self.tableView.rx.items(dataSource: dataSource))
-//            .disposed(by: disposeBag)
+        reactor.state.map { $0.sections }
+            .asObservable()
+            .bind(to: BPPriceInfoEditTableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
     }
     
     // MARK: - initilaize
@@ -162,7 +163,7 @@ extension BPPriceInfoEditViewController: UIImagePickerControllerDelegate, UINavi
         if let image = info[.editedImage] as? UIImage {
             let attachment = NSTextAttachment()
             
-            
+            reactor?.action.onNext(.appendImage(image))
             //            attachment.image = image.resize(newWidth: BPEditTextView.frame.width - 10)
             //            let attributedString = NSAttributedString(attachment: attachment)
             //            print("🌳 \(attachment)")

@@ -5,30 +5,35 @@
 //  Created by Hamlit Jason on 2022/11/05.
 //
 
+import UIKit
 import ReactorKit
-import RxRelay
 
 final class BPPriceInfoEditReactor: Reactor {
     enum Action {
         case didTapCloseItem
         case didTapPhotoItem
         case didTapConfirmItem(String)
+        case appendImage(UIImage)
     }
     
     enum Mutation {
         case isDismiss
         case openPhotoLibrary
         case sendProfile(String)
+        
+        case appendImage(UIImage)
     }
     
     struct State {
         var isDismiss = false
         @Pulse var isOpenPhotoLibrary = false
         
-        var dataSource: [BPPriceInfoEditModel]
+        var sections: [BPPriceInfoEditCellSection] {
+            didSet { print("🧞‍♂️ sections \(sections)")}
+        }
         
-        init(dataSource: [BPPriceInfoEditModel]) {
-            self.dataSource = dataSource
+        init(sections: [BPPriceInfoEditCellSection]) {
+            self.sections = sections
         }
     }
     
@@ -37,7 +42,8 @@ final class BPPriceInfoEditReactor: Reactor {
     
     init(provider: BPPriceInfoEditServiceProtocol = BPPriceInfoEditService()) {
         self.provider = provider
-        self.initialState = State(dataSource: [.init(row: 0, type: .text, input: "처음")])
+        self.initialState = State(sections: BPPriceInfoEditReactor.confugurationSections())
+        
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -47,8 +53,10 @@ final class BPPriceInfoEditReactor: Reactor {
         case .didTapPhotoItem:
             return .just(.openPhotoLibrary)
         case .didTapConfirmItem(let string):
-            provider.priceEditStringService.convertToArray(string)
+//            provider.priceEditStringService.convertToArray(string)
             return .just(.sendProfile(string))
+        case .appendImage(let image):
+            return .just(.appendImage(image))
         }
     }
     
@@ -63,15 +71,41 @@ final class BPPriceInfoEditReactor: Reactor {
             return newState
         case .sendProfile(let string):
             // NOTE: - 서버로 보내기
+            currentState.sections.forEach { section in
+                print("👨🏼‍🚀 \(section)")
+            }
             return newState
-//        case .appendImage(let image):
-//            var newValue = currentState.dataSource
-//
-//            newValue.append(BehaviorRelay(value: .init(type: .image, image: image)))
-//            newValue.append(BehaviorRelay(value: .init(type: .text, input: "")))
-//            newState.dataSource = newValue
-//
-//            return newState
+        case .appendImage(let image):
+            var newValue = appendImage(image: image)
+            newState.sections = newValue
+            
+            return newState
         }
+    }
+    
+    func appendImage(image: UIImage) -> [BPPriceInfoEditCellSection] {
+        var oldValue = currentState.sections
+        let imageCell = BPPriceInfoEditSectionsFactory.makeTextCell(
+            .init(row: 0, type: .image, image: image))
+        let textCell = BPPriceInfoEditSectionsFactory.makeTextCell(
+            .init(row: 0, type: .text, input: "이거처음줄")
+        )
+        
+        let textSection = BPPriceInfoEditCellSection.textCell([textCell])
+        let imageSection = BPPriceInfoEditCellSection.textCell([textCell])
+        
+        return oldValue + [textSection, imageSection]
+    }
+}
+
+extension BPPriceInfoEditReactor {
+    static func confugurationSections() -> [BPPriceInfoEditCellSection] {
+        let textCell = BPPriceInfoEditSectionsFactory.makeTextCell(
+            .init(row: 0, type: .text, input: "이거처음줄")
+        )
+
+        let textCellSection = BPPriceInfoEditCellSection.textCell([textCell])
+        
+        return [textCellSection]
     }
 }
