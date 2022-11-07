@@ -459,6 +459,7 @@
 				B1CDE8F3291659EF00ACB9AC /* BPPriceInfoEditViewController.swift */,
 				B1CDE8F829166AFB00ACB9AC /* BPPriceInfoEditReactor.swift */,
 				B1CED5EB2918BD2D00048A27 /* BPPriceInfoEditModel */,
+				B1CED5EC2918D58C00048A27 /* BPProfiledEditSection */,
 				B1CDE8FC29166C8C00ACB9AC /* BPPriceInfoEditService */,
 				B1D5BD292917C5C700A85D4A /* BPPriceInfoEditCells */,
 			);
@@ -488,6 +489,13 @@
 				B1CED5E92918BD1900048A27 /* BPPriceInfoEditModel.swift */,
 			);
 			path = BPPriceInfoEditModel;
+			sourceTree = "<group>";
+		};
+		B1CED5EC2918D58C00048A27 /* BPProfiledEditSection */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BPProfiledEditSection;
 			sourceTree = "<group>";
 		};
 		B1CEF7302913A07300814113 /* BPProductsCells */ = {
@@ -669,7 +677,7 @@
 				B1E4985728EE85A800B469AC /* MagazineDetailViewController.swift */,
 				B1E4986828EE9E3500B469AC /* MagazineDetailViewReactor.swift */,
 				B1E4986328EE956F00B469AC /* MagazineDetailModel */,
-				B1E4987128EEB1C600B469AC /* MagazineDetailSection */,
+				B1E4987128EEB1C600B469AC /* MagazineDetailSections */,
 				B1E4986028EE8BAE00B469AC /* MagazineDetailCell */,
 			);
 			path = MagazineDetail;
@@ -696,13 +704,13 @@
 			path = MagazineDetailModel;
 			sourceTree = "<group>";
 		};
-		B1E4987128EEB1C600B469AC /* MagazineDetailSection */ = {
+		B1E4987128EEB1C600B469AC /* MagazineDetailSections */ = {
 			isa = PBXGroup;
 			children = (
 				B1E4985E28EE886900B469AC /* MagazineDetailSection.swift */,
 				B1E4986F28EEADC900B469AC /* MagazineDetailSectionFactory.swift */,
 			);
-			path = MagazineDetailSection;
+			path = MagazineDetailSections;
 			sourceTree = "<group>";
 		};
 		B1E986AC28FE889200962F5B /* FilterService */ = {
