@@ -10,6 +10,7 @@ import SnapKit
 import ReactorKit
 import RxDataSources
 import BlackCatSDK
+import RxKeyboard
 
 final class BPPriceInfoEditViewController: UIViewController, View {
     typealias Reactor = BPPriceInfoEditReactor
@@ -28,6 +29,12 @@ final class BPPriceInfoEditViewController: UIViewController, View {
     }
     
     private func dispatch(reactor: Reactor) {
+        RxKeyboard.instance.visibleHeight
+            .skip(1)    // 초기 값 버리기
+            .drive(with: self) { owner, keyboardVisibleHeight in
+//                owner.updateView(with: keyboardVisibleHeight)
+            }.disposed(by: disposeBag)
+        
         closeBarButtonItem.rx.tap
             .map { Reactor.Action.didTapCloseItem }
             .bind(to: reactor.action)
@@ -119,6 +126,26 @@ final class BPPriceInfoEditViewController: UIViewController, View {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        print(" 👽 \(self.navigationController) :: \(super.navigationController)")
+        self.navigationController?.toolbar.snp.updateConstraints({
+//            $0.bottom.equalToSuperview().priority(.low)
+            $0.bottom.equalToSuperview().inset(100)
+        })
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        print(" 👽 \(self.navigationController) :: \(super.navigationController)")
+        self.navigationController?.toolbar.translatesAutoresizingMaskIntoConstraints = false
+        self.navigationController?.toolbar.snp.updateConstraints({
+//            $0.bottom.equalToSuperview().priority(.low)
+            $0.bottom.equalToSuperview().inset(100)
+        })
+    }
+    
     // MARK: - UIComponents
     private func barButtonItemModifier(_ sender: UIBarButtonItem, systemName: String) {
         sender.image = UIImage(systemName: systemName)
@@ -166,10 +193,22 @@ extension BPPriceInfoEditViewController {
         self.navigationItem.rightBarButtonItems = [confirmBarButtonItem]
         self.toolbarItems = [photoBarButtonItem]
         
+//        self.navigationController?.toolbar.bounds
+        self.navigationController?.toolbar.snp.updateConstraints({
+            $0.bottom.equalToSuperview().priority(.low)
+        })
+//        self.setToolbarItems(<#T##toolbarItems: [UIBarButtonItem]?##[UIBarButtonItem]?#>, animated: <#T##Bool#>)
+        
         view.addSubview(BPPriceInfoEditTableView)
         BPPriceInfoEditTableView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+    
+    func totot() {
+        self.navigationController?.toolbar.snp.updateConstraints({
+            $0.bottom.equalToSuperview().inset(100)
+        })
     }
 }
 

@@ -122,6 +122,7 @@
 		B1E4986728EE9BE800B469AC /* MagazineDetailBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E4986628EE9BE800B469AC /* MagazineDetailBaseCell.swift */; };
 		B1E4986928EE9E3500B469AC /* MagazineDetailViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E4986828EE9E3500B469AC /* MagazineDetailViewReactor.swift */; };
 		B1E4987028EEADC900B469AC /* MagazineDetailSectionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E4986F28EEADC900B469AC /* MagazineDetailSectionFactory.swift */; };
+		B1E87AF029195CD800EB28DE /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = B1E87AEF29195CD800EB28DE /* RxKeyboard */; };
 		B1E986AB28FE888800962F5B /* FilterTaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E986AA28FE888800962F5B /* FilterTaskService.swift */; };
 		B1E986AE28FE8D4F00962F5B /* BaseRealmProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E986AD28FE8D4F00962F5B /* BaseRealmProtocol.swift */; };
 		B1E986B128FE975C00962F5B /* FilterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E986B028FE975C00962F5B /* FilterService.swift */; };
@@ -303,6 +304,7 @@
 				B1E4985D28EE873100B469AC /* RxDataSources in Frameworks */,
 				B1E4984628EE83BD00B469AC /* Realm in Frameworks */,
 				B1E3F7D1290ECC0500005F17 /* FlexLayout in Frameworks */,
+				B1E87AF029195CD800EB28DE /* RxKeyboard in Frameworks */,
 				B160DC2028FF53C400C0D682 /* RxSwift in Frameworks */,
 				B1E4985B28EE873100B469AC /* Differentiator in Frameworks */,
 				B1E4984B28EE83D800B469AC /* ReactorKit in Frameworks */,
@@ -844,6 +846,7 @@
 				B1E3F7D4290ECC0500005F17 /* FlexLayoutYogaKit */,
 				B1CDE90029169F8E00ACB9AC /* URLMatcher */,
 				B1CDE90229169F8E00ACB9AC /* URLNavigator */,
+				B1E87AEF29195CD800EB28DE /* RxKeyboard */,
 			);
 			productName = BlackCat;
 			productReference = B1D79CA728EB0EF9008487D0 /* BlackCat.app */;
@@ -890,6 +893,7 @@
 				B1E3F7C9290ECBBB00005F17 /* XCRemoteSwiftPackageReference "PinLayout" */,
 				B1E3F7CF290ECC0500005F17 /* XCRemoteSwiftPackageReference "FlexLayout" */,
 				B1CDE8FF29169F8D00ACB9AC /* XCRemoteSwiftPackageReference "URLNavigator" */,
+				B1E87AEE29195CD800EB28DE /* XCRemoteSwiftPackageReference "RxKeyboard" */,
 			);
 			productRefGroup = B1D79CA828EB0EF9008487D0 /* Products */;
 			projectDirPath = "";
@@ -1392,6 +1396,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		B1E87AEE29195CD800EB28DE /* XCRemoteSwiftPackageReference "RxKeyboard" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxKeyboard";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		B1EABEC228FBE0400029B6BC /* XCRemoteSwiftPackageReference "RxGesture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RxSwiftCommunity/RxGesture";
@@ -1517,6 +1529,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B1E4985928EE873100B469AC /* XCRemoteSwiftPackageReference "RxDataSources" */;
 			productName = RxDataSources;
+		};
+		B1E87AEF29195CD800EB28DE /* RxKeyboard */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B1E87AEE29195CD800EB28DE /* XCRemoteSwiftPackageReference "RxKeyboard" */;
+			productName = RxKeyboard;
 		};
 		B1EABEC328FBE0400029B6BC /* RxGesture */ = {
 			isa = XCSwiftPackageProductDependency;
