@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import ReactorKit
 
-final class BPPriceInfoEditImageCell: BaseTableViewCell {
+final class BPPriceInfoEditImageCell: BaseTableViewCell, View {
+    typealias Reactor = BPPriceInfoEditImageCellReactor
     
-    func configureCell(with item: BPPriceInfoEditModel) {
-//        profileTitleLabel.text = item.title
-//        profileDescriptionLabel.text = item.description
+    var disposeBag = DisposeBag()
+    
+    func bind(reactor: Reactor) {
+        
     }
     
     func setUI() {
@@ -29,4 +32,14 @@ final class BPPriceInfoEditImageCell: BaseTableViewCell {
         $0.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
         return $0
     }(UIImageView())
+}
+
+final class BPPriceInfoEditImageCellReactor: Reactor {
+    typealias Action = NoAction
+    
+    var initialState: BPPriceInfoEditModel
+    
+    init(initialState: BPPriceInfoEditModel) {
+        self.initialState = initialState
+    }
 }

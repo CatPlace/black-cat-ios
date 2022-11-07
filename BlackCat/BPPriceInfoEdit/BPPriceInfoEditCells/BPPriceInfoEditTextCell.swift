@@ -5,37 +5,18 @@
 //  Created by Hamlit Jason on 2022/11/06.
 //
 
-import Foundation
 import UIKit
-import RxSwift
-import RxRelay
-import RxCocoa
-
-struct TextCellViewModel {
-    let inpurString: BehaviorRelay<String>
-    
-    init(inpurString: BehaviorRelay<String>) {
-        self.inpurString = inpurString
-    }
-}
+import ReactorKit
+import SnapKit
 
 // 🐻‍❄️ NOTE: - 다른 개발자님이 feature 이어 받으시도록 스타일로 맞춤.
-final class BPPriceInfoEditTextCell: BaseTableViewCell {
+final class BPPriceInfoEditTextCell: BaseTableViewCell, View {
+    typealias Reactor = BPPriceInfoEditTextCellReactor
+    
     var disposeBag = DisposeBag()
     
-//    var item: BPPriceInfoEditModel? {
-//        didSet { configureCell() }
-//    }
-//    
-//    private func configureCell() {
-//        guard let item else { return }
-//        editTextView.text = "\(item.row)" + item.input
-//    }
-    
-    func bind(to viewModel: TextCellViewModel) {
-        editTextView.rx.text.orEmpty
-            .bind(to: viewModel.inpurString)
-            .disposed(by: disposeBag)
+    func bind(reactor: Reactor) {
+        
     }
     
     func setUI() {
@@ -56,4 +37,14 @@ final class BPPriceInfoEditTextCell: BaseTableViewCell {
         
         return $0
     }(UITextView())
+}
+
+final class BPPriceInfoEditTextCellReactor: Reactor {
+    typealias Action = NoAction
+    
+    var initialState: BPPriceInfoEditModel
+    
+    init(initialState: BPPriceInfoEditModel) {
+        self.initialState = initialState
+    }
 }

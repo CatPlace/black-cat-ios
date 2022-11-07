@@ -13,14 +13,31 @@ import BlackCatSDK
 
 final class BPPriceInfoEditViewController: UIViewController, View {
     typealias Reactor = BPPriceInfoEditReactor
+    typealias ManageMentDataSource = RxTableViewSectionedReloadDataSource<BPPriceInfoEditCellSection>
     
     enum Reusable {
-        static let textViewCell = ReusableCell<BPPriceInfoEditTextCell>()
-        static let imageViewCell = ReusableCell<BPPriceInfoEditImageCell>()
+        static let textCell = ReusableCell<BPPriceInfoEditTextCell>()
+        static let imageCell = ReusableCell<BPPriceInfoEditImageCell>()
     }
     
     var disposeBag: DisposeBag = DisposeBag()
+    let dataSource: ManageMentDataSource = ManageMentDataSource { _, tableView, indexPath, items in
         
+        switch items {
+        case .textCell(let reactor):
+            let cell = tableView.dequeue(Reusable.textCell, for: indexPath)
+            
+            cell.reactor = reactor
+            return cell
+        case .imageCell(let reactor):
+            let cell = tableView.dequeue(Reusable.imageCell, for: indexPath)
+            
+            cell.reactor = reactor
+            return cell
+        }
+    }
+    
+    // MARK: - Binding
     func bind(reactor: Reactor) {
         dispatch(reactor: reactor)
         render(reactor: reactor)
@@ -34,7 +51,7 @@ final class BPPriceInfoEditViewController: UIViewController, View {
         
         confirmBarButtonItem.rx.tap
             .compactMap { [weak self] _ in
-//                return self?.BPEditTextView.textStorage.description
+                //                return self?.BPEditTextView.textStorage.description
                 return ""
             }
             .map { Reactor.Action.didTapConfirmItem($0) }
@@ -62,27 +79,10 @@ final class BPPriceInfoEditViewController: UIViewController, View {
                 owner.openPhotoLibrary()
             }.disposed(by: disposeBag)
         
-        // 🐻‍❄️ NOTE: - 지훈이형이랑 논의에 따라 이 부분은 단일 섹션으로 구현
-        // 주의점: 단일 섹션으로 구현하면서 셀 재사용 문제를 고민해보기
-        reactor.state.map { $0.dataSource }
-            .asDriver(onErrorJustReturn: [])
-            .drive(BPPriceInfoEditTableView.rx.items) { tv, row, item in
-                let indexPath = IndexPath(row: row, section: 0)
-                
-                switch item.type {
-                case .text:
-                    let cell = tv.dequeue(Reusable.textViewCell, for: indexPath)
-                    cell.editTextView.delegate = self // NOTE: - 동적 height를 구현하기 위함.
-                    
-//                    cell.item = item
-                    return cell
-                case .image:
-                    let cell = tv.dequeue(Reusable.imageViewCell, for: indexPath)
-                    
-                    
-                    return cell
-                }
-            }.disposed(by: disposeBag)
+//        reactor.state.map { $0.sections }
+//            .asObservable()
+//            .bind(to: self.tableView.rx.items(dataSource: dataSource))
+//            .disposed(by: disposeBag)
     }
     
     // MARK: - initilaize
@@ -132,8 +132,8 @@ final class BPPriceInfoEditViewController: UIViewController, View {
     
     lazy var BPPriceInfoEditTableView: UITableView = {
         $0.backgroundColor = .blue
-        $0.register(Reusable.textViewCell)
-        $0.register(Reusable.imageViewCell)
+        $0.register(Reusable.textCell)
+        $0.register(Reusable.imageCell)
         
         return $0
     }(UITableView())
@@ -163,11 +163,11 @@ extension BPPriceInfoEditViewController: UIImagePickerControllerDelegate, UINavi
             let attachment = NSTextAttachment()
             
             
-//            attachment.image = image.resize(newWidth: BPEditTextView.frame.width - 10)
-//            let attributedString = NSAttributedString(attachment: attachment)
-//            print("🌳 \(attachment)")
-//            self.BPEditTextView.textStorage.insert(attributedString,
-//                                                   at: self.BPEditTextView.selectedRange.location) // 현재 커서의 위치에 이미지 삽입
+            //            attachment.image = image.resize(newWidth: BPEditTextView.frame.width - 10)
+            //            let attributedString = NSAttributedString(attachment: attachment)
+            //            print("🌳 \(attachment)")
+            //            self.BPEditTextView.textStorage.insert(attributedString,
+            //                                                   at: self.BPEditTextView.selectedRange.location) // 현재 커서의 위치에 이미지 삽입
         } else {
             print("🚨 오잉? \(#function)에 문제가 있어요")
             // 🐻‍❄️ NOTE: - Error Handling
