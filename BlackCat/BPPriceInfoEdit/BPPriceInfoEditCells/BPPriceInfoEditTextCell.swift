@@ -16,7 +16,10 @@ final class BPPriceInfoEditTextCell: BaseTableViewCell, View {
     var disposeBag = DisposeBag()
     
     func bind(reactor: Reactor) {
-        
+        reactor.state.map { $0.input }
+            .withUnretained(self)
+            .bind { owner, text in owner.editTextView.text = text }
+            .disposed(by: disposeBag)
     }
     
     func setUI() {

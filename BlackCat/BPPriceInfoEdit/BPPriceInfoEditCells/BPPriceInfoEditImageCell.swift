@@ -14,7 +14,10 @@ final class BPPriceInfoEditImageCell: BaseTableViewCell, View {
     var disposeBag = DisposeBag()
     
     func bind(reactor: Reactor) {
-        
+        reactor.state.map { $0.image }
+            .withUnretained(self)
+            .bind { owner, image in owner.editImageView.image = image }
+            .disposed(by: disposeBag)
     }
     
     func setUI() {

@@ -21,18 +21,33 @@ final class BPPriceInfoEditViewController: UIViewController, View {
     }
     
     var disposeBag: DisposeBag = DisposeBag()
-    lazy var dataSource: ManageMentDataSource = ManageMentDataSource { _, tableView, indexPath, items in
+    lazy var dataSource: ManageMentDataSource = ManageMentDataSource { env, tableView, indexPath, items in
         
         switch items {
         case .textCell(let reactor):
             let cell = tableView.dequeue(Reusable.textCell, for: indexPath)
             cell.editTextView.delegate = self // NOTE: - 셀 높이 동적대응
             
+            
+            print("🐬 text row \(indexPath.row) section \(indexPath.section)")
+            reactor.initialState = .init(row: indexPath.row,
+                                         type: .text,
+                                         input: "\(indexPath)")
+            print("🐬env :: \(reactor.initialState)")
             cell.reactor = reactor
+            
+            
+//            cell.editTextView.rx.text
+//                .bind(to: reactor)
+//                .disposed(by: disposeBag)
+                
+            
             return cell
         case .imageCell(let reactor):
             let cell = tableView.dequeue(Reusable.imageCell, for: indexPath)
+            print("✨ image \(indexPath)")
             
+            print("✨ env :: \(reactor.initialState)")
             cell.reactor = reactor
             return cell
         }
@@ -80,7 +95,8 @@ final class BPPriceInfoEditViewController: UIViewController, View {
                 owner.openPhotoLibrary()
             }.disposed(by: disposeBag)
         
-        reactor.state.map { $0.sections }
+//        reactor.state.map { $0.sections }
+        reactor.pulse(\.$sections)
             .asObservable()
             .bind(to: BPPriceInfoEditTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
@@ -178,7 +194,7 @@ extension BPPriceInfoEditViewController: UIImagePickerControllerDelegate, UINavi
     private func openPhotoLibrary() {
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             let vc = UIImagePickerController()
-            vc.modalPresentationStyle = .fullScreen
+//            vc.modalPresentationStyle = .fullScreen
             vc.sourceType = .photoLibrary
             vc.delegate = self
             vc.allowsEditing = true

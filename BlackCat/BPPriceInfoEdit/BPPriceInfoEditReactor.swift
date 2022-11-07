@@ -14,6 +14,7 @@ final class BPPriceInfoEditReactor: Reactor {
         case didTapPhotoItem
         case didTapConfirmItem(String)
         case appendImage(UIImage)
+//        case updateDataSource(BPPriceInfoEditModel)
     }
     
     enum Mutation {
@@ -28,7 +29,7 @@ final class BPPriceInfoEditReactor: Reactor {
         var isDismiss = false
         @Pulse var isOpenPhotoLibrary = false
         
-        var sections: [BPPriceInfoEditCellSection] {
+        @Pulse var sections: [BPPriceInfoEditCellSection] {
             didSet { print("🧞‍♂️ sections \(sections)")}
         }
         
@@ -85,16 +86,16 @@ final class BPPriceInfoEditReactor: Reactor {
     
     func appendImage(image: UIImage) -> [BPPriceInfoEditCellSection] {
         var oldValue = currentState.sections
-        let imageCell = BPPriceInfoEditSectionsFactory.makeTextCell(
+        let imageCell = BPPriceInfoEditSectionsFactory.makeImageCell(
             .init(row: 0, type: .image, image: image))
         let textCell = BPPriceInfoEditSectionsFactory.makeTextCell(
             .init(row: 0, type: .text, input: "이거처음줄")
         )
         
-        let textSection = BPPriceInfoEditCellSection.textCell([textCell])
-        let imageSection = BPPriceInfoEditCellSection.textCell([textCell])
-        
-        return oldValue + [textSection, imageSection]
+//        let imageSection = BPPriceInfoEditCellSection.imageCell([imageCell])
+//        let textSection = BPPriceInfoEditCellSection.textCell([textCell])
+        let mergeSection = BPPriceInfoEditCellSection.imageCell([imageCell, textCell])
+        return oldValue + [mergeSection]
     }
 }
 

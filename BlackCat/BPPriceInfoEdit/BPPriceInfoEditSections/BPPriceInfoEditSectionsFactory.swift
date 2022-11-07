@@ -18,15 +18,13 @@ struct BPPriceInfoEditSectionsFactory {
             )
         )
     }
-    
-//    /// imageCell을 만드는 factory
-//    static func makeImageCell(_ item: BPPriceInfoEditModel) -> MagazineDetailSectionItem {
-//
-//        return MagazineDetailSectionItem.imageCell(
-//            MagazineDetailImageCellReactor(
-//                initialState: item
-//            )
-//        )
-//    }
-//
+    /// imageCell을 만드는 factory
+    static func makeImageCell(_ item: BPPriceInfoEditModel) -> BPPriceInfoEditSectionItem {
+        
+        return BPPriceInfoEditSectionItem.imageCell(
+            BPPriceInfoEditImageCellReactor(
+                initialState: item
+            )
+        )
+    }
 }
