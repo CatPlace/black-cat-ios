@@ -13,7 +13,6 @@ import BlackCatSDK
 
 final class BPPriceInfoEditViewController: UIViewController, View {
     typealias Reactor = BPPriceInfoEditReactor
-    typealias ManageMentDataSource = RxTableViewSectionedReloadDataSource<BPPriceInfoEditCellSection>
     
     enum Reusable {
         static let textCell = ReusableCell<BPPriceInfoEditTextCell>()
@@ -21,41 +20,6 @@ final class BPPriceInfoEditViewController: UIViewController, View {
     }
     
     var disposeBag: DisposeBag = DisposeBag()
-    lazy var dataSource: ManageMentDataSource = ManageMentDataSource { env, tableView, indexPath, items in
-        
-        switch items {
-        case .textCell(let reactor):
-            let cell = tableView.dequeue(Reusable.textCell, for: indexPath)
-            cell.editTextView.delegate = self // NOTE: - 셀 높이 동적대응
-            
-            print("🐬 text row \(indexPath.row) section \(indexPath.section)")
-            reactor.initialState = .init(row: indexPath.row,
-                                         type: .text,
-                                         input: "\(indexPath)")
-            cell.reactor = reactor
-            
-            cell.editTextView.rx.text.orEmpty
-                .map { text -> (IndexPath, String) in return (indexPath, text) }
-                .map { Reactor.Action.updateDatasource($0) }
-//                .debug("💕")
-                .bind(to: self.reactor!.action) // 🐻‍❄️ NOTE: - VC(super) Reactor
-                .disposed(by: self.disposeBag)
-        
-            return cell
-        case .imageCell(let reactor):
-            let cell = tableView.dequeue(Reusable.imageCell, for: indexPath)
-//            print("✨ image \(indexPath)")
-            
-//            print("✨ env :: \(reactor.initialState)")
-//            reactor.initialState = .init(row: indexPath.row,
-//                                         type: .text,
-//                                         image: "\(indexPath)")
-//            cell.reactor = reactor
-            
-            cell.reactor = reactor
-            return cell
-        }
-    }
     
     // MARK: - Binding
     func bind(reactor: Reactor) {
@@ -99,10 +63,44 @@ final class BPPriceInfoEditViewController: UIViewController, View {
                 owner.openPhotoLibrary()
             }.disposed(by: disposeBag)
         
-        reactor.pulse(\.$sections)
+//        reactor.pulse(\.$sections)
+//            .asObservable()
+//            .bind(to: BPPriceInfoEditTableView.rx.items) { tv, row, item in
+//                let indexPath = IndexPath(row: row, section: 0)
+//
+//                switch item.editModelRelay.value.type {
+//                case .text:
+//                    let cell = tv.dequeue(Reusable.textCell, for: indexPath)
+//                    cell.viewModel = item
+//                    cell.editTextView.delegate = self
+//
+//                    return cell
+//                case .image:
+//                    let cell = tv.dequeue(Reusable.imageCell, for: indexPath)
+//
+//                    return cell
+//                }
+//            }.disposed(by: disposeBag)
+        
+        reactor.pulse(\.$sampleSections)
+            .map { $0.value }
             .asObservable()
-            .bind(to: BPPriceInfoEditTableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
+            .bind(to: BPPriceInfoEditTableView.rx.items) { tv, row, item in
+                let indexPath = IndexPath(row: row, section: 0)
+                
+                switch item.editModelRelay.value.type {
+                case .text:
+                    let cell = tv.dequeue(Reusable.textCell, for: indexPath)
+                    cell.viewModel = item
+                    cell.editTextView.delegate = self
+                    
+                    return cell
+                case .image:
+                    let cell = tv.dequeue(Reusable.imageCell, for: indexPath)
+                    
+                    return cell
+                }
+            }.disposed(by: disposeBag)
     }
     
     // MARK: - initilaize

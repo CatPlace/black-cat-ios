@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxRelay
 import ReactorKit
 
 final class BPPriceInfoEditReactor: Reactor {
@@ -30,11 +31,15 @@ final class BPPriceInfoEditReactor: Reactor {
         var isDismiss = false
         @Pulse var isOpenPhotoLibrary = false
         
-        @Pulse var sections: [BPPriceInfoEditCellSection] {
+        @Pulse var sections: [BPPriceInfoEditCellViewModel] {
             didSet { print("🧞‍♂️ sections \(sections)")}
         }
         
-        init(sections: [BPPriceInfoEditCellSection]) {
+        @Pulse var sampleSections = BehaviorRelay<[BPPriceInfoEditCellViewModel]>(
+            value: [.init(editModelRelay: .init(value: .init(row: 0, type: .text, input: "샘플의 처음값")))]
+        )
+        
+        init(sections: [BPPriceInfoEditCellViewModel]) {
             self.sections = sections
         }
     }
@@ -44,7 +49,7 @@ final class BPPriceInfoEditReactor: Reactor {
     
     init(provider: BPPriceInfoEditServiceProtocol = BPPriceInfoEditService()) {
         self.provider = provider
-        self.initialState = State(sections: BPPriceInfoEditReactor.confugurationSections())
+        self.initialState = State(sections: [.init(editModelRelay: .init(value: .init(row: 0, type: .text, input: "처음입니당.")))])
         
     }
     
@@ -80,50 +85,24 @@ final class BPPriceInfoEditReactor: Reactor {
             }
             return newState
         case .appendImage(let image):
-            var newValue = appendImage(image: image)
-            newState.sections = newValue
+//            var newValue = appendImage(image: image)
+//            newState.sections = newValue
             
             return newState
         case let .updateDatasource((indexPath, text)):
-            var sasbsd = initialState.sections[indexPath.section]
-            var tempSections = currentState.sections[indexPath.section].items
-            let oldValue = currentState.sections[indexPath.section].items.last!
             
-            switch oldValue {
-            case .imageCell(let reactor): break
-            case .textCell(let reactor):
-                reactor.initialState.input = text
-                var aa: BPPriceInfoEditCellSection.Item = .textCell(reactor)
-                newState.sections[indexPath.section].items.last
-                
-                print("✅ \(dump(oldValue))")
-                
-                return newState
-            }
             return newState
         }
     }
     
-    func appendImage(image: UIImage) -> [BPPriceInfoEditCellSection] {
-        let imageCell = BPPriceInfoEditSectionsFactory.makeImageCell(
-            .init(row: 0, type: .image, image: image))
-        let textCell = BPPriceInfoEditSectionsFactory.makeTextCell(
-            .init(row: 0, type: .text, input: "이거처음줄")
-        )
-
-        let mergeSection = BPPriceInfoEditCellSection.imageCell([imageCell, textCell])
-        return currentState.sections + [mergeSection]
-    }
-}
-
-extension BPPriceInfoEditReactor {
-    static func confugurationSections() -> [BPPriceInfoEditCellSection] {
-        let textCell = BPPriceInfoEditSectionsFactory.makeTextCell(
-            .init(row: 0, type: .text, input: "이거처음줄")
-        )
-
-        let textCellSection = BPPriceInfoEditCellSection.textCell([textCell])
-        
-        return [textCellSection]
-    }
+//    func appendImage(image: UIImage) -> [BPPriceInfoEditCellSection] {
+//        let imageCell = BPPriceInfoEditSectionsFactory.makeImageCell(
+//            .init(row: 0, type: .image, image: image))
+//        let textCell = BPPriceInfoEditSectionsFactory.makeTextCell(
+//            .init(row: 0, type: .text, input: "이거처음줄")
+//        )
+//
+//        let mergeSection = BPPriceInfoEditCellSection.imageCell([imageCell, textCell])
+//        return currentState.sections + [mergeSection]
+//    }
 }

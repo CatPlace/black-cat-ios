@@ -6,26 +6,24 @@
 //
 
 import UIKit
-import ReactorKit
+import RxSwift
+import RxCocoa
+import RxRelay
 import SnapKit
 
 // 🐻‍❄️ NOTE: - 다른 개발자님이 feature 이어 받으시도록 스타일로 맞춤.
-final class BPPriceInfoEditTextCell: BaseTableViewCell, View {
-    typealias Reactor = BPPriceInfoEditTextCellReactor
-    
+final class BPPriceInfoEditTextCell: BaseTableViewCell {
     var disposeBag = DisposeBag()
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
-        disposeBag = DisposeBag()
-    }
-    
-    func bind(reactor: Reactor) {
-        reactor.state.map { $0.input }
-            .withUnretained(self)
-            .bind { owner, text in owner.editTextView.text = text }
-            .disposed(by: disposeBag)
+    var viewModel: BPPriceInfoEditCellViewModel? {
+        didSet {
+            guard let viewModel else { print("💀 guard에 걸렸네요,,"); return; }
+            
+            viewModel.inputStringDriver
+                .drive(editTextView.rx.text)
+                .disposed(by: disposeBag)
+            
+            
+        }
     }
     
     func setUI() {
@@ -33,6 +31,13 @@ final class BPPriceInfoEditTextCell: BaseTableViewCell, View {
         editTextView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        disposeBag = DisposeBag()
+//        editTextView.delegate = nil
     }
     
     override func initialize() {
@@ -48,12 +53,18 @@ final class BPPriceInfoEditTextCell: BaseTableViewCell, View {
     }(UITextView())
 }
 
-final class BPPriceInfoEditTextCellReactor: Reactor {
-    typealias Action = NoAction
+final class BPPriceInfoEditCellViewModel {
+    // MARK: - Input
+    var editModelRelay: BehaviorRelay<BPPriceInfoEditModel>
     
-    var initialState: BPPriceInfoEditModel
+    // MARK: - OutPut
+    var inputStringDriver: Driver<String>
     
-    init(initialState: BPPriceInfoEditModel) {
-        self.initialState = initialState
+    init(editModelRelay: BehaviorRelay<BPPriceInfoEditModel>) {
+        self.editModelRelay = editModelRelay
+        
+        self.inputStringDriver = editModelRelay
+            .map { $0.input }
+            .asDriver(onErrorJustReturn: "🚨 Error")
     }
 }
