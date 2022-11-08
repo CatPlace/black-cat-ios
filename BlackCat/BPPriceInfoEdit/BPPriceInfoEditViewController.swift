@@ -126,26 +126,6 @@ final class BPPriceInfoEditViewController: UIViewController, View {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        print(" 👽 \(self.navigationController) :: \(super.navigationController)")
-        self.navigationController?.toolbar.snp.updateConstraints({
-//            $0.bottom.equalToSuperview().priority(.low)
-            $0.bottom.equalToSuperview().inset(100)
-        })
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        print(" 👽 \(self.navigationController) :: \(super.navigationController)")
-        self.navigationController?.toolbar.translatesAutoresizingMaskIntoConstraints = false
-        self.navigationController?.toolbar.snp.updateConstraints({
-//            $0.bottom.equalToSuperview().priority(.low)
-            $0.bottom.equalToSuperview().inset(100)
-        })
-    }
-    
     // MARK: - UIComponents
     private func barButtonItemModifier(_ sender: UIBarButtonItem, systemName: String) {
         sender.image = UIImage(systemName: systemName)

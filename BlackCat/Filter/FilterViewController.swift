@@ -59,12 +59,14 @@ final class FilterViewController: BottomSheetController, View {
     private func render(reactor: Reactor) {
         reactor.state.map { $0.tasks }
             .bind(to: taskCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
-                cell.taskViewModel = .init(item: item)
+                cell.viewModel = .init(typeString: item.type.rawValue,
+                                       isSubscribe: item.isSubscribe)
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.locations }
             .bind(to: locationCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
-                cell.loactionViewModel = .init(item: item)
+                cell.viewModel = .init(typeString: item.type.rawValue,
+                                       isSubscribe: item.isSubscribe)
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.isDismiss }

@@ -715,14 +715,14 @@
 			path = MagazineDetailSections;
 			sourceTree = "<group>";
 		};
-		B1E986AC28FE889200962F5B /* FilterService */ = {
+		B1E986AC28FE889200962F5B /* FilterServices */ = {
 			isa = PBXGroup;
 			children = (
 				B1E986B028FE975C00962F5B /* FilterService.swift */,
 				B1E986AA28FE888800962F5B /* FilterTaskService.swift */,
 				B1E986B228FE9E0B00962F5B /* FilterLoactionService.swift */,
 			);
-			path = FilterService;
+			path = FilterServices;
 			sourceTree = "<group>";
 		};
 		B1E986AF28FE8D5B00962F5B /* BaseArchitecture */ = {
@@ -759,7 +759,7 @@
 				B1EE64F728FA4ABE0055A4F1 /* FilterExampleViewController.swift */,
 				B1EE651128FA872B0055A4F1 /* FilterViewController.swift */,
 				B1EABEBE28FBA8E10029B6BC /* FilterReactor.swift */,
-				B1E986AC28FE889200962F5B /* FilterService */,
+				B1E986AC28FE889200962F5B /* FilterServices */,
 				B1EABEBD28FBA88A0029B6BC /* FilterModels */,
 				B1EE651528FA8B190055A4F1 /* FilterCell */,
 			);
