@@ -11,42 +11,24 @@ import RxCocoa
 import RxGesture
 
 final class FilterCell: FilterBaseCell {
-    typealias TaskVM = FilterCellTaskViewModel
-    typealias LoactionVM = FilterCellLocationViewModel
     
     // MARK: - Properties
-    var taskViewModel: TaskVM? {
+    var viewModel: FilterCellViewModel? {
         didSet {
-            guard let taskViewModel else { return }
+            guard let viewModel else { return }
             
-            taskViewModel.typeStringDriver
+            viewModel.typeStringDriver
                 .drive(with: self) { owner, text in
                     owner.titleLabel.text = text
                 }.disposed(by: self.disposeBag)
             
-            taskViewModel.isSubscribeDriver
+            viewModel.isSubscribeDriver
                 .drive(with: self) { owner, isSubscribe in
                     owner.configureAttributes(isSubscribe)
                 }.disposed(by: self.disposeBag)
         }
     }
-    
-    var loactionViewModel: LoactionVM? {
-        didSet {
-            guard let loactionViewModel else { return }
-            
-            loactionViewModel.typeStringDriver
-                .drive(with: self) { owner, text in
-                    owner.titleLabel.text = text
-                }.disposed(by: self.disposeBag)
-            
-            loactionViewModel.isSubscribeDriver
-                .drive(with: self) { owner, isSubscribe in
-                    owner.configureAttributes(isSubscribe)
-                }.disposed(by: self.disposeBag)
-        }
-    }
-    
+
     func configureAttributes(_ isSubscribe: Bool) {
         DispatchQueue.main.async { [weak self] in
             self?.titleLabel.textColor = isSubscribe
@@ -80,35 +62,18 @@ final class FilterCell: FilterBaseCell {
     }(UILabel())
 }
 
-// MARK: - FilterCellTaskViewModel
+// MARK: - FilterCellViewModel
 
-final class FilterCellTaskViewModel {
-    let typeStringDriver: Driver<String>
-    let isSubscribeDriver: Driver<Bool>
-    
-    init(item: FilterTask) {
-        
-        typeStringDriver = Observable.just(item.type)
-            .map { $0.rawValue }
-            .asDriver(onErrorJustReturn: "")
-        
-        isSubscribeDriver = Observable.just(item.isSubscribe)
-            .asDriver(onErrorJustReturn: false)
-    }
-}
-
-// MARK: - FilterCellLocationViewModel
-
-final class FilterCellLocationViewModel {
+final class FilterCellViewModel {
     let typeStringDriver: Driver<String>
     let isSubscribeDriver: Driver<Bool>
 
-    init(item: FilterLocation) {
-        typeStringDriver = Observable.just(item.type)
-            .map { $0.rawValue }
+    init(typeString: String, isSubscribe: Bool) {
+        typeStringDriver = Observable.just(typeString)
+            .map { $0 }
             .asDriver(onErrorJustReturn: "")
         
-        isSubscribeDriver = Observable.just(item.isSubscribe)
+        isSubscribeDriver = Observable.just(isSubscribe)
             .asDriver(onErrorJustReturn: false)
     }
 }
