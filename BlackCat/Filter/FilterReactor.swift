@@ -48,7 +48,7 @@ final class FilterReactor: Reactor {
     var initialState: State
     var provider: FilterServiceProtocol
     
-    init(provider: FilterServiceProtocol = FilterServiceProvider()) {
+    init(provider: FilterServiceProtocol = FilterService()) {
         self.initialState = State(mementoTasks: provider.taskService.createMemento(),
                                   mementoLocations: provider.locationService.createMemento())
         self.provider = provider

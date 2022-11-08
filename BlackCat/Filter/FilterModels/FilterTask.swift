@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-// NOTE: - GOTO SDK 🥕
+// 🐻‍❄️ NOTE: - GOTO SDK 🥕
 public class FilterTask: Object {
     
     public enum TaskType: String, CaseIterable {

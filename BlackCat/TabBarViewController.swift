@@ -11,7 +11,7 @@ import ReactorKit
 final class TabBarViewController: UITabBarController {
     
     // MARK: - Properties
-    let vc = TabBarFactory.create(viewController: HomeViewController(),
+    let vc = TabBarFactory.create(viewController: FilterExampleViewController(),
                                                 title: "dd",
                                                 image: .ic_board,
                                                 selectedImage: .ic_board_fill)
@@ -24,8 +24,12 @@ final class TabBarViewController: UITabBarController {
                                                 title: "매거진",
                                                 image: .ic_board,
                                                 selectedImage: .ic_board_fill)
-    let vc4 = TabBarFactory.create(viewController: FilterExampleViewController(),
+    let vc4 = TabBarFactory.create(viewController: BusinessProfileViewController(),
                                                 title: "임시뷰",
+                                                image: .ic_board,
+                                                selectedImage: .ic_board_fill)
+    let vc5 = TabBarFactory.create(viewController: BPEditTempViewController(),
+                                                title: "에딧",
                                                 image: .ic_board,
                                                 selectedImage: .ic_board_fill)
 //    var homeViewController: UINavigationController
@@ -41,7 +45,7 @@ final class TabBarViewController: UITabBarController {
         
         UITabBar.clearShadow()
         tabBar.layer.applyShadow(color: .gray, alpha: 0.3, x: 0, y: 0, blur: 12)
-        viewControllers = [vc, vc2, vc3, vc4]
+        viewControllers = [vc, vc2, vc3, vc4, vc5]
     }
 
 }

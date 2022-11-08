@@ -7,7 +7,7 @@
 
 import UIKit
 
-// ✅ NOTE: - 이거 DTO가 아니라 Model임!! 명심할 것
+// 🐻‍❄️ NOTE: - 이거 DTO가 아니라 Model임!! 명심할 것
 class MagazineDetailModel {
     
     /** 매거진 cellTyep (dafault = emptyCell) */ var cellType: MagazineDetailCellType?

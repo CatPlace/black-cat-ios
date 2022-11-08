@@ -12,7 +12,7 @@ protocol FilterServiceProtocol {
     var locationService: FilterLocationServiceProtocol { get set }
 }
 
-final class FilterServiceProvider: FilterServiceProtocol {
+final class FilterService: FilterServiceProtocol {
     var taskService: FilterTaskServiceProtocol = FilterTaskService()
     var locationService: FilterLocationServiceProtocol = FilterLoactionService()
 }
