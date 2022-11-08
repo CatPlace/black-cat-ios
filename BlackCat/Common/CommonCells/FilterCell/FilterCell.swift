@@ -24,20 +24,8 @@ final class FilterCell: FilterBaseCell {
             
             viewModel.isSubscribeDriver
                 .drive(with: self) { owner, isSubscribe in
-                    owner.configureAttributes(isSubscribe)
+                    owner.configureAttributes(owner.titleLabel, isSubscribe)
                 }.disposed(by: self.disposeBag)
-        }
-    }
-
-    func configureAttributes(_ isSubscribe: Bool) {
-        DispatchQueue.main.async { [weak self] in
-            self?.titleLabel.textColor = isSubscribe
-            ? .white
-            : .darkGray
-            
-            self?.contentView.backgroundColor = isSubscribe
-            ? #colorLiteral(red: 0.4449512362, green: 0.1262507141, blue: 0.628126204, alpha: 1)
-            : .systemGray6
         }
     }
     
@@ -60,20 +48,4 @@ final class FilterCell: FilterBaseCell {
         $0.font = .systemFont(ofSize: 16, weight: .semibold)
         return $0
     }(UILabel())
-}
-
-// MARK: - FilterCellViewModel
-
-final class FilterCellViewModel {
-    let typeStringDriver: Driver<String>
-    let isSubscribeDriver: Driver<Bool>
-
-    init(typeString: String, isSubscribe: Bool) {
-        typeStringDriver = Observable.just(typeString)
-            .map { $0 }
-            .asDriver(onErrorJustReturn: "")
-        
-        isSubscribeDriver = Observable.just(isSubscribe)
-            .asDriver(onErrorJustReturn: false)
-    }
 }

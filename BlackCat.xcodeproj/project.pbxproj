@@ -122,6 +122,7 @@
 		B1E4986728EE9BE800B469AC /* MagazineDetailBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E4986628EE9BE800B469AC /* MagazineDetailBaseCell.swift */; };
 		B1E4986928EE9E3500B469AC /* MagazineDetailViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E4986828EE9E3500B469AC /* MagazineDetailViewReactor.swift */; };
 		B1E4987028EEADC900B469AC /* MagazineDetailSectionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E4986F28EEADC900B469AC /* MagazineDetailSectionFactory.swift */; };
+		B1E5E471291AC42F00CC8FBE /* FilterCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E5E470291AC42F00CC8FBE /* FilterCellViewModel.swift */; };
 		B1E87AF029195CD800EB28DE /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = B1E87AEF29195CD800EB28DE /* RxKeyboard */; };
 		B1E986AB28FE888800962F5B /* FilterTaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E986AA28FE888800962F5B /* FilterTaskService.swift */; };
 		B1E986AE28FE8D4F00962F5B /* BaseRealmProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E986AD28FE8D4F00962F5B /* BaseRealmProtocol.swift */; };
@@ -258,6 +259,7 @@
 		B1E4986628EE9BE800B469AC /* MagazineDetailBaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailBaseCell.swift; sourceTree = "<group>"; };
 		B1E4986828EE9E3500B469AC /* MagazineDetailViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailViewReactor.swift; sourceTree = "<group>"; };
 		B1E4986F28EEADC900B469AC /* MagazineDetailSectionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailSectionFactory.swift; sourceTree = "<group>"; };
+		B1E5E470291AC42F00CC8FBE /* FilterCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCellViewModel.swift; sourceTree = "<group>"; };
 		B1E986AA28FE888800962F5B /* FilterTaskService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTaskService.swift; sourceTree = "<group>"; };
 		B1E986AD28FE8D4F00962F5B /* BaseRealmProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRealmProtocol.swift; sourceTree = "<group>"; };
 		B1E986B028FE975C00962F5B /* FilterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterService.swift; sourceTree = "<group>"; };
@@ -477,12 +479,12 @@
 			path = BPPriceInfoEditService;
 			sourceTree = "<group>";
 		};
-		B1CDE9082916A00800ACB9AC /* Service */ = {
+		B1CDE9082916A00800ACB9AC /* CommonsServices */ = {
 			isa = PBXGroup;
 			children = (
 				B1CDE90429169FD500ACB9AC /* AlertService.swift */,
 			);
-			path = Service;
+			path = CommonsServices;
 			sourceTree = "<group>";
 		};
 		B1CED5EB2918BD2D00048A27 /* BPPriceInfoEditModel */ = {
@@ -536,7 +538,8 @@
 			isa = PBXGroup;
 			children = (
 				B1E3F7DB290EE9D500005F17 /* MulticastDelegate.swift */,
-				B1CDE9082916A00800ACB9AC /* Service */,
+				B1E5E473291ACA0700CC8FBE /* CommonCells */,
+				B1CDE9082916A00800ACB9AC /* CommonsServices */,
 				B1EE64FB28FA4E720055A4F1 /* BottomSheet */,
 			);
 			path = Common;
@@ -715,6 +718,14 @@
 			path = MagazineDetailSections;
 			sourceTree = "<group>";
 		};
+		B1E5E473291ACA0700CC8FBE /* CommonCells */ = {
+			isa = PBXGroup;
+			children = (
+				B1EE651528FA8B190055A4F1 /* FilterCell */,
+			);
+			path = CommonCells;
+			sourceTree = "<group>";
+		};
 		B1E986AC28FE889200962F5B /* FilterServices */ = {
 			isa = PBXGroup;
 			children = (
@@ -761,7 +772,6 @@
 				B1EABEBE28FBA8E10029B6BC /* FilterReactor.swift */,
 				B1E986AC28FE889200962F5B /* FilterServices */,
 				B1EABEBD28FBA88A0029B6BC /* FilterModels */,
-				B1EE651528FA8B190055A4F1 /* FilterCell */,
 			);
 			path = Filter;
 			sourceTree = "<group>";
@@ -780,6 +790,7 @@
 			children = (
 				B1EE651628FA8DDE0055A4F1 /* FilterBaseCell.swift */,
 				B1EE651328FA8B160055A4F1 /* FilterCell.swift */,
+				B1E5E470291AC42F00CC8FBE /* FilterCellViewModel.swift */,
 			);
 			path = FilterCell;
 			sourceTree = "<group>";
@@ -942,6 +953,7 @@
 				B1D89C96290E845700C8B7F1 /* BPThumbnailModel.swift in Sources */,
 				B1D89C98290E879B00C8B7F1 /* BPBaseCell.swift in Sources */,
 				B1E3F7C0290EC1AD00005F17 /* BusinessProfileReactor.swift in Sources */,
+				B1E5E471291AC42F00CC8FBE /* FilterCellViewModel.swift in Sources */,
 				B1E361E428F28C3100A29CC8 /* MagazineDetailStroyShareButtonCell.swift in Sources */,
 				B1E4985F28EE886900B469AC /* MagazineDetailSection.swift in Sources */,
 				B1E4987028EEADC900B469AC /* MagazineDetailSectionFactory.swift in Sources */,

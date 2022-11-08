@@ -11,7 +11,7 @@ import ReactorKit
 final class TabBarViewController: UITabBarController {
     
     // MARK: - Properties
-    let vc = TabBarFactory.create(viewController: HomeViewController(),
+    let vc = TabBarFactory.create(viewController: FilterExampleViewController(),
                                                 title: "dd",
                                                 image: .ic_board,
                                                 selectedImage: .ic_board_fill)
