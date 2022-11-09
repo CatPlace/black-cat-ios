@@ -84,7 +84,11 @@ class GenreViewController: UIViewController {
     }
 
     // MARK: - UIComponents
-    private let dropDown = DropDownView()
+    private let dropDown: CategoryPaperView = {
+        let view = CategoryPaperView()
+        view.presentStyle = .dissolveAtCenter
+        return view
+    }()
 
     private let backButtonItem: UIBarButtonItem = {
         let image = UIImage(systemName: "chevron.backward")?.withTintColor(.black, renderingMode: .alwaysOriginal)
