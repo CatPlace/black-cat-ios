@@ -1,0 +1,31 @@
+//
+//  DropDownView.UITableView.swift
+//  BlackCat
+//
+//  Created by SeYeong on 2022/11/02.
+//
+
+import UIKit
+
+extension CategoryPaperView: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+        return items.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: CategoryListTableViewCell.identifier,
+            for: indexPath
+        ) as? CategoryListTableViewCell else { return UITableViewCell() }
+
+        cell.configure(with: items[indexPath.row])
+
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        hidePresentationView()
+        categoryTitleLabel.text = items[indexPath.row]
+    }
+}
