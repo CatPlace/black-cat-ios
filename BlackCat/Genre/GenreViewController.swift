@@ -86,7 +86,7 @@ class GenreViewController: UIViewController {
     // MARK: - UIComponents
     private let dropDown: CategoryPaperView = {
         let view = CategoryPaperView()
-        view.presentStyle = .dissolveAtCenter
+        view.presentationStyle = .dissolveAtCenter
         return view
     }()
 

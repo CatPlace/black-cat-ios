@@ -16,20 +16,20 @@ class CategoryPaperView: UIView {
 
     // MARK: - Properties
 
-    var presentStyle: PresentStyle {
+    var presentationStyle: PresentationStyle {
         get {
-            self.configuration.presentStyle
+            self.configuration.presentationStyle
         } set(newStyle) {
             self.setPresentationView(style: newStyle)
-            self.configuration.presentStyle = newStyle
+            self.configuration.presentationStyle = newStyle
         }
     }
 
     var dropDownBackgroundColor: UIColor? {
         get {
-            self.configuration.dropDownBackgroundColor
+            self.configuration.backgroundColor
         } set(newColor) {
-            self.configuration.dropDownBackgroundColor = newColor
+            self.configuration.backgroundColor = newColor
         }
     }
 
@@ -67,7 +67,7 @@ class CategoryPaperView: UIView {
 
     private lazy var tableViewFrame: CGRect = CGRect(x: 0, y: 0, width: width, height: 0) {
         didSet {
-            guard presentStyle == .dropDown else { return }
+            guard presentationStyle == .dropDown else { return }
             let tableView = configuration.tableView
             tableView.frame = CGRect(x: tableViewFrame.origin.x,
                                      y: tableViewFrame.origin.y + tableViewFrame.height,
@@ -102,20 +102,20 @@ class CategoryPaperView: UIView {
 
     @objc
     private func didTapBackgroundView() {
-        if isShown { presentStyle.hide(withConfiguration: configuration) }
+        if isShown { presentationStyle.hide(withConfiguration: configuration) }
     }
 
     func showPresentationView() {
         isShown = true
         rotateArrowImage()
         configuration.menuWrapper.isHidden = false
-        presentStyle.show(withConfiguration: configuration)
+        presentationStyle.show(withConfiguration: configuration)
     }
 
     func hidePresentationView() {
         isShown = false
         rotateArrowImage()
-        presentStyle.hide(withConfiguration: configuration)
+        presentationStyle.hide(withConfiguration: configuration)
     }
 
     private func rotateArrowImage() {
@@ -204,10 +204,10 @@ extension CategoryPaperView {
             $0.trailing.equalTo(arrowImageView.snp.leading).offset(-10)
         }
 
-        setPresentationView(style: presentStyle)
+        setPresentationView(style: presentationStyle)
     }
 
-    private func setPresentationView(style: PresentStyle) {
+    private func setPresentationView(style: PresentationStyle) {
         guard let window = UIApplication.shared.keyWindow else { return }
 
         let backgroundView = configuration.backgroundView

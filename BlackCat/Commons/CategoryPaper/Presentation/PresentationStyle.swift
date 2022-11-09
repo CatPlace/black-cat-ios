@@ -7,12 +7,12 @@
 
 import UIKit
 
-enum PresentStyle {
+enum PresentationStyle {
     case dropDown
     case dissolveAtCenter
 }
 
-extension PresentStyle {
+extension PresentationStyle {
     func show(withConfiguration configuration: CategoryPaperConfiguration) {
         switch self {
         case .dropDown:

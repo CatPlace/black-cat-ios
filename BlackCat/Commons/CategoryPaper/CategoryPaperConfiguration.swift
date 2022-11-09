@@ -13,7 +13,7 @@ class CategoryPaperConfiguration {
     lazy var backgroundView = presentationView.backgroundView
     lazy var menuWrapper = presentationView.menuWrapper
 
-    var presentStyle: PresentStyle
+    var presentationStyle: PresentationStyle
 
     var cellHeight: CGFloat {
         get {
@@ -23,7 +23,7 @@ class CategoryPaperConfiguration {
         }
     }
 
-    var dropDownBackgroundColor: UIColor? {
+    var backgroundColor: UIColor? {
         get {
             tableView.backgroundColor
         } set {
@@ -46,9 +46,9 @@ class CategoryPaperConfiguration {
     var arrowImage: UIImage?
 
     init() {
-        self.presentStyle = .dropDown
+        self.presentationStyle = .dropDown
         self.cellHeight = 28
-        self.dropDownBackgroundColor = .white
+        self.backgroundColor = .white
         self.animateDuration = 0.35
         self.dropDownCellInset = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
         self.width = 130
