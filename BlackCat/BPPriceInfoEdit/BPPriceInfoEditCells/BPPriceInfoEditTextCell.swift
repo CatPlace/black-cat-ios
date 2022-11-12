@@ -11,9 +11,15 @@ import RxCocoa
 import RxRelay
 import SnapKit
 
+protocol BPPriceInfoEditTextCellProtocol {
+    func textViewDidChange(text: String)
+}
+
 // 🐻‍❄️ NOTE: - 다른 개발자님이 feature 이어 받으시도록 스타일로 맞춤.
 final class BPPriceInfoEditTextCell: BaseTableViewCell {
     var disposeBag = DisposeBag()
+    var delegate: BPPriceInfoEditTextCellProtocol?
+    
     var viewModel: BPPriceInfoEditCellViewModel? {
         didSet {
             guard let viewModel else { print("💀 guard에 걸렸네요,,"); return; }
@@ -25,8 +31,11 @@ final class BPPriceInfoEditTextCell: BaseTableViewCell {
                 .disposed(by: disposeBag)
             
             editTextView.rx.text.orEmpty
-                .map { text -> BPPriceInfoEditModel in
-                        .init(row: 0, type: .text, input: text)
+                .withUnretained(self)
+                .map { owner, text -> BPPriceInfoEditModel in
+                    owner.delegate?.textViewDidChange(text: text)
+                    
+                    return .init(row: 0, type: .text, input: text)
                 }
                 .bind(to: viewModel.editModelRelay)
                 .disposed(by: disposeBag)
@@ -56,9 +65,26 @@ final class BPPriceInfoEditTextCell: BaseTableViewCell {
         $0.isScrollEnabled = false
         $0.autocorrectionType = .no // 자동완성 없애기
         $0.font = UIFont.boldSystemFont(ofSize: 16)
+        $0.textContainer.maximumNumberOfLines = 0
+        $0.delegate = self
         
         return $0
     }(UITextView())
+}
+extension BPPriceInfoEditTextCell: UITextViewDelegate {
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        print(text)
+        if let char = text.cString(using: String.Encoding.utf8) {
+            let isBackSpace = strcmp(char, "\\b")
+            if (isBackSpace == -92 && self.editTextView.text.isEmpty) {
+                self.editTextView.resignFirstResponder()
+                
+                return true
+            }
+        }
+        return true
+    }
 }
 
 final class BPPriceInfoEditCellViewModel {

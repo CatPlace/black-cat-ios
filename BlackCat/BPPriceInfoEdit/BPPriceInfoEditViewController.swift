@@ -30,14 +30,6 @@ final class BPPriceInfoEditViewController: UIViewController, View {
     }
     
     private func dispatch(reactor: Reactor) {
-        RxKeyboard.instance.visibleHeight
-            .skip(1)    // 초기 값 버리기
-            .debug("🌿")
-            .drive(with: self) { owner, keyboardVisibleHeight in
-                
-                owner.updateView(with: keyboardVisibleHeight)
-            }.disposed(by: disposeBag)
-        
         closeBarButtonItem.rx.tap
             .map { Reactor.Action.didTapCloseItem }
             .bind(to: reactor.action)
@@ -60,6 +52,12 @@ final class BPPriceInfoEditViewController: UIViewController, View {
     }
     
     private func render(reactor: Reactor) {
+        RxKeyboard.instance.visibleHeight
+            .skip(1)
+            .drive(with: self) { owner, keyboardVisibleHeight in
+                owner.updateView(with: keyboardVisibleHeight)
+            }.disposed(by: disposeBag)
+        
         reactor.state.map { $0.isDismiss }
             .filter { $0 == true }
             .withUnretained(self)
@@ -83,8 +81,10 @@ final class BPPriceInfoEditViewController: UIViewController, View {
                 case .text:
                     let cell = tv.dequeue(Reusable.textCell, for: indexPath)
                     cell.viewModel = item
-                    cell.editTextView.delegate = self
-
+                    cell.delegate = self
+                    
+                    // 🐻‍❄️ TODO: - 커서위치 잡아서 키보드에 키보드에 안가리게끔 만들도록 구현해야함.
+                    
                     return cell
                 case .image:
                     let cell = tv.dequeue(Reusable.imageCell, for: indexPath)
@@ -174,11 +174,6 @@ extension BPPriceInfoEditViewController {
         self.navigationItem.leftBarButtonItems = [closeBarButtonItem]
         self.navigationItem.rightBarButtonItems = [confirmBarButtonItem]
         
-        view.addSubview(BPPriceInfoEditTableView)
-        BPPriceInfoEditTableView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
-        }
-        
         view.addSubview(toolBarView)
         let toolbarHeight = 50
         toolBarView.snp.makeConstraints {
@@ -189,6 +184,12 @@ extension BPPriceInfoEditViewController {
         photoToolbarButton.snp.makeConstraints {
             $0.bottom.leading.equalToSuperview()
             $0.width.height.equalTo(toolbarHeight)
+        }
+        
+        view.addSubview(BPPriceInfoEditTableView)
+        BPPriceInfoEditTableView.snp.makeConstraints {
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(photoToolbarButton.snp.top)
         }
     }
 }
@@ -225,8 +226,8 @@ extension BPPriceInfoEditViewController: UIImagePickerControllerDelegate, UINavi
 }
 
 
-extension BPPriceInfoEditViewController: UITextViewDelegate {
-    func textViewDidChange(_ textView: UITextView) {
+extension BPPriceInfoEditViewController: BPPriceInfoEditTextCellProtocol {
+    func textViewDidChange(text: String) {
         BPPriceInfoEditTableView.beginUpdates()
         BPPriceInfoEditTableView.endUpdates()
     }
