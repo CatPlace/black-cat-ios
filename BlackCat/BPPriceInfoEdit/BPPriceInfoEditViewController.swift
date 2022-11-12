@@ -43,14 +43,15 @@ final class BPPriceInfoEditViewController: UIViewController, View {
         
         confirmBarButtonItem.rx.tap
             .compactMap { [weak self] _ in
-                //                return self?.BPEditTextView.textStorage.description
+                // TODO: - 서버로 보내기.
+                
                 return ""
             }
             .map { Reactor.Action.didTapConfirmItem($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        photoBarButtonItem.rx.tap
+        photoToolbarButton.rx.tap
             .map { Reactor.Action.didTapPhotoItem }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -106,70 +107,75 @@ final class BPPriceInfoEditViewController: UIViewController, View {
     }
     
     // MARK: - UIComponents
-    private func barButtonItemModifier(_ sender: UIBarButtonItem, systemName: String) {
-        sender.image = UIImage(systemName: systemName)
-        configureBarButtonItem(sender: sender)
-    }
-    
-    private func barButtonItemModifier(_ sender: UIBarButtonItem, title: String) {
-        sender.title = title
-        configureBarButtonItem(sender: sender)
-    }
-    
-    private func configureBarButtonItem(sender: UIBarButtonItem) {
-        sender.style = .plain
-        sender.target = self
-        sender.tintColor = .black
+    private func configureButton(sender: Any) {
+        if let sender = sender as? UIBarButtonItem {
+            sender.style = .plain
+            sender.target = self
+            sender.tintColor = .black
+        }
+        else if let sender = sender as? UIButton {
+            sender.tintColor = .black
+        } else { print("🚨 \(#function) error ")}
     }
     
     lazy var closeBarButtonItem: UIBarButtonItem = {
-        barButtonItemModifier($0, systemName: "xmark")
+        $0.image = UIImage(systemName: "xmark")
+        configureButton(sender: $0)
         return $0
     }(UIBarButtonItem())
     
     lazy var confirmBarButtonItem: UIBarButtonItem = {
-        barButtonItemModifier($0, title: "완료")
-        return $0
-    }(UIBarButtonItem())
-    
-    lazy var photoBarButtonItem: UIBarButtonItem = {
-        barButtonItemModifier($0, systemName: "photo")
+        $0.title = "완료"
+        configureButton(sender: $0)
         return $0
     }(UIBarButtonItem())
     
     lazy var BPPriceInfoEditTableView: UITableView = {
-        $0.backgroundColor = .blue
         $0.separatorStyle = .none
-        
+        $0.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
         $0.register(Reusable.textCell)
         $0.register(Reusable.imageCell)
         
         return $0
     }(UITableView())
+    
+    lazy var toolBarView: UIView = {
+        $0.backgroundColor = .white
+        return $0
+    }(UIView())
+    
+    lazy var photoToolbarButton: UIButton = {
+        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .light)
+        let image = UIImage(systemName: "photo", withConfiguration: config)
+        $0.setImage(image, for: .normal)
+        
+        configureButton(sender: $0)
+        return $0
+    }(UIButton())
 }
 
 extension BPPriceInfoEditViewController {
     func setUI() {
         self.navigationItem.leftBarButtonItems = [closeBarButtonItem]
         self.navigationItem.rightBarButtonItems = [confirmBarButtonItem]
-        self.toolbarItems = [photoBarButtonItem]
-        
-//        self.navigationController?.toolbar.bounds
-        self.navigationController?.toolbar.snp.updateConstraints({
-            $0.bottom.equalToSuperview().priority(.low)
-        })
-//        self.setToolbarItems(<#T##toolbarItems: [UIBarButtonItem]?##[UIBarButtonItem]?#>, animated: <#T##Bool#>)
         
         view.addSubview(BPPriceInfoEditTableView)
         BPPriceInfoEditTableView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
-    }
-    
-    func totot() {
-        self.navigationController?.toolbar.snp.updateConstraints({
-            $0.bottom.equalToSuperview().inset(100)
-        })
+        
+        view.addSubview(toolBarView)
+        let toolbarHeight = 50
+        toolBarView.snp.makeConstraints {
+            $0.height.equalTo(toolbarHeight) // 🐻‍❄️ NOTE: - 시스템 툴바 height 25
+//            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        toolBarView.addSubview(photoToolbarButton)
+        photoToolbarButton.snp.makeConstraints {
+            $0.bottom.leading.equalToSuperview()
+            $0.width.height.equalTo(toolbarHeight)
+        }
     }
 }
 
@@ -184,7 +190,7 @@ extension BPPriceInfoEditViewController: UIImagePickerControllerDelegate, UINavi
             image = image.resize(newWidth: UIScreen.main.bounds.width)
             reactor?.action.onNext(.appendImage(image))
         } else {
-            print("🚨 오잉? \(#function)에 문제가 있어요")
+            print("🚨 \(#function)에 문제가 있어요")
             // 🐻‍❄️ NOTE: - Error Handling
         }
     }

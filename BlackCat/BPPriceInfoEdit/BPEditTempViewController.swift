@@ -25,7 +25,7 @@ class BPEditTempViewController: UIViewController {
             .bind {
                 let vc = UINavigationController(rootViewController: BPPriceInfoEditViewController(reactor: BPPriceInfoEditReactor()))
                 vc.modalPresentationStyle = .fullScreen
-                vc.setToolbarHidden(false, animated: true)
+//                vc.setToolbarHidden(false, animated: true)
                 self.present(vc, animated: true)
             }.disposed(by: disposeBag)
     }
