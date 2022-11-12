@@ -33,7 +33,8 @@ final class BPPriceInfoEditViewController: UIViewController, View {
         RxKeyboard.instance.visibleHeight
             .skip(1)    // 초기 값 버리기
             .drive(with: self) { owner, keyboardVisibleHeight in
-//                owner.updateView(with: keyboardVisibleHeight)
+                
+                owner.updateView(with: keyboardVisibleHeight)
             }.disposed(by: disposeBag)
         
         closeBarButtonItem.rx.tap
@@ -91,6 +92,17 @@ final class BPPriceInfoEditViewController: UIViewController, View {
                     return cell
                 }
             }.disposed(by: disposeBag)
+    }
+    
+    // MARK: - Function
+    func updateView(with keyboardHeight: CGFloat) {
+        toolBarView.snp.updateConstraints {
+            $0.bottom.equalToSuperview().inset(keyboardHeight)
+        }
+        
+        UIView.animate(withDuration: 0.4) {
+            self.view.layoutIfNeeded()
+        }
     }
     
     // MARK: - initilaize
@@ -168,7 +180,7 @@ extension BPPriceInfoEditViewController {
         let toolbarHeight = 50
         toolBarView.snp.makeConstraints {
             $0.height.equalTo(toolbarHeight) // 🐻‍❄️ NOTE: - 시스템 툴바 height 25
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
         toolBarView.addSubview(photoToolbarButton)
         photoToolbarButton.snp.makeConstraints {
