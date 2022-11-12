@@ -72,7 +72,7 @@ final class BPPriceInfoEditViewController: UIViewController, View {
                 owner.openPhotoLibrary()
             }.disposed(by: disposeBag)
         
-        reactor.state.map { $0.sampleSections }
+        reactor.state.map { $0.sections }
             .map { $0.value }
             .bind(to: BPPriceInfoEditTableView.rx.items) { tv, row, item in
                 let indexPath = IndexPath(row: row, section: 0) // NOTE: - 섹션 하나
@@ -168,7 +168,6 @@ extension BPPriceInfoEditViewController {
         let toolbarHeight = 50
         toolBarView.snp.makeConstraints {
             $0.height.equalTo(toolbarHeight) // 🐻‍❄️ NOTE: - 시스템 툴바 height 25
-//            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         toolBarView.addSubview(photoToolbarButton)

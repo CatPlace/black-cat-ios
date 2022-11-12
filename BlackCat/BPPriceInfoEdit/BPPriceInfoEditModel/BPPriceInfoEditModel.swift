@@ -13,7 +13,7 @@ struct BPPriceInfoEditModel {
         case image
     }
     
-    var row: Int
+    var row: Int // 이건 없어도 될 것 같기도 한데 리팩토링 고고
     var type: EditType
     var input: String = ""
     var image: UIImage

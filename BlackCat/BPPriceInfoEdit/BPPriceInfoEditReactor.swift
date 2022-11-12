@@ -31,12 +31,12 @@ final class BPPriceInfoEditReactor: Reactor {
         var isDismiss = false
         @Pulse var isOpenPhotoLibrary = false
         
-        @Pulse var sampleSections = BehaviorRelay<[BPPriceInfoEditCellViewModel]>(
-            value: [.init(editModelRelay: .init(value: .init(row: 0, type: .text, input: "샘플의 처음값")))]
-        ) { didSet { print("👽 \(sampleSections)") } }
+        var sections: BehaviorRelay<[BPPriceInfoEditCellViewModel]> {
+            didSet { print("👽 \(sections)") }
+        }
         
-        init(sections: [BPPriceInfoEditCellViewModel]) {
-            
+        init(sections: BehaviorRelay<[BPPriceInfoEditCellViewModel]>) {
+            self.sections = sections
         }
     }
     
@@ -45,8 +45,16 @@ final class BPPriceInfoEditReactor: Reactor {
     
     init(provider: BPPriceInfoEditServiceProtocol = BPPriceInfoEditService()) {
         self.provider = provider
-        self.initialState = State(sections: [.init(editModelRelay: .init(value: .init(row: 0, type: .text, input: "처음입니당.")))])
-        
+        //  🐻‍❄️ NOTE: - 외부에서 초기값을 주입 받을 수 있도록 (Why? -> 수정해야 하니까요!)
+        self.initialState = .init(sections: .init(value: [.init(
+            editModelRelay: .init(
+                value: .init(
+                    row: 0,
+                    type: .text,
+                    input: "샘플의 처음값"
+                )
+            )
+        )]))
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -56,7 +64,7 @@ final class BPPriceInfoEditReactor: Reactor {
         case .didTapPhotoItem:
             return .just(.openPhotoLibrary)
         case .didTapConfirmItem(let string):
-//            provider.priceEditStringService.convertToArray(string)
+
             return .just(.sendProfile(string))
         case .appendImage(let image):
             return .just(.appendImage(image))
@@ -79,35 +87,9 @@ final class BPPriceInfoEditReactor: Reactor {
             
             return newState
         case .appendImage(let image):
-            // MARK: - 셀추가
-            let imageModel = BPPriceInfoEditModel(row: 0, type: .image, image: image)
-            let textModel = BPPriceInfoEditModel(row: 0, type: .text, input: "image다음")
+            let result = appendImage(to: image)
+            newState.sections.accept(result)
             
-            // 기존값
-            let oldValue = currentState.sampleSections.value.first?.editModelRelay.value
-            print("💕 \(oldValue)")
-            var aa = currentState.sampleSections.value
-//            aa.append(.init(editModelRelay: imageModel))
-//            aa.append(.init(editModelRelay: textModel))
-            aa.append(.init(editModelRelay: .init(value: imageModel)))
-            aa.append(.init(editModelRelay: .init(value: textModel)))
-            
-            newState.sampleSections.accept(aa)
-//            var newValue = currentState.sampleSections
-//            let imageModel = BPPriceInfoEditModel(row: 0, type: .image, image: image)
-//            let textModel = BPPriceInfoEditModel(row: 0, type: .text, input: "image다음")
-//
-//            var oldValue = currentState.sampleSections.value
-////            newValue.accept(oldValue)
-//            newState.sampleSections.accept(
-//                oldValue +
-//                [
-//                    .init(editModelRelay: .init(value: imageModel)),
-//                    .init(editModelRelay: .init(value: textModel)),
-//                ]
-//            )
-            
-            print("포토아이템 들어왔어요.")
             return newState
         case let .updateDatasource((indexPath, text)):
             
@@ -115,14 +97,16 @@ final class BPPriceInfoEditReactor: Reactor {
         }
     }
     
-//    func appendImage(image: UIImage) -> [BPPriceInfoEditCellSection] {
-//        let imageCell = BPPriceInfoEditSectionsFactory.makeImageCell(
-//            .init(row: 0, type: .image, image: image))
-//        let textCell = BPPriceInfoEditSectionsFactory.makeTextCell(
-//            .init(row: 0, type: .text, input: "이거처음줄")
-//        )
-//
-//        let mergeSection = BPPriceInfoEditCellSection.imageCell([imageCell, textCell])
-//        return currentState.sections + [mergeSection]
-//    }
+    private func appendImage(to image: UIImage) -> [BPPriceInfoEditCellViewModel] {
+        // MARK: - 셀추가
+        let imageModel = BPPriceInfoEditModel(row: 0, type: .image, image: image)
+        let textModel = BPPriceInfoEditModel(row: 0, type: .text, input: "image다음")
+        
+        var oldValue = currentState.sections.value
+        
+        oldValue.append(.init(editModelRelay: .init(value: imageModel)))
+        oldValue.append(.init(editModelRelay: .init(value: textModel)))
+        
+        return oldValue
+    }
 }
