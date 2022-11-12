@@ -16,21 +16,28 @@ final class BPPriceInfoEditImageCell: BaseTableViewCell {
             
             viewModel.imageDriver
                 .distinctUntilChanged() // 이건 스트림 분기
-                .drive(editImageView.rx.image)
-                .disposed(by: disposeBag)
+                .drive(with: self) { owner, image in
+                    owner.setUI(to: image)
+                    
+                    owner.editImageView.image = image
+                }.disposed(by: disposeBag)
             
         }
     }
-    func setUI() {
+    
+    private func setUI(to image: UIImage) {
+        contentView.backgroundColor =  UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
+        
         contentView.addSubview(editImageView)
         editImageView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.width.equalTo(image.size.width)
+            $0.height.equalTo(image.size.height)
+            $0.centerX.equalToSuperview()
+            $0.top.bottom.equalToSuperview().priority(.medium)
         }
     }
     
-    override func initialize() {
-        self.setUI()
-    }
+    override func initialize() { }
     
     lazy var editImageView: UIImageView = {
         $0.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)

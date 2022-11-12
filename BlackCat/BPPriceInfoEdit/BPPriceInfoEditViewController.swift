@@ -11,6 +11,7 @@ import ReactorKit
 import RxDataSources
 import BlackCatSDK
 import RxKeyboard
+import RxCocoa
 
 final class BPPriceInfoEditViewController: UIViewController, View {
     typealias Reactor = BPPriceInfoEditReactor
@@ -70,32 +71,10 @@ final class BPPriceInfoEditViewController: UIViewController, View {
                 owner.openPhotoLibrary()
             }.disposed(by: disposeBag)
         
-//        reactor.pulse(\.$sections)
-//        reactor.state.map { $0.sections }
-//            .asObservable()
-//            .bind(to: BPPriceInfoEditTableView.rx.items) { tv, row, item in
-//                let indexPath = IndexPath(row: row, section: 0)
-//
-//                switch item.editModelRelay.value.type {
-//                case .text:
-//                    let cell = tv.dequeue(Reusable.textCell, for: indexPath)
-//                    cell.viewModel = item
-//                    cell.editTextView.delegate = self
-//
-//                    return cell
-//                case .image:
-//                    let cell = tv.dequeue(Reusable.imageCell, for: indexPath)
-//
-//                    return cell
-//                }
-//            }.disposed(by: disposeBag)
-        
-//        reactor.pulse(\.$sampleSections)
         reactor.state.map { $0.sampleSections }
             .map { $0.value }
-            .asObservable()
             .bind(to: BPPriceInfoEditTableView.rx.items) { tv, row, item in
-                let indexPath = IndexPath(row: row, section: 0)
+                let indexPath = IndexPath(row: row, section: 0) // NOTE: - 섹션 하나
 
                 switch item.editModelRelay.value.type {
                 case .text:
@@ -160,6 +139,8 @@ final class BPPriceInfoEditViewController: UIViewController, View {
     
     lazy var BPPriceInfoEditTableView: UITableView = {
         $0.backgroundColor = .blue
+        $0.separatorStyle = .none
+        
         $0.register(Reusable.textCell)
         $0.register(Reusable.imageCell)
         
@@ -199,15 +180,9 @@ extension BPPriceInfoEditViewController: UIImagePickerControllerDelegate, UINavi
         picker.dismiss(animated: true)
         
         // 🐻‍❄️ NOTE: - editedImage를 사용합니다. 이미지 사이즈는 0 < height <= width 입니다.
-        if let image = info[.editedImage] as? UIImage {
-            let attachment = NSTextAttachment()
-            
+        if var image = info[.editedImage] as? UIImage {
+            image = image.resize(newWidth: UIScreen.main.bounds.width)
             reactor?.action.onNext(.appendImage(image))
-            //            attachment.image = image.resize(newWidth: BPEditTextView.frame.width - 10)
-            //            let attributedString = NSAttributedString(attachment: attachment)
-            //            print("🌳 \(attachment)")
-            //            self.BPEditTextView.textStorage.insert(attributedString,
-            //                                                   at: self.BPEditTextView.selectedRange.location) // 현재 커서의 위치에 이미지 삽입
         } else {
             print("🚨 오잉? \(#function)에 문제가 있어요")
             // 🐻‍❄️ NOTE: - Error Handling
@@ -217,7 +192,7 @@ extension BPPriceInfoEditViewController: UIImagePickerControllerDelegate, UINavi
     private func openPhotoLibrary() {
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             let vc = UIImagePickerController()
-//            vc.modalPresentationStyle = .fullScreen
+            vc.modalPresentationStyle = .fullScreen
             vc.sourceType = .photoLibrary
             vc.delegate = self
             vc.allowsEditing = true

@@ -463,7 +463,6 @@
 				B1CDE8F3291659EF00ACB9AC /* BPPriceInfoEditViewController.swift */,
 				B1CDE8F829166AFB00ACB9AC /* BPPriceInfoEditReactor.swift */,
 				B1CED5EB2918BD2D00048A27 /* BPPriceInfoEditModel */,
-				B1CED5EC2918D58C00048A27 /* BPPriceInfoEditSections */,
 				B1CDE8FC29166C8C00ACB9AC /* BPPriceInfoEditService */,
 				B1D5BD292917C5C700A85D4A /* BPPriceInfoEditCells */,
 			);
@@ -493,13 +492,6 @@
 				B1CED5E92918BD1900048A27 /* BPPriceInfoEditModel.swift */,
 			);
 			path = BPPriceInfoEditModel;
-			sourceTree = "<group>";
-		};
-		B1CED5EC2918D58C00048A27 /* BPPriceInfoEditSections */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = BPPriceInfoEditSections;
 			sourceTree = "<group>";
 		};
 		B1CEF7302913A07300814113 /* BPProductsCells */ = {

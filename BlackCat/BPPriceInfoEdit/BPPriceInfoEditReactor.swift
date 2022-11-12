@@ -31,16 +31,12 @@ final class BPPriceInfoEditReactor: Reactor {
         var isDismiss = false
         @Pulse var isOpenPhotoLibrary = false
         
-        @Pulse var sections: [BPPriceInfoEditCellViewModel] {
-            didSet { print("🧞‍♂️ sections \(sections)")}
-        }
-        
         @Pulse var sampleSections = BehaviorRelay<[BPPriceInfoEditCellViewModel]>(
             value: [.init(editModelRelay: .init(value: .init(row: 0, type: .text, input: "샘플의 처음값")))]
         ) { didSet { print("👽 \(sampleSections)") } }
         
         init(sections: [BPPriceInfoEditCellViewModel]) {
-            self.sections = sections
+            
         }
     }
     
@@ -80,9 +76,7 @@ final class BPPriceInfoEditReactor: Reactor {
             return newState
         case .sendProfile(let string):
             // NOTE: - 서버로 보내기
-            currentState.sections.forEach { section in
-                print("👨🏼‍🚀 \(section)")
-            }
+            
             return newState
         case .appendImage(let image):
             // MARK: - 셀추가
@@ -114,11 +108,6 @@ final class BPPriceInfoEditReactor: Reactor {
 //            )
             
             print("포토아이템 들어왔어요.")
-//            newState.$sampleSections
-//            newState.sampleSections.accept([.init(editModelRelay: .init(value: .init(row: 0, type: .image, image: image)))])
-//
-//            newState.sampleSections.accept(<#T##event: [BPPriceInfoEditCellViewModel]##[BPPriceInfoEditCellViewModel]#>)
-            
             return newState
         case let .updateDatasource((indexPath, text)):
             
