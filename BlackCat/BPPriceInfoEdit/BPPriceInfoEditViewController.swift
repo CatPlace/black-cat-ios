@@ -32,6 +32,7 @@ final class BPPriceInfoEditViewController: UIViewController, View {
     private func dispatch(reactor: Reactor) {
         RxKeyboard.instance.visibleHeight
             .skip(1)    // 초기 값 버리기
+            .debug("🌿")
             .drive(with: self) { owner, keyboardVisibleHeight in
                 
                 owner.updateView(with: keyboardVisibleHeight)
@@ -96,13 +97,15 @@ final class BPPriceInfoEditViewController: UIViewController, View {
     
     // MARK: - Function
     func updateView(with keyboardHeight: CGFloat) {
-        toolBarView.snp.updateConstraints {
-            $0.bottom.equalToSuperview().inset(keyboardHeight)
-        }
+        let height = keyboardHeight == 0
+        ? keyboardHeight
+        : keyboardHeight - view.safeAreaInsets.bottom
         
-        UIView.animate(withDuration: 0.4) {
-            self.view.layoutIfNeeded()
+        toolBarView.snp.updateConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(height)
         }
+
+        // NOTE: - 애니메이션 주면 UI가 비는 느낌이 나서 제거
     }
     
     // MARK: - initilaize
@@ -180,7 +183,7 @@ extension BPPriceInfoEditViewController {
         let toolbarHeight = 50
         toolBarView.snp.makeConstraints {
             $0.height.equalTo(toolbarHeight) // 🐻‍❄️ NOTE: - 시스템 툴바 height 25
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         toolBarView.addSubview(photoToolbarButton)
         photoToolbarButton.snp.makeConstraints {
