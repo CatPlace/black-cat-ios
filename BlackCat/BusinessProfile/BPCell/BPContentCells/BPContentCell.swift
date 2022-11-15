@@ -20,7 +20,7 @@ final class BPContentCell: BPBaseCell, View {
     }
     
     enum BPContentType: CaseIterable {
-        case profile, product, review, info
+        case profile, product, review, priceInfo
     }
     
     func bind(reactor: Reactor) {
@@ -67,21 +67,35 @@ final class BPContentCell: BPBaseCell, View {
                 
                 cell.configureCell(with: item)
             }.disposed(by: self.disposeBag)
+        
+        // ☃️ NOTE: - 당근마켓 UI로 변경시 바로 적용 가능하도록 배열로 설계
+        reactor.state
+            .filter { _ in reactor.currentState.contentModel.order == 3 }
+            .map { $0.priceInfos.first?.text ?? "🚨" }
+            .debug("❌")
+            .do(onNext: { _ in
+                self.setCollectionViewHidden(forType: .priceInfo)
+            })
+            .bind(to: priceInfoTextView.rx.text)
+            .disposed(by: disposeBag)
     }
     
     func setCollectionViewHidden(forType type: BPContentType) {
         // 🐻‍❄️ NOTE: - 알고리즘 리팩토링 가능
-        [productCollectionView, reviewCollectionView].forEach { $0.isHidden = true }
+        [profileCollectionView,
+         productCollectionView,
+         reviewCollectionView,
+         priceInfoTextView].forEach { $0.isHidden = true }
         
         if type == .profile { profileCollectionView.isHidden = false }
         else if type == .product { productCollectionView.isHidden = false }
         else if type == .review { reviewCollectionView.isHidden = false }
-        else if type == .info { }
+        else if type == .priceInfo { priceInfoTextView.isHidden = false }
     }
     
     // MARK: - Initialize
     override func initialize() {
-        setUI()
+        self.setUI()
     }
     
     // MARK: - UIComponents
@@ -113,6 +127,21 @@ final class BPContentCell: BPBaseCell, View {
         cv.register(Reusable.profileCell)
         return cv
     }()
+    
+//    lazy var priceInfoScrollView: UITableView = {
+//        
+//        $0.
+//    }(UITableView())
+    lazy var priceInfoTextView: UITextView = {
+//        $0.isEditable = false
+//        $0.isUserInteractionEnabled = false
+        $0.isScrollEnabled = true
+        $0.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
+        $0.font = .systemFont(ofSize: 16, weight: .semibold)
+        $0.textContainerInset = .init(top: 20, left: 20, bottom: 20, right: 20)
+        
+        return $0
+    }(UITextView())
 }
 
 extension BPContentCell: UIScrollViewDelegate {

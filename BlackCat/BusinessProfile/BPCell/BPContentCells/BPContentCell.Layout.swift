@@ -25,6 +25,11 @@ extension BPContentCell {
         reviewCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        
+        contentView.addSubview(priceInfoTextView)
+        priceInfoTextView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
     
     func createLayout(forType type: BPContentType) -> UICollectionViewCompositionalLayout {
@@ -35,7 +40,7 @@ extension BPContentCell {
             case .profile: return self.profileLayoutSection()
             case .product: return self.productLayoutSection()
             case .review: return self.reviewLayoutSection()
-            default: return self.productLayoutSection()
+            default: assert(false, "🚨\(#function) error 발생")
             }
         }
     }
