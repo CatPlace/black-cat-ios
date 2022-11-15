@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import Nuke
 
-class BPBaseCell: BaseCollectionViewCell {
+class BPBaseCollectionViewCell: BaseCollectionViewCell {
     var disposeBag = DisposeBag()
     
     func loadImageUsingNuke(sender: UIImageView, urlString: String) {

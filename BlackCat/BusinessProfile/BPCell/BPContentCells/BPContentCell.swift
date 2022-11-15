@@ -10,13 +10,14 @@ import ReactorKit
 import SnapKit
 import BlackCatSDK
 
-final class BPContentCell: BPBaseCell, View {
+final class BPContentCell: BPBaseCollectionViewCell, View {
     typealias Reactor = BPContentCellReactor
     
     enum Reusable {
         static let profileCell = ReusableCell<BPProfileCell>()
         static let productCell = ReusableCell<BPProductCell>()
         static let reviewCell = ReusableCell<BPReviewCell>()
+        static let priceInfoCell = ReusableCell<BPPriceInfoCell>()
     }
     
     enum BPContentType: CaseIterable {
@@ -68,16 +69,19 @@ final class BPContentCell: BPBaseCell, View {
                 cell.configureCell(with: item)
             }.disposed(by: self.disposeBag)
         
-        // ☃️ NOTE: - 당근마켓 UI로 변경시 바로 적용 가능하도록 배열로 설계
         reactor.state
             .filter { _ in reactor.currentState.contentModel.order == 3 }
-            .map { $0.priceInfos.first?.text ?? "🚨" }
-            .debug("❌")
-            .do(onNext: { _ in
+            .map { $0.priceInfos }
+            .bind(to: priceInfoTableView.rx.items(Reusable.priceInfoCell)) { [weak self] index, item, cell in
+                guard let self = self else { return }
                 self.setCollectionViewHidden(forType: .priceInfo)
-            })
-            .bind(to: priceInfoTextView.rx.text)
-            .disposed(by: disposeBag)
+                
+                cell.configureCell(with: item)
+//                self.layoutIfNeeded()
+                self.priceInfoTableView.beginUpdates()
+                self.priceInfoTableView.endUpdates()
+
+            }.disposed(by: self.disposeBag)
     }
     
     func setCollectionViewHidden(forType type: BPContentType) {
@@ -85,12 +89,12 @@ final class BPContentCell: BPBaseCell, View {
         [profileCollectionView,
          productCollectionView,
          reviewCollectionView,
-         priceInfoTextView].forEach { $0.isHidden = true }
+         priceInfoTableView].forEach { $0.isHidden = true }
         
         if type == .profile { profileCollectionView.isHidden = false }
         else if type == .product { productCollectionView.isHidden = false }
         else if type == .review { reviewCollectionView.isHidden = false }
-        else if type == .priceInfo { priceInfoTextView.isHidden = false }
+        else if type == .priceInfo { priceInfoTableView.isHidden = false }
     }
     
     // MARK: - Initialize
@@ -128,20 +132,14 @@ final class BPContentCell: BPBaseCell, View {
         return cv
     }()
     
-//    lazy var priceInfoScrollView: UITableView = {
-//        
-//        $0.
-//    }(UITableView())
-    lazy var priceInfoTextView: UITextView = {
-//        $0.isEditable = false
-//        $0.isUserInteractionEnabled = false
-        $0.isScrollEnabled = true
+    lazy var priceInfoTableView: UITableView = {
+        $0.separatorStyle = .none
         $0.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
-        $0.font = .systemFont(ofSize: 16, weight: .semibold)
-        $0.textContainerInset = .init(top: 20, left: 20, bottom: 20, right: 20)
+        $0.rowHeight = UITableView.automaticDimension
+        $0.register(Reusable.priceInfoCell)
         
         return $0
-    }(UITextView())
+    }(UITableView())
 }
 
 extension BPContentCell: UIScrollViewDelegate {

@@ -26,8 +26,8 @@ extension BPContentCell {
             $0.edges.equalToSuperview()
         }
         
-        contentView.addSubview(priceInfoTextView)
-        priceInfoTextView.snp.makeConstraints {
+        contentView.addSubview(priceInfoTableView)
+        priceInfoTableView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }

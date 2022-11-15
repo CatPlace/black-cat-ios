@@ -8,7 +8,7 @@
 import UIKit
 
 // 🐻‍❄️ NOTE: - 다른 개발자님이 feature 이어 받으시도록 스타일로 맞춤.
-final class BPProfileCell: BPBaseCell {
+final class BPProfileCell: BPBaseCollectionViewCell {
     
     func configureCell(with item: BPProfileModel) {
         profileTitleLabel.text = item.title
