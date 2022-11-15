@@ -23,7 +23,7 @@ class BPEditTempViewController: UIViewController {
         
         button.rx.tap
             .bind {
-                let vc = UINavigationController(rootViewController: BPPriceInfoEditViewController(reactor: BPPriceInfoEditReactor()))
+                let vc = UINavigationController(rootViewController: BPPriceInfoEditViewController())
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
             }.disposed(by: disposeBag)

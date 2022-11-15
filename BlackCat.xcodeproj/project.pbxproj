@@ -67,6 +67,7 @@
 		B1D3363828F1CA2000826636 /* BlackCatSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B1D3363628F1CA2000826636 /* BlackCatSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B1D3364128F1CCFA00826636 /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3364028F1CCFA00826636 /* UICollectionView+.swift */; };
 		B1D3364328F1CD1B00826636 /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3364228F1CD1B00826636 /* UITableView+.swift */; };
+		B1D39E6C292345B50058BE37 /* BPPriceInfoEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D39E6B292345B50058BE37 /* BPPriceInfoEditViewController.swift */; };
 		B1D5BD2429174EEC00A85D4A /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D5BD2329174EEC00A85D4A /* UIViewController+.swift */; };
 		B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */; };
 		B1D79CAD28EB0EF9008487D0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */; };
@@ -207,6 +208,7 @@
 		B1D3363628F1CA2000826636 /* BlackCatSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BlackCatSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1D3364028F1CCFA00826636 /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		B1D3364228F1CD1B00826636 /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
+		B1D39E6B292345B50058BE37 /* BPPriceInfoEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPPriceInfoEditViewController.swift; sourceTree = "<group>"; };
 		B1D5BD2329174EEC00A85D4A /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		B1D79CA728EB0EF9008487D0 /* BlackCat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlackCat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -449,6 +451,7 @@
 			children = (
 				B1CDE8F629165E6A00ACB9AC /* BPEditTempViewController.swift */,
 				B1CED5EB2918BD2D00048A27 /* BPPriceInfoEditModel */,
+				B1D39E6B292345B50058BE37 /* BPPriceInfoEditViewController.swift */,
 			);
 			path = BPPriceInfoEdit;
 			sourceTree = "<group>";
@@ -926,6 +929,7 @@
 				B1D127DD28F08DCA007E3667 /* TabBarViewController.swift in Sources */,
 				B1E4986228EE8BFE00B469AC /* MagazineDetailTextCell.swift in Sources */,
 				B1D89C8B290E7C6400C8B7F1 /* BPSection.swift in Sources */,
+				B1D39E6C292345B50058BE37 /* BPPriceInfoEditViewController.swift in Sources */,
 				B1E4985828EE85A800B469AC /* MagazineDetailViewController.swift in Sources */,
 				8E2D8C5F28F2EE69004B514D /* HomeRecommendCellViewModel.swift in Sources */,
 				78B00BB828F5661000A9915D /* LastMagazineCell.swift in Sources */,
