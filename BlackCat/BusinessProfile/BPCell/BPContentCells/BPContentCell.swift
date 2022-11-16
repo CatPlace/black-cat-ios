@@ -77,9 +77,9 @@ final class BPContentCell: BPBaseCollectionViewCell, View {
                 self.setCollectionViewHidden(forType: .priceInfo)
                 
                 cell.configureCell(with: item)
-//                self.layoutIfNeeded()
-                self.priceInfoTableView.beginUpdates()
-                self.priceInfoTableView.endUpdates()
+//                self.priceInfoTableView.layoutIfNeeded()
+//                self.priceInfoTableView.beginUpdates()
+//                self.priceInfoTableView.endUpdates()
 
             }.disposed(by: self.disposeBag)
     }
@@ -104,6 +104,16 @@ final class BPContentCell: BPBaseCollectionViewCell, View {
     
     // MARK: - UIComponents
     
+    lazy var profileCollectionView: UICollectionView = {
+        let layout = createLayout(forType: .profile)
+        var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        
+        cv.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
+        cv.register(Reusable.profileCell)
+        
+        return cv
+    }()
+    
     lazy var productCollectionView: UICollectionView = {
         let layout = createLayout(forType: .product)
         var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -120,15 +130,7 @@ final class BPContentCell: BPBaseCollectionViewCell, View {
         
         cv.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
         cv.register(Reusable.reviewCell)
-        return cv
-    }()
-    
-    lazy var profileCollectionView: UICollectionView = {
-        let layout = createLayout(forType: .profile)
-        var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
-        cv.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
-        cv.register(Reusable.profileCell)
         return cv
     }()
     

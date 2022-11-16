@@ -13,15 +13,16 @@ final class BPPriceInfoCell: BaseTableViewCell {
     
     func configureCell(with item: BPPriceInfoModel) {
         print("A")
-        priceInfoTextView.text = item.text
+        priceInfoLabel.text = item.text
     }
     
     func setUI() {
         contentView.layer.cornerRadius = 15
         contentView.backgroundColor = .white
         
-        contentView.addSubview(priceInfoTextView)
-        priceInfoTextView.snp.makeConstraints {
+        contentView.addSubview(priceInfoLabel)
+        priceInfoLabel.snp.makeConstraints {
+//            $0.height.equalTo(100)
             $0.edges.equalToSuperview()
         }
     }
@@ -30,14 +31,15 @@ final class BPPriceInfoCell: BaseTableViewCell {
         self.setUI()
     }
     
-    lazy var priceInfoTextView: UITextView = {
-        $0.isEditable = false
+    lazy var priceInfoLabel: UILabel = {
+//        $0.isEditable = false
+        $0.numberOfLines = 0
         $0.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
         $0.font = .systemFont(ofSize: 16, weight: .semibold)
 //        $0.textContainerInset = .init(top: 20, left: 20, bottom: 20, right: 20)
 
         return $0
-    }(UITextView())
+    }(UILabel())
     
 }
 
