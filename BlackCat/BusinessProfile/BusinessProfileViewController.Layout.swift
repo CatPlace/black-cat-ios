@@ -14,7 +14,7 @@ extension BusinessProfileViewController {
         
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
     

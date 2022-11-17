@@ -97,7 +97,7 @@ final class BusinessProfileViewController: UIViewController, View {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setUI()
+        self.setUI()
         BPDispatchSystem.dispatch.multicastDelegate.addDelegate(self)
     }
     
