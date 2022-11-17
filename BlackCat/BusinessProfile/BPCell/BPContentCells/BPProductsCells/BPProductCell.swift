@@ -29,7 +29,7 @@ final class BPProductCell: BPBaseCollectionViewCell {
     }
     
     lazy var productImageView: UIImageView = {
-        $0.layer.backgroundColor = .init(gray: 1.0, alpha: 1.0)
+        $0.layer.backgroundColor = UIColor.gray.cgColor
         return $0
     }(UIImageView())
 }

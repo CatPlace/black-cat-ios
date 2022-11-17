@@ -31,7 +31,6 @@ final class BPProfileCell: BPBaseCollectionViewCell {
     }
     
     override func initialize() {
-        print("called")
         self.setUI()
     }
     
