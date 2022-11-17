@@ -33,6 +33,7 @@ final class BPContentCell: BPBaseCollectionViewCell, View {
         productCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
         reviewCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
         profileCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
+        priceInfoCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
         
         reactor.action.onNext(.initialize)
     }
@@ -72,15 +73,11 @@ final class BPContentCell: BPBaseCollectionViewCell, View {
         reactor.state
             .filter { _ in reactor.currentState.contentModel.order == 3 }
             .map { $0.priceInfos }
-            .bind(to: priceInfoTableView.rx.items(Reusable.priceInfoCell)) { [weak self] index, item, cell in
+            .bind(to: priceInfoCollectionView.rx.items(Reusable.priceInfoCell)) { [weak self] index, item, cell in
                 guard let self = self else { return }
                 self.setCollectionViewHidden(forType: .priceInfo)
                 
                 cell.configureCell(with: item)
-//                self.priceInfoTableView.layoutIfNeeded()
-//                self.priceInfoTableView.beginUpdates()
-//                self.priceInfoTableView.endUpdates()
-
             }.disposed(by: self.disposeBag)
     }
     
@@ -89,12 +86,12 @@ final class BPContentCell: BPBaseCollectionViewCell, View {
         [profileCollectionView,
          productCollectionView,
          reviewCollectionView,
-         priceInfoTableView].forEach { $0.isHidden = true }
+         priceInfoCollectionView].forEach { $0.isHidden = true }
         
         if type == .profile { profileCollectionView.isHidden = false }
         else if type == .product { productCollectionView.isHidden = false }
         else if type == .review { reviewCollectionView.isHidden = false }
-        else if type == .priceInfo { priceInfoTableView.isHidden = false }
+        else if type == .priceInfo { priceInfoCollectionView.isHidden = false }
     }
     
     // MARK: - Initialize
@@ -134,26 +131,30 @@ final class BPContentCell: BPBaseCollectionViewCell, View {
         return cv
     }()
     
-    lazy var priceInfoTableView: UITableView = {
-        $0.separatorStyle = .none
-        $0.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
-        $0.rowHeight = UITableView.automaticDimension
-        $0.register(Reusable.priceInfoCell)
+    lazy var priceInfoCollectionView: UICollectionView = {
+        let layout = createLayout(forType: .priceInfo)
+        var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
-        return $0
-    }(UITableView())
+        cv.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
+        
+        cv.register(Reusable.priceInfoCell)
+        
+        return cv
+    }()
 }
 
 extension BPContentCell: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // 🐻‍❄️ NOTE: - 막지말고, 차라리 당겨서 해당 셀을 refresh하는건 어떨까요?
+        // NOTE: - delegateProxy를 사용하는 방법도 있겠습니다.
+        
         scrollView.bounces = scrollView.contentOffset.y >= 0
         
         print("scrollView \(scrollView.contentOffset.y)")
+        
         BPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
             delegate.notifyViewController(offset: scrollView.contentOffset.y)
         }
-        
         
     }
 }
