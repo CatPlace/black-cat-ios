@@ -46,7 +46,7 @@ final class BPContentCell: BPBaseCollectionViewCell, View {
             .bind(to: profileCollectionView.rx.items(Reusable.profileCell)) { [weak self] index, item, cell in
                 guard let self = self else { return }
                 self.setCollectionViewHidden(forType: .profile)
-                print(" 👍 itme \(item)")
+                
                 cell.configureCell(with: item)
             }.disposed(by: self.disposeBag)
         

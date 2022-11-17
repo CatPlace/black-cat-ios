@@ -13,18 +13,24 @@ final class BPPriceInfoCell: BPBaseCollectionViewCell {
     
     func configureCell(with item: BPPriceInfoModel) {
         
-        priceInfoLabel.text = item.text + "\n\n\n"
+        priceInfoLabel.text = item.text + self.labelSpacing
     }
     
     func setUI() {
-        contentView.layer.cornerRadius = 15
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
         
         contentView.addSubview(priceInfoLabel)
         priceInfoLabel.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.top.leading.trailing.equalToSuperview().inset(30)
         }
+        
+        contentView.addSubview(priceInfoAdminLabel)
+        priceInfoAdminLabel.snp.makeConstraints {
+            $0.top.equalTo(priceInfoLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalTo(priceInfoLabel)
+            $0.bottom.equalToSuperview().inset(20)
+        }
+        
     }
     
     override func initialize() {
@@ -39,5 +45,15 @@ final class BPPriceInfoCell: BPBaseCollectionViewCell {
         return $0
     }(UILabel())
     
+    lazy var priceInfoAdminLabel: UILabel = {
+        $0.numberOfLines = 0
+        $0.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
+        $0.font = .systemFont(ofSize: 14, weight: .semibold)
+        $0.textColor = .lightGray
+        $0.textAlignment = .center
+        $0.text = "타투이스트에 의해 작성된 영역입니다."
+
+        return $0
+    }(UILabel())
 }
 

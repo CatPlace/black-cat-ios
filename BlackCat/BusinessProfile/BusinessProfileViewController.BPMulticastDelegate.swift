@@ -29,7 +29,7 @@ extension BusinessProfileViewController: BPMulticastDelegate {
         
         // 🐻‍❄️ NOTE: - 'offset <= ?' ?를 정해 볼까요?
 //        if offset <= UIScreen.main.bounds.height / 3 {
-        if offset <= 10 {
+        if offset <= 1 {
             UIView.animate(withDuration: 0.3) {
                 self.collectionView.contentOffset = CGPoint(x: 0, y: 0)
             }

@@ -17,6 +17,32 @@ struct BPPriceInfoModel {
 
 extension BPPriceInfoModel {
     static func fetch() -> [BPPriceInfoModel] {
+        let shortText = """
+        
+        짧은 텍스트
+                짧은 텍스트
+        짧은 텍스트
+        
+        """
+        
+        let middleText = """
+        미들 텍스트
+                미들 텍스트
+                미들 텍스트
+                미들 텍스트
+                미들 텍스트미들 텍스트
+                미들 텍스트
+                미들 텍스트미들 텍스트미들 텍스트
+                미들 텍스트미들 텍스트미들 텍스트  미들 텍스트
+                미들 텍스트미들 텍스트
+                        미들 텍스트미들 텍스트미들 텍스트  미들 텍스트
+                        미들 텍스트미들 텍스트
+                        미들 텍스트미들 텍스트미들 텍스트  미들 텍스트
+                        미들 텍스트미들 텍스트
+                        미들 텍스트미들 텍스트미들 텍스트  미들 텍스트
+                        미들 텍스트미들 텍스트
+        """
+        
         let text = """
         ✅ 안녕하세요 천재 타투이스트
         
@@ -55,6 +81,6 @@ extension BPPriceInfoModel {
                         이게 과연 백줄이 된다면?이게 과연 백줄이 된다면?이게 과연 백줄이 된다면?
         """
         
-        return [BPPriceInfoModel(text: text)]
+        return [BPPriceInfoModel(text: shortText)]
     }
 }
