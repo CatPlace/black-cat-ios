@@ -30,6 +30,20 @@
 		8E2D8C5D28F2EE69004B514D /* HomeRecommendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C5628F2EE69004B514D /* HomeRecommendCell.swift */; };
 		8E2D8C5E28F2EE69004B514D /* HomeTattooAlbumCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C5728F2EE69004B514D /* HomeTattooAlbumCellViewModel.swift */; };
 		8E2D8C5F28F2EE69004B514D /* HomeRecommendCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C5828F2EE69004B514D /* HomeRecommendCellViewModel.swift */; };
+		8E7E9CD2291C8CF700D09157 /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7E9CD1291C8CF700D09157 /* BookmarkViewController.swift */; };
+		8E7E9CDA291C8EA700D09157 /* BMTabButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7E9CD4291C8EA700D09157 /* BMTabButton.swift */; };
+		8E7E9CDB291C8EA700D09157 /* BMTabBarIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7E9CD6291C8EA700D09157 /* BMTabBarIndicator.swift */; };
+		8E7E9CDC291C8EA700D09157 /* BMTabBarCornerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7E9CD7291C8EA700D09157 /* BMTabBarCornerStyle.swift */; };
+		8E7E9CDD291C8EA700D09157 /* BMTabMenuAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7E9CD8291C8EA700D09157 /* BMTabMenuAnimation.swift */; };
+		8E7E9CDE291C8EA700D09157 /* BMTabMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7E9CD9291C8EA700D09157 /* BMTabMenuView.swift */; };
+		8E7E9CE0291C910B00D09157 /* UIPageViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7E9CDF291C910B00D09157 /* UIPageViewController+.swift */; };
+		8E7E9CE2291C927200D09157 /* BookmarkTattooViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7E9CE1291C927200D09157 /* BookmarkTattooViewController.swift */; };
+		8E7E9CE4291C92B000D09157 /* BookmarkMagazineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7E9CE3291C92B000D09157 /* BookmarkMagazineViewController.swift */; };
+		8EBB61422927389600F640F5 /* BMTattooCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB61412927389600F640F5 /* BMTattooCell.swift */; };
+		8EBB6144292738FA00F640F5 /* BMTattooCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB6143292738FA00F640F5 /* BMTattooCellViewModel.swift */; };
+		8EBB614629273CE300F640F5 /* BMEditFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB614529273CE300F640F5 /* BMEditFilterView.swift */; };
+		8EBB614829274C0800F640F5 /* BookmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB614729274C0800F640F5 /* BookmarkViewModel.swift */; };
+		8EBB614A29274D9300F640F5 /* BookmarkTattooViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB614929274D9300F640F5 /* BookmarkTattooViewModel.swift */; };
 		8EE9A0C128F3CB0D003D7761 /* HomeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9A0C028F3CB0D003D7761 /* HomeSection.swift */; };
 		8EE9A0C328F3CD25003D7761 /* HomeCompositionalLayoutSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9A0C228F3CD25003D7761 /* HomeCompositionalLayoutSection.swift */; };
 		B12C1DC728ED219C0089964E /* UIVIewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12C1DC628ED219C0089964E /* UIVIewController+Rx.swift */; };
@@ -188,6 +202,20 @@
 		8E2D8C5628F2EE69004B514D /* HomeRecommendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRecommendCell.swift; sourceTree = "<group>"; };
 		8E2D8C5728F2EE69004B514D /* HomeTattooAlbumCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTattooAlbumCellViewModel.swift; sourceTree = "<group>"; };
 		8E2D8C5828F2EE69004B514D /* HomeRecommendCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRecommendCellViewModel.swift; sourceTree = "<group>"; };
+		8E7E9CD1291C8CF700D09157 /* BookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
+		8E7E9CD4291C8EA700D09157 /* BMTabButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMTabButton.swift; sourceTree = "<group>"; };
+		8E7E9CD6291C8EA700D09157 /* BMTabBarIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMTabBarIndicator.swift; sourceTree = "<group>"; };
+		8E7E9CD7291C8EA700D09157 /* BMTabBarCornerStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMTabBarCornerStyle.swift; sourceTree = "<group>"; };
+		8E7E9CD8291C8EA700D09157 /* BMTabMenuAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMTabMenuAnimation.swift; sourceTree = "<group>"; };
+		8E7E9CD9291C8EA700D09157 /* BMTabMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMTabMenuView.swift; sourceTree = "<group>"; };
+		8E7E9CDF291C910B00D09157 /* UIPageViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPageViewController+.swift"; sourceTree = "<group>"; };
+		8E7E9CE1291C927200D09157 /* BookmarkTattooViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkTattooViewController.swift; sourceTree = "<group>"; };
+		8E7E9CE3291C92B000D09157 /* BookmarkMagazineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkMagazineViewController.swift; sourceTree = "<group>"; };
+		8EBB61412927389600F640F5 /* BMTattooCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTattooCell.swift; sourceTree = "<group>"; };
+		8EBB6143292738FA00F640F5 /* BMTattooCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTattooCellViewModel.swift; sourceTree = "<group>"; };
+		8EBB614529273CE300F640F5 /* BMEditFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMEditFilterView.swift; sourceTree = "<group>"; };
+		8EBB614729274C0800F640F5 /* BookmarkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewModel.swift; sourceTree = "<group>"; };
+		8EBB614929274D9300F640F5 /* BookmarkTattooViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkTattooViewModel.swift; sourceTree = "<group>"; };
 		8EE9A0C028F3CB0D003D7761 /* HomeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSection.swift; sourceTree = "<group>"; };
 		8EE9A0C228F3CD25003D7761 /* HomeCompositionalLayoutSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCompositionalLayoutSection.swift; sourceTree = "<group>"; };
 		B12C1DC628ED219C0089964E /* UIVIewController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIewController+Rx.swift"; sourceTree = "<group>"; };
@@ -399,6 +427,50 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		8E7E9CD0291C8CAA00D09157 /* Bookmark */ = {
+			isa = PBXGroup;
+			children = (
+				8E7E9CD1291C8CF700D09157 /* BookmarkViewController.swift */,
+				8EBB614729274C0800F640F5 /* BookmarkViewModel.swift */,
+				8E7E9CE1291C927200D09157 /* BookmarkTattooViewController.swift */,
+				8EBB614929274D9300F640F5 /* BookmarkTattooViewModel.swift */,
+				8E7E9CE3291C92B000D09157 /* BookmarkMagazineViewController.swift */,
+				8E7E9CD3291C8E1100D09157 /* BMTabMenu */,
+				8EBB613C2927361A00F640F5 /* Views */,
+			);
+			path = Bookmark;
+			sourceTree = "<group>";
+		};
+		8E7E9CD3291C8E1100D09157 /* BMTabMenu */ = {
+			isa = PBXGroup;
+			children = (
+				8E7E9CD4291C8EA700D09157 /* BMTabButton.swift */,
+				8E7E9CD8291C8EA700D09157 /* BMTabMenuAnimation.swift */,
+				8E7E9CD5291C8EA700D09157 /* BMTabMenuIndicator */,
+				8E7E9CD9291C8EA700D09157 /* BMTabMenuView.swift */,
+			);
+			path = BMTabMenu;
+			sourceTree = "<group>";
+		};
+		8E7E9CD5291C8EA700D09157 /* BMTabMenuIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				8E7E9CD6291C8EA700D09157 /* BMTabBarIndicator.swift */,
+				8E7E9CD7291C8EA700D09157 /* BMTabBarCornerStyle.swift */,
+			);
+			path = BMTabMenuIndicator;
+			sourceTree = "<group>";
+		};
+		8EBB613C2927361A00F640F5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8EBB61412927389600F640F5 /* BMTattooCell.swift */,
+				8EBB6143292738FA00F640F5 /* BMTattooCellViewModel.swift */,
+				8EBB614529273CE300F640F5 /* BMEditFilterView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		8EE9A0BE28F3CAED003D7761 /* HomeModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -428,6 +500,7 @@
 			children = (
 				B1D5BD2329174EEC00A85D4A /* UIViewController+.swift */,
 				B12C1DC628ED219C0089964E /* UIVIewController+Rx.swift */,
+				8E7E9CDF291C910B00D09157 /* UIPageViewController+.swift */,
 				B1DD25DC28EF0BC800103FF1 /* UIColor+.swift */,
 				B1D3364028F1CCFA00826636 /* UICollectionView+.swift */,
 				B1D3364228F1CD1B00826636 /* UITableView+.swift */,
@@ -580,6 +653,7 @@
 				B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */,
 				B1D127DC28F08DCA007E3667 /* TabBarViewController.swift */,
 				8E2D8C4628F2EBFA004B514D /* Home */,
+				8E7E9CD0291C8CAA00D09157 /* Bookmark */,
 				78B00BA928F5661000A9915D /* Magazine */,
 				B1E4985628EE859600B469AC /* MagazineDetail */,
 				B1EE64F428FA48170055A4F1 /* Filter */,
@@ -951,6 +1025,7 @@
 				8E2D8C5E28F2EE69004B514D /* HomeTattooAlbumCellViewModel.swift in Sources */,
 				B1D2D107290AC7B5005B76BD /* UIScrollView+Rx.swift in Sources */,
 				B1D89C96290E845700C8B7F1 /* BPThumbnailModel.swift in Sources */,
+				8EBB614A29274D9300F640F5 /* BookmarkTattooViewModel.swift in Sources */,
 				B1D89C98290E879B00C8B7F1 /* BPBaseCell.swift in Sources */,
 				B1E3F7C0290EC1AD00005F17 /* BusinessProfileReactor.swift in Sources */,
 				B1E5E471291AC42F00CC8FBE /* FilterCellViewModel.swift in Sources */,
@@ -968,12 +1043,15 @@
 				B1D127DD28F08DCA007E3667 /* TabBarViewController.swift in Sources */,
 				B1E4986228EE8BFE00B469AC /* MagazineDetailTextCell.swift in Sources */,
 				B1D89C8B290E7C6400C8B7F1 /* BPSection.swift in Sources */,
+				8E7E9CDB291C8EA700D09157 /* BMTabBarIndicator.swift in Sources */,
 				B1E4985828EE85A800B469AC /* MagazineDetailViewController.swift in Sources */,
 				8E2D8C5F28F2EE69004B514D /* HomeRecommendCellViewModel.swift in Sources */,
+				8E7E9CE0291C910B00D09157 /* UIPageViewController+.swift in Sources */,
 				78B00BB828F5661000A9915D /* LastMagazineCell.swift in Sources */,
 				8E2D8C5128F2EDF3004B514D /* HomeCategorySectionBackgroundReusableView.swift in Sources */,
 				8EE9A0C128F3CB0D003D7761 /* HomeSection.swift in Sources */,
 				B1D127E228F0923C007E3667 /* Asset.swift in Sources */,
+				8EBB6144292738FA00F640F5 /* BMTattooCellViewModel.swift in Sources */,
 				B1E986B328FE9E0B00962F5B /* FilterLoactionService.swift in Sources */,
 				B1D5BD2429174EEC00A85D4A /* UIViewController+.swift in Sources */,
 				78B00BB928F5661000A9915D /* MagazineTestUseCase.swift in Sources */,
@@ -991,6 +1069,7 @@
 				B1D89C91290E7D2100C8B7F1 /* BPContentCell.swift in Sources */,
 				B1E3F7BC290EBABE00005F17 /* BPReviewCell.swift in Sources */,
 				8E2D8C4F28F2ED53004B514D /* HomeHeaderView.swift in Sources */,
+				8E7E9CDA291C8EA700D09157 /* BMTabButton.swift in Sources */,
 				B1E3F7E0290F042B00005F17 /* BPContentCellReactor.swift in Sources */,
 				B1EABEC128FBD83F0029B6BC /* FilterLoaction.swift in Sources */,
 				B1D2D109290AC8FA005B76BD /* Observable+.swift in Sources */,
@@ -998,6 +1077,7 @@
 				B1D5BD2B2917C80A00A85D4A /* BPPriceInfoEditImageCell.swift in Sources */,
 				78B00BBD28F5661000A9915D /* MagazineViewController.swift in Sources */,
 				8E2D8C4828F2EC27004B514D /* HomeViewController.swift in Sources */,
+				8E7E9CDD291C8EA700D09157 /* BMTabMenuAnimation.swift in Sources */,
 				B1EE64F828FA4ABE0055A4F1 /* FilterExampleViewController.swift in Sources */,
 				B1EE651428FA8B160055A4F1 /* FilterCell.swift in Sources */,
 				B160DBF928FF3CBD00C0D682 /* BaseCollectionViewCell.swift in Sources */,
@@ -1005,6 +1085,7 @@
 				78858BEC28F6F4E400EC7BF7 /* MagazineSection.swift in Sources */,
 				78B00BBB28F5661000A9915D /* MagazineModel.swift in Sources */,
 				B1D3362928F1AC1200826636 /* MagazineDetailEmptyCell.swift in Sources */,
+				8E7E9CDE291C8EA700D09157 /* BMTabMenuView.swift in Sources */,
 				B1E3F7C2290EC1F700005F17 /* BPContentModel.swift in Sources */,
 				78B00BBE28F5661000A9915D /* MagazineViewModel.swift in Sources */,
 				B1E3F7C6290EC98600005F17 /* BPBaseCollectionReusableView.swift in Sources */,
@@ -1016,6 +1097,7 @@
 				B1E986AE28FE8D4F00962F5B /* BaseRealmProtocol.swift in Sources */,
 				B1CDE8F4291659EF00ACB9AC /* BPPriceInfoEditViewController.swift in Sources */,
 				B1D3362528F142A400826636 /* CALayer+.swift in Sources */,
+				8E7E9CDC291C8EA700D09157 /* BMTabBarCornerStyle.swift in Sources */,
 				B1D89C87290E78AF00C8B7F1 /* BusinessProfileViewController.swift in Sources */,
 				B1E3F7E2290F098400005F17 /* BPContentCellService.swift in Sources */,
 				78B00BC028F5661000A9915D /* LastMagazineHeaderView.swift in Sources */,
@@ -1024,22 +1106,27 @@
 				B1D127DF28F09200007E3667 /* UIImage+.swift in Sources */,
 				B1E3F7D7290EDFD500005F17 /* BPSectionFactory.swift in Sources */,
 				B1CDE90529169FD500ACB9AC /* AlertService.swift in Sources */,
+				8EBB61422927389600F640F5 /* BMTattooCell.swift in Sources */,
 				B1E4986928EE9E3500B469AC /* MagazineDetailViewReactor.swift in Sources */,
+				8E7E9CE2291C927200D09157 /* BookmarkTattooViewController.swift in Sources */,
 				B1D3364328F1CD1B00826636 /* UITableView+.swift in Sources */,
 				B1E3F7C8290ECAA100005F17 /* BPContentSectionHeaderReactor.swift in Sources */,
 				B1CDE8F929166AFB00ACB9AC /* BPPriceInfoEditReactor.swift in Sources */,
 				B1EE64FA28FA4E600055A4F1 /* BottomSheetTransitioningDelegate.swift in Sources */,
 				B1CA040628F00CC1004A6027 /* MagazineDetailImageCell.swift in Sources */,
+				8E7E9CD2291C8CF700D09157 /* BookmarkViewController.swift in Sources */,
 				B12C1DC728ED219C0089964E /* UIVIewController+Rx.swift in Sources */,
 				78B00BB728F5661000A9915D /* RecentMagazineCell.swift in Sources */,
 				B1D79CAD28EB0EF9008487D0 /* SceneDelegate.swift in Sources */,
 				8E2D8C4C28F2ED03004B514D /* HomeModel.swift in Sources */,
+				8EBB614829274C0800F640F5 /* BookmarkViewModel.swift in Sources */,
 				78B00BBF28F5661000A9915D /* RecentMagazineFooterView.swift in Sources */,
 				B1D89C93290E810000C8B7F1 /* BusinessProfileViewController.Layout.swift in Sources */,
 				B1EE64F628FA48230055A4F1 /* BottomSheetController.swift in Sources */,
 				B1E3F7C4290EC95100005F17 /* BPContentSectionHeaderView.swift in Sources */,
 				B1EE651228FA872B0055A4F1 /* FilterViewController.swift in Sources */,
 				B1E3F7B8290EB85400005F17 /* BPReviewModel.swift in Sources */,
+				8E7E9CE4291C92B000D09157 /* BookmarkMagazineViewController.swift in Sources */,
 				8EE9A0C328F3CD25003D7761 /* HomeCompositionalLayoutSection.swift in Sources */,
 				8E2D8C5B28F2EE69004B514D /* HomeCategoryCell.swift in Sources */,
 				B1D127DB28F047A9007E3667 /* MagazineDetailBulletedCell.swift in Sources */,
@@ -1049,6 +1136,7 @@
 				B1EABEBC28FBA87C0029B6BC /* FilterTask.swift in Sources */,
 				B1D3362728F1457700826636 /* UITabBar+.swift in Sources */,
 				B1CEF7332913A0EC00814113 /* BPProfileCell.swift in Sources */,
+				8EBB614629273CE300F640F5 /* BMEditFilterView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
