@@ -13,7 +13,7 @@
 		78B00BB728F5661000A9915D /* RecentMagazineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BAB28F5661000A9915D /* RecentMagazineCell.swift */; };
 		78B00BB828F5661000A9915D /* LastMagazineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BAC28F5661000A9915D /* LastMagazineCell.swift */; };
 		78B00BB928F5661000A9915D /* MagazineTestUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BAE28F5661000A9915D /* MagazineTestUseCase.swift */; };
-		78B00BBA28F5661000A9915D /* MagazineViewModel.dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BAF28F5661000A9915D /* MagazineViewModel.dummy.swift */; };
+		78B00BBA28F5661000A9915D /* MagazineModel.dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BAF28F5661000A9915D /* MagazineModel.dummy.swift */; };
 		78B00BBB28F5661000A9915D /* MagazineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BB028F5661000A9915D /* MagazineModel.swift */; };
 		78B00BBC28F5661000A9915D /* MagazineViewController.Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BB128F5661000A9915D /* MagazineViewController.Layout.swift */; };
 		78B00BBD28F5661000A9915D /* MagazineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BB228F5661000A9915D /* MagazineViewController.swift */; };
@@ -26,6 +26,9 @@
 		78F235EA292E0F8C0010E7D7 /* MyPageProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F235E9292E0F8C0010E7D7 /* MyPageProfileCell.swift */; };
 		78F235EC292E0F970010E7D7 /* MyPageTattooCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F235EB292E0F970010E7D7 /* MyPageTattooCell.swift */; };
 		78F235EE292E0FA40010E7D7 /* MyPageMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F235ED292E0FA40010E7D7 /* MyPageMenuCell.swift */; };
+		78F235F1292E813B0010E7D7 /* MyPageTestUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F235F0292E813B0010E7D7 /* MyPageTestUseCase.swift */; };
+		78F235F3292E81590010E7D7 /* MyPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F235F2292E81590010E7D7 /* MyPageModel.swift */; };
+		78F235F5292E816B0010E7D7 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F235F4292E816B0010E7D7 /* MyPageViewModel.swift */; };
 		8E2D8C4828F2EC27004B514D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4728F2EC27004B514D /* HomeViewController.swift */; };
 		8E2D8C4A28F2ECD2004B514D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4928F2ECD2004B514D /* HomeViewModel.swift */; };
 		8E2D8C4C28F2ED03004B514D /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4B28F2ED03004B514D /* HomeModel.swift */; };
@@ -179,7 +182,7 @@
 		78B00BAB28F5661000A9915D /* RecentMagazineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentMagazineCell.swift; sourceTree = "<group>"; };
 		78B00BAC28F5661000A9915D /* LastMagazineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastMagazineCell.swift; sourceTree = "<group>"; };
 		78B00BAE28F5661000A9915D /* MagazineTestUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineTestUseCase.swift; sourceTree = "<group>"; };
-		78B00BAF28F5661000A9915D /* MagazineViewModel.dummy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineViewModel.dummy.swift; sourceTree = "<group>"; };
+		78B00BAF28F5661000A9915D /* MagazineModel.dummy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineModel.dummy.swift; sourceTree = "<group>"; };
 		78B00BB028F5661000A9915D /* MagazineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineModel.swift; sourceTree = "<group>"; };
 		78B00BB128F5661000A9915D /* MagazineViewController.Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineViewController.Layout.swift; sourceTree = "<group>"; };
 		78B00BB228F5661000A9915D /* MagazineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineViewController.swift; sourceTree = "<group>"; };
@@ -192,6 +195,9 @@
 		78F235E9292E0F8C0010E7D7 /* MyPageProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageProfileCell.swift; sourceTree = "<group>"; };
 		78F235EB292E0F970010E7D7 /* MyPageTattooCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTattooCell.swift; sourceTree = "<group>"; };
 		78F235ED292E0FA40010E7D7 /* MyPageMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageMenuCell.swift; sourceTree = "<group>"; };
+		78F235F0292E813B0010E7D7 /* MyPageTestUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTestUseCase.swift; sourceTree = "<group>"; };
+		78F235F2292E81590010E7D7 /* MyPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageModel.swift; sourceTree = "<group>"; };
+		78F235F4292E816B0010E7D7 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		8E2D8C4728F2EC27004B514D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8E2D8C4928F2ECD2004B514D /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		8E2D8C4B28F2ED03004B514D /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
@@ -381,7 +387,7 @@
 			isa = PBXGroup;
 			children = (
 				78B00BAE28F5661000A9915D /* MagazineTestUseCase.swift */,
-				78B00BAF28F5661000A9915D /* MagazineViewModel.dummy.swift */,
+				78B00BAF28F5661000A9915D /* MagazineModel.dummy.swift */,
 			);
 			path = MagazineMock;
 			sourceTree = "<group>";
@@ -400,8 +406,11 @@
 			children = (
 				78F235DF292E07B20010E7D7 /* MyPageViewController.swift */,
 				78F235E4292E09F40010E7D7 /* MyPageViewController.Layout.swift */,
+				78F235F4292E816B0010E7D7 /* MyPageViewModel.swift */,
+				78F235F2292E81590010E7D7 /* MyPageModel.swift */,
 				78F235E1292E09C30010E7D7 /* MyPageSection */,
 				78F235E6292E0F570010E7D7 /* Cells */,
+				78F235EF292E80FD0010E7D7 /* MyPageMock */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -422,6 +431,14 @@
 				78F235ED292E0FA40010E7D7 /* MyPageMenuCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		78F235EF292E80FD0010E7D7 /* MyPageMock */ = {
+			isa = PBXGroup;
+			children = (
+				78F235F0292E813B0010E7D7 /* MyPageTestUseCase.swift */,
+			);
+			path = MyPageMock;
 			sourceTree = "<group>";
 		};
 		8E2D8C4628F2EBFA004B514D /* Home */ = {
@@ -1024,6 +1041,7 @@
 				B1D89C9A290E888200C8B7F1 /* BPThumbnailImageCellReactor.swift in Sources */,
 				8E2D8C5D28F2EE69004B514D /* HomeRecommendCell.swift in Sources */,
 				B1D127DD28F08DCA007E3667 /* TabBarViewController.swift in Sources */,
+				78F235F1292E813B0010E7D7 /* MyPageTestUseCase.swift in Sources */,
 				B1E4986228EE8BFE00B469AC /* MagazineDetailTextCell.swift in Sources */,
 				B1D89C8B290E7C6400C8B7F1 /* BPSection.swift in Sources */,
 				B1E4985828EE85A800B469AC /* MagazineDetailViewController.swift in Sources */,
@@ -1034,6 +1052,7 @@
 				78F235E3292E09D30010E7D7 /* MyPageSection.swift in Sources */,
 				B1D127E228F0923C007E3667 /* Asset.swift in Sources */,
 				B1E986B328FE9E0B00962F5B /* FilterLoactionService.swift in Sources */,
+				78F235F5292E816B0010E7D7 /* MyPageViewModel.swift in Sources */,
 				B1D5BD2429174EEC00A85D4A /* UIViewController+.swift in Sources */,
 				78B00BB928F5661000A9915D /* MagazineTestUseCase.swift in Sources */,
 				B1E3F7BE290EBE3900005F17 /* BPContentCell.Layout.swift in Sources */,
@@ -1056,6 +1075,7 @@
 				B1E3F7E0290F042B00005F17 /* BPContentCellReactor.swift in Sources */,
 				B1EABEC128FBD83F0029B6BC /* FilterLoaction.swift in Sources */,
 				B1D2D109290AC8FA005B76BD /* Observable+.swift in Sources */,
+				78F235F3292E81590010E7D7 /* MyPageModel.swift in Sources */,
 				B1D5BD26291796F700A85D4A /* BPPriceInfoEditStringService.swift in Sources */,
 				B1D5BD2B2917C80A00A85D4A /* BPPriceInfoEditImageCell.swift in Sources */,
 				78B00BBD28F5661000A9915D /* MagazineViewController.swift in Sources */,
@@ -1081,7 +1101,7 @@
 				B1D89C87290E78AF00C8B7F1 /* BusinessProfileViewController.swift in Sources */,
 				B1E3F7E2290F098400005F17 /* BPContentCellService.swift in Sources */,
 				78B00BC028F5661000A9915D /* LastMagazineHeaderView.swift in Sources */,
-				78B00BBA28F5661000A9915D /* MagazineViewModel.dummy.swift in Sources */,
+				78B00BBA28F5661000A9915D /* MagazineModel.dummy.swift in Sources */,
 				78B00BBC28F5661000A9915D /* MagazineViewController.Layout.swift in Sources */,
 				B1D127DF28F09200007E3667 /* UIImage+.swift in Sources */,
 				B1E3F7D7290EDFD500005F17 /* BPSectionFactory.swift in Sources */,

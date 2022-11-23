@@ -13,73 +13,8 @@ import RxSwift
 import RxCocoa
 import RxRelay
 
-struct User {
-    let jwt: String
-    let name: String
-    let profileImageUrlString: String
-}
 
-struct Tattoo {
-    let imageUrl: String // imgUrl or UIImage?
-    let title: String
-    let price: Int
-}
-
-class MyPageUseCase {
-    func userProfile() -> Observable<User> {
-        return .just(.init(jwt: "afgad", name: "김타투", profileImageUrlString: "https://cdn.eyesmag.com/content/uploads/posts/2022/08/08/main-ad65ae47-5a50-456d-a41f-528b63071b7b.jpg"))
-    }
-    
-    func recentTattoo() -> Observable<[Tattoo]> {
-        return .just([
-            .init(imageUrl: "ㅁㄴㅇ", title: "타투 제목", price: 700000),
-            .init(imageUrl: "ㅁ", title: "타투 제목", price: 1700000),
-            .init(imageUrl: "ㄴ", title: "타투 제목", price: 2700000),
-            .init(imageUrl: "ㄴ", title: "타투 제목", price: 2700000),
-            .init(imageUrl: "ㄴ", title: "타투 제목", price: 2700000),
-            .init(imageUrl: "ㄴ", title: "타투 제목", price: 2700000),
-            .init(imageUrl: "ㄴ", title: "타투 제목", price: 2700000),
-            .init(imageUrl: "ㄴ", title: "타투 제목", price: 2700000),
-            .init(imageUrl: "ㄴ", title: "타투 제목", price: 2700000),
-            .init(imageUrl: "ㄴ", title: "타투 제목", price: 2700000),
-            .init(imageUrl: "ㄴ", title: "타투 제목", price: 2700000)
-        ])
-    }
-}
-
-class MyPageViewModel {
-    
-    // MARK: - Input
-    let viewWillAppear = PublishRelay<Void>()
-    
-    // MARK: - Output
-    let dataSourceDriver: Driver<[MyPageSection]>
-    
-    init(useCase: MyPageUseCase = MyPageUseCase()) {
-        let profileSectionDataObservable = viewWillAppear
-            .flatMap { useCase.userProfile() }
-        
-        let recentTattooSectionDataObservable = viewWillAppear
-            .flatMap { useCase.recentTattoo() }
-        
-        let menuSectionDataObservable = Observable.just(["공지사항", "문의하기", "서비스 이용약관", "개인정보 수집 및 이용", "신고 및 피드백", "로그아웃", "회원 탈퇴"])
-        
-        dataSourceDriver = Observable.combineLatest(
-            profileSectionDataObservable,
-            recentTattooSectionDataObservable,
-            menuSectionDataObservable
-        ) { firstSectionData, secondSectionData, thirdSectionData in
-            [
-                MyPageSection(items: [.profileSection(.init(user: firstSectionData))] ),
-                MyPageSection(items: secondSectionData.map { .recentTattooSection(.init(tattoo: $0)) }),
-                MyPageSection(items: thirdSectionData.map { .menuSection(.init(title: $0)) })
-            ]
-        }.asDriver(onErrorJustReturn: [])
-        
-    }
-}
-
-class MyPageViewController: UIViewController {
+final class MyPageViewController: UIViewController {
     enum Reusable {
         static let profileCell = ReusableCell<MyPageProfileCell>()
         static let tattooCell = ReusableCell<MyPageTattooCell>()
