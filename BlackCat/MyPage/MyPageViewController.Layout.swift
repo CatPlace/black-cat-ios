@@ -43,7 +43,7 @@ extension MyPageViewController {
     
     func recentTattooSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(160 / 375.0),
+            widthDimension: .fractionalWidth(1),
             heightDimension: .fractionalWidth(217 / 375.0)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -52,11 +52,14 @@ extension MyPageViewController {
             widthDimension: .fractionalWidth(160 / 375.0),
             heightDimension: .fractionalWidth(217 / 375.0)
         )
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
-                                                       subitems: [item])
+        
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize,
+                                                       subitem: item,
+                                                       count: 1)
+        group.contentInsets = .init(top: 1, leading: 1, bottom: 1, trailing: 1)
         
         let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .paging
+        section.orthogonalScrollingBehavior = .continuous
         return section
     }
     
@@ -87,7 +90,7 @@ extension MyPageViewController {
         
         section.interGroupSpacing = 15
         section.orthogonalScrollingBehavior = .none
-        section.contentInsets = .init(top: 0, leading: 0, bottom: 40, trailing: 0)
+        section.contentInsets = .init(top: 40, leading: 0, bottom: 40, trailing: 0)
         return section
     }
 }

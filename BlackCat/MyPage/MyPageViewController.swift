@@ -33,6 +33,14 @@ class MyPageUseCase {
         return .just([
             .init(imageUrl: "ㅁㄴㅇ", title: "타투 제목", price: 700000),
             .init(imageUrl: "ㅁ", title: "타투 제목", price: 1700000),
+            .init(imageUrl: "ㄴ", title: "타투 제목", price: 2700000),
+            .init(imageUrl: "ㄴ", title: "타투 제목", price: 2700000),
+            .init(imageUrl: "ㄴ", title: "타투 제목", price: 2700000),
+            .init(imageUrl: "ㄴ", title: "타투 제목", price: 2700000),
+            .init(imageUrl: "ㄴ", title: "타투 제목", price: 2700000),
+            .init(imageUrl: "ㄴ", title: "타투 제목", price: 2700000),
+            .init(imageUrl: "ㄴ", title: "타투 제목", price: 2700000),
+            .init(imageUrl: "ㄴ", title: "타투 제목", price: 2700000),
             .init(imageUrl: "ㄴ", title: "타투 제목", price: 2700000)
         ])
     }
