@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import RxRelay
 
+
 class MyPageMenuCellViewModel {
     
     let titleDriver: Driver<String>
@@ -20,14 +21,14 @@ class MyPageMenuCellViewModel {
     }
 }
 
-class MyPageMenuCell: BaseCollectionViewCell {
+class MyPageMenuCell: MyPageBaseCell {
     // MARK: - Properties
     var disposeBag = DisposeBag()
     
     // MARK: - Initializer
     override func initialize() {
-        setUI()
         configureCell()
+        setUI()
     }
     
     // MARK: - Life Cycle
@@ -49,15 +50,6 @@ class MyPageMenuCell: BaseCollectionViewCell {
         l.textColor = .init(hex: "#666666FF")
         return l
     }()
-    
-    func configureCell() {
-        layer.applyShadow(alpha: 0.15, y: 4, blur: UIScreen.main.bounds.width * 40 / 375.0)
-        
-        backgroundColor = .white
-        layer.cornerRadius = 15
-        contentView.layer.cornerRadius = 15
-        contentView.layer.masksToBounds = true
-    }
     
     func setUI() {
         addSubview(titleLabel)

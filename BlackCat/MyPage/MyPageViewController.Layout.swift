@@ -55,6 +55,8 @@ extension MyPageViewController {
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
+        
+        
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(160 / 375.0),
             heightDimension: .fractionalWidth(217 / 375.0)
@@ -63,10 +65,22 @@ extension MyPageViewController {
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize,
                                                        subitem: item,
                                                        count: 1)
-        group.contentInsets = .init(top: 1, leading: 1, bottom: 1, trailing: 1)
+        group.contentInsets = .init(top: 0, leading: 6, bottom: 0, trailing: 6)
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
+        
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .absolute(38)
+            ),
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        
+        section.boundarySupplementaryItems = [header]
+        
         return section
     }
     

@@ -35,7 +35,7 @@ class MyPageProfileCellViewModel {
             .asDriver(onErrorJustReturn: ())
         
         profileImageUrlStringDriver = loggedInUser
-            .map { $0.profileImageUrlString }
+            .map { $0.imageUrl }
             .asDriver(onErrorJustReturn: "")
         
         userNameDriver = loggedInUser
@@ -44,7 +44,7 @@ class MyPageProfileCellViewModel {
     }
 }
 
-class MyPageProfileCell: BaseCollectionViewCell {
+class MyPageProfileCell: MyPageBaseCell {
     // MARK: - Properties
     var disposeBag = DisposeBag()
     
@@ -85,8 +85,8 @@ class MyPageProfileCell: BaseCollectionViewCell {
     
     // MARK: - Initializer
     override func initialize() {
-        setUI()
         configureCell()
+        setUI()
     }
     
     // MARK: - Life Cycle
@@ -105,6 +105,7 @@ class MyPageProfileCell: BaseCollectionViewCell {
     let loginLabel: UILabel = {
         let l = UILabel()
         l.text = "로그인"
+        l.font = .boldSystemFont(ofSize: 20)
         return l
     }()
     let userImageView: UIImageView = {
@@ -249,14 +250,6 @@ extension MyPageProfileCell {
             $0.center.equalToSuperview()
         }
         
-    }
-    
-    func configureCell() {
-        layer.applyShadow(alpha: 0.15, y: 4, blur: UIScreen.main.bounds.width * 40 / 375.0)
-        backgroundColor = .white
-        layer.cornerRadius = 15
-        contentView.layer.cornerRadius = 15
-        contentView.layer.masksToBounds = true
     }
 }
 

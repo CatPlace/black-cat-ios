@@ -10,7 +10,7 @@ import Foundation
 struct User {
     let jwt: String
     let name: String
-    let profileImageUrlString: String
+    let imageUrl: String
 }
 
 struct Tattoo {

@@ -19,6 +19,7 @@ final class MyPageViewController: UIViewController {
         static let profileCell = ReusableCell<MyPageProfileCell>()
         static let tattooCell = ReusableCell<MyPageTattooCell>()
         static let menuCell = ReusableCell<MyPageMenuCell>()
+        static let tattooHeaderView = ReusableView<RecentTattooHeaderView>()
     }
     
     // MARK: - Properties
@@ -33,6 +34,7 @@ final class MyPageViewController: UIViewController {
                 return cell
             case .recentTattooSection(let viewModel):
                 let cell = collectionView.dequeue(Reusable.tattooCell, for: indexPath)
+                cell.bind(to: viewModel)
                 return cell
             case .menuSection(let viewModel):
                 let cell = collectionView.dequeue(Reusable.menuCell, for: indexPath)
@@ -45,9 +47,10 @@ final class MyPageViewController: UIViewController {
                   let self
             else { return UICollectionReusableView() }
             
-            // TODO: Title
-            return UICollectionReusableView()
+            return  collectionView.dequeue(Reusable.tattooHeaderView, kind: .header, for: indexPath)
         }
+        
+        
     )
     
     // MARK: - Binding
@@ -80,6 +83,7 @@ final class MyPageViewController: UIViewController {
         v.register(Reusable.profileCell)
         v.register(Reusable.tattooCell)
         v.register(Reusable.menuCell)
+        v.register(Reusable.tattooHeaderView, kind: .header)
         return v
     }()
 }
