@@ -20,6 +20,7 @@
 		78B00BBE28F5661000A9915D /* MagazineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BB328F5661000A9915D /* MagazineViewModel.swift */; };
 		78B00BBF28F5661000A9915D /* RecentMagazineFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BB528F5661000A9915D /* RecentMagazineFooterView.swift */; };
 		78B00BC028F5661000A9915D /* LastMagazineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BB628F5661000A9915D /* LastMagazineHeaderView.swift */; };
+		78F235E0292E07B20010E7D7 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F235DF292E07B20010E7D7 /* MyPageViewController.swift */; };
 		8E2D8C4828F2EC27004B514D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4728F2EC27004B514D /* HomeViewController.swift */; };
 		8E2D8C4A28F2ECD2004B514D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4928F2ECD2004B514D /* HomeViewModel.swift */; };
 		8E2D8C4C28F2ED03004B514D /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4B28F2ED03004B514D /* HomeModel.swift */; };
@@ -180,6 +181,7 @@
 		78B00BB328F5661000A9915D /* MagazineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineViewModel.swift; sourceTree = "<group>"; };
 		78B00BB528F5661000A9915D /* RecentMagazineFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentMagazineFooterView.swift; sourceTree = "<group>"; };
 		78B00BB628F5661000A9915D /* LastMagazineHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastMagazineHeaderView.swift; sourceTree = "<group>"; };
+		78F235DF292E07B20010E7D7 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		8E2D8C4728F2EC27004B514D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8E2D8C4928F2ECD2004B514D /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		8E2D8C4B28F2ED03004B514D /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
@@ -381,6 +383,14 @@
 				78B00BB628F5661000A9915D /* LastMagazineHeaderView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		78F235DE292E079D0010E7D7 /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				78F235DF292E07B20010E7D7 /* MyPageViewController.swift */,
+			);
+			path = MyPage;
 			sourceTree = "<group>";
 		};
 		8E2D8C4628F2EBFA004B514D /* Home */ = {
@@ -593,6 +603,7 @@
 				B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */,
 				B1D127DC28F08DCA007E3667 /* TabBarViewController.swift */,
 				7867503D29273D2A005139ED /* Login */,
+				78F235DE292E079D0010E7D7 /* MyPage */,
 				8E2D8C4628F2EBFA004B514D /* Home */,
 				78B00BA928F5661000A9915D /* Magazine */,
 				B1E4985628EE859600B469AC /* MagazineDetail */,
@@ -969,6 +980,7 @@
 				B1E3F7C0290EC1AD00005F17 /* BusinessProfileReactor.swift in Sources */,
 				B1E5E471291AC42F00CC8FBE /* FilterCellViewModel.swift in Sources */,
 				B1E361E428F28C3100A29CC8 /* MagazineDetailStroyShareButtonCell.swift in Sources */,
+				78F235E0292E07B20010E7D7 /* MyPageViewController.swift in Sources */,
 				B1E4985F28EE886900B469AC /* MagazineDetailSection.swift in Sources */,
 				B1E4987028EEADC900B469AC /* MagazineDetailSectionFactory.swift in Sources */,
 				8E2D8C5C28F2EE69004B514D /* HomeTattooAlbumCell.swift in Sources */,
@@ -1250,6 +1262,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = W9K8S57VSZ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BlackCat/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "작품 및 도안 등록을 위해 라이브러리 접근 권한이 필요해요.";
@@ -1280,7 +1293,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = W9K8S57VSZ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BlackCat/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "작품 및 도안 등록을 위해 라이브러리 접근 권한이 필요해요.";

@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import BlackCatSDK
+
 import RxSwift
 import RxCocoa
 import RxRelay
@@ -25,17 +27,42 @@ class BlackCatSocialLoginSDK {
         }
     }
     
-//    func accessToken(type: SocialLoginType) {
-//        switch type {
-//        case .kakao:
+//    let prev = {
 //
-//        case .apple:
-//
-//        }
 //    }
+//
+//    prev.dispose()
+//
+//    prev = {
+//
+//    }
+    
+    func accessToken(type: SocialLoginType) {
+        switch type {
+        case .kakao:
+            return
+        case .apple:
+            return
+        }
+    }
+    
+//    func
+    
 }
 
 // BlackCat에서 사용할 부분 (BlackCatSocialLoginSDK, 우리가 만든 UserRepository에 의존)
 public class BlackCatLoginSDK {
+    func login() {
+        
+    }
+    
+    func logout() {
+        
+    }
+    
+    func 탈퇴() {
+        
+    }
+    
     
 }
