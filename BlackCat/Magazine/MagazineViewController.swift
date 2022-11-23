@@ -17,7 +17,7 @@ class MagazineViewController: UIViewController {
     enum Reusable {
         static let recentMagazineCell = ReusableCell<RecentMagazineCell>()
         static let recentMagazineFooterView = ReusableView<RecentMagazineFooterView>()
-        static let lastMagazineHeaderView = ReusableView<LastMagazineHeaderView>()
+        static let lastMagazineHeaderView = ReusableView<RecentTattooHeaderView>()
         static let lastMagazinecell = ReusableCell<LastMagazineCell>()
     }
     
@@ -54,9 +54,11 @@ class MagazineViewController: UIViewController {
                 }
                 return self.recentMagazineFooterView!
             case .lastMagazine:
-                return collectionView.dequeue(Reusable.lastMagazineHeaderView,
-                                              kind: .header,
-                                              for: indexPath)
+                let v = collectionView.dequeue(Reusable.lastMagazineHeaderView,
+                                               kind: .header,
+                                               for: indexPath)
+                v.bind(to: .init(text: "지난 이야기", backgroundColor: .white))
+                return v
             }
         }
     )

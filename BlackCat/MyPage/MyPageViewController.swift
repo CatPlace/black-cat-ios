@@ -47,7 +47,9 @@ final class MyPageViewController: UIViewController {
                   let self
             else { return UICollectionReusableView() }
             
-            return  collectionView.dequeue(Reusable.tattooHeaderView, kind: .header, for: indexPath)
+            let v = collectionView.dequeue(Reusable.tattooHeaderView, kind: .header, for: indexPath)
+            v.bind(to: .init(text: "최근 본 타투", backgroundColor: .clear))
+            return v
         }
         
         

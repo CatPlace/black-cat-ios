@@ -71,20 +71,19 @@ class MyPageTattooCell: MyPageBaseCell {
     let titleLabel: UILabel = {
         let l = UILabel()
         l.font = .boldSystemFont(ofSize: 16)
-        l.backgroundColor = .red
         return l
     }()
     let userNameLabel: UILabel = {
         let l = UILabel()
         l.font = .systemFont(ofSize: 16)
-        l.backgroundColor = .blue
         return l
     }()
     func setUI() {
         addSubview(VStackView)
         
         VStackView.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(10)
+            $0.top.leading.trailing.equalToSuperview().inset(10)
+            $0.bottom.equalToSuperview().inset(20)
         }
         
         [tattooImageView, titleLabel, userNameLabel].forEach { VStackView.addArrangedSubview($0) }

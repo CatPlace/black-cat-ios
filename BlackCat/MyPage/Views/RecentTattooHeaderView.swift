@@ -6,17 +6,37 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import RxRelay
 
 struct RecentTattooHeaderViewModel {
     
-    init(text: String) {
-        
+    let textDriver: Driver<String>
+    let backgroundColorDriver: Driver<UIColor>
+
+    init(text: String, backgroundColor: UIColor) {
+        textDriver = .just(text)
+        backgroundColorDriver = .just(backgroundColor)
     }
 }
 
 class RecentTattooHeaderView: UICollectionReusableView {
-    // MARK: - Life Cycle
+    // MARK: - Properties
+    var disposeBag = DisposeBag()
     
+    // MARK: - Binding
+    func bind(to viewModel: RecentTattooHeaderViewModel) {
+        viewModel.textDriver
+            .drive(headerLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.backgroundColorDriver
+            .drive(rx.backgroundColor)
+            .disposed(by: disposeBag)
+    }
+    
+    // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .clear
@@ -30,7 +50,6 @@ class RecentTattooHeaderView: UICollectionReusableView {
     // MARK: - UIComponents
     let headerLabel: UILabel = {
         let l = UILabel()
-        l.text = "최근 본 타투"
         l.font = .boldSystemFont(ofSize: 20)
         return l
     }()
