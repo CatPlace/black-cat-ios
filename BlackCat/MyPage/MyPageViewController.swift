@@ -16,6 +16,7 @@ import RxRelay
 struct User {
     let jwt: String
     let name: String
+    let profileImageUrlString: String
 }
 
 struct Tattoo {
@@ -26,7 +27,7 @@ struct Tattoo {
 
 class MyPageUseCase {
     func userProfile() -> Observable<User> {
-        return .just(.init(jwt: "afgad", name: "김타투"))
+        return .just(.init(jwt: "afgad", name: "김타투", profileImageUrlString: "https://cdn.eyesmag.com/content/uploads/posts/2022/08/08/main-ad65ae47-5a50-456d-a41f-528b63071b7b.jpg"))
     }
     
     func recentTattoo() -> Observable<[Tattoo]> {
@@ -93,11 +94,10 @@ class MyPageViewController: UIViewController {
             switch item {
             case .profileSection(let viewModel):
                 let cell = collectionView.dequeue(Reusable.profileCell, for: indexPath)
-                cell.backgroundColor = .red
+                cell.bind(to: viewModel)
                 return cell
             case .recentTattooSection(let viewModel):
                 let cell = collectionView.dequeue(Reusable.tattooCell, for: indexPath)
-                cell.backgroundColor = .black
                 return cell
             case .menuSection(let viewModel):
                 let cell = collectionView.dequeue(Reusable.menuCell, for: indexPath)

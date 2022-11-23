@@ -21,15 +21,19 @@ extension MyPageViewController {
     }
     
     func profileSection() -> NSCollectionLayoutSection {
+        let itemWidthRatio: CGFloat = 335 / 375
+        let itemHeightRatio: CGFloat = 132 / 335
+        let itemLeadingTrailingInset: CGFloat = view.frame.width * (1 - itemWidthRatio) / 2.0
+        
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .fractionalWidth(0.6)
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalWidth(itemHeightRatio)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .fractionalWidth(0.6)
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalWidth(itemHeightRatio)
         )
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
@@ -37,7 +41,10 @@ extension MyPageViewController {
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .none
-
+        section.contentInsets = .init(top: 30,
+                                      leading: itemLeadingTrailingInset,
+                                      bottom: 40,
+                                      trailing: itemLeadingTrailingInset)
         return section
     }
     
@@ -64,23 +71,18 @@ extension MyPageViewController {
     }
     
     func menuSection() -> NSCollectionLayoutSection {
-        let itemWidth: CGFloat = 335 / 375
-        let itemHeight: CGFloat = 50 / 375
-        let itemLeadingTrailingInset: CGFloat = view.frame.width * (1 - itemWidth) / 2.0
+        let itemWidthRatio: CGFloat = 335 / 375
+        let itemHeightRatio: CGFloat = 50 / 335
+        let itemLeadingTrailingInset: CGFloat = view.frame.width * (1 - itemWidthRatio) / 2.0
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalWidth(itemHeight)
+            heightDimension: .fractionalWidth(itemHeightRatio)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        item.contentInsets = .init(top: 0,
-                                   leading: itemLeadingTrailingInset,
-                                   bottom: 0,
-                                   trailing: itemLeadingTrailingInset)
-        
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalWidth(itemHeight)
+            heightDimension: .fractionalWidth(itemHeightRatio)
         )
         
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize,
@@ -90,7 +92,10 @@ extension MyPageViewController {
         
         section.interGroupSpacing = 15
         section.orthogonalScrollingBehavior = .none
-        section.contentInsets = .init(top: 40, leading: 0, bottom: 40, trailing: 0)
+        section.contentInsets = .init(top: 40,
+                                      leading: itemLeadingTrailingInset,
+                                      bottom: 40,
+                                      trailing: itemLeadingTrailingInset)
         return section
     }
 }

@@ -27,7 +27,7 @@ class MyPageMenuCell: BaseCollectionViewCell {
     // MARK: - Initializer
     override func initialize() {
         setUI()
-        setupContentView()
+        configureCell()
     }
     
     // MARK: - Life Cycle
@@ -46,18 +46,17 @@ class MyPageMenuCell: BaseCollectionViewCell {
     // MARK: - UIComponents
     let titleLabel: UILabel = {
         let l = UILabel()
-        l.textColor = .init(hex: "#666666")
+        l.textColor = .init(hex: "#666666FF")
         return l
     }()
     
-    func setupContentView() {
-        layer.applyShadow(alpha: 0.15, y: 4, blur: 40)
+    func configureCell() {
+        layer.applyShadow(alpha: 0.15, y: 4, blur: UIScreen.main.bounds.width * 40 / 375.0)
         
         backgroundColor = .white
         layer.cornerRadius = 15
         contentView.layer.cornerRadius = 15
         contentView.layer.masksToBounds = true
-
     }
     
     func setUI() {
