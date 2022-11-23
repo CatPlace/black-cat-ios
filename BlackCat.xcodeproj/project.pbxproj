@@ -21,6 +21,11 @@
 		78B00BBF28F5661000A9915D /* RecentMagazineFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BB528F5661000A9915D /* RecentMagazineFooterView.swift */; };
 		78B00BC028F5661000A9915D /* LastMagazineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BB628F5661000A9915D /* LastMagazineHeaderView.swift */; };
 		78F235E0292E07B20010E7D7 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F235DF292E07B20010E7D7 /* MyPageViewController.swift */; };
+		78F235E3292E09D30010E7D7 /* MyPageSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F235E2292E09D30010E7D7 /* MyPageSection.swift */; };
+		78F235E5292E09F40010E7D7 /* MyPageViewController.Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F235E4292E09F40010E7D7 /* MyPageViewController.Layout.swift */; };
+		78F235EA292E0F8C0010E7D7 /* MyPageProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F235E9292E0F8C0010E7D7 /* MyPageProfileCell.swift */; };
+		78F235EC292E0F970010E7D7 /* MyPageTattooCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F235EB292E0F970010E7D7 /* MyPageTattooCell.swift */; };
+		78F235EE292E0FA40010E7D7 /* MyPageMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F235ED292E0FA40010E7D7 /* MyPageMenuCell.swift */; };
 		8E2D8C4828F2EC27004B514D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4728F2EC27004B514D /* HomeViewController.swift */; };
 		8E2D8C4A28F2ECD2004B514D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4928F2ECD2004B514D /* HomeViewModel.swift */; };
 		8E2D8C4C28F2ED03004B514D /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4B28F2ED03004B514D /* HomeModel.swift */; };
@@ -182,6 +187,11 @@
 		78B00BB528F5661000A9915D /* RecentMagazineFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentMagazineFooterView.swift; sourceTree = "<group>"; };
 		78B00BB628F5661000A9915D /* LastMagazineHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastMagazineHeaderView.swift; sourceTree = "<group>"; };
 		78F235DF292E07B20010E7D7 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		78F235E2292E09D30010E7D7 /* MyPageSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageSection.swift; sourceTree = "<group>"; };
+		78F235E4292E09F40010E7D7 /* MyPageViewController.Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.Layout.swift; sourceTree = "<group>"; };
+		78F235E9292E0F8C0010E7D7 /* MyPageProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageProfileCell.swift; sourceTree = "<group>"; };
+		78F235EB292E0F970010E7D7 /* MyPageTattooCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTattooCell.swift; sourceTree = "<group>"; };
+		78F235ED292E0FA40010E7D7 /* MyPageMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageMenuCell.swift; sourceTree = "<group>"; };
 		8E2D8C4728F2EC27004B514D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8E2D8C4928F2ECD2004B514D /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		8E2D8C4B28F2ED03004B514D /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
@@ -389,8 +399,29 @@
 			isa = PBXGroup;
 			children = (
 				78F235DF292E07B20010E7D7 /* MyPageViewController.swift */,
+				78F235E4292E09F40010E7D7 /* MyPageViewController.Layout.swift */,
+				78F235E1292E09C30010E7D7 /* MyPageSection */,
+				78F235E6292E0F570010E7D7 /* Cells */,
 			);
 			path = MyPage;
+			sourceTree = "<group>";
+		};
+		78F235E1292E09C30010E7D7 /* MyPageSection */ = {
+			isa = PBXGroup;
+			children = (
+				78F235E2292E09D30010E7D7 /* MyPageSection.swift */,
+			);
+			path = MyPageSection;
+			sourceTree = "<group>";
+		};
+		78F235E6292E0F570010E7D7 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				78F235E9292E0F8C0010E7D7 /* MyPageProfileCell.swift */,
+				78F235EB292E0F970010E7D7 /* MyPageTattooCell.swift */,
+				78F235ED292E0FA40010E7D7 /* MyPageMenuCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		8E2D8C4628F2EBFA004B514D /* Home */ = {
@@ -974,6 +1005,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E2D8C5E28F2EE69004B514D /* HomeTattooAlbumCellViewModel.swift in Sources */,
+				78F235EA292E0F8C0010E7D7 /* MyPageProfileCell.swift in Sources */,
 				B1D2D107290AC7B5005B76BD /* UIScrollView+Rx.swift in Sources */,
 				B1D89C96290E845700C8B7F1 /* BPThumbnailModel.swift in Sources */,
 				B1D89C98290E879B00C8B7F1 /* BPBaseCell.swift in Sources */,
@@ -999,6 +1031,7 @@
 				78B00BB828F5661000A9915D /* LastMagazineCell.swift in Sources */,
 				8E2D8C5128F2EDF3004B514D /* HomeCategorySectionBackgroundReusableView.swift in Sources */,
 				8EE9A0C128F3CB0D003D7761 /* HomeSection.swift in Sources */,
+				78F235E3292E09D30010E7D7 /* MyPageSection.swift in Sources */,
 				B1D127E228F0923C007E3667 /* Asset.swift in Sources */,
 				B1E986B328FE9E0B00962F5B /* FilterLoactionService.swift in Sources */,
 				B1D5BD2429174EEC00A85D4A /* UIViewController+.swift in Sources */,
@@ -1012,7 +1045,9 @@
 				B1E3F7DE290F009F00005F17 /* BusinessProfileViewController.BPMulticastDelegate.swift in Sources */,
 				B1E4986728EE9BE800B469AC /* MagazineDetailBaseCell.swift in Sources */,
 				B1E3F7DC290EE9D500005F17 /* MulticastDelegate.swift in Sources */,
+				78F235E5292E09F40010E7D7 /* MyPageViewController.Layout.swift in Sources */,
 				8E2D8C5928F2EE69004B514D /* HomeEmptyCell.swift in Sources */,
+				78F235EC292E0F970010E7D7 /* MyPageTattooCell.swift in Sources */,
 				B1E986AB28FE888800962F5B /* FilterTaskService.swift in Sources */,
 				B1CDE8FB29166C7E00ACB9AC /* BPPriceInfoEditService.swift in Sources */,
 				B1D89C91290E7D2100C8B7F1 /* BPContentCell.swift in Sources */,
@@ -1051,6 +1086,7 @@
 				B1D127DF28F09200007E3667 /* UIImage+.swift in Sources */,
 				B1E3F7D7290EDFD500005F17 /* BPSectionFactory.swift in Sources */,
 				B1CDE90529169FD500ACB9AC /* AlertService.swift in Sources */,
+				78F235EE292E0FA40010E7D7 /* MyPageMenuCell.swift in Sources */,
 				B1E4986928EE9E3500B469AC /* MagazineDetailViewReactor.swift in Sources */,
 				B1D3364328F1CD1B00826636 /* UITableView+.swift in Sources */,
 				B1E3F7C8290ECAA100005F17 /* BPContentSectionHeaderReactor.swift in Sources */,

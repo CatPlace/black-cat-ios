@@ -63,6 +63,4 @@ public class BlackCatLoginSDK {
     func 탈퇴() {
         
     }
-    
-    
 }
