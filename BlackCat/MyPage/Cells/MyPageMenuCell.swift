@@ -11,13 +11,30 @@ import RxSwift
 import RxCocoa
 import RxRelay
 
+// 문의하기랑 신고 및 피드백 ... ?
+enum MyPageMenuType: String {
+    case notice = "공지사항"
+    case inquiry = "문의하기"
+    case termOfService = "서비스 이용약관"
+    case PersonalInfoAgreement = "개인정보 수집 및 이용"
+    case feedback = "신고 및 피드백"
+    case logout = "로그아웃"
+    case withdrawal = "회원 탈퇴"
+    
+    func nextVC() -> UIViewController {
+        switch self {
+        default:
+            return HomeViewController()
+        }
+    }
+}
 
 class MyPageMenuCellViewModel {
     
     let titleDriver: Driver<String>
     
-    init(title: String) {
-        titleDriver = .just(title)
+    init(type: MyPageMenuType) {
+        titleDriver = .just(type.rawValue)
     }
 }
 

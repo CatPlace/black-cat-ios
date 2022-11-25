@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import RxRelay
 
+
 final class MyPageViewModel {
     
     // MARK: - Input
@@ -26,7 +27,15 @@ final class MyPageViewModel {
         let recentTattooSectionDataObservable = viewWillAppear
             .flatMap { useCase.recentTattoo() }
         
-        let menuSectionDataObservable = Observable.just(["공지사항", "문의하기", "서비스 이용약관", "개인정보 수집 및 이용", "신고 및 피드백", "로그아웃", "회원 탈퇴"])
+        let menuSectionDataObservable: Observable<[MyPageMenuType]> = Observable.just([
+            .notice,
+            .inquiry,
+            .termOfService,
+            .PersonalInfoAgreement,
+            .feedback,
+            .logout,
+            .withdrawal
+        ])
         
         dataSourceDriver = Observable.combineLatest(
             profileSectionDataObservable,
@@ -36,7 +45,7 @@ final class MyPageViewModel {
             [
                 MyPageSection(items: [.profileSection(.init(user: firstSectionData))] ),
                 MyPageSection(items: secondSectionData.map { .recentTattooSection(.init(tattoo: $0)) }),
-                MyPageSection(items: thirdSectionData.map { .menuSection(.init(title: $0)) })
+                MyPageSection(items: thirdSectionData.map { .menuSection(.init(type: $0)) })
             ]
         }.asDriver(onErrorJustReturn: [])
         
