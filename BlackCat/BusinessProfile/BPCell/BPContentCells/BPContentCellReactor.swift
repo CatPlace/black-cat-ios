@@ -16,6 +16,7 @@ final class BPContentCellReactor: Reactor {
         /** 프로필 */ case fetchProfiles([BPProfileModel])
         /** 작품보기 */ case fetchProducts([BPProductModel])
         /** 후기 */ case fetchReviews([BPReviewModel])
+        /** 견적문의 */ case fetchPriceInfo([BPPriceInfoModel])
     }
     
     struct State {
@@ -23,6 +24,7 @@ final class BPContentCellReactor: Reactor {
         var profiles: [BPProfileModel] = []
         var products: [BPProductModel] = []
         var reviews: [BPReviewModel] = []
+        var priceInfos: [BPPriceInfoModel] = []
         
         init(contentModel: BPContentModel) {
             self.contentModel = contentModel
@@ -42,7 +44,8 @@ final class BPContentCellReactor: Reactor {
             return .concat([
                 .just(.fetchProfiles(provider.fetchProfiles())),
                 .just(.fetchProducts(provider.fetchProducts())),
-                .just(.fetchReviews(provider.fetchReviews()))
+                .just(.fetchReviews(provider.fetchReviews())),
+                .just(.fetchPriceInfo(provider.fetchPriceInfos()))
             ])
         }
     }
@@ -58,6 +61,9 @@ final class BPContentCellReactor: Reactor {
             return newState
         case .fetchReviews(let reviews):
             newState.reviews = reviews
+            return newState
+        case .fetchPriceInfo(let priceInfos):
+            newState.priceInfos = priceInfos
             return newState
         }
     }
