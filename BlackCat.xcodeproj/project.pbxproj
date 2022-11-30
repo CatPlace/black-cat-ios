@@ -22,7 +22,6 @@
 		78F235E0292E07B20010E7D7 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F235DF292E07B20010E7D7 /* MyPageViewController.swift */; };
 		78F235E3292E09D30010E7D7 /* MyPageSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F235E2292E09D30010E7D7 /* MyPageSection.swift */; };
 		78F235E5292E09F40010E7D7 /* MyPageViewController.Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F235E4292E09F40010E7D7 /* MyPageViewController.Layout.swift */; };
-		78F235EA292E0F8C0010E7D7 /* MyPageProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F235E9292E0F8C0010E7D7 /* MyPageProfileCell.swift */; };
 		78F235EC292E0F970010E7D7 /* MyPageTattooCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F235EB292E0F970010E7D7 /* MyPageTattooCell.swift */; };
 		78F235EE292E0FA40010E7D7 /* MyPageMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F235ED292E0FA40010E7D7 /* MyPageMenuCell.swift */; };
 		78F235F1292E813B0010E7D7 /* MyPageTestUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F235F0292E813B0010E7D7 /* MyPageTestUseCase.swift */; };
@@ -193,7 +192,6 @@
 		78F235DF292E07B20010E7D7 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		78F235E2292E09D30010E7D7 /* MyPageSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageSection.swift; sourceTree = "<group>"; };
 		78F235E4292E09F40010E7D7 /* MyPageViewController.Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.Layout.swift; sourceTree = "<group>"; };
-		78F235E9292E0F8C0010E7D7 /* MyPageProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageProfileCell.swift; sourceTree = "<group>"; };
 		78F235EB292E0F970010E7D7 /* MyPageTattooCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTattooCell.swift; sourceTree = "<group>"; };
 		78F235ED292E0FA40010E7D7 /* MyPageMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageMenuCell.swift; sourceTree = "<group>"; };
 		78F235F0292E813B0010E7D7 /* MyPageTestUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTestUseCase.swift; sourceTree = "<group>"; };
@@ -430,7 +428,6 @@
 			isa = PBXGroup;
 			children = (
 				78F235F6292E84190010E7D7 /* MyPageBaseCell.swift */,
-				78F235E9292E0F8C0010E7D7 /* MyPageProfileCell.swift */,
 				78F235EB292E0F970010E7D7 /* MyPageTattooCell.swift */,
 				78F235ED292E0FA40010E7D7 /* MyPageMenuCell.swift */,
 			);
@@ -1035,7 +1032,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E2D8C5E28F2EE69004B514D /* HomeTattooAlbumCellViewModel.swift in Sources */,
-				78F235EA292E0F8C0010E7D7 /* MyPageProfileCell.swift in Sources */,
 				B1D2D107290AC7B5005B76BD /* UIScrollView+Rx.swift in Sources */,
 				B1D89C96290E845700C8B7F1 /* BPThumbnailModel.swift in Sources */,
 				B1D89C98290E879B00C8B7F1 /* BPBaseCell.swift in Sources */,
