@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7867A625293741C000FC1160 /* LastMagazineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7867A624293741C000FC1160 /* LastMagazineHeaderView.swift */; };
 		78858BEC28F6F4E400EC7BF7 /* MagazineSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78858BEB28F6F4E300EC7BF7 /* MagazineSection.swift */; };
 		78B00BB728F5661000A9915D /* RecentMagazineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BAB28F5661000A9915D /* RecentMagazineCell.swift */; };
 		78B00BB828F5661000A9915D /* LastMagazineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BAC28F5661000A9915D /* LastMagazineCell.swift */; };
@@ -172,6 +173,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7867A624293741C000FC1160 /* LastMagazineHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastMagazineHeaderView.swift; sourceTree = "<group>"; };
 		78858BEB28F6F4E300EC7BF7 /* MagazineSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineSection.swift; sourceTree = "<group>"; };
 		78B00BAB28F5661000A9915D /* RecentMagazineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentMagazineCell.swift; sourceTree = "<group>"; };
 		78B00BAC28F5661000A9915D /* LastMagazineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastMagazineCell.swift; sourceTree = "<group>"; };
@@ -391,6 +393,7 @@
 			isa = PBXGroup;
 			children = (
 				78B00BB528F5661000A9915D /* RecentMagazineFooterView.swift */,
+				7867A624293741C000FC1160 /* LastMagazineHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1046,6 +1049,7 @@
 				B1D3364328F1CD1B00826636 /* UITableView+.swift in Sources */,
 				B1E3F7C8290ECAA100005F17 /* BPContentSectionHeaderReactor.swift in Sources */,
 				B1EE64FA28FA4E600055A4F1 /* BottomSheetTransitioningDelegate.swift in Sources */,
+				7867A625293741C000FC1160 /* LastMagazineHeaderView.swift in Sources */,
 				B1CA040628F00CC1004A6027 /* MagazineDetailImageCell.swift in Sources */,
 				8EFC9FE32912281500A83D3D /* CategoryPaperView.UITableView.swift in Sources */,
 				B12C1DC728ED219C0089964E /* UIVIewController+Rx.swift in Sources */,
