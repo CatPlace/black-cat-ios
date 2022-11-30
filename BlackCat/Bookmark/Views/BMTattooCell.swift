@@ -25,18 +25,44 @@ class BMTattooCell: UICollectionViewCell {
     // MARK: - Binding
 
     func bind(to viewModel: BMTattooCellViewModel) {
+        viewModel.selectNumber
+            .debug(";;")
+            .subscribe { _ in
+
+            }
+            .disposed(by: disposeBag)
+
         if let url = URL(string: viewModel.imageURLString) {
             Nuke.loadImage(with: url, into: thumbnailImageView)
         }
-        editFilterView.selectNumberLabel.text = viewModel.selectNumber
+//        editFilterView.selectNumberLabel.text = viewModel.selectNumberText
         print("viewModelIMageURLS: \(viewModel.imageURLString)")
 
+//        print(address(of: viewModel.selectNumber))
+        print(address(o: viewModel))
+
         viewModel.showEditView
-            .debug("ff")
+            .debug("BMTattooCell ShowEditView")
             .drive(with: self) { owner, isHidden in
                 owner.editFilterView.isHidden = isHidden
             }
             .disposed(by: disposeBag)
+
+        viewModel.selectNumberText
+            .debug("BMTattooCell SelectNumberText")
+            .drive(with: self) { owner, text in
+                owner.editFilterView.selectNumberLabel.text = text
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func address(of object: UnsafeRawPointer) -> String {
+        let address = Int(bitPattern: object)
+        return String(format: "%p", address)
+    }
+
+    func address<T: AnyObject>(o: T) -> Int {
+        return unsafeBitCast(o, to: Int.self)
     }
 
     // MARK: - Function

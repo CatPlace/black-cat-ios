@@ -36,7 +36,7 @@ class BookmarkViewController: UIViewController {
     // MARK: - Properties
 
     let pages: [UIViewController]
-    let viewModel = BookmarkViewModel()
+    let viewModel = BookmarkViewModel(bookmarkPageViewModels: [BookmarkTattooViewModel(), BookmarkTattooViewModel()])
     var editMode: EditMode = .edit
 
     // MARK: - Binding
@@ -46,6 +46,8 @@ class BookmarkViewController: UIViewController {
             .map { _ in self.editMode }
             .bind(to: viewModel.didTapEditBarButtonItem)
             .disposed(by: disposeBag)
+
+
 
         viewModel.updateModeDriver
             .drive(with: self) { owner, type in
@@ -73,8 +75,8 @@ class BookmarkViewController: UIViewController {
 
     init() {
         self.pages = [
-            BookmarkTattooViewController(viewModel: viewModel.bookmarkTattooViewModel),
-            BookmarkMagazineViewController()
+            BookmarkTattooViewController(viewModel: viewModel.bookmarkPageViewModels[0]),
+            BookmarkMagazineViewController(viewModel: viewModel.bookmarkPageViewModels[1])
         ]
 
         super.init(nibName: nil, bundle: nil)
@@ -171,5 +173,6 @@ extension BookmarkViewController {
 extension BookmarkViewController: BMTabMenuDelegate {
     func selectedButtonTag(tag: Int) {
         pageViewConroller.setViewControllers([pages[tag]], direction: .forward, animated: false)
+        viewModel.currentShowingPageIndex.accept(tag)
     }
 }

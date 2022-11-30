@@ -18,6 +18,7 @@
 		78B00BBE28F5661000A9915D /* MagazineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BB328F5661000A9915D /* MagazineViewModel.swift */; };
 		78B00BBF28F5661000A9915D /* RecentMagazineFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BB528F5661000A9915D /* RecentMagazineFooterView.swift */; };
 		78B00BC028F5661000A9915D /* LastMagazineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BB628F5661000A9915D /* LastMagazineHeaderView.swift */; };
+		8E0D37E8292F5B58000AF41D /* BMMagazineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0D37E7292F5B58000AF41D /* BMMagazineCell.swift */; };
 		8E2D8C4828F2EC27004B514D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4728F2EC27004B514D /* HomeViewController.swift */; };
 		8E2D8C4A28F2ECD2004B514D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4928F2ECD2004B514D /* HomeViewModel.swift */; };
 		8E2D8C4C28F2ED03004B514D /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4B28F2ED03004B514D /* HomeModel.swift */; };
@@ -190,6 +191,7 @@
 		78B00BB328F5661000A9915D /* MagazineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineViewModel.swift; sourceTree = "<group>"; };
 		78B00BB528F5661000A9915D /* RecentMagazineFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentMagazineFooterView.swift; sourceTree = "<group>"; };
 		78B00BB628F5661000A9915D /* LastMagazineHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastMagazineHeaderView.swift; sourceTree = "<group>"; };
+		8E0D37E7292F5B58000AF41D /* BMMagazineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMMagazineCell.swift; sourceTree = "<group>"; };
 		8E2D8C4728F2EC27004B514D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8E2D8C4928F2ECD2004B514D /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		8E2D8C4B28F2ED03004B514D /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
@@ -433,8 +435,8 @@
 				8E7E9CD1291C8CF700D09157 /* BookmarkViewController.swift */,
 				8EBB614729274C0800F640F5 /* BookmarkViewModel.swift */,
 				8E7E9CE1291C927200D09157 /* BookmarkTattooViewController.swift */,
-				8EBB614929274D9300F640F5 /* BookmarkTattooViewModel.swift */,
 				8E7E9CE3291C92B000D09157 /* BookmarkMagazineViewController.swift */,
+				8EBB614929274D9300F640F5 /* BookmarkTattooViewModel.swift */,
 				8E7E9CD3291C8E1100D09157 /* BMTabMenu */,
 				8EBB613C2927361A00F640F5 /* Views */,
 			);
@@ -465,6 +467,7 @@
 			isa = PBXGroup;
 			children = (
 				8EBB61412927389600F640F5 /* BMTattooCell.swift */,
+				8E0D37E7292F5B58000AF41D /* BMMagazineCell.swift */,
 				8EBB6143292738FA00F640F5 /* BMTattooCellViewModel.swift */,
 				8EBB614529273CE300F640F5 /* BMEditFilterView.swift */,
 			);
@@ -1036,6 +1039,7 @@
 				8E2D8C4A28F2ECD2004B514D /* HomeViewModel.swift in Sources */,
 				B1E3F7B6290EB7E700005F17 /* BPProductModel.swift in Sources */,
 				B1EE651728FA8DDE0055A4F1 /* FilterBaseCell.swift in Sources */,
+				8E0D37E8292F5B58000AF41D /* BMMagazineCell.swift in Sources */,
 				B1D3364128F1CCFA00826636 /* UICollectionView+.swift in Sources */,
 				B1E986B128FE975C00962F5B /* FilterService.swift in Sources */,
 				B1D89C9A290E888200C8B7F1 /* BPThumbnailImageCellReactor.swift in Sources */,
@@ -1322,6 +1326,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VP52T77886;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BlackCat/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "작품 및 도안 등록을 위해 라이브러리 접근 권한이 필요해요.";
