@@ -88,6 +88,10 @@ final class MyPageViewController: UIViewController {
         v.register(Reusable.tattooHeaderView, kind: .header)
         return v
     }()
+    
+    deinit {
+        print("deinit")
+    }
 }
 
 extension MyPageViewController {
