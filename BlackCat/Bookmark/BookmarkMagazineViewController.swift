@@ -16,7 +16,7 @@ class BookmarkMagazineViewController: UIViewController {
 
     let disposeBag = DisposeBag()
     enum Reusable {
-        static let magazineCell = ReusableCell<LastMagazineCell>()
+        static let magazineCell = ReusableCell<BMMagazineCell>()
     }
 
     // MARK: - Properties
@@ -26,6 +26,25 @@ class BookmarkMagazineViewController: UIViewController {
     // MARK: - Binding
 
     private func bind(to viewModel: BookmarkTattooViewModel) {
+        rx.viewDidLoad
+            .bind(to: viewModel.viewDidLoad)
+            .disposed(by: disposeBag)
+
+        collectionView.rx.itemSelected
+            .map { $0.row }
+            .bind(to: viewModel.didSelectItem)
+            .disposed(by: disposeBag)
+
+        viewModel.tattooItems
+            .drive(collectionView.rx.items(Reusable.magazineCell)) { [weak self] _, viewModel, cell in
+                self?.viewModel.editMode
+                    .map { $0 != .edit }
+                    .bind(to: viewModel.showing)
+                    .disposed(by: cell.disposeBag)
+
+                cell.bind(to: viewModel)
+            }
+            .disposed(by: disposeBag)
     }
 
     // MARK: - Initialize
@@ -34,7 +53,7 @@ class BookmarkMagazineViewController: UIViewController {
         self.viewModel = viewModel
 
         super.init(nibName: nil, bundle: nil)
-
+        bind(to: viewModel)
     }
 
     required init?(coder: NSCoder) {
@@ -52,7 +71,8 @@ class BookmarkMagazineViewController: UIViewController {
     // MARK: - UIComponents
 
     private lazy var collectionView: UICollectionView = {
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
+        let cv = UICollectionView(frame: .zero,
+                                  collectionViewLayout: collectionViewLayout)
         cv.register(Reusable.magazineCell)
         cv.showsVerticalScrollIndicator = false
         return cv
@@ -62,7 +82,7 @@ class BookmarkMagazineViewController: UIViewController {
         let minLineSpacing: CGFloat = 1
         let minInterSpacing: CGFloat = 1
         let itemWidth = (UIScreen.main.bounds.width - 2) / 2
-        let itemHeight = itemWidth * (248 / 187.0) * 0.5
+        let itemHeight = itemWidth * (248 / 187.0)
 
         let layout = UICollectionViewFlowLayout()
 
