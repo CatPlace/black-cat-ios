@@ -7,7 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7867A625293741C000FC1160 /* LastMagazineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7867A624293741C000FC1160 /* LastMagazineHeaderView.swift */; };
+		784B021D29375713004ED20A /* MagazineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B021C29375713004ED20A /* MagazineModel.swift */; };
+		784B021F29375719004ED20A /* MagazineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B021E29375719004ED20A /* MagazineViewModel.swift */; };
+		784B02302937579E004ED20A /* MyPageTestUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B02222937579E004ED20A /* MyPageTestUseCase.swift */; };
+		784B02312937579E004ED20A /* MyPageViewController.Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B02232937579E004ED20A /* MyPageViewController.Layout.swift */; };
+		784B02322937579E004ED20A /* MyPageBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B02252937579E004ED20A /* MyPageBaseCell.swift */; };
+		784B02332937579E004ED20A /* MyPageMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B02262937579E004ED20A /* MyPageMenuCell.swift */; };
+		784B02342937579E004ED20A /* MyPageProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B02272937579E004ED20A /* MyPageProfileCell.swift */; };
+		784B02352937579E004ED20A /* MyPageTattooCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B02282937579E004ED20A /* MyPageTattooCell.swift */; };
+		784B02362937579F004ED20A /* MyPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B02292937579E004ED20A /* MyPageModel.swift */; };
+		784B02372937579F004ED20A /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B022A2937579E004ED20A /* MyPageViewController.swift */; };
+		784B02382937579F004ED20A /* MyPageSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B022C2937579E004ED20A /* MyPageSection.swift */; };
+		784B02392937579F004ED20A /* RecentTattooHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B022E2937579E004ED20A /* RecentTattooHeaderView.swift */; };
+		784B023A2937579F004ED20A /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B022F2937579E004ED20A /* MyPageViewModel.swift */; };
 		7867A63229374D0500FC1160 /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7867A62729374D0500FC1160 /* MulticastDelegate.swift */; };
 		7867A63329374D0500FC1160 /* BottomSheetTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7867A62929374D0500FC1160 /* BottomSheetTransitioningDelegate.swift */; };
 		7867A63429374D0500FC1160 /* BottomSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7867A62A29374D0500FC1160 /* BottomSheetController.swift */; };
@@ -19,11 +31,9 @@
 		78B00BB728F5661000A9915D /* RecentMagazineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BAB28F5661000A9915D /* RecentMagazineCell.swift */; };
 		78B00BB828F5661000A9915D /* LastMagazineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BAC28F5661000A9915D /* LastMagazineCell.swift */; };
 		78B00BB928F5661000A9915D /* MagazineTestUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BAE28F5661000A9915D /* MagazineTestUseCase.swift */; };
-		78B00BBA28F5661000A9915D /* MagazineViewModel.dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BAF28F5661000A9915D /* MagazineViewModel.dummy.swift */; };
-		78B00BBB28F5661000A9915D /* MagazineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BB028F5661000A9915D /* MagazineModel.swift */; };
+		78B00BBA28F5661000A9915D /* MagazineModel.dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BAF28F5661000A9915D /* MagazineModel.dummy.swift */; };
 		78B00BBC28F5661000A9915D /* MagazineViewController.Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BB128F5661000A9915D /* MagazineViewController.Layout.swift */; };
 		78B00BBD28F5661000A9915D /* MagazineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BB228F5661000A9915D /* MagazineViewController.swift */; };
-		78B00BBE28F5661000A9915D /* MagazineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BB328F5661000A9915D /* MagazineViewModel.swift */; };
 		78B00BBF28F5661000A9915D /* RecentMagazineFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BB528F5661000A9915D /* RecentMagazineFooterView.swift */; };
 		8E2D8C4828F2EC27004B514D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4728F2EC27004B514D /* HomeViewController.swift */; };
 		8E2D8C4A28F2ECD2004B514D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4928F2ECD2004B514D /* HomeViewModel.swift */; };
@@ -173,7 +183,20 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		7867A624293741C000FC1160 /* LastMagazineHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastMagazineHeaderView.swift; sourceTree = "<group>"; };
+		784B021C29375713004ED20A /* MagazineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineModel.swift; sourceTree = "<group>"; };
+		784B021E29375719004ED20A /* MagazineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineViewModel.swift; sourceTree = "<group>"; };
+		784B02222937579E004ED20A /* MyPageTestUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageTestUseCase.swift; sourceTree = "<group>"; };
+		784B02232937579E004ED20A /* MyPageViewController.Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageViewController.Layout.swift; sourceTree = "<group>"; };
+		784B02252937579E004ED20A /* MyPageBaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageBaseCell.swift; sourceTree = "<group>"; };
+		784B02262937579E004ED20A /* MyPageMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageMenuCell.swift; sourceTree = "<group>"; };
+		784B02272937579E004ED20A /* MyPageProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageProfileCell.swift; sourceTree = "<group>"; };
+		784B02282937579E004ED20A /* MyPageTattooCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageTattooCell.swift; sourceTree = "<group>"; };
+		784B02292937579E004ED20A /* MyPageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageModel.swift; sourceTree = "<group>"; };
+		784B022A2937579E004ED20A /* MyPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		784B022C2937579E004ED20A /* MyPageSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageSection.swift; sourceTree = "<group>"; };
+		784B022E2937579E004ED20A /* RecentTattooHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentTattooHeaderView.swift; sourceTree = "<group>"; };
+		784B022F2937579E004ED20A /* MyPageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
+		7867A5FC2935CD1B00FC1160 /* BlackCat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BlackCat.entitlements; sourceTree = "<group>"; };
 		7867A62729374D0500FC1160 /* MulticastDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MulticastDelegate.swift; sourceTree = "<group>"; };
 		7867A62929374D0500FC1160 /* BottomSheetTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomSheetTransitioningDelegate.swift; sourceTree = "<group>"; };
 		7867A62A29374D0500FC1160 /* BottomSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomSheetController.swift; sourceTree = "<group>"; };
@@ -185,11 +208,9 @@
 		78B00BAB28F5661000A9915D /* RecentMagazineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentMagazineCell.swift; sourceTree = "<group>"; };
 		78B00BAC28F5661000A9915D /* LastMagazineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastMagazineCell.swift; sourceTree = "<group>"; };
 		78B00BAE28F5661000A9915D /* MagazineTestUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineTestUseCase.swift; sourceTree = "<group>"; };
-		78B00BAF28F5661000A9915D /* MagazineViewModel.dummy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineViewModel.dummy.swift; sourceTree = "<group>"; };
-		78B00BB028F5661000A9915D /* MagazineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineModel.swift; sourceTree = "<group>"; };
+		78B00BAF28F5661000A9915D /* MagazineModel.dummy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineModel.dummy.swift; sourceTree = "<group>"; };
 		78B00BB128F5661000A9915D /* MagazineViewController.Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineViewController.Layout.swift; sourceTree = "<group>"; };
 		78B00BB228F5661000A9915D /* MagazineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineViewController.swift; sourceTree = "<group>"; };
-		78B00BB328F5661000A9915D /* MagazineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineViewModel.swift; sourceTree = "<group>"; };
 		78B00BB528F5661000A9915D /* RecentMagazineFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentMagazineFooterView.swift; sourceTree = "<group>"; };
 		8E2D8C4728F2EC27004B514D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8E2D8C4928F2ECD2004B514D /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -341,6 +362,56 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		784B02202937579E004ED20A /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				784B02212937579E004ED20A /* MyPageMock */,
+				784B02232937579E004ED20A /* MyPageViewController.Layout.swift */,
+				784B02242937579E004ED20A /* Cells */,
+				784B02292937579E004ED20A /* MyPageModel.swift */,
+				784B022A2937579E004ED20A /* MyPageViewController.swift */,
+				784B022B2937579E004ED20A /* MyPageSection */,
+				784B022D2937579E004ED20A /* Views */,
+				784B022F2937579E004ED20A /* MyPageViewModel.swift */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
+		784B02212937579E004ED20A /* MyPageMock */ = {
+			isa = PBXGroup;
+			children = (
+				784B02222937579E004ED20A /* MyPageTestUseCase.swift */,
+			);
+			path = MyPageMock;
+			sourceTree = "<group>";
+		};
+		784B02242937579E004ED20A /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				784B02252937579E004ED20A /* MyPageBaseCell.swift */,
+				784B02262937579E004ED20A /* MyPageMenuCell.swift */,
+				784B02272937579E004ED20A /* MyPageProfileCell.swift */,
+				784B02282937579E004ED20A /* MyPageTattooCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		784B022B2937579E004ED20A /* MyPageSection */ = {
+			isa = PBXGroup;
+			children = (
+				784B022C2937579E004ED20A /* MyPageSection.swift */,
+			);
+			path = MyPageSection;
+			sourceTree = "<group>";
+		};
+		784B022D2937579E004ED20A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				784B022E2937579E004ED20A /* RecentTattooHeaderView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		7867A6022937359600FC1160 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -412,8 +483,8 @@
 			children = (
 				78B00BB228F5661000A9915D /* MagazineViewController.swift */,
 				78B00BB128F5661000A9915D /* MagazineViewController.Layout.swift */,
-				78B00BB328F5661000A9915D /* MagazineViewModel.swift */,
-				78B00BB028F5661000A9915D /* MagazineModel.swift */,
+				784B021E29375719004ED20A /* MagazineViewModel.swift */,
+				784B021C29375713004ED20A /* MagazineModel.swift */,
 				78858BEA28F6F48C00EC7BF7 /* MagazineSection */,
 				78B00BAA28F5661000A9915D /* Cells */,
 				78B00BB428F5661000A9915D /* Views */,
@@ -435,7 +506,7 @@
 			isa = PBXGroup;
 			children = (
 				78B00BAE28F5661000A9915D /* MagazineTestUseCase.swift */,
-				78B00BAF28F5661000A9915D /* MagazineViewModel.dummy.swift */,
+				78B00BAF28F5661000A9915D /* MagazineModel.dummy.swift */,
 			);
 			path = MagazineMock;
 			sourceTree = "<group>";
@@ -444,7 +515,6 @@
 			isa = PBXGroup;
 			children = (
 				78B00BB528F5661000A9915D /* RecentMagazineFooterView.swift */,
-				7867A624293741C000FC1160 /* LastMagazineHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -657,6 +727,7 @@
 		B1D79CA928EB0EF9008487D0 /* BlackCat */ = {
 			isa = PBXGroup;
 			children = (
+				7867A5FC2935CD1B00FC1160 /* BlackCat.entitlements */,
 				B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */,
 				B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */,
 				B1D127DC28F08DCA007E3667 /* TabBarViewController.swift */,
@@ -667,6 +738,7 @@
 				B1EE64F428FA48170055A4F1 /* Filter */,
 				B1D89C88290E78B300C8B7F1 /* BusinessProfile */,
 				B1CDE8F529165A1000ACB9AC /* BPPriceInfoEdit */,
+				784B02202937579E004ED20A /* MyPage */,
 				B1E986AF28FE8D5B00962F5B /* BaseArchitecture */,
 				B1D127E028F09223007E3667 /* Utils */,
 				B12C1DC528ED21830089964E /* Extension */,
@@ -1007,11 +1079,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E2D8C5E28F2EE69004B514D /* HomeTattooAlbumCellViewModel.swift in Sources */,
+				784B021D29375713004ED20A /* MagazineModel.swift in Sources */,
+				784B02302937579E004ED20A /* MyPageTestUseCase.swift in Sources */,
 				8EFC9FE1291205B400A83D3D /* UIView+.swift in Sources */,
 				8EFC9FE929123B7100A83D3D /* PresentationStyle.swift in Sources */,
 				B1D2D107290AC7B5005B76BD /* UIScrollView+Rx.swift in Sources */,
 				B1D89C96290E845700C8B7F1 /* BPThumbnailModel.swift in Sources */,
+				784B02392937579F004ED20A /* RecentTattooHeaderView.swift in Sources */,
 				B1D89C98290E879B00C8B7F1 /* BPBaseCollectionViewCell.swift in Sources */,
+				784B02382937579F004ED20A /* MyPageSection.swift in Sources */,
 				B1E3F7C0290EC1AD00005F17 /* BusinessProfileReactor.swift in Sources */,
 				B1E361E428F28C3100A29CC8 /* MagazineDetailStroyShareButtonCell.swift in Sources */,
 				B1E4985F28EE886900B469AC /* MagazineDetailSection.swift in Sources */,
@@ -1031,6 +1107,7 @@
 				B1D89C8B290E7C6400C8B7F1 /* BPSection.swift in Sources */,
 				B1D39E6C292345B50058BE37 /* BPPriceInfoEditViewController.swift in Sources */,
 				B1E4985828EE85A800B469AC /* MagazineDetailViewController.swift in Sources */,
+				784B021F29375719004ED20A /* MagazineViewModel.swift in Sources */,
 				8E2D8C5F28F2EE69004B514D /* HomeRecommendCellViewModel.swift in Sources */,
 				78B00BB828F5661000A9915D /* LastMagazineCell.swift in Sources */,
 				B1D39E7029235EAA0058BE37 /* BPPriceInfoCell.swift in Sources */,
@@ -1045,10 +1122,12 @@
 				B160DBFB28FF3D8E00C0D682 /* BaseTableViewCell.swift in Sources */,
 				B1E3F7BA290EBAB100005F17 /* BPProductCell.swift in Sources */,
 				B1CDE8F729165E6A00ACB9AC /* BPEditTempViewController.swift in Sources */,
+				784B02312937579E004ED20A /* MyPageViewController.Layout.swift in Sources */,
 				B1E4986528EE957E00B469AC /* MagazineDetailModel.swift in Sources */,
 				B1E3F7DE290F009F00005F17 /* BusinessProfileViewController.BPMulticastDelegate.swift in Sources */,
 				B1E4986728EE9BE800B469AC /* MagazineDetailBaseCell.swift in Sources */,
 				8E2D8C5928F2EE69004B514D /* HomeEmptyCell.swift in Sources */,
+				784B02372937579F004ED20A /* MyPageViewController.swift in Sources */,
 				7867A63829374D0500FC1160 /* AlertService.swift in Sources */,
 				B1E986AB28FE888800962F5B /* FilterTaskService.swift in Sources */,
 				B1D89C91290E7D2100C8B7F1 /* BPContentCell.swift in Sources */,
@@ -1057,16 +1136,15 @@
 				B1E3F7E0290F042B00005F17 /* BPContentCellReactor.swift in Sources */,
 				B1EABEC128FBD83F0029B6BC /* FilterLoaction.swift in Sources */,
 				8EFC9FE5291229CC00A83D3D /* CategoryPaperConfiguration.swift in Sources */,
+				784B02352937579E004ED20A /* MyPageTattooCell.swift in Sources */,
 				B1D2D109290AC8FA005B76BD /* Observable+.swift in Sources */,
 				78B00BBD28F5661000A9915D /* MagazineViewController.swift in Sources */,
 				8E2D8C4828F2EC27004B514D /* HomeViewController.swift in Sources */,
 				B1EE64F828FA4ABE0055A4F1 /* FilterExampleViewController.swift in Sources */,
 				B160DBF928FF3CBD00C0D682 /* BaseCollectionViewCell.swift in Sources */,
 				78858BEC28F6F4E400EC7BF7 /* MagazineSection.swift in Sources */,
-				78B00BBB28F5661000A9915D /* MagazineModel.swift in Sources */,
 				B1D3362928F1AC1200826636 /* MagazineDetailEmptyCell.swift in Sources */,
 				B1E3F7C2290EC1F700005F17 /* BPContentModel.swift in Sources */,
-				78B00BBE28F5661000A9915D /* MagazineViewModel.swift in Sources */,
 				B1E3F7C6290EC98600005F17 /* BPBaseCollectionReusableView.swift in Sources */,
 				8E2D8C5A28F2EE69004B514D /* HomeCategoryCellViewModel.swift in Sources */,
 				B1E3F7D9290EE8CE00005F17 /* BPMultiCastDelegate.swift in Sources */,
@@ -1076,7 +1154,7 @@
 				B1D3362528F142A400826636 /* CALayer+.swift in Sources */,
 				B1D89C87290E78AF00C8B7F1 /* BusinessProfileViewController.swift in Sources */,
 				B1E3F7E2290F098400005F17 /* BPContentCellService.swift in Sources */,
-				78B00BBA28F5661000A9915D /* MagazineViewModel.dummy.swift in Sources */,
+				78B00BBA28F5661000A9915D /* MagazineModel.dummy.swift in Sources */,
 				8EED4EDD2902817500DA3887 /* GenreViewModel.swift in Sources */,
 				7867A63729374D0500FC1160 /* FilterBaseCell.swift in Sources */,
 				8E7B4D812904E85A002948F7 /* CategoryPaperTableViewCell.swift in Sources */,
@@ -1088,7 +1166,6 @@
 				7867A63629374D0500FC1160 /* FilterCellViewModel.swift in Sources */,
 				B1D3364328F1CD1B00826636 /* UITableView+.swift in Sources */,
 				B1E3F7C8290ECAA100005F17 /* BPContentSectionHeaderReactor.swift in Sources */,
-				7867A625293741C000FC1160 /* LastMagazineHeaderView.swift in Sources */,
 				B1CA040628F00CC1004A6027 /* MagazineDetailImageCell.swift in Sources */,
 				8EFC9FE32912281500A83D3D /* CategoryPaperView.UITableView.swift in Sources */,
 				B12C1DC728ED219C0089964E /* UIVIewController+Rx.swift in Sources */,
@@ -1099,6 +1176,7 @@
 				78B00BBF28F5661000A9915D /* RecentMagazineFooterView.swift in Sources */,
 				B1D89C93290E810000C8B7F1 /* BusinessProfileViewController.Layout.swift in Sources */,
 				B1E3F7C4290EC95100005F17 /* BPContentSectionHeaderView.swift in Sources */,
+				784B02322937579E004ED20A /* MyPageBaseCell.swift in Sources */,
 				7867A63329374D0500FC1160 /* BottomSheetTransitioningDelegate.swift in Sources */,
 				B1EE651228FA872B0055A4F1 /* FilterViewController.swift in Sources */,
 				B1E3F7B8290EB85400005F17 /* BPReviewModel.swift in Sources */,
@@ -1107,6 +1185,10 @@
 				B1D127DB28F047A9007E3667 /* MagazineDetailBulletedCell.swift in Sources */,
 				B1D89C8E290E7CEE00C8B7F1 /* BPThumbnailImageCell.swift in Sources */,
 				7867A63429374D0500FC1160 /* BottomSheetController.swift in Sources */,
+				784B02362937579F004ED20A /* MyPageModel.swift in Sources */,
+				784B023A2937579F004ED20A /* MyPageViewModel.swift in Sources */,
+				784B02342937579E004ED20A /* MyPageProfileCell.swift in Sources */,
+				784B02332937579E004ED20A /* MyPageMenuCell.swift in Sources */,
 				B1DD25DD28EF0BC800103FF1 /* UIColor+.swift in Sources */,
 				B1EABEBF28FBA8E10029B6BC /* FilterReactor.swift in Sources */,
 				B1EABEBC28FBA87C0029B6BC /* FilterTask.swift in Sources */,
@@ -1298,8 +1380,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BlackCat/BlackCat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z54MHCPF6U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BlackCat/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "작품 및 도안 등록을 위해 라이브러리 접근 권한이 필요해요.";
@@ -1315,7 +1399,7 @@
 				MARKETING_VERSION = 1.0;
 				"OTHER_LDFLAGS[arch=*]" = "";
 				"OTHER_LDFLAGS[sdk=iphonesimulator*]" = "-all_load";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cat.black.BlackCat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cat.blackCat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1328,9 +1412,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BlackCat/BlackCat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = Z54MHCPF6U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BlackCat/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "작품 및 도안 등록을 위해 라이브러리 접근 권한이 필요해요.";
@@ -1345,7 +1430,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				"OTHER_LDFLAGS[sdk=iphonesimulator*]" = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cat.black;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cat.blackCatRelease;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
