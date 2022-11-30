@@ -365,14 +365,14 @@
 		784B02202937579E004ED20A /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
-				784B02212937579E004ED20A /* MyPageMock */,
-				784B02232937579E004ED20A /* MyPageViewController.Layout.swift */,
-				784B02242937579E004ED20A /* Cells */,
-				784B02292937579E004ED20A /* MyPageModel.swift */,
 				784B022A2937579E004ED20A /* MyPageViewController.swift */,
-				784B022B2937579E004ED20A /* MyPageSection */,
-				784B022D2937579E004ED20A /* Views */,
+				784B02232937579E004ED20A /* MyPageViewController.Layout.swift */,
 				784B022F2937579E004ED20A /* MyPageViewModel.swift */,
+				784B02292937579E004ED20A /* MyPageModel.swift */,
+				784B022B2937579E004ED20A /* MyPageSection */,
+				784B02242937579E004ED20A /* Cells */,
+				784B022D2937579E004ED20A /* Views */,
+				784B02212937579E004ED20A /* MyPageMock */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
