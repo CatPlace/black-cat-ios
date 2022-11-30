@@ -42,6 +42,10 @@ class BookmarkMagazineViewController: UIViewController {
                     .bind(to: viewModel.showing)
                     .disposed(by: cell.disposeBag)
 
+                self?.viewModel.decreaseSelectNumber
+                    .bind(to: viewModel.decreaseSelectNumber)
+                    .disposed(by: cell.disposeBag)
+
                 cell.bind(to: viewModel)
             }
             .disposed(by: disposeBag)

@@ -18,7 +18,7 @@ protocol cellEditable {
 class BMTattooCellViewModel: cellEditable {
     var imageURLString: String
     var selectNumber = PublishRelay<Int>()
-    var decreaseSelectNumber = PublishRelay<Void>()
+    var decreaseSelectNumber = PublishRelay<Int>()
     var showing = PublishRelay<Bool>()
 
     let showEditView: Driver<Bool>
@@ -30,19 +30,27 @@ class BMTattooCellViewModel: cellEditable {
         showEditView = showing
             .asDriver(onErrorJustReturn: true)
 
-        let currentSelectNumber = selectNumber
-
-        let decreasedCurrentSelectNumber = selectNumber
-            .withLatestFrom(decreaseSelectNumber) { currentNumber, _ in
-                return currentNumber - 1
+        let decreasedCurrentSelectNumber = decreaseSelectNumber
+            .withLatestFrom(selectNumber) { selectedNumber, currentNumber in
+                print("selectedNumber: \(selectedNumber), currentNumber: \(currentNumber)")
+                
+                if selectedNumber == currentNumber {
+                    return 0
+                } else if selectedNumber < currentNumber {
+                    return currentNumber - 1
+                } else {
+                    return currentNumber
+                }
             }
 
-        selectNumberText = Observable.merge([
-            currentSelectNumber.asObservable(),
+        let currentSelectNumber = Observable.merge([
+            selectNumber.asObservable(),
             decreasedCurrentSelectNumber
         ])
+
+        selectNumberText = currentSelectNumber
             .debug("===Select Number===")
-            .map { String($0) }
+            .map { $0 == 0 ? "" : String($0) }
             .asDriver(onErrorJustReturn: "")
     }
 }

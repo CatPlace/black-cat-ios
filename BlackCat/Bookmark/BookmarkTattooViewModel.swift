@@ -17,6 +17,7 @@ class BookmarkTattooViewModel {
     let hidden = PublishRelay<Bool>()
     let viewDidLoad = PublishRelay<Void>()
     let editMode = PublishRelay<EditMode>()
+    let decreaseSelectNumber = PublishRelay<Int>()
     let didSelectItem = PublishRelay<Int>()
     let selectedEditingCellIndexes = BehaviorRelay<Set<Int>>(value: [])
 
@@ -25,7 +26,7 @@ class BookmarkTattooViewModel {
     init() {
         let items = BehaviorRelay<[String]>(value: ["100", "200", "300", "400"])
 
-        let editingCellIndexes = BehaviorRelay<Set<Int>>(value: [])
+        let editingCellIndexes = BehaviorRelay<Dictionary<Int, Int>>(value: [:])
 
         let cellViewModels = Observable.just([
             BMTattooCellViewModel(imageURLString: "100"),
@@ -34,90 +35,67 @@ class BookmarkTattooViewModel {
             BMTattooCellViewModel(imageURLString: "400"),
         ])
 
-
         let firstTattooItems = viewDidLoad
             .withLatestFrom(cellViewModels)
             .debug("😀😀😀")
 
         let editingCellIndex = didSelectItem
-            .withLatestFrom(editMode) { ($0, $1) }
-            .filter { $0.1 == .edit }
-            .map { $0.0 }
+            .withLatestFrom(editMode) { (index: $0, editMode: $1) }
+            .filter { $0.editMode == .edit }
+            .map { $0.index }
 
-        editingCellIndex
-            .withLatestFrom(editingCellIndexes) { selectItemIndex, editingCellSet -> (Int, Int) in
-                var a = editingCellSet
-                a.insert(selectItemIndex)
-                editingCellIndexes.accept(a)
-                return (selectItemIndex, a.count)
+        let isEditingCell = editingCellIndex
+            .withLatestFrom(editingCellIndexes) { selectItemIndex, editingCellDict -> (contains: Bool, index: Int) in
+                let isDictionaryContainsItemIndex = editingCellDict.contains { $0.key == selectItemIndex }
+
+                return (contains: !isDictionaryContainsItemIndex, index: selectItemIndex)
             }
-            .withLatestFrom(cellViewModels) { count, viewModels in
-                return (count.1, viewModels[count.0])
+            .share()
+
+        let addEditingCellIndex = isEditingCell
+            .filter { $0.contains }
+            .map { $0.index }
+
+        let removeEditingCellIndex = isEditingCell
+            .filter { !$0.contains }
+            .map { $0.index }
+
+        let observable = Observable
+            .combineLatest(editingCellIndexes, cellViewModels)
+
+        addEditingCellIndex
+            .debug("🤬🤬🤬🤬🤬 addEditingCellIndex 🤬🤬🤬🤬🤬")
+            .withLatestFrom(editingCellIndexes) { selectedItemIndex, editingCellDict in
+                var dict = editingCellDict
+                dict[selectedItemIndex] = dict.count + 1
+                editingCellIndexes.accept(dict)
             }
-            .subscribe { $0.1.selectNumber.accept($0.0) }
+            .subscribe { _ in () }
             .disposed(by: disposeBag)
 
-//        didSelectItem
-//            .withLatestFrom(firstTattooItems) { index, items in
-//
-//                return (index, items)
-//            }
-//            .do { $0.1[1].selectNumber = $0.0 }
+        removeEditingCellIndex
+            .withLatestFrom(observable) { editingCellIndex, observable in
+                var dict = observable.0
+                var targetNumber = dict[editingCellIndex, default: 0]
+                observable.1[editingCellIndex].selectNumber.accept(0)
+                dict[editingCellIndex] = nil
+                dict.filter { $0.value > targetNumber }.forEach {
+                    dict[$0.key] = $0.value - 1
+                }
 
-//        let selectedEditingCellIndex = didSelectItem
-//            .withLatestFrom(editMode) { ($0, $1) }
-//            .filter { $0.1 == .edit }
-//            .map { $0.0 }
-//            .do { print($0) }
-//        //            .do { row in a(row: row) }
-//
-//        selectedEditingCellIndex
-//            .withLatestFrom(firstTattooItems) { ($0, $1) }
-//            .do { $0.1[$0.0].selectNumber.accept(5) }
-//            .bind { $0.1[$0.0].selectNumber.accept(5) }
-//            .disposed(by: disposeBag)
+                editingCellIndexes.accept(dict)
+            }
+            .subscribe { _ in () }
+            .disposed(by: disposeBag)
 
-//        func a(row: Int) {
-//            var prevSet = editingCellIndexes.value
-//            if prevSet.contains(row) {
-//                prevSet.remove(row)
-//            } else {
-//                prevSet.insert(row)
-//            }
-//            editingCellIndexes.accept(prevSet)
-//        }
+        editingCellIndexes
+            .withLatestFrom(cellViewModels) { (dict: $0, cellViewModels: $1) }
+            .subscribe { tuple in
+                tuple.dict.forEach { tuple.cellViewModels[$0.key].selectNumber.accept($0.value) }
+            }
+            .disposed(by: disposeBag)
 
-        //        let reloadItemsByEditing = selectedEditingCellIndex
-        //            .withLatestFrom(selectedEditingCellIndexes) { row, cellIndexes in
-        //                var newCellIndexes = cellIndexes
-        //                if newCellIndexes.contains(where: { $0 == row }) {
-        //                    newCellIndexes.append(row)
-        //                } else {
-        //                    newCellIndexes.remove(at: cellIndexes.firstIndex(of: row)!)
-        //                }
-        //                self.selectedEditingCellIndexes.accept(newCellIndexes)
-        //            }
-
-        //            .withLatestFrom(firstTattooItems) { row, items -> [BMTattooCellViewModel] in
-        //                var newItems = items
-        //                print("====before NewItems: \(newItems)")
-        //                let newCellViewModel = BMTattooCellViewModel(imageURLString: "")
-        //                newCellViewModel.selectNumber = "\(row!)"
-        //                newItems.enumerated().forEach { index, cellViewModel in
-        //                    if index == row {
-        //                        newItems[row!] = newCellViewModel
-        //                    } else {
-        //                        cellViewModel.selectNumber = nil
-        //                    }
-        //                }
-        //                print("====After NewItems: \(newItems)")
-        //
-        //                return newItems
-        //            }
-
-        tattooItems = Observable.merge([
-            firstTattooItems,
-//            relaodBySelectItem
-        ]).asDriver(onErrorJustReturn: [])
+        tattooItems = firstTattooItems
+            .asDriver(onErrorJustReturn: [])
     }
 }
