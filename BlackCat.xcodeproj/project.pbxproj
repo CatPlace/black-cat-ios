@@ -69,7 +69,6 @@
 		B1CDE8F729165E6A00ACB9AC /* BPEditTempViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDE8F629165E6A00ACB9AC /* BPEditTempViewController.swift */; };
 		B1CDE90129169F8E00ACB9AC /* URLMatcher in Frameworks */ = {isa = PBXBuildFile; productRef = B1CDE90029169F8E00ACB9AC /* URLMatcher */; };
 		B1CDE90329169F8E00ACB9AC /* URLNavigator in Frameworks */ = {isa = PBXBuildFile; productRef = B1CDE90229169F8E00ACB9AC /* URLNavigator */; };
-		B1CDE90529169FD500ACB9AC /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDE90429169FD500ACB9AC /* AlertService.swift */; };
 		B1CEF7332913A0EC00814113 /* BPProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CEF7322913A0EC00814113 /* BPProfileCell.swift */; };
 		B1D127DB28F047A9007E3667 /* MagazineDetailBulletedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D127DA28F047A9007E3667 /* MagazineDetailBulletedCell.swift */; };
 		B1D127DD28F08DCA007E3667 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D127DC28F08DCA007E3667 /* TabBarViewController.swift */; };
@@ -119,7 +118,6 @@
 		B1E3F7D5290ECC0500005F17 /* FlexLayoutYogaKit in Frameworks */ = {isa = PBXBuildFile; productRef = B1E3F7D4290ECC0500005F17 /* FlexLayoutYogaKit */; };
 		B1E3F7D7290EDFD500005F17 /* BPSectionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7D6290EDFD500005F17 /* BPSectionFactory.swift */; };
 		B1E3F7D9290EE8CE00005F17 /* BPMultiCastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7D8290EE8CE00005F17 /* BPMultiCastDelegate.swift */; };
-		B1E3F7DC290EE9D500005F17 /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7DB290EE9D500005F17 /* MulticastDelegate.swift */; };
 		B1E3F7DE290F009F00005F17 /* BusinessProfileViewController.BPMulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7DD290F009F00005F17 /* BusinessProfileViewController.BPMulticastDelegate.swift */; };
 		B1E3F7E0290F042B00005F17 /* BPContentCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7DF290F042B00005F17 /* BPContentCellReactor.swift */; };
 		B1E3F7E2290F098400005F17 /* BPContentCellService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E3F7E1290F098400005F17 /* BPContentCellService.swift */; };
@@ -137,7 +135,6 @@
 		B1E4986728EE9BE800B469AC /* MagazineDetailBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E4986628EE9BE800B469AC /* MagazineDetailBaseCell.swift */; };
 		B1E4986928EE9E3500B469AC /* MagazineDetailViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E4986828EE9E3500B469AC /* MagazineDetailViewReactor.swift */; };
 		B1E4987028EEADC900B469AC /* MagazineDetailSectionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E4986F28EEADC900B469AC /* MagazineDetailSectionFactory.swift */; };
-		B1E5E471291AC42F00CC8FBE /* FilterCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E5E470291AC42F00CC8FBE /* FilterCellViewModel.swift */; };
 		B1E87AF029195CD800EB28DE /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = B1E87AEF29195CD800EB28DE /* RxKeyboard */; };
 		B1E986AB28FE888800962F5B /* FilterTaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E986AA28FE888800962F5B /* FilterTaskService.swift */; };
 		B1E986AE28FE8D4F00962F5B /* BaseRealmProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E986AD28FE8D4F00962F5B /* BaseRealmProtocol.swift */; };
@@ -149,8 +146,6 @@
 		B1EABEC428FBE0400029B6BC /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = B1EABEC328FBE0400029B6BC /* RxGesture */; };
 		B1EE64F828FA4ABE0055A4F1 /* FilterExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE64F728FA4ABE0055A4F1 /* FilterExampleViewController.swift */; };
 		B1EE651228FA872B0055A4F1 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE651128FA872B0055A4F1 /* FilterViewController.swift */; };
-		B1EE651428FA8B160055A4F1 /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE651328FA8B160055A4F1 /* FilterCell.swift */; };
-		B1EE651728FA8DDE0055A4F1 /* FilterBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EE651628FA8DDE0055A4F1 /* FilterBaseCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1018,7 +1013,6 @@
 				B1D89C96290E845700C8B7F1 /* BPThumbnailModel.swift in Sources */,
 				B1D89C98290E879B00C8B7F1 /* BPBaseCollectionViewCell.swift in Sources */,
 				B1E3F7C0290EC1AD00005F17 /* BusinessProfileReactor.swift in Sources */,
-				B1E5E471291AC42F00CC8FBE /* FilterCellViewModel.swift in Sources */,
 				B1E361E428F28C3100A29CC8 /* MagazineDetailStroyShareButtonCell.swift in Sources */,
 				B1E4985F28EE886900B469AC /* MagazineDetailSection.swift in Sources */,
 				B1E4987028EEADC900B469AC /* MagazineDetailSectionFactory.swift in Sources */,
@@ -1027,7 +1021,6 @@
 				8E2D8C5C28F2EE69004B514D /* HomeTattooAlbumCell.swift in Sources */,
 				8E2D8C4A28F2ECD2004B514D /* HomeViewModel.swift in Sources */,
 				B1E3F7B6290EB7E700005F17 /* BPProductModel.swift in Sources */,
-				B1EE651728FA8DDE0055A4F1 /* FilterBaseCell.swift in Sources */,
 				B1D3364128F1CCFA00826636 /* UICollectionView+.swift in Sources */,
 				B1E986B128FE975C00962F5B /* FilterService.swift in Sources */,
 				B1D89C9A290E888200C8B7F1 /* BPThumbnailImageCellReactor.swift in Sources */,
@@ -1055,7 +1048,6 @@
 				B1E4986528EE957E00B469AC /* MagazineDetailModel.swift in Sources */,
 				B1E3F7DE290F009F00005F17 /* BusinessProfileViewController.BPMulticastDelegate.swift in Sources */,
 				B1E4986728EE9BE800B469AC /* MagazineDetailBaseCell.swift in Sources */,
-				B1E3F7DC290EE9D500005F17 /* MulticastDelegate.swift in Sources */,
 				8E2D8C5928F2EE69004B514D /* HomeEmptyCell.swift in Sources */,
 				7867A63829374D0500FC1160 /* AlertService.swift in Sources */,
 				B1E986AB28FE888800962F5B /* FilterTaskService.swift in Sources */,
@@ -1069,7 +1061,6 @@
 				78B00BBD28F5661000A9915D /* MagazineViewController.swift in Sources */,
 				8E2D8C4828F2EC27004B514D /* HomeViewController.swift in Sources */,
 				B1EE64F828FA4ABE0055A4F1 /* FilterExampleViewController.swift in Sources */,
-				B1EE651428FA8B160055A4F1 /* FilterCell.swift in Sources */,
 				B160DBF928FF3CBD00C0D682 /* BaseCollectionViewCell.swift in Sources */,
 				78858BEC28F6F4E400EC7BF7 /* MagazineSection.swift in Sources */,
 				78B00BBB28F5661000A9915D /* MagazineModel.swift in Sources */,
@@ -1093,7 +1084,6 @@
 				78B00BBC28F5661000A9915D /* MagazineViewController.Layout.swift in Sources */,
 				B1D127DF28F09200007E3667 /* UIImage+.swift in Sources */,
 				B1E3F7D7290EDFD500005F17 /* BPSectionFactory.swift in Sources */,
-				B1CDE90529169FD500ACB9AC /* AlertService.swift in Sources */,
 				B1E4986928EE9E3500B469AC /* MagazineDetailViewReactor.swift in Sources */,
 				7867A63629374D0500FC1160 /* FilterCellViewModel.swift in Sources */,
 				B1D3364328F1CD1B00826636 /* UITableView+.swift in Sources */,
