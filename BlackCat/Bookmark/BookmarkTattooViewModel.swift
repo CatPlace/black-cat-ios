@@ -14,49 +14,78 @@ class BookmarkTattooViewModel {
     let disposeBag = DisposeBag()
 
     //    let cellViewModels = PublishRelay<[BMTattooCellViewModel]>()
-    //    let hidden = PublishRelay<Bool>()
+    let hidden = PublishRelay<Bool>()
     let viewDidLoad = PublishRelay<Void>()
     let editMode = PublishRelay<EditMode>()
     let didSelectItem = PublishRelay<Int>()
-    let selectedEditingCellIndexes = BehaviorRelay<[Int]>(value: [])
+    let selectedEditingCellIndexes = BehaviorRelay<Set<Int>>(value: [])
 
     let tattooItems: Driver<[BMTattooCellViewModel]>
 
     init() {
-        let hiddenRelay = PublishRelay<Bool>()
-        //        self.cellViewModel = cellViewModel
-        let items = BehaviorRelay<[String]>(value: ["1", "2", "3", "4"])
-        let editingCellIndexes = BehaviorRelay<[Int]>(value: [])
+        let items = BehaviorRelay<[String]>(value: ["100", "200", "300", "400"])
+
+        let editingCellIndexes = BehaviorRelay<Set<Int>>(value: [])
+
+        let cellViewModels = Observable.just([
+            BMTattooCellViewModel(imageURLString: "100"),
+            BMTattooCellViewModel(imageURLString: "200"),
+            BMTattooCellViewModel(imageURLString: "300"),
+            BMTattooCellViewModel(imageURLString: "400"),
+        ])
+
 
         let firstTattooItems = viewDidLoad
-            .withLatestFrom(items)
-            .map { $0.map { dummy -> BMTattooCellViewModel in
-                    let viewModel = BMTattooCellViewModel(imageURLString: dummy)
-                    viewModel.showing = hiddenRelay
+            .withLatestFrom(cellViewModels)
+            .debug("😀😀😀")
 
-                    return viewModel }
+        let editingCellIndex = didSelectItem
+            .withLatestFrom(editMode) { ($0, $1) }
+            .filter { $0.1 == .edit }
+            .map { $0.0 }
+
+        editingCellIndex
+            .withLatestFrom(editingCellIndexes) { selectItemIndex, editingCellSet -> (Int, Int) in
+                var a = editingCellSet
+                a.insert(selectItemIndex)
+                editingCellIndexes.accept(a)
+                return (selectItemIndex, a.count)
             }
-        //            .map { _ -> [BMTattooCellViewModel] in
-        //                let viewModel = BMTattooCellViewModel(imageURLString: "A", hidden: hiddenRelay)
-        ////                viewModel.showing = hiddenRelay
-        //
-        //                return Array(repeating: viewModel, count: 23)
-        //            }
-
-        let editMode = editMode
-            .share()
-
-        editMode
-            .map { $0 != .edit }
-            .debug("asd")
-        //            .map { editMode in editMode == .edit ? false : true }
-            .bind(to: hiddenRelay)
+            .withLatestFrom(cellViewModels) { count, viewModels in
+                return (count.1, viewModels[count.0])
+            }
+            .subscribe { $0.1.selectNumber.accept($0.0) }
             .disposed(by: disposeBag)
 
-        //        let selectedEditingCellIndex = didSelectItem
-        //            .withLatestFrom(editMode) { row, editMode -> Int in
-        //                if editMode == .edit { return row }
-        //            }
+//        didSelectItem
+//            .withLatestFrom(firstTattooItems) { index, items in
+//
+//                return (index, items)
+//            }
+//            .do { $0.1[1].selectNumber = $0.0 }
+
+//        let selectedEditingCellIndex = didSelectItem
+//            .withLatestFrom(editMode) { ($0, $1) }
+//            .filter { $0.1 == .edit }
+//            .map { $0.0 }
+//            .do { print($0) }
+//        //            .do { row in a(row: row) }
+//
+//        selectedEditingCellIndex
+//            .withLatestFrom(firstTattooItems) { ($0, $1) }
+//            .do { $0.1[$0.0].selectNumber.accept(5) }
+//            .bind { $0.1[$0.0].selectNumber.accept(5) }
+//            .disposed(by: disposeBag)
+
+//        func a(row: Int) {
+//            var prevSet = editingCellIndexes.value
+//            if prevSet.contains(row) {
+//                prevSet.remove(row)
+//            } else {
+//                prevSet.insert(row)
+//            }
+//            editingCellIndexes.accept(prevSet)
+//        }
 
         //        let reloadItemsByEditing = selectedEditingCellIndex
         //            .withLatestFrom(selectedEditingCellIndexes) { row, cellIndexes in
@@ -88,7 +117,7 @@ class BookmarkTattooViewModel {
 
         tattooItems = Observable.merge([
             firstTattooItems,
-            //            reloadItemsByEditing,
+//            relaodBySelectItem
         ]).asDriver(onErrorJustReturn: [])
     }
 }
