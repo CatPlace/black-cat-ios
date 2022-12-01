@@ -16,8 +16,9 @@ class BookmarkTattooViewModel {
     //    let cellViewModels = PublishRelay<[BMTattooCellViewModel]>()
     let hidden = PublishRelay<Bool>()
     let viewDidLoad = PublishRelay<Void>()
+    let viewWillDisappear = PublishRelay<Void>()
+
     let editMode = PublishRelay<EditMode>()
-    let decreaseSelectNumber = PublishRelay<Int>()
     let didSelectItem = PublishRelay<Int>()
     let selectedEditingCellIndexes = BehaviorRelay<Set<Int>>(value: [])
 
@@ -41,7 +42,7 @@ class BookmarkTattooViewModel {
 
         let editingCellIndex = didSelectItem
             .withLatestFrom(editMode) { (index: $0, editMode: $1) }
-            .filter { $0.editMode == .edit }
+            .filter { $0.editMode == .normal }
             .map { $0.index }
 
         let isEditingCell = editingCellIndex
@@ -76,7 +77,7 @@ class BookmarkTattooViewModel {
         removeEditingCellIndex
             .withLatestFrom(observable) { editingCellIndex, observable in
                 var dict = observable.0
-                var targetNumber = dict[editingCellIndex, default: 0]
+                let targetNumber = dict[editingCellIndex, default: 0]
                 observable.1[editingCellIndex].selectNumber.accept(0)
                 dict[editingCellIndex] = nil
                 dict.filter { $0.value > targetNumber }.forEach {
@@ -93,6 +94,16 @@ class BookmarkTattooViewModel {
             .subscribe { tuple in
                 tuple.dict.forEach { tuple.cellViewModels[$0.key].selectNumber.accept($0.value) }
             }
+            .disposed(by: disposeBag)
+
+        viewWillDisappear
+            .withLatestFrom(observable) { _, observable in
+                var dict = observable.0
+                dict.forEach { observable.1[$0.key].selectNumber.accept(0) }
+                dict.removeAll()
+                editingCellIndexes.accept(dict)
+            }
+            .subscribe { _ in () }
             .disposed(by: disposeBag)
 
         tattooItems = firstTattooItems
