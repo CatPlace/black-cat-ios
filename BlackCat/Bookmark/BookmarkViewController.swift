@@ -12,20 +12,20 @@ import RxSwift
 import SnapKit
 
 enum EditMode: String {
-    case edit = "편집"
-    case delete = "삭제"
+    case normal = "편집"
+    case edit = "삭제"
 
     var tintColor: UIColor {
         switch self {
-        case .edit: return .black
-        case .delete: return .purple
+        case .normal: return .black
+        case .edit: return .purple
         }
     }
 
     func toggle() -> EditMode {
-        self == .edit
-        ? .delete
-        : .edit
+        self == .normal
+        ? .edit
+        : .normal
     }
 }
 
@@ -37,7 +37,7 @@ class BookmarkViewController: UIViewController {
 
     let pages: [UIViewController]
     let viewModel = BookmarkViewModel(bookmarkPageViewModels: [BookmarkTattooViewModel(), BookmarkTattooViewModel()])
-    var editMode: EditMode = .edit
+    var editMode: EditMode = .normal
 
     // MARK: - Binding
 
@@ -47,29 +47,20 @@ class BookmarkViewController: UIViewController {
             .bind(to: viewModel.didTapEditBarButtonItem)
             .disposed(by: disposeBag)
 
-
-
         viewModel.updateModeDriver
-            .drive(with: self) { owner, type in
-                owner.editMode = type
-                owner.updateButton(editMode: type)
-            }.disposed(by: disposeBag)
+            .drive(with: self) { owner, editMode in
+                owner.editMode = editMode
+                owner.updateEditButton(editMode: editMode)
+            }
+            .disposed(by: disposeBag)
     }
 
     // MARK: - Functions
-    private func updateButton(editMode: EditMode) {
+
+    private func updateEditButton(editMode: EditMode) {
         editRightBarButtonItem.title = editMode.rawValue
         editRightBarButtonItem.tintColor = editMode.tintColor
     }
-    private func toggleEditButton() {
-        editMode = editMode == .edit
-        ? .delete
-        : .edit
-
-        editRightBarButtonItem.title = editMode.rawValue
-        editRightBarButtonItem.tintColor = editMode.tintColor
-    }
-
 
     // MARK: - Initialize
 
@@ -129,8 +120,8 @@ class BookmarkViewController: UIViewController {
 
     private let editRightBarButtonItem: UIBarButtonItem = {
         let barbuttonItem = UIBarButtonItem()
-        barbuttonItem.title = EditMode.edit.rawValue
-        barbuttonItem.tintColor = EditMode.edit.tintColor
+        barbuttonItem.title = EditMode.normal.rawValue
+        barbuttonItem.tintColor = EditMode.normal.tintColor
         return barbuttonItem
     }()
 }

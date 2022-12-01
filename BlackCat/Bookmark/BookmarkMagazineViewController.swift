@@ -30,6 +30,11 @@ class BookmarkMagazineViewController: UIViewController {
             .bind(to: viewModel.viewDidLoad)
             .disposed(by: disposeBag)
 
+        rx.viewWillDisappear
+            .map { _ in () }
+            .bind(to: viewModel.viewWillDisappear)
+            .disposed(by: disposeBag)
+
         collectionView.rx.itemSelected
             .map { $0.row }
             .bind(to: viewModel.didSelectItem)
@@ -38,12 +43,8 @@ class BookmarkMagazineViewController: UIViewController {
         viewModel.tattooItems
             .drive(collectionView.rx.items(Reusable.magazineCell)) { [weak self] _, viewModel, cell in
                 self?.viewModel.editMode
-                    .map { $0 != .edit }
+                    .map { $0 != .normal }
                     .bind(to: viewModel.showing)
-                    .disposed(by: cell.disposeBag)
-
-                self?.viewModel.decreaseSelectNumber
-                    .bind(to: viewModel.decreaseSelectNumber)
                     .disposed(by: cell.disposeBag)
 
                 cell.bind(to: viewModel)

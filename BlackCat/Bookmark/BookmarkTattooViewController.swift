@@ -30,6 +30,11 @@ class BookmarkTattooViewController: UIViewController {
             .bind(to: viewModel.viewDidLoad)
             .disposed(by: disposeBag)
 
+        rx.viewWillDisappear
+            .map { _ in () }
+            .bind(to: viewModel.viewWillDisappear)
+            .disposed(by: disposeBag)
+
         collectionView.rx.itemSelected
             .map { $0.row }
             .bind(to: viewModel.didSelectItem)
@@ -38,7 +43,7 @@ class BookmarkTattooViewController: UIViewController {
         viewModel.tattooItems
             .drive(collectionView.rx.items(Reusable.tattooCell)) { [weak self] _, viewModel, cell in
                 self?.viewModel.editMode
-                    .map { $0 != .edit }
+                    .map { $0 != .normal }
                     .bind(to: viewModel.showing)
                     .disposed(by: cell.disposeBag)
 
