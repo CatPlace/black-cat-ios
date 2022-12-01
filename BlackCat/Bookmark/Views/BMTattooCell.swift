@@ -25,25 +25,15 @@ class BMTattooCell: UICollectionViewCell {
     // MARK: - Binding
 
     func bind(to viewModel: BMTattooCellViewModel) {
-        viewModel.selectNumber
-            .debug(";;")
-            .subscribe { _ in
-
-            }
-            .disposed(by: disposeBag)
-
         if let url = URL(string: viewModel.imageURLString) {
             Nuke.loadImage(with: url, into: thumbnailImageView)
+            thumbnailImageView.image = UIImage(named: "DummyPict")
         }
-//        editFilterView.selectNumberLabel.text = viewModel.selectNumberText
-        print("viewModelIMageURLS: \(viewModel.imageURLString)")
-
-//        print(address(of: viewModel.selectNumber))
-        print(address(o: viewModel))
 
         viewModel.showEditView
             .debug("BMTattooCell ShowEditView")
             .drive(with: self) { owner, isHidden in
+                print("IsHidden: \(isHidden)")
                 owner.editFilterView.isHidden = isHidden
             }
             .disposed(by: disposeBag)
@@ -51,18 +41,9 @@ class BMTattooCell: UICollectionViewCell {
         viewModel.selectNumberText
             .debug("BMTattooCell SelectNumberText")
             .drive(with: self) { owner, text in
-                owner.editFilterView.selectNumberLabel.text = text
+                owner.editFilterView.update(with: text)
             }
             .disposed(by: disposeBag)
-    }
-
-    func address(of object: UnsafeRawPointer) -> String {
-        let address = Int(bitPattern: object)
-        return String(format: "%p", address)
-    }
-
-    func address<T: AnyObject>(o: T) -> Int {
-        return unsafeBitCast(o, to: Int.self)
     }
 
     // MARK: - Function

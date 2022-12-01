@@ -11,11 +11,16 @@ import SnapKit
 
 class BMEditFilterView: UIView {
 
-    // MARK: - Properties
+    // MARK: - Function
 
-    // MARK: - Binding
-
-    // function
+    func update(with text: String) {
+        if text.isEmpty {
+            blackFilterView.alpha = 0
+        } else {
+            blackFilterView.alpha = 0.5
+        }
+        selectNumberLabel.text = text
+    }
 
     // MARK: - Initialize
 
@@ -47,7 +52,7 @@ class BMEditFilterView: UIView {
         return view
     }()
 
-    let selectNumberLabel: UILabel = {
+    private let selectNumberLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16)
         label.textColor = .purple

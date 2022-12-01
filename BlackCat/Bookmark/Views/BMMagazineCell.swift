@@ -35,7 +35,7 @@ class BMMagazineCell: UICollectionViewCell {
         viewModel.selectNumberText
             .debug("이거 뭔데?")
             .drive(with: self) { owner, text in
-                owner.editFilterView.selectNumberLabel.text = text
+                owner.editFilterView.update(with: text)
             }
             .disposed(by: disposeBag)
     }
