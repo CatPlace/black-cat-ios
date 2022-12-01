@@ -14,8 +14,6 @@ class BookmarkViewModel {
 
     let disposeBag = DisposeBag()
     let bookmarkPageViewModels: [BookmarkTattooViewModel]
-//    let bookmarkTattooViewModel: BookmarkTattooViewModel
-//    let bookmarkMagazineViewModel: BookmarkTattooViewModel
 
     // MARK: - Input
 
@@ -25,11 +23,10 @@ class BookmarkViewModel {
     let currentShowingPageIndex = BehaviorRelay<Int>(value: 0)
 
     // MARK: - Output
+
     let updateModeDriver: Driver<EditMode>
 
     init(
-//        bookmarkTattooViewModel: BookmarkTattooViewModel,
-//        bookmarkMagazineViewModel: BookmarkTattooViewModel
         bookmarkPageViewModels: [BookmarkTattooViewModel]
     ) {
         self.bookmarkPageViewModels = bookmarkPageViewModels
@@ -42,18 +39,24 @@ class BookmarkViewModel {
             .debug("currentShowingPageIndex")
             .map { bookmarkPageViewModels[$0] }
 
-        didTapEditButton
+        let updateEditMode = didTapEditButton
             .withLatestFrom(currentShowingPageViewModel) { ($0, $1) }
-            .subscribe { editMode, viewModel in
-                print("editMode: \(editMode)")
-                print("viewModel: \(viewModel)")
-                viewModel.editMode.accept(editMode)
-            }
-            .disposed(by: disposeBag)
-
-        updateModeDriver = currentShowingPageViewModel
-            .flatMap { $0.editMode }
+            .do { editMode, viewModel in viewModel.editMode.accept(editMode) }
+            .map { editMode, _ in editMode }
             .map { $0.toggle() }
-            .asDriver(onErrorJustReturn: .edit)
+
+        let childViewWillDisappearObservables = bookmarkPageViewModels
+            .map { $0.viewWillDisappear.asObservable() }
+
+        let viewWillDisappear = Observable.merge(childViewWillDisappearObservables)
+            .withLatestFrom(currentShowingPageViewModel) { _, showingPageViewModel in
+                showingPageViewModel.editMode.accept(.edit)
+            }
+
+        updateModeDriver = Observable.merge([
+            viewWillDisappear.map { _ in EditMode.normal },
+            updateEditMode
+        ])
+        .asDriver(onErrorJustReturn: .normal)
     }
 }
