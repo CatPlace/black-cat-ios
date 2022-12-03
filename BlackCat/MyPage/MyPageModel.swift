@@ -7,14 +7,9 @@
 
 import Foundation
 
-struct User {
-    let jwt: String
-    let name: String
-    let imageUrl: String
-}
-
+// TODO: - SDK에 있는 모델로 !
 struct Tattoo {
-    let imageUrl: String // imgUrl or UIImage?
+    let imageUrl: String
     let title: String
     let userName: String
     let price: Int

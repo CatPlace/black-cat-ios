@@ -7,7 +7,7 @@
 
 import Foundation
 
-
+// TODO: - SDK에 있는 모델로 !
 struct Magazine {
     let id: Int
     let imageUrlString: String

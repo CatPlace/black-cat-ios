@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import RxRelay
 import Nuke
+import BlackCatSDK
 
 class MyPageProfileCellViewModel {
     
@@ -19,8 +20,8 @@ class MyPageProfileCellViewModel {
     let profileImageUrlStringDriver: Driver<String>
     let userNameDriver: Driver<String>
     
-    init(user: User) {
-        let userObservable: Observable<User> = .just(user)
+    init(user: Model.User) {
+        let userObservable: Observable<Model.User> = .just(user)
         
         showLoginViewDriver = userObservable
             .filter { _ in user.jwt == "" }
