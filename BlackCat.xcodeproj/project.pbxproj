@@ -20,7 +20,6 @@
 		784B02382937579F004ED20A /* MyPageSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B022C2937579E004ED20A /* MyPageSection.swift */; };
 		784B02392937579F004ED20A /* RecentTattooHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B022E2937579E004ED20A /* RecentTattooHeaderView.swift */; };
 		784B023A2937579F004ED20A /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B022F2937579E004ED20A /* MyPageViewModel.swift */; };
-		784B023E29375949004ED20A /* LoginMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B023C29375949004ED20A /* LoginMock.swift */; };
 		784B023F29375949004ED20A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B023D29375949004ED20A /* LoginViewController.swift */; };
 		7867A63229374D0500FC1160 /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7867A62729374D0500FC1160 /* MulticastDelegate.swift */; };
 		7867A63329374D0500FC1160 /* BottomSheetTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7867A62929374D0500FC1160 /* BottomSheetTransitioningDelegate.swift */; };
@@ -198,7 +197,6 @@
 		784B022C2937579E004ED20A /* MyPageSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageSection.swift; sourceTree = "<group>"; };
 		784B022E2937579E004ED20A /* RecentTattooHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentTattooHeaderView.swift; sourceTree = "<group>"; };
 		784B022F2937579E004ED20A /* MyPageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
-		784B023C29375949004ED20A /* LoginMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginMock.swift; sourceTree = "<group>"; };
 		784B023D29375949004ED20A /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		7867A5FC2935CD1B00FC1160 /* BlackCat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BlackCat.entitlements; sourceTree = "<group>"; };
 		7867A62729374D0500FC1160 /* MulticastDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MulticastDelegate.swift; sourceTree = "<group>"; };
@@ -419,7 +417,6 @@
 		784B023B29375949004ED20A /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				784B023C29375949004ED20A /* LoginMock.swift */,
 				784B023D29375949004ED20A /* LoginViewController.swift */,
 			);
 			path = Login;
@@ -1177,7 +1174,6 @@
 				B1D127DF28F09200007E3667 /* UIImage+.swift in Sources */,
 				B1E3F7D7290EDFD500005F17 /* BPSectionFactory.swift in Sources */,
 				B1E4986928EE9E3500B469AC /* MagazineDetailViewReactor.swift in Sources */,
-				784B023E29375949004ED20A /* LoginMock.swift in Sources */,
 				7867A63629374D0500FC1160 /* FilterCellViewModel.swift in Sources */,
 				B1D3364328F1CD1B00826636 /* UITableView+.swift in Sources */,
 				B1E3F7C8290ECAA100005F17 /* BPContentSectionHeaderReactor.swift in Sources */,
