@@ -19,7 +19,6 @@ class LoginViewController: UIViewController {
             imageView.rx.tapGesture()
                 .when(.recognized)
                 .map { _ in imageView.tag }
-                .debug("클릭 !")
                 .bind(to: viewModel.didTapSocialLoginButton)
                 .disposed(by: disposeBag)
         }
@@ -63,8 +62,10 @@ class LoginViewController: UIViewController {
     var appNameLabel: UILabel = {
         let l = UILabel()
         l.text = "Black\nCat"
+        l.textAlignment = .center
         l.numberOfLines = 0
         l.textColor = .white
+        l.font = .boldSystemFont(ofSize: 48)
         return l
     }()
     var VStackView: UIStackView = {
@@ -76,8 +77,12 @@ class LoginViewController: UIViewController {
     }()
     var lookAroundLabel: UILabel = {
         let l = UILabel()
-        l.attributedText = NSAttributedString(string: "둘러보기")
+        l.attributedText = NSAttributedString(string: "둘러보기",
+                                              attributes: [
+                                                NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue
+                                              ])
         l.textColor = .white
+        l.font = .systemFont(ofSize: 14)
         return l
     }()
     
