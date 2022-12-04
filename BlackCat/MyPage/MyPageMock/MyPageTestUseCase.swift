@@ -11,7 +11,7 @@ import BlackCatSDK
 
 class MyPageUseCase {
     func userProfile() -> Observable<Model.User> {
-        return .just(.init(jwt: "afgad", name: "김타투", imageUrl: "https://cdn.eyesmag.com/content/uploads/posts/2022/08/08/main-ad65ae47-5a50-456d-a41f-528b63071b7b.jpg"))
+        return .just(.init(id: -1, jwt: "text", name: "김타투", imageUrl: "https://cdn.eyesmag.com/content/uploads/posts/2022/08/08/main-ad65ae47-5a50-456d-a41f-528b63071b7b.jpg"))
     }
     
     func recentTattoo() -> Observable<[Tattoo]> {

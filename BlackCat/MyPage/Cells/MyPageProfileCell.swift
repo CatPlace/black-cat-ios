@@ -36,11 +36,11 @@ class MyPageProfileCellViewModel {
             .asDriver(onErrorJustReturn: ())
         
         profileImageUrlStringDriver = loggedInUser
-            .map { $0.imageUrl }
+            .map { $0.imageUrl ?? "TEST" }
             .asDriver(onErrorJustReturn: "")
         
         userNameDriver = loggedInUser
-            .map { $0.name }
+            .map { $0.name ?? "TEST" }
             .asDriver(onErrorJustReturn: "")
     }
 }

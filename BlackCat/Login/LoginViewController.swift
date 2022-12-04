@@ -7,36 +7,6 @@
 
 import UIKit
 import RxSwift
-import RxCocoa
-import RxRelay
-import BlackCatSDK
-
-class LoginViewModel {
-    let socialLoginTypes: [BlackCatUserSDK.loginType] = [.kakao, .apple]
-    
-    // MARK: - Input
-    var didTapSocialLoginButton = PublishRelay<Int>()
-    
-    // MARK: - Output
-    var resultDriver: Driver<Void>
-    
-    init() {
-        let types = socialLoginTypes
-        
-        resultDriver = didTapSocialLoginButton
-            .map { types[$0] }
-            .flatMap(BlackCatUserSDK.login)
-            .map { result in
-                switch result {
-                case .success(let a):
-                    print(a)
-                case .failure(let b):
-                    print(b)
-                }
-            }.map { _ in () }
-            .asDriver(onErrorJustReturn: ())
-    }
-}
 
 class LoginViewController: UIViewController {
     // MARK: - Properties
@@ -49,11 +19,13 @@ class LoginViewController: UIViewController {
             imageView.rx.tapGesture()
                 .when(.recognized)
                 .map { _ in imageView.tag }
+                .debug("클릭 !")
                 .bind(to: viewModel.didTapSocialLoginButton)
                 .disposed(by: disposeBag)
         }
         
         viewModel.resultDriver
+            .debug("처리 드라이버 😡")
             .drive { _ in
                 print("drive")
             }.disposed(by: disposeBag)

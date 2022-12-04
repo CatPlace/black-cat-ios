@@ -36,6 +36,7 @@
 		78B00BBC28F5661000A9915D /* MagazineViewController.Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BB128F5661000A9915D /* MagazineViewController.Layout.swift */; };
 		78B00BBD28F5661000A9915D /* MagazineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BB228F5661000A9915D /* MagazineViewController.swift */; };
 		78B00BBF28F5661000A9915D /* RecentMagazineFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BB528F5661000A9915D /* RecentMagazineFooterView.swift */; };
+		78C8D470293BAD59006A4DF5 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8D46F293BAD59006A4DF5 /* LoginViewModel.swift */; };
 		8E2D8C4828F2EC27004B514D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4728F2EC27004B514D /* HomeViewController.swift */; };
 		8E2D8C4A28F2ECD2004B514D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4928F2ECD2004B514D /* HomeViewModel.swift */; };
 		8E2D8C4C28F2ED03004B514D /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4B28F2ED03004B514D /* HomeModel.swift */; };
@@ -214,6 +215,7 @@
 		78B00BB128F5661000A9915D /* MagazineViewController.Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineViewController.Layout.swift; sourceTree = "<group>"; };
 		78B00BB228F5661000A9915D /* MagazineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineViewController.swift; sourceTree = "<group>"; };
 		78B00BB528F5661000A9915D /* RecentMagazineFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentMagazineFooterView.swift; sourceTree = "<group>"; };
+		78C8D46F293BAD59006A4DF5 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		8E2D8C4728F2EC27004B514D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8E2D8C4928F2ECD2004B514D /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		8E2D8C4B28F2ED03004B514D /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
@@ -418,6 +420,7 @@
 			isa = PBXGroup;
 			children = (
 				784B023D29375949004ED20A /* LoginViewController.swift */,
+				78C8D46F293BAD59006A4DF5 /* LoginViewModel.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1146,6 +1149,7 @@
 				8E2D8C4F28F2ED53004B514D /* HomeHeaderView.swift in Sources */,
 				B1E3F7E0290F042B00005F17 /* BPContentCellReactor.swift in Sources */,
 				B1EABEC128FBD83F0029B6BC /* FilterLoaction.swift in Sources */,
+				78C8D470293BAD59006A4DF5 /* LoginViewModel.swift in Sources */,
 				8EFC9FE5291229CC00A83D3D /* CategoryPaperConfiguration.swift in Sources */,
 				784B02352937579E004ED20A /* MyPageTattooCell.swift in Sources */,
 				B1D2D109290AC8FA005B76BD /* Observable+.swift in Sources */,
