@@ -90,7 +90,6 @@ class BookmarkMagazineViewController: UIViewController {
         let itemHeight = itemWidth * (248 / 187.0)
 
         let layout = UICollectionViewFlowLayout()
-
         layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
         layout.minimumLineSpacing = minLineSpacing
         layout.minimumInteritemSpacing = minInterSpacing

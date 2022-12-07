@@ -82,7 +82,6 @@ class BookmarkTattooViewController: UIViewController {
                                   collectionViewLayout: collectionViewLayout)
         cv.register(Reusable.tattooCell)
         cv.showsVerticalScrollIndicator = false
-
         return cv
     }()
 
@@ -92,12 +91,10 @@ class BookmarkTattooViewController: UIViewController {
         let itemWidth = (UIScreen.main.bounds.width - 3) / 3
 
         let layout = UICollectionViewFlowLayout()
-
         layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
         layout.minimumLineSpacing = minLineSpacing
         layout.minimumInteritemSpacing = minInterSpacing
         layout.sectionInset = .init(top: 0, left: 0.5, bottom: 0, right: 0.5)
-
         return layout
     }()
 }

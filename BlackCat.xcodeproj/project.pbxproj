@@ -41,7 +41,7 @@
 		8E7E9CE2291C927200D09157 /* BookmarkTattooViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7E9CE1291C927200D09157 /* BookmarkTattooViewController.swift */; };
 		8E7E9CE4291C92B000D09157 /* BookmarkMagazineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7E9CE3291C92B000D09157 /* BookmarkMagazineViewController.swift */; };
 		8EBB61422927389600F640F5 /* BMTattooCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB61412927389600F640F5 /* BMTattooCell.swift */; };
-		8EBB6144292738FA00F640F5 /* BMTattooCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB6143292738FA00F640F5 /* BMTattooCellViewModel.swift */; };
+		8EBB6144292738FA00F640F5 /* BMCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB6143292738FA00F640F5 /* BMCellViewModel.swift */; };
 		8EBB614629273CE300F640F5 /* BMEditFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB614529273CE300F640F5 /* BMEditFilterView.swift */; };
 		8EBB614829274C0800F640F5 /* BookmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB614729274C0800F640F5 /* BookmarkViewModel.swift */; };
 		8EBB614A29274D9300F640F5 /* BookmarkTattooViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB614929274D9300F640F5 /* BookmarkTattooViewModel.swift */; };
@@ -214,7 +214,7 @@
 		8E7E9CE1291C927200D09157 /* BookmarkTattooViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkTattooViewController.swift; sourceTree = "<group>"; };
 		8E7E9CE3291C92B000D09157 /* BookmarkMagazineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkMagazineViewController.swift; sourceTree = "<group>"; };
 		8EBB61412927389600F640F5 /* BMTattooCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTattooCell.swift; sourceTree = "<group>"; };
-		8EBB6143292738FA00F640F5 /* BMTattooCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTattooCellViewModel.swift; sourceTree = "<group>"; };
+		8EBB6143292738FA00F640F5 /* BMCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMCellViewModel.swift; sourceTree = "<group>"; };
 		8EBB614529273CE300F640F5 /* BMEditFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMEditFilterView.swift; sourceTree = "<group>"; };
 		8EBB614729274C0800F640F5 /* BookmarkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewModel.swift; sourceTree = "<group>"; };
 		8EBB614929274D9300F640F5 /* BookmarkTattooViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkTattooViewModel.swift; sourceTree = "<group>"; };
@@ -468,7 +468,7 @@
 			children = (
 				8EBB61412927389600F640F5 /* BMTattooCell.swift */,
 				8E0D37E7292F5B58000AF41D /* BMMagazineCell.swift */,
-				8EBB6143292738FA00F640F5 /* BMTattooCellViewModel.swift */,
+				8EBB6143292738FA00F640F5 /* BMCellViewModel.swift */,
 				8EBB614529273CE300F640F5 /* BMEditFilterView.swift */,
 			);
 			path = Views;
@@ -1055,7 +1055,7 @@
 				8E2D8C5128F2EDF3004B514D /* HomeCategorySectionBackgroundReusableView.swift in Sources */,
 				8EE9A0C128F3CB0D003D7761 /* HomeSection.swift in Sources */,
 				B1D127E228F0923C007E3667 /* Asset.swift in Sources */,
-				8EBB6144292738FA00F640F5 /* BMTattooCellViewModel.swift in Sources */,
+				8EBB6144292738FA00F640F5 /* BMCellViewModel.swift in Sources */,
 				B1E986B328FE9E0B00962F5B /* FilterLoactionService.swift in Sources */,
 				B1D5BD2429174EEC00A85D4A /* UIViewController+.swift in Sources */,
 				78B00BB928F5661000A9915D /* MagazineTestUseCase.swift in Sources */,
