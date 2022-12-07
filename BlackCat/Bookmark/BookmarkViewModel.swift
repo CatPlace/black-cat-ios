@@ -20,6 +20,7 @@ class BookmarkViewModel {
     let viewDidLoad = PublishRelay<Void>()
     let didTap = PublishRelay<EditMode>()
     let didTapEditBarButtonItem = PublishRelay<EditMode>()
+    let didTapCancelBarButtonItem = PublishRelay<EditMode>()
     let currentShowingPageIndex = BehaviorRelay<Int>(value: 0)
 
     // MARK: - Output
@@ -31,15 +32,22 @@ class BookmarkViewModel {
     ) {
         self.bookmarkPageViewModels = bookmarkPageViewModels
 
+        let currentShowingPageViewModel = currentShowingPageIndex
+            .distinctUntilChanged()
+            .map { bookmarkPageViewModels[$0] }
+
         let didTapEditButton = didTapEditBarButtonItem
             .share()
 
-        let currentShowingPageViewModel = currentShowingPageIndex
-            .distinctUntilChanged()
-            .debug("currentShowingPageIndex")
-            .map { bookmarkPageViewModels[$0] }
+        let didTapCancelButton = didTapCancelBarButtonItem
+            .withLatestFrom(currentShowingPageViewModel) { ($0, $1) }
+            .do { $0.1.refreshSelectedCells.accept(()) }
+            .map { $0.0 }
 
-        let updateEditMode = didTapEditButton
+        let updateEditMode = Observable.merge([
+            didTapCancelButton,
+            didTapEditButton
+        ])
             .withLatestFrom(currentShowingPageViewModel) { ($0, $1) }
             .do { editMode, viewModel in viewModel.editMode.accept(editMode) }
             .map { editMode, _ in editMode }

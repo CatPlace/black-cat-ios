@@ -13,10 +13,14 @@ import RxSwift
 class BookmarkTattooViewModel {
     let disposeBag = DisposeBag()
 
-    //    let cellViewModels = PublishRelay<[BMTattooCellViewModel]>()
+    // MARK: - Input
+
     let hidden = PublishRelay<Bool>()
     let viewDidLoad = PublishRelay<Void>()
     let viewWillDisappear = PublishRelay<Void>()
+    let refreshSelectedCells = PublishRelay<Void>()
+
+    // MARK: - Output
 
     let editMode = PublishRelay<EditMode>()
     let didSelectItem = PublishRelay<Int>()
@@ -25,8 +29,6 @@ class BookmarkTattooViewModel {
     let tattooItems: Driver<[BMTattooCellViewModel]>
 
     init() {
-        let items = BehaviorRelay<[String]>(value: ["100", "200", "300", "400"])
-
         let editingCellIndexes = BehaviorRelay<Dictionary<Int, Int>>(value: [:])
 
         let cellViewModels = Observable.just([
@@ -96,7 +98,10 @@ class BookmarkTattooViewModel {
             }
             .disposed(by: disposeBag)
 
-        viewWillDisappear
+        Observable.merge([
+            viewWillDisappear.asObservable(),
+            refreshSelectedCells.asObservable()
+        ])
             .withLatestFrom(observable) { _, observable in
                 var dict = observable.0
                 dict.forEach { observable.1[$0.key].selectNumber.accept(0) }

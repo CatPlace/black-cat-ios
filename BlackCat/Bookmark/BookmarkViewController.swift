@@ -37,11 +37,21 @@ class BookmarkViewController: UIViewController {
 
     let pages: [UIViewController]
     let viewModel = BookmarkViewModel(bookmarkPageViewModels: [BookmarkTattooViewModel(), BookmarkTattooViewModel()])
-    var editMode: EditMode = .normal
+    var editMode: EditMode = .normal {
+        didSet {
+            updateEditButton(editMode: editMode)
+            updateCancelButton(editMode: editMode)
+        }
+    }
 
     // MARK: - Binding
 
     private func bind(to viewModel: BookmarkViewModel) {
+        cancelRightBarButtonItem.rx.tap
+            .map { _ in self.editMode }
+            .bind(to: viewModel.didTapCancelBarButtonItem)
+            .disposed(by: disposeBag)
+
         editRightBarButtonItem.rx.tap
             .map { _ in self.editMode }
             .bind(to: viewModel.didTapEditBarButtonItem)
@@ -50,7 +60,6 @@ class BookmarkViewController: UIViewController {
         viewModel.updateModeDriver
             .drive(with: self) { owner, editMode in
                 owner.editMode = editMode
-                owner.updateEditButton(editMode: editMode)
             }
             .disposed(by: disposeBag)
     }
@@ -60,6 +69,16 @@ class BookmarkViewController: UIViewController {
     private func updateEditButton(editMode: EditMode) {
         editRightBarButtonItem.title = editMode.rawValue
         editRightBarButtonItem.tintColor = editMode.tintColor
+    }
+
+    private func updateCancelButton(editMode: EditMode) {
+        if editMode == .normal {
+            cancelRightBarButtonItem.title = ""
+            cancelRightBarButtonItem.isEnabled = false
+        } else {
+            cancelRightBarButtonItem.title = "취소"
+            cancelRightBarButtonItem.isEnabled = true
+        }
     }
 
     // MARK: - Initialize
@@ -106,33 +125,40 @@ class BookmarkViewController: UIViewController {
 
     private lazy var tabMenuView: BMTabMenuView = {
         let view = BMTabMenuView(buttons: [tattooTabMenuButton, magazineTabMenuButton])
-
         view.selectedColor = .black
         view.unSelectedColor = .black.withAlphaComponent(0.3)
-
         view.barIndicator.tintColor = .black
-
         view.delegate = self
         return view
     }()
 
     private let contentView = UIView()
 
+    private let cancelRightBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem()
+        barButtonItem.title = ""
+        barButtonItem.tintColor = EditMode.normal.tintColor
+        barButtonItem.isEnabled = false
+        return barButtonItem
+    }()
+
     private let editRightBarButtonItem: UIBarButtonItem = {
-        let barbuttonItem = UIBarButtonItem()
-        barbuttonItem.title = EditMode.normal.rawValue
-        barbuttonItem.tintColor = EditMode.normal.tintColor
-        return barbuttonItem
+        let barButtonItem = UIBarButtonItem()
+        barButtonItem.title = EditMode.normal.rawValue
+        barButtonItem.tintColor = EditMode.normal.tintColor
+        return barButtonItem
     }()
 }
 
 extension BookmarkViewController {
     private func setNavigationBar() {
         title = "🖤 찜한 컨텐츠"
-        navigationItem.rightBarButtonItem = editRightBarButtonItem
+        navigationItem.rightBarButtonItems = [editRightBarButtonItem, cancelRightBarButtonItem]
     }
 
     private func setUI() {
+        view.backgroundColor = .white
+
         view.addSubview(tabMenuView)
 
         tabMenuView.snp.makeConstraints {
