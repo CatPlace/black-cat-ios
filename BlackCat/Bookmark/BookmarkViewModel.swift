@@ -27,26 +27,26 @@ class BookmarkViewModel {
 
     let updateModeDriver: Driver<EditMode>
 
-    init(
-        bookmarkPageViewModels: [BookmarkTattooViewModel]
-    ) {
+    init(bookmarkPageViewModels: [BookmarkTattooViewModel]) {
         self.bookmarkPageViewModels = bookmarkPageViewModels
 
         let currentShowingPageViewModel = currentShowingPageIndex
             .distinctUntilChanged()
             .map { bookmarkPageViewModels[$0] }
 
-        let didTapEditButton = didTapEditBarButtonItem
+        let editModeWhenDidTapEditButton = didTapEditBarButtonItem
             .share()
 
-        let didTapCancelButton = didTapCancelBarButtonItem
-            .withLatestFrom(currentShowingPageViewModel) { ($0, $1) }
-            .do { $0.1.refreshSelectedCells.accept(()) }
-            .map { $0.0 }
+        let editModeWhenDidTapCancelButton = didTapCancelBarButtonItem
+            .withLatestFrom(currentShowingPageViewModel) { editMode, viewModel -> (editMode: EditMode, viewModel: BookmarkTattooViewModel) in
+                return (editMode, viewModel)
+            }
+            .do { $0.viewModel.refreshSelectedCells.accept(()) }
+            .map { $0.editMode }
 
         let updateEditMode = Observable.merge([
-            didTapCancelButton,
-            didTapEditButton
+            editModeWhenDidTapEditButton,
+            editModeWhenDidTapCancelButton
         ])
             .withLatestFrom(currentShowingPageViewModel) { ($0, $1) }
             .do { editMode, viewModel in viewModel.editMode.accept(editMode) }
