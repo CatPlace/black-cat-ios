@@ -24,7 +24,7 @@ class BMTattooCell: UICollectionViewCell {
 //    }
     // MARK: - Binding
 
-    func bind(to viewModel: BMTattooCellViewModel) {
+    func bind(to viewModel: BMCellViewModel) {
         if let url = URL(string: viewModel.imageURLString) {
             Nuke.loadImage(with: url, into: thumbnailImageView)
             thumbnailImageView.image = UIImage(named: "DummyPict")
