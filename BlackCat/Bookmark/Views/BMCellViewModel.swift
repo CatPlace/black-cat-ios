@@ -15,7 +15,7 @@ protocol cellEditable {
     var showEditView: Driver<Bool> { get }
 }
 
-class BMTattooCellViewModel: cellEditable {
+class BMCellViewModel: cellEditable {
     var imageURLString: String
     var selectNumber = PublishRelay<Int>()
     var showing = PublishRelay<Bool>()
