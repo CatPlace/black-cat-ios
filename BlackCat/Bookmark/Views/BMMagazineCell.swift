@@ -23,7 +23,6 @@ class BMMagazineCell: UICollectionViewCell {
         if let url = URL(string: viewModel.imageURLString) {
             Nuke.loadImage(with: url, into: thumbnailImageView)
         }
-//        editFilterView.selectNumberLabel.text = viewModel.selectNumberText
 
         viewModel.showEditView
             .debug("BMMagazineCell EditView isHidden")
@@ -39,8 +38,6 @@ class BMMagazineCell: UICollectionViewCell {
             }
             .disposed(by: disposeBag)
     }
-
-    // function
 
     // MARK: - Initialize
 

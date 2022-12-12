@@ -10,12 +10,7 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-protocol cellEditable {
-    var showing: PublishRelay<Bool> { get }
-    var showEditView: Driver<Bool> { get }
-}
-
-class BMCellViewModel: cellEditable {
+struct BMCellViewModel {
     var imageURLString: String
     var selectNumber = PublishRelay<Int>()
     var showing = PublishRelay<Bool>()

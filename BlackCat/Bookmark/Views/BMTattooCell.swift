@@ -16,12 +16,7 @@ class BMTattooCell: UICollectionViewCell {
     // MARK: - Properties
 
     let disposeBag = DisposeBag()
-//    var viewModel: BMTattooCellViewModel? {
-//        didSet {
-//            setUI()
-//            bind(to: viewModel ?? .init(imageURLString: "B"))
-//        }
-//    }
+
     // MARK: - Binding
 
     func bind(to viewModel: BMCellViewModel) {
@@ -31,22 +26,17 @@ class BMTattooCell: UICollectionViewCell {
         }
 
         viewModel.showEditView
-            .debug("BMTattooCell ShowEditView")
             .drive(with: self) { owner, isHidden in
-                print("IsHidden: \(isHidden)")
                 owner.editFilterView.isHidden = isHidden
             }
             .disposed(by: disposeBag)
 
         viewModel.selectNumberText
-            .debug("BMTattooCell SelectNumberText")
             .drive(with: self) { owner, text in
                 owner.editFilterView.update(with: text)
             }
             .disposed(by: disposeBag)
     }
-
-    // MARK: - Function
 
     // MARK: - Initialize
 

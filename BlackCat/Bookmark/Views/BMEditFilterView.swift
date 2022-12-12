@@ -14,11 +14,7 @@ class BMEditFilterView: UIView {
     // MARK: - Function
 
     func update(with text: String) {
-        if text.isEmpty {
-            blackFilterView.alpha = 0
-        } else {
-            blackFilterView.alpha = 0.5
-        }
+        blackFilterView.alpha = text.isEmpty ? 0 : 0.5
         selectNumberLabel.text = text
     }
 

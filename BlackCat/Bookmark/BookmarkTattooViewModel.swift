@@ -31,7 +31,7 @@ class BookmarkTattooViewModel {
     let tattooItems: Driver<[BMCellViewModel]>
 
     init() {
-        let editingCellIndexToSelectNumberDict = BehaviorRelay<EditingCellIndexToSelectNumberDict>(value: [:])
+        let editingCellManagingDict = BehaviorRelay<EditingCellIndexToSelectNumberDict>(value: [:])
 
         let cellViewModels = Observable.just([
             BMCellViewModel(imageURLString: "100"),
@@ -48,53 +48,50 @@ class BookmarkTattooViewModel {
             .filter { $0.editMode == .normal }
             .map { $0.index }
 
-        let isEditingCell = editingCellIndex
-            .withLatestFrom(editingCellIndexToSelectNumberDict) { selectItemIndex, editingCellIndexToSelectNumberDict -> (shouldEdit: Bool, index: Int) in
+        let cellShouldBeEdited = editingCellIndex
+            .withLatestFrom(editingCellManagingDict) { selectItemIndex, editingCellIndexToSelectNumberDict -> (shouldEdit: Bool, index: Int) in
                 let isDictionaryContainsCellIndex = editingCellIndexToSelectNumberDict.contains { $0.key == selectItemIndex }
 
                 return (shouldEdit: !isDictionaryContainsCellIndex, index: selectItemIndex)
             }
             .share()
 
-        let addEditingCellIndex = isEditingCell
+        let cellIndexShouldBeAddInManagingDict = cellShouldBeEdited
             .filter { $0.shouldEdit }
             .map { $0.index }
 
-        let removeEditingCellIndex = isEditingCell
+        let cellIndexShouldBeRemoveFromManagingDict = cellShouldBeEdited
             .filter { !$0.shouldEdit }
             .map { $0.index }
 
-        let observable = Observable
-            .combineLatest(editingCellIndexToSelectNumberDict, cellViewModels)
-
-        addEditingCellIndex
-            .withLatestFrom(editingCellIndexToSelectNumberDict) { selectedItemIndex, editingCellDict in
+        cellIndexShouldBeAddInManagingDict
+            .withLatestFrom(editingCellManagingDict) { selectedItemIndex, editingCellDict in
                 var dict = editingCellDict
                 dict[selectedItemIndex] = dict.count + 1
-                editingCellIndexToSelectNumberDict.accept(dict)
+                editingCellManagingDict.accept(dict)
             }
             .subscribe { _ in () }
             .disposed(by: disposeBag)
 
-        removeEditingCellIndex
-            .withLatestFrom(observable) { editingCellIndex, observable in
-                var dict = observable.0
-                let targetNumber = dict[editingCellIndex, default: 0]
-                observable.1[editingCellIndex].selectNumber.accept(0)
-                dict[editingCellIndex] = nil
-                dict.filter { $0.value > targetNumber }.forEach {
-                    dict[$0.key] = $0.value - 1
-                }
-
-                editingCellIndexToSelectNumberDict.accept(dict)
+        cellIndexShouldBeRemoveFromManagingDict
+            .withLatestFrom(editingCellManagingDict) { selectedCellIndex, editingCellDict -> Int in
+                var dict = editingCellDict
+                let selectNumber = dict[selectedCellIndex, default: 0]
+                dict[selectedCellIndex] = nil
+                dict.filter { $0.value > selectNumber }.forEach { dict[$0.key] = $0.value - 1 }
+                editingCellManagingDict.accept(dict)
+                return selectedCellIndex
+            }
+            .withLatestFrom(cellViewModels) { selectedCellIndex, cellViewModels in
+                removeSelectNumber(from: cellViewModels[selectedCellIndex])
             }
             .subscribe { _ in () }
             .disposed(by: disposeBag)
 
-        editingCellIndexToSelectNumberDict
+        editingCellManagingDict
             .withLatestFrom(cellViewModels) { (dict: $0, cellViewModels: $1) }
-            .subscribe { tuple in
-                tuple.dict.forEach { tuple.cellViewModels[$0.key].selectNumber.accept($0.value) }
+            .subscribe { returned in
+                returned.dict.forEach { returned.cellViewModels[$0.key].selectNumber.accept($0.value) }
             }
             .disposed(by: disposeBag)
 
@@ -102,16 +99,20 @@ class BookmarkTattooViewModel {
             viewWillDisappear.asObservable(),
             refreshSelectedCells.asObservable()
         ])
-            .withLatestFrom(observable) { _, observable in
-                var dict = observable.0
-                dict.forEach { observable.1[$0.key].selectNumber.accept(0) }
-                dict.removeAll()
-                editingCellIndexToSelectNumberDict.accept(dict)
-            }
+        .withLatestFrom(Observable.combineLatest(editingCellManagingDict, cellViewModels)) {
+            let dict = $1.0
+            let cellViewModels = $1.1
+            dict.forEach { removeSelectNumber(from: cellViewModels[$0.key]) }
+            editingCellManagingDict.accept(dict)
+        }
             .subscribe { _ in () }
             .disposed(by: disposeBag)
 
         tattooItems = bookmarkCellViewModelsWhenFirstLoad
             .asDriver(onErrorJustReturn: [])
+
+        func removeSelectNumber(from viewModel: BMCellViewModel) {
+            viewModel.selectNumber.accept(0)
+        }
     }
-} 
+}
