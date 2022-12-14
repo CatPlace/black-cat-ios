@@ -44,6 +44,10 @@ final class TabBarViewController: UITabBarController {
                                    title: "로그인",
                                    image: .ic_board,
                                    selectedImage: .ic_board_fill)
+    let vc8 = TabBarFactory.create(viewController: FilterExampleViewController(),
+                                   title: "폰트",
+                                   image: .ic_board,
+                                   selectedImage: .ic_board_fill)
     //    var homeViewController: UINavigationController
     //    var magazineViewController: UINavigationController
     //    var chatViewController: UINavigationController
