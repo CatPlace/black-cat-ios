@@ -12,6 +12,23 @@
 				<string>kakao15dc66fefb2499ef2fb14ce048a69f5f</string>
 			</array>
 		</dict>
+	</array>	
+	<key>UIAppFonts</key>
+	<array>
+		<string>Pretendard-Bold.otf</string>
+		<string>Pretendard-ExtraBold.otf</string>
+		<string>Pretendard-ExtraLight.otf</string>
+		<string>Pretendard-Light.otf</string>
+		<string>Pretendard-Medium.otf</string>
+		<string>Pretendard-Regular.otf</string>
+		<string>Pretendard-SemiBold.otf</string>
+		<string>Pretendard-Thin.otf</string>
+		<string>HeirofLightOTFBold.otf</string>
+		<string>HeirofLightOTFRegular.otf</string>
+		<string>Didot Bold.otf</string>
+		<string>Didot Italic.otf</string>
+		<string>Didot.otf</string>
+		<string>Didot Title.otf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

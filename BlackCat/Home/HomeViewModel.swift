@@ -29,6 +29,7 @@ class HomeViewModel {
     // MARK: - Output
 
     let homeItems: Driver<[HomeSection]>
+    let pushToBookmarkViewController: Driver<Void>
     let pushToGenreViewController: Driver<GenreTitle>
 
     init() {
@@ -62,6 +63,9 @@ class HomeViewModel {
                              items: tattooAlbumItems.map { .allTattoosCell(HomeTattooAlbumCellViewModel(with: $0)) })]
             }
             .asDriver(onErrorJustReturn: [])
+
+        pushToBookmarkViewController = didTapHeartBarButtonItem
+            .asDriver(onErrorJustReturn: ())
 
         // Dummy Function입니다.
         // API가 나오는대로 SDK에서 처리할 함수입니다.

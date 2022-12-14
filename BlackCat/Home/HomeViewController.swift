@@ -96,11 +96,10 @@ class HomeViewController: UIViewController {
             .drive(collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
-        viewModel.pushToGenreViewController
-            .drive(with: self) { owner, genreTitle in
-                let genreViewController = GenreViewController(genreTitle: genreTitle)
-                owner.navigationItem.backButtonTitle = ""
-                owner.navigationController?.pushViewController(genreViewController, animated: true)
+        viewModel.pushToBookmarkViewController
+            .drive(with: self) { owner, _ in
+                let bookmarkViewController = BookmarkViewController()
+                owner.navigationController?.pushViewController(bookmarkViewController, animated: true)
             }
             .disposed(by: disposeBag)
     }
@@ -143,13 +142,13 @@ class HomeViewController: UIViewController {
         let  cv = UICollectionView(frame: .zero,
                                    collectionViewLayout: compositionalLayout)
 
-         cv.register(Reusable.categoryCell)
-         cv.register(Reusable.recommendCell)
-         cv.register(Reusable.emptyCell)
-         cv.register(Reusable.tattooAlbumCell)
-         cv.register(Reusable.headerView, kind: .header)
+        cv.register(Reusable.categoryCell)
+        cv.register(Reusable.recommendCell)
+        cv.register(Reusable.emptyCell)
+        cv.register(Reusable.tattooAlbumCell)
+        cv.register(Reusable.headerView, kind: .header)
 
-         cv.showsVerticalScrollIndicator = false
+        cv.showsVerticalScrollIndicator = false
         return  cv
     }()
 
