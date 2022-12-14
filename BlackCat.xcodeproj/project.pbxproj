@@ -24,6 +24,22 @@
 		7867A63529374D0500FC1160 /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7867A62D29374D0500FC1160 /* FilterCell.swift */; };
 		7867A63729374D0500FC1160 /* FilterBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7867A62F29374D0500FC1160 /* FilterBaseCell.swift */; };
 		7867A63829374D0500FC1160 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7867A63129374D0500FC1160 /* AlertService.swift */; };
+		786B58032949C8B100E2C4A5 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 786B57F32949C8B100E2C4A5 /* Pretendard-Regular.otf */; };
+		786B58042949C8B100E2C4A5 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 786B57F42949C8B100E2C4A5 /* Pretendard-Medium.otf */; };
+		786B58052949C8B100E2C4A5 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 786B57F52949C8B100E2C4A5 /* Pretendard-Light.otf */; };
+		786B58062949C8B100E2C4A5 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 786B57F62949C8B100E2C4A5 /* Pretendard-ExtraBold.otf */; };
+		786B58072949C8B100E2C4A5 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 786B57F72949C8B100E2C4A5 /* Pretendard-Bold.otf */; };
+		786B58082949C8B100E2C4A5 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 786B57F82949C8B100E2C4A5 /* Pretendard-Thin.otf */; };
+		786B58092949C8B100E2C4A5 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 786B57F92949C8B100E2C4A5 /* Pretendard-ExtraLight.otf */; };
+		786B580A2949C8B100E2C4A5 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 786B57FA2949C8B100E2C4A5 /* Pretendard-SemiBold.otf */; };
+		786B580B2949C8B100E2C4A5 /* Didot.otf in Resources */ = {isa = PBXBuildFile; fileRef = 786B57FC2949C8B100E2C4A5 /* Didot.otf */; };
+		786B580C2949C8B100E2C4A5 /* Didot Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 786B57FD2949C8B100E2C4A5 /* Didot Bold.otf */; };
+		786B580D2949C8B100E2C4A5 /* Didot Title.otf in Resources */ = {isa = PBXBuildFile; fileRef = 786B57FE2949C8B100E2C4A5 /* Didot Title.otf */; };
+		786B580E2949C8B100E2C4A5 /* Didot Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 786B57FF2949C8B100E2C4A5 /* Didot Italic.otf */; };
+		786B580F2949C8B100E2C4A5 /* HeirofLightOTFBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 786B58012949C8B100E2C4A5 /* HeirofLightOTFBold.otf */; };
+		786B58102949C8B100E2C4A5 /* HeirofLightOTFRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 786B58022949C8B100E2C4A5 /* HeirofLightOTFRegular.otf */; };
+		787D5843293CD6BC00A3E610 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787D5842293CD6BC00A3E610 /* UIFont+.swift */; };
+		787D5845293CD8CB00A3E610 /* FontExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787D5844293CD8CB00A3E610 /* FontExampleViewController.swift */; };
 		78858BEC28F6F4E400EC7BF7 /* MagazineSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78858BEB28F6F4E300EC7BF7 /* MagazineSection.swift */; };
 		78B00BB728F5661000A9915D /* RecentMagazineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BAB28F5661000A9915D /* RecentMagazineCell.swift */; };
 		78B00BB828F5661000A9915D /* LastMagazineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BAC28F5661000A9915D /* LastMagazineCell.swift */; };
@@ -219,6 +235,36 @@
 		7867A62E29374D0500FC1160 /* FilterCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCellViewModel.swift; sourceTree = "<group>"; };
 		7867A62F29374D0500FC1160 /* FilterBaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterBaseCell.swift; sourceTree = "<group>"; };
 		7867A63129374D0500FC1160 /* AlertService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
+		786B57F32949C8B100E2C4A5 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		786B57F42949C8B100E2C4A5 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		786B57F52949C8B100E2C4A5 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
+		786B57F62949C8B100E2C4A5 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
+		786B57F72949C8B100E2C4A5 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		786B57F82949C8B100E2C4A5 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		786B57F92949C8B100E2C4A5 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
+		786B57FA2949C8B100E2C4A5 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		786B57FC2949C8B100E2C4A5 /* Didot.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Didot.otf; sourceTree = "<group>"; };
+		786B57FD2949C8B100E2C4A5 /* Didot Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Didot Bold.otf"; sourceTree = "<group>"; };
+		786B57FE2949C8B100E2C4A5 /* Didot Title.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Didot Title.otf"; sourceTree = "<group>"; };
+		786B57FF2949C8B100E2C4A5 /* Didot Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Didot Italic.otf"; sourceTree = "<group>"; };
+		786B58012949C8B100E2C4A5 /* HeirofLightOTFBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = HeirofLightOTFBold.otf; sourceTree = "<group>"; };
+		786B58022949C8B100E2C4A5 /* HeirofLightOTFRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = HeirofLightOTFRegular.otf; sourceTree = "<group>"; };
+		787D5828293CD5BE00A3E610 /* HeirofLightOTFRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = HeirofLightOTFRegular.otf; sourceTree = "<group>"; };
+		787D5829293CD5BE00A3E610 /* HeirofLightOTFBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = HeirofLightOTFBold.otf; sourceTree = "<group>"; };
+		787D582C293CD5D700A3E610 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
+		787D582D293CD5D700A3E610 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		787D582E293CD5D800A3E610 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		787D582F293CD5D800A3E610 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		787D5830293CD5D800A3E610 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		787D5831293CD5D800A3E610 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
+		787D5832293CD5D800A3E610 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
+		787D5833293CD5D800A3E610 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		787D5842293CD6BC00A3E610 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
+		787D5844293CD8CB00A3E610 /* FontExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExampleViewController.swift; sourceTree = "<group>"; };
+		787D5846293CDF5B00A3E610 /* Didot Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Didot Bold.otf"; sourceTree = "<group>"; };
+		787D5847293CDF5B00A3E610 /* Didot.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Didot.otf; sourceTree = "<group>"; };
+		787D5848293CDF5B00A3E610 /* Didot Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Didot Italic.otf"; sourceTree = "<group>"; };
+		787D5849293CDF5B00A3E610 /* Didot Title.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Didot Title.otf"; sourceTree = "<group>"; };
 		78858BEB28F6F4E300EC7BF7 /* MagazineSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineSection.swift; sourceTree = "<group>"; };
 		78B00BAB28F5661000A9915D /* RecentMagazineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentMagazineCell.swift; sourceTree = "<group>"; };
 		78B00BAC28F5661000A9915D /* LastMagazineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastMagazineCell.swift; sourceTree = "<group>"; };
@@ -460,6 +506,20 @@
 				8EFC9FE4291229CC00A83D3D /* CategoryPaperConfiguration.swift */,
 				8EED4EDC2902817500DA3887 /* GenreViewModel.swift */,
 				8EFC9FE629122F9E00A83D3D /* PresentationView.swift */,
+				787D5829293CD5BE00A3E610 /* HeirofLightOTFBold.otf */,
+				787D5848293CDF5B00A3E610 /* Didot Italic.otf */,
+				787D5833293CD5D800A3E610 /* Pretendard-Bold.otf */,
+				787D5828293CD5BE00A3E610 /* HeirofLightOTFRegular.otf */,
+				787D5846293CDF5B00A3E610 /* Didot Bold.otf */,
+				787D582C293CD5D700A3E610 /* Pretendard-ExtraBold.otf */,
+				787D5831293CD5D800A3E610 /* Pretendard-Light.otf */,
+				787D582F293CD5D800A3E610 /* Pretendard-SemiBold.otf */,
+				787D582D293CD5D700A3E610 /* Pretendard-Thin.otf */,
+				787D5847293CDF5B00A3E610 /* Didot.otf */,
+				787D582E293CD5D800A3E610 /* Pretendard-Regular.otf */,
+				787D5849293CDF5B00A3E610 /* Didot Title.otf */,
+				787D5830293CD5D800A3E610 /* Pretendard-Medium.otf */,
+				787D5832293CD5D800A3E610 /* Pretendard-ExtraLight.otf */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -508,6 +568,67 @@
 				7867A63129374D0500FC1160 /* AlertService.swift */,
 			);
 			path = CommonsServices;
+			sourceTree = "<group>";
+		};
+		786B57F02949C8B100E2C4A5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				786B57F12949C8B100E2C4A5 /* Fonts */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		786B57F12949C8B100E2C4A5 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				786B57F22949C8B100E2C4A5 /* Pretendard */,
+				786B57FB2949C8B100E2C4A5 /* Didot */,
+				786B58002949C8B100E2C4A5 /* HeirOfLight */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		786B57F22949C8B100E2C4A5 /* Pretendard */ = {
+			isa = PBXGroup;
+			children = (
+				786B57F32949C8B100E2C4A5 /* Pretendard-Regular.otf */,
+				786B57F42949C8B100E2C4A5 /* Pretendard-Medium.otf */,
+				786B57F52949C8B100E2C4A5 /* Pretendard-Light.otf */,
+				786B57F62949C8B100E2C4A5 /* Pretendard-ExtraBold.otf */,
+				786B57F72949C8B100E2C4A5 /* Pretendard-Bold.otf */,
+				786B57F82949C8B100E2C4A5 /* Pretendard-Thin.otf */,
+				786B57F92949C8B100E2C4A5 /* Pretendard-ExtraLight.otf */,
+				786B57FA2949C8B100E2C4A5 /* Pretendard-SemiBold.otf */,
+			);
+			path = Pretendard;
+			sourceTree = "<group>";
+		};
+		786B57FB2949C8B100E2C4A5 /* Didot */ = {
+			isa = PBXGroup;
+			children = (
+				786B57FC2949C8B100E2C4A5 /* Didot.otf */,
+				786B57FD2949C8B100E2C4A5 /* Didot Bold.otf */,
+				786B57FE2949C8B100E2C4A5 /* Didot Title.otf */,
+				786B57FF2949C8B100E2C4A5 /* Didot Italic.otf */,
+			);
+			path = Didot;
+			sourceTree = "<group>";
+		};
+		786B58002949C8B100E2C4A5 /* HeirOfLight */ = {
+			isa = PBXGroup;
+			children = (
+				786B58012949C8B100E2C4A5 /* HeirofLightOTFBold.otf */,
+				786B58022949C8B100E2C4A5 /* HeirofLightOTFRegular.otf */,
+			);
+			path = HeirOfLight;
+			sourceTree = "<group>";
+		};
+		787D584E293CE00400A3E610 /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				787D5844293CD8CB00A3E610 /* FontExampleViewController.swift */,
+			);
+			path = Example;
 			sourceTree = "<group>";
 		};
 		78858BEA28F6F48C00EC7BF7 /* MagazineSection */ = {
@@ -720,6 +841,7 @@
 				B1D2D106290AC7B5005B76BD /* UIScrollView+Rx.swift */,
 				B1D2D108290AC8FA005B76BD /* Observable+.swift */,
 				8EFC9FE0291205B400A83D3D /* UIView+.swift */,
+				787D5842293CD6BC00A3E610 /* UIFont+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -830,7 +952,11 @@
 				B1D127E028F09223007E3667 /* Utils */,
 				B12C1DC528ED21830089964E /* Extension */,
 				8E8848702949C3F80039F99A /* Commons */,
+				787D581B293CD4E900A3E610 /* Resources */,
+				8E8848702949C3F80039F99A /* Commons */,
 				7867A62629374D0500FC1160 /* Common */,
+				787D584E293CE00400A3E610 /* Example */,
+				786B57F02949C8B100E2C4A5 /* Resources */,
 				B1D79CB328EB0EFB008487D0 /* Assets.xcassets */,
 				B1D79CB528EB0EFB008487D0 /* LaunchScreen.storyboard */,
 				B1D79CB828EB0EFB008487D0 /* Info.plist */,
@@ -1145,8 +1271,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				786B58062949C8B100E2C4A5 /* Pretendard-ExtraBold.otf in Resources */,
+				786B580A2949C8B100E2C4A5 /* Pretendard-SemiBold.otf in Resources */,
+				786B58092949C8B100E2C4A5 /* Pretendard-ExtraLight.otf in Resources */,
+				786B580D2949C8B100E2C4A5 /* Didot Title.otf in Resources */,
+				786B58082949C8B100E2C4A5 /* Pretendard-Thin.otf in Resources */,
+				786B580B2949C8B100E2C4A5 /* Didot.otf in Resources */,
+				786B580F2949C8B100E2C4A5 /* HeirofLightOTFBold.otf in Resources */,
+				786B58052949C8B100E2C4A5 /* Pretendard-Light.otf in Resources */,
+				786B58102949C8B100E2C4A5 /* HeirofLightOTFRegular.otf in Resources */,
+				786B580C2949C8B100E2C4A5 /* Didot Bold.otf in Resources */,
+				786B58032949C8B100E2C4A5 /* Pretendard-Regular.otf in Resources */,
 				B1D79CB728EB0EFB008487D0 /* LaunchScreen.storyboard in Resources */,
+				786B580E2949C8B100E2C4A5 /* Didot Italic.otf in Resources */,
+				786B58072949C8B100E2C4A5 /* Pretendard-Bold.otf in Resources */,
 				B1D79CB428EB0EFB008487D0 /* Assets.xcassets in Resources */,
+				786B58042949C8B100E2C4A5 /* Pretendard-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1203,6 +1343,7 @@
 				8EE9A0C128F3CB0D003D7761 /* HomeSection.swift in Sources */,
 				B1D127E228F0923C007E3667 /* Asset.swift in Sources */,
 				8EBB6144292738FA00F640F5 /* BMCellViewModel.swift in Sources */,
+				787D5845293CD8CB00A3E610 /* FontExampleViewController.swift in Sources */,
 				B1E986B328FE9E0B00962F5B /* FilterLoactionService.swift in Sources */,
 				B1D5BD2429174EEC00A85D4A /* UIViewController+.swift in Sources */,
 				8E88487C2949C3F80039F99A /* CommonFullImageCell.swift in Sources */,
@@ -1291,6 +1432,7 @@
 				784B02342937579E004ED20A /* MyPageProfileCell.swift in Sources */,
 				784B02332937579E004ED20A /* MyPageMenuCell.swift in Sources */,
 				B1DD25DD28EF0BC800103FF1 /* UIColor+.swift in Sources */,
+				787D5843293CD6BC00A3E610 /* UIFont+.swift in Sources */,
 				B1EABEBF28FBA8E10029B6BC /* FilterReactor.swift in Sources */,
 				B1EABEBC28FBA87C0029B6BC /* FilterTask.swift in Sources */,
 				7867A63229374D0500FC1160 /* MulticastDelegate.swift in Sources */,
