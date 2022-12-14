@@ -10,7 +10,7 @@ import ReactorKit
 import SnapKit
 import Nuke
 
-final class BPThumbnailImageCell: BPBaseCell, View {
+final class BPThumbnailImageCell: BPBaseCollectionViewCell, View {
     typealias Reactor = BPThumbnailImageCellReactor
     
     func bind(reactor: Reactor) {

@@ -14,7 +14,7 @@ extension BusinessProfileViewController {
         
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
@@ -46,7 +46,7 @@ extension BusinessProfileViewController {
                                                             heightDimension: .fractionalHeight(1.0)))
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                                         heightDimension: .fractionalHeight(1.0)),
+                                                                         heightDimension: .fractionalHeight(0.7)),
                                                        subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)

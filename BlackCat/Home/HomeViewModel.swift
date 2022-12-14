@@ -13,6 +13,9 @@ import RxDataSources
 import RxSwift
 
 class HomeViewModel {
+    typealias GenreTitle = String
+
+    private let disposeBag = DisposeBag()
     private let categoryItemTitles = Observable<[HomeModel.Category]>.just(HomeModel.Category.default)
 
     // MARK: - Input
@@ -27,12 +30,17 @@ class HomeViewModel {
 
     let homeItems: Driver<[HomeSection]>
     let pushToBookmarkViewController: Driver<Void>
+    let pushToGenreViewController: Driver<GenreTitle>
 
     init() {
         let fetchedRecommendItems = viewDidLoad
             .map { _ in Array(repeating: HomeModel.Recommend(imageURLString: "",
                                                              priceString: "15,500원",
                                                              tattooistName: "김타투"), count: 7) }
+        let startFetchItems = viewDidLoad.share()
+        let didTapGenreItem = PublishRelay<Int>()
+        let didTapRecommendItem = PublishRelay<Int>()
+        let didTapTattooAlbumItem = PublishRelay<Int>()
 
         let fetchedTattooAlbumItems = nextFetchPage
             .distinct()
@@ -64,6 +72,22 @@ class HomeViewModel {
         func fetchTattoAlbumItems(at page: Int) -> Observable<[HomeModel.TattooAlbum]> {
             return .just(Array(repeating: HomeModel.TattooAlbum(imageURLString: ""), count: 15))
         }
+        didTapCollectionViewItem
+            .bind { indexPath in
+                switch indexPath.section {
+                case 0: didTapGenreItem.accept(indexPath.row)
+                case 1: didTapRecommendItem.accept(indexPath.row)
+                case 3: didTapTattooAlbumItem.accept(indexPath.row)
+                default: return
+                }
+            }
+            .disposed(by: disposeBag)
+
+        pushToGenreViewController = didTapGenreItem
+            .withLatestFrom(categoryItemTitles) { index, titles in
+                titles[index].title
+            }
+            .asDriver(onErrorJustReturn: "")
     }
 }
 

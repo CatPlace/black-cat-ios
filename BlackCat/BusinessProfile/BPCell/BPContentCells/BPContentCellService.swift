@@ -12,6 +12,7 @@ protocol BPContentCellServiceProtocol {
     func fetchProfiles() -> [BPProfileModel]
     func fetchProducts() -> [BPProductModel]
     func fetchReviews() -> [BPReviewModel]
+    func fetchPriceInfos() -> [BPPriceInfoModel]
 }
 
 final class BPContentCellService: BPContentCellServiceProtocol {
@@ -25,5 +26,9 @@ final class BPContentCellService: BPContentCellServiceProtocol {
     
     func fetchReviews() -> [BPReviewModel] {
         return BPReviewModel.fetch()
+    }
+    
+    func fetchPriceInfos() -> [BPPriceInfoModel] {
+        return BPPriceInfoModel.fetch()
     }
 }
