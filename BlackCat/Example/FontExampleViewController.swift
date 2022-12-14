@@ -1,5 +1,5 @@
 //
-//  FontTestViewController.swift
+//  FontExampleViewController.swift
 //  BlackCat
 //
 //  Created by 김지훈 on 2022/12/04.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FontTestViewController: UIViewController {
+class FontExampleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -40,7 +40,7 @@ final class TabBarViewController: UITabBarController {
                                    title: "마이페이지",
                                    image: .ic_board,
                                    selectedImage: .ic_board_fill)
-    let vc8 = TabBarFactory.create(viewController: FontTestViewController(),
+    let vc8 = TabBarFactory.create(viewController: FontExampleViewController(),
                                    title: "폰트",
                                    image: .ic_board,
                                    selectedImage: .ic_board_fill)
