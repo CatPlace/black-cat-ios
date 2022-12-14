@@ -35,7 +35,7 @@ class BMTabButton: UIButton {
 
     weak var delegate: BMTabButtonDelegate?
 
-    // MARK: - Initializi
+    // MARK: - Initialize
 
     override init(frame: CGRect) {
         super.init(frame: frame)

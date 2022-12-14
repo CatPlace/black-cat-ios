@@ -33,9 +33,9 @@ class BMTabMenuView: UIView {
         }
     }
 
-    var selectedColor: UIColor? = .black.withAlphaComponent(1.0)
+    var selectedColor: UIColor = .black.withAlphaComponent(1.0)
 
-    var unSelectedColor: UIColor? = .black.withAlphaComponent(0.3)
+    var unSelectedColor: UIColor = .black.withAlphaComponent(0.3)
 
     var barIndicatorHeight: CGFloat = 4.0
 

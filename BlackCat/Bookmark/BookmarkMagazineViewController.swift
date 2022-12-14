@@ -75,14 +75,6 @@ class BookmarkMagazineViewController: UIViewController {
 
     // MARK: - UIComponents
 
-    private lazy var collectionView: UICollectionView = {
-        let cv = UICollectionView(frame: .zero,
-                                  collectionViewLayout: collectionViewLayout)
-        cv.register(Reusable.magazineCell)
-        cv.showsVerticalScrollIndicator = false
-        return cv
-    }()
-
     private let collectionViewLayout: UICollectionViewLayout = {
         let minLineSpacing: CGFloat = 1
         let minInterSpacing: CGFloat = 1
@@ -95,6 +87,14 @@ class BookmarkMagazineViewController: UIViewController {
         layout.minimumInteritemSpacing = minInterSpacing
         layout.sectionInset = .init(top: 0, left: 0.5, bottom: 0, right: 0.5)
         return layout
+    }()
+
+    private lazy var collectionView: UICollectionView = {
+        let cv = UICollectionView(frame: .zero,
+                                  collectionViewLayout: collectionViewLayout)
+        cv.register(Reusable.magazineCell)
+        cv.showsVerticalScrollIndicator = false
+        return cv
     }()
 }
 

@@ -85,7 +85,7 @@ class BookmarkTattooViewModel {
             .withLatestFrom(cellViewModels) { selectedCellIndex, cellViewModels in
                 removeSelectNumber(from: cellViewModels[selectedCellIndex])
             }
-            .subscribe { _ in () }
+            .subscribe()
             .disposed(by: disposeBag)
 
         editingCellManagingDict
@@ -105,7 +105,7 @@ class BookmarkTattooViewModel {
             dict.forEach { removeSelectNumber(from: cellViewModels[$0.key]) }
             editingCellManagingDict.accept(dict)
         }
-            .subscribe { _ in () }
+            .subscribe()
             .disposed(by: disposeBag)
 
         tattooItems = bookmarkCellViewModelsWhenFirstLoad
