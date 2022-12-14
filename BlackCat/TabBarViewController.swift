@@ -15,10 +15,10 @@ final class TabBarViewController: UITabBarController {
                                                 title: "dd",
                                                 image: .ic_board,
                                                 selectedImage: .ic_board_fill)
-    let vc = TabBarFactory.create(viewController: FilterExampleViewController(),
-                                  title: "dd",
-                                  image: .ic_board,
-                                  selectedImage: .ic_board_fill)
+//    let vc = TabBarFactory.create(viewController: FilterExampleViewController(),
+//                                  title: "dd",
+//                                  image: .ic_board,
+//                                  selectedImage: .ic_board_fill)
     
     let vc2 = TabBarFactory.create(viewController: MagazineDetailViewController(reactor: MagazineDetailViewController.Reactor()),
                                    title: "디테일",
