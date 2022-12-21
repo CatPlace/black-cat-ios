@@ -18,26 +18,27 @@ class LoginViewModel {
     var didTapSocialLoginButton = PublishRelay<Int>()
     
     // MARK: - Output
-    var resultDriver: Driver<Void>
+    var loginSuccessDriver: Driver<Void>
+    var loginFailureDriver: Driver<Void>
     
     init() {
         let types = socialLoginTypes
         
-        resultDriver = didTapSocialLoginButton
+        let loginResult = didTapSocialLoginButton
             .debug("💡User")
             .map { types[$0] }
             .flatMap(CatSDKUser.login)
             .catch { error in
                     .just(.init(id: -1))
-            }
-            
-//            .map { result in
-//                switch result {
-//                case .success(let a):
-//                    print(a)
-//                case .failure(let b):
-//                    print(b)
-//                }
+            }.debug("asd")
+        
+        loginSuccessDriver = loginResult
+            .filter { $0.jwt != nil }
+            .map { _ in () }
+            .asDriver(onErrorJustReturn: ())
+        
+        loginFailureDriver = loginResult
+            .filter { $0.jwt == nil }
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
     }

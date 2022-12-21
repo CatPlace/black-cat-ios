@@ -96,6 +96,14 @@ class HomeViewController: UIViewController {
             .drive(collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
+        viewModel.pushToGenreViewController
+            .debug()
+            .drive(with: self) { owner, genreTitle in
+                let genreViewController = GenreViewController(genreTitle: genreTitle)
+                owner.navigationController?.pushViewController(genreViewController, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
         viewModel.pushToBookmarkViewController
             .drive(with: self) { owner, _ in
                 let bookmarkViewController = BookmarkViewController()
