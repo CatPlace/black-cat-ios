@@ -86,9 +86,9 @@ class CategoryPaperView: UIView {
 
     // MARK: - Functions
 
-    func configure(with items: [String]) {
+    func configure(with items: [String], title: String) {
         self.items = items
-        categoryTitleLabel.text = items.first ?? ""
+        categoryTitleLabel.text = title
     }
 
     @objc

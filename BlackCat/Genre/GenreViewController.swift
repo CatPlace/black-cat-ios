@@ -50,7 +50,8 @@ class GenreViewController: UIViewController {
 
         viewModel.dropDownItems
             .drive(with: self) { owner, items in
-                owner.dropDown.configure(with: items)
+                let title = owner.genreTitle
+                owner.dropDown.configure(with: items, title: title)
             }
             .disposed(by: disposeBag)
 
