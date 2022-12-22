@@ -12,6 +12,14 @@ import RxSwift
 import Nuke
 import SnapKit
 
+class CommonFullImageCellViewModel {
+    let imageURLString: String
+
+    init(imageURLString: String) {
+        self.imageURLString = imageURLString
+    }
+}
+
 class CommonFullImageCell: UICollectionViewCell {
 
     // MARK: - Properties

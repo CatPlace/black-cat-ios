@@ -28,6 +28,6 @@ extension MyPageSection: SectionModelType {
 
 enum MyPageItem {
     case profileSection(MyPageProfileCellViewModel)
-    case recentTattooSection(MyPageTattooCellViewModel)
+    case recentTattooSection(CommonTattooInfoCellViewModel)
     case menuSection(MyPageMenuCellViewModel)
 }

@@ -34,9 +34,7 @@ class HomeViewModel {
 
     init() {
         let fetchedRecommendItems = viewDidLoad
-            .map { _ in Array(repeating: HomeModel.Recommend(imageURLString: "",
-                                                             priceString: "15,500원",
-                                                             tattooistName: "김타투"), count: 7) }
+            .map { _ in Array(repeating: Tattoo(imageUrl: "A", title: "A", userName: "김타투"), count: 5) }
         let startFetchItems = viewDidLoad.share()
         let didTapGenreItem = PublishRelay<Int>()
         let didTapRecommendItem = PublishRelay<Int>()
@@ -56,7 +54,7 @@ class HomeViewModel {
                 [HomeSection(header: .empty,
                              items: categoryItems.map { .categoryCell(HomeCategoryCellViewModel(with: $0)) }),
                  HomeSection(header: .title("추천 항목"),
-                             items: recommendItems.map { .recommendCell(HomeRecommendCellViewModel(with: $0)) }),
+                             items: recommendItems.map { .recommendCell(CommonTattooInfoCellViewModel(tattoo: $0)) }),
                  HomeSection(header: .empty,
                              items: [.emptyCell(HomeModel.Empty())]),
                  HomeSection(header: .title("전체 보기"),

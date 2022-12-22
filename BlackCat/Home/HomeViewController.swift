@@ -18,7 +18,7 @@ class HomeViewController: UIViewController {
     let disposeBag = DisposeBag()
     enum Reusable {
         static let categoryCell = ReusableCell<HomeCategoryCell>()
-        static let recommendCell = ReusableCell<HomeRecommendCell>()
+        static let recommendCell = ReusableCell<CommonTattooInfoCell>()
         static let emptyCell = ReusableCell<HomeEmptyCell>()
         static let tattooAlbumCell = ReusableCell<HomeTattooAlbumCell>()
         static let headerView = ReusableView<HomeHeaderView>()
