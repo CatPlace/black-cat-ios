@@ -17,7 +17,7 @@ import RxRelay
 final class MyPageViewController: UIViewController {
     enum Reusable {
         static let profileCell = ReusableCell<MyPageProfileCell>()
-        static let tattooCell = ReusableCell<MyPageTattooCell>()
+        static let tattooCell = ReusableCell<CommonTattooInfoCell>()
         static let menuCell = ReusableCell<MyPageMenuCell>()
         static let tattooHeaderView = ReusableView<RecentTattooHeaderView>()
     }

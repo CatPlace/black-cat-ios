@@ -11,7 +11,7 @@ import RxCocoa
 import RxRelay
 import Nuke
 
-class MyPageTattooCellViewModel {
+class CommonTattooInfoCellViewModel {
     
     let imageUrlStringDriver: Driver<String>
     let titleDrvier: Driver<String>
@@ -24,12 +24,12 @@ class MyPageTattooCellViewModel {
     }
 }
 
-class MyPageTattooCell: MyPageBaseCell {
+class CommonTattooInfoCell: MyPageBaseCell {
     // MARK: - Properties
     var disposeBag = DisposeBag()
     
     // MARK: - Binding
-    func bind(to viewModel: MyPageTattooCellViewModel) {
+    func bind(to viewModel: CommonTattooInfoCellViewModel) {
         viewModel.imageUrlStringDriver
             .compactMap { URL(string: $0) }
             .drive(with: self) { owner, url in

@@ -13,7 +13,7 @@ final class PresentationView {
         tv.register(CategoryListTableViewCell.self,
                     forCellReuseIdentifier: CategoryListTableViewCell.identifier)
         tv.separatorStyle = .none
-        tv.layer.cornerRadius = 15
+        tv.layer.cornerRadius = 30
         tv.isScrollEnabled = false
         return tv
     }()

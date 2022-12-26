@@ -18,7 +18,7 @@ class HomeViewController: UIViewController {
     let disposeBag = DisposeBag()
     enum Reusable {
         static let categoryCell = ReusableCell<HomeCategoryCell>()
-        static let recommendCell = ReusableCell<HomeRecommendCell>()
+        static let recommendCell = ReusableCell<CommonTattooInfoCell>()
         static let emptyCell = ReusableCell<HomeEmptyCell>()
         static let tattooAlbumCell = ReusableCell<HomeTattooAlbumCell>()
         static let headerView = ReusableView<HomeHeaderView>()
@@ -96,6 +96,14 @@ class HomeViewController: UIViewController {
             .drive(collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
+        viewModel.pushToGenreViewController
+            .debug()
+            .drive(with: self) { owner, genreTitle in
+                let genreViewController = GenreViewController(genreTitle: genreTitle)
+                owner.navigationController?.pushViewController(genreViewController, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
         viewModel.pushToBookmarkViewController
             .drive(with: self) { owner, _ in
                 let bookmarkViewController = BookmarkViewController()
@@ -142,6 +150,7 @@ class HomeViewController: UIViewController {
         let  cv = UICollectionView(frame: .zero,
                                    collectionViewLayout: compositionalLayout)
 
+        cv.backgroundColor = .init(hex: "#F4F4F4FF")
         cv.register(Reusable.categoryCell)
         cv.register(Reusable.recommendCell)
         cv.register(Reusable.emptyCell)

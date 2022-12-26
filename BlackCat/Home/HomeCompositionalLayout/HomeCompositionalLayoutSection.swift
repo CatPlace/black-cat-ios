@@ -36,11 +36,6 @@ enum HomeCompositionalLayoutSection: Int {
             section.interGroupSpacing = itemSpacing
             section.contentInsets = NSDirectionalEdgeInsets(top: 30, leading: 14, bottom: 30, trailing: 14)
 
-            let sectionBackgroundView = NSCollectionLayoutDecorationItem.background(
-                elementKind: HomeCategorySectionBackgroundReusableView.identifier
-            )
-            section.decorationItems = [sectionBackgroundView]
-
             return section
         case .recommend:
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),

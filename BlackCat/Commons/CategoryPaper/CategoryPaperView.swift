@@ -80,15 +80,16 @@ class CategoryPaperView: UIView {
 
     var items: [String] = [] {
         didSet {
+            setPresentationView(style: presentationStyle)
             configuration.tableView.reloadData()
         }
     }
 
     // MARK: - Functions
 
-    func configure(with items: [String]) {
+    func configure(with items: [String], title: String) {
         self.items = items
-        categoryTitleLabel.text = items.first ?? ""
+        categoryTitleLabel.text = title
     }
 
     @objc
@@ -226,9 +227,10 @@ extension CategoryPaperView {
         case .dropDown:
             tableView.frame = tableViewFrame
         case .dissolveAtCenter:
+            let height = cellHeight * CGFloat(items.count) + 40
             let tableViewXPoint = (menuWrapper.bounds.width / 2) - (width / 2)
-            let tableViewYPoint = (menuWrapper.bounds.height / 2) - 200
-            tableView.frame = CGRect(x: tableViewXPoint, y: tableViewYPoint, width: width, height: 400)
+            let tableViewYPoint = (menuWrapper.bounds.height / 2) - (height / 2)
+            tableView.frame = CGRect(x: tableViewXPoint, y: tableViewYPoint, width: width, height: height)
         }
     }
 }

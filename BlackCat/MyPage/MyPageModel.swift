@@ -12,5 +12,5 @@ struct Tattoo {
     let imageUrl: String
     let title: String
     let userName: String
-    let price: Int
+//    let price: Int
 }

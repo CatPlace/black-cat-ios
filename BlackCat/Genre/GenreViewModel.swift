@@ -12,10 +12,13 @@ import RxSwift
 
 class GenreViewModel {
 
+    let disposeBag = DisposeBag()
+
     // MARK: - Input
 
     private let categoryList = Observable<[String]>.just(["전체보기", "미니 타투", "감성 타투", "이레즈미", "블랙&그레이", "라인워크", "헤나", "커버업", "뉴스쿨", "올드스쿨", "잉크 스플래쉬", "치카노", "컬러", "캐릭터"])
     let viewWillAppear = PublishRelay<Void>()
+    let filterViewDidDismiss = PublishRelay<Void>()
     let selectedDropDownItemRow = PublishRelay<Int>()
 
     // MARK: - Output
@@ -25,6 +28,24 @@ class GenreViewModel {
     let categoryItems: Driver<[CommonFullImageCellViewModel]>
 
     init() {
+        let filterService = FilterService()
+
+        let filteredTask = filterService.taskService.fetch()
+            .map { $0.filter { $0.isSubscribe == true } }
+
+        let filteredLocation = filterService.locationService.fetch()
+            .map { $0.filter { $0.isSubscribe == true } }
+
+        let filteredInfo = Observable.zip(filteredTask, filteredLocation)
+
+        Observable.merge([viewWillAppear.asObservable(), filterViewDidDismiss.asObservable()])
+            .withLatestFrom(filteredInfo) { _, filteredInfo in filteredInfo }
+            .subscribe { filteredTasks, filteredLocations in
+                print("filteredTasks: \(filteredTasks)")
+                print("filteredLocations: \(filteredLocations)")
+            }
+            .disposed(by: disposeBag)
+
         dropDownItems = viewWillAppear
             .withLatestFrom(categoryList)
             .asDriver(onErrorJustReturn: [])

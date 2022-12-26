@@ -11,20 +11,20 @@ import ReactorKit
 final class TabBarViewController: UITabBarController {
     
     // MARK: - Properties
-    let vc = TabBarFactory.create(viewController: HomeViewController(),
+    let homeVC = TabBarFactory.create(viewController: HomeViewController(),
                                                 title: "dd",
                                                 image: .ic_board,
                                                 selectedImage: .ic_board_fill)
-//    let vc = TabBarFactory.create(viewController: FilterExampleViewController(),
-//                                  title: "dd",
-//                                  image: .ic_board,
-//                                  selectedImage: .ic_board_fill)
+    let vc = TabBarFactory.create(viewController: FilterExampleViewController(),
+                                  title: "dd",
+                                  image: .ic_board,
+                                  selectedImage: .ic_board_fill)
     
     let vc2 = TabBarFactory.create(viewController: MagazineDetailViewController(reactor: MagazineDetailViewController.Reactor()),
                                    title: "디테일",
                                    image: .ic_board,
                                    selectedImage: .ic_board_fill)
-    let vc3 = TabBarFactory.create(viewController: MagazineViewController(),
+    let magazineVC = TabBarFactory.create(viewController: MagazineViewController(),
                                    title: "매거진",
                                    image: .ic_board,
                                    selectedImage: .ic_board_fill)
@@ -36,12 +36,8 @@ final class TabBarViewController: UITabBarController {
                                    title: "에딧",
                                    image: .ic_board,
                                    selectedImage: .ic_board_fill)
-    let vc6 = TabBarFactory.create(viewController: MyPageViewController(viewModel: .init()),
+    let myPageVC = TabBarFactory.create(viewController: MyPageViewController(viewModel: .init()),
                                    title: "마이페이지",
-                                   image: .ic_board,
-                                   selectedImage: .ic_board_fill)
-    let vc7 = TabBarFactory.create(viewController: LoginViewController(viewModel: .init()),
-                                   title: "로그인",
                                    image: .ic_board,
                                    selectedImage: .ic_board_fill)
     let vc8 = TabBarFactory.create(viewController: FilterExampleViewController(),
@@ -58,10 +54,10 @@ final class TabBarViewController: UITabBarController {
         tabBar.tintColor = .darkGray
         tabBar.layer.cornerRadius = tabBar.frame.height * 0.41
         tabBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        
+        modalPresentationStyle = .fullScreen
         UITabBar.clearShadow()
         tabBar.layer.applyShadow(color: .gray, alpha: 0.3, x: 0, y: 0, blur: 12)
-        viewControllers = [vc, vc2, vc3, vc4, vc5, vc6, vc7]
+        viewControllers = [homeVC, magazineVC, myPageVC, vc]
     }
     
 }

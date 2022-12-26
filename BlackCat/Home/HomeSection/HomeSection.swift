@@ -21,7 +21,7 @@ struct HomeSection {
 
     enum HomeItem {
         case categoryCell(HomeCategoryCellViewModel)
-        case recommendCell(HomeRecommendCellViewModel)
+        case recommendCell(CommonTattooInfoCellViewModel)
         case emptyCell(HomeModel.Empty)
         case allTattoosCell(HomeTattooAlbumCellViewModel)
     }

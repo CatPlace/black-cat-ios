@@ -23,10 +23,23 @@ class LoginViewController: UIViewController {
                 .disposed(by: disposeBag)
         }
         
-        viewModel.resultDriver
+        viewModel.loginSuccessDriver
             .debug("처리 드라이버 😡")
             .drive { _ in
-                print("drive")
+                print("홈화면 진입")
+            }.disposed(by: disposeBag)
+        
+        viewModel.loginFailureDriver
+            .drive { _ in
+                print("로그인 실패 alert")
+            }.disposed(by: disposeBag)
+        
+        lookAroundLabel.rx.tapGesture()
+            .when(.recognized)
+            .withUnretained(self)
+            .debug("둘러보기")
+            .bind { owner, _ in
+                owner.present(TabBarViewController(), animated: false)
             }.disposed(by: disposeBag)
     }
     
