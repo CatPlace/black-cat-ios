@@ -50,7 +50,7 @@ class CategoryPaperConfiguration {
         self.cellHeight = 28
         self.backgroundColor = .white
         self.animateDuration = 0.35
-        self.dropDownCellInset = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
+        self.dropDownCellInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         self.width = 130
         self.arrowImage = UIImage(named: "arrowtriangle.down.fill")
     }

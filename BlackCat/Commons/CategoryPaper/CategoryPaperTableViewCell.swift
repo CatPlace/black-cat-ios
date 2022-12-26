@@ -39,7 +39,7 @@ final class CategoryListTableViewCell: UITableViewCell {
     private let categoryLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
-        label.textAlignment = .left
+        label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
 
         return label
