@@ -62,9 +62,19 @@ final class MyPageViewController: UIViewController {
             .bind(to: viewModel.viewWillAppear)
             .disposed(by: disposeBag)
         
+        myPageCollectionView.rx.itemSelected
+            .bind(to: viewModel.selectedItem)
+            .disposed(by: disposeBag)
+        
         viewModel.dataSourceDriver
             .drive(myPageCollectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
+        
+        viewModel.logoutDriver
+            .drive(with: self) { owner, _ in
+                //TODO: Alert 추가
+                owner.dismiss(animated: false)
+            }.disposed(by: disposeBag)
     }
     
     // MARK: - Initializer

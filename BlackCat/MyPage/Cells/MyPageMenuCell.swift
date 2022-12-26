@@ -12,14 +12,14 @@ import RxCocoa
 import RxRelay
 
 // 문의하기랑 신고 및 피드백 ... ?
-enum MyPageMenuType: String {
-    case notice = "공지사항"
-    case inquiry = "문의하기"
-    case termOfService = "서비스 이용약관"
-    case PersonalInfoAgreement = "개인정보 수집 및 이용"
-    case feedback = "신고 및 피드백"
-    case logout = "로그아웃"
-    case withdrawal = "회원 탈퇴"
+enum MyPageMenuType: Int {
+    case notice
+    case inquiry
+    case termOfService
+    case PersonalInfoAgreement
+    case feedback
+    case logout
+    case withdrawal
     
     func nextVC() -> UIViewController {
         switch self {
@@ -27,6 +27,26 @@ enum MyPageMenuType: String {
             return HomeViewController()
         }
     }
+    
+    func menuTitle() -> String {
+        switch self {
+        case .notice:
+            return "공지사항"
+        case .inquiry:
+            return "문의하기"
+        case .termOfService:
+            return "서비스 이용약관"
+        case .PersonalInfoAgreement:
+            return "개인정보 수집 및 이용"
+        case .feedback:
+            return "신고 및 피드백"
+        case .logout:
+            return "로그아웃"
+        case .withdrawal:
+            return "회원 탈퇴"
+        }
+    }
+    
 }
 
 class MyPageMenuCellViewModel {
@@ -34,7 +54,7 @@ class MyPageMenuCellViewModel {
     let titleDriver: Driver<String>
     
     init(type: MyPageMenuType) {
-        titleDriver = .just(type.rawValue)
+        titleDriver = .just(type.menuTitle())
     }
 }
 

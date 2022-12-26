@@ -67,13 +67,19 @@ class HomeViewController: UIViewController {
     // MARK: - Binding
 
     private func bind() {
-
+        
         // MARK: - Action
 
         rx.viewDidLoad
             .bind(to: viewModel.viewDidLoad)
             .disposed(by: disposeBag)
-
+        
+        viewModel.viewDidLoad
+            .debug("유저")
+            .bind {
+            print(CatSDKUser.fetchLocalUser())
+        }.disposed(by: disposeBag)
+        
         collectionView.rx.nextFetchPage
             .bind(to: viewModel.nextFetchPage)
             .disposed(by: disposeBag)
