@@ -14,7 +14,7 @@ class HomeEmptyCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = .lightGray
+        backgroundColor = .init(hex: "#F4F4F4")
     }
 
     required init?(coder: NSCoder) {

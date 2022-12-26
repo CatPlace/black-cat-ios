@@ -150,6 +150,7 @@ class HomeViewController: UIViewController {
         let  cv = UICollectionView(frame: .zero,
                                    collectionViewLayout: compositionalLayout)
 
+        cv.backgroundColor = .init(hex: "#F4F4F4FF")
         cv.register(Reusable.categoryCell)
         cv.register(Reusable.recommendCell)
         cv.register(Reusable.emptyCell)

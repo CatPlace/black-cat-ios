@@ -18,7 +18,7 @@ class HomeCategorySectionBackgroundReusableView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = .lightGray
+        backgroundColor = .init(hex: "#F4F4F4FF")
     }
 
     required init?(coder: NSCoder) {
