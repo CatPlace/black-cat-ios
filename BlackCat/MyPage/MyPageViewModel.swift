@@ -10,15 +10,17 @@ import Foundation
 import RxSwift
 import RxCocoa
 import RxRelay
-
+import BlackCatSDK
 
 final class MyPageViewModel {
     
     // MARK: - Input
     let viewWillAppear = PublishRelay<Void>()
+    let selectedItem = PublishRelay<IndexPath>()
     
     // MARK: - Output
     let dataSourceDriver: Driver<[MyPageSection]>
+    let logoutDriver: Driver<Void>
     
     init(useCase: MyPageUseCase = MyPageUseCase()) {
         let profileSectionDataObservable = viewWillAppear
@@ -48,6 +50,12 @@ final class MyPageViewModel {
                 MyPageSection(items: thirdSectionData.map { .menuSection(.init(type: $0)) })
             ]
         }.asDriver(onErrorJustReturn: [])
-        
+     
+        //TODO: - 알러트 추가 후 수정
+        logoutDriver = selectedItem.filter { MyPageSectionType(rawValue: $0.section) == .menu }
+            .filter { MyPageMenuType(rawValue: $0.row)?.menuTitle() == "로그아웃" }
+            .map { _ in () }
+            .do { _ in CatSDKUser.logout() }
+            .asDriver(onErrorJustReturn: ())
     }
 }
