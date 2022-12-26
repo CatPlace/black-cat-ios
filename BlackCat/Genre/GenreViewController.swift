@@ -22,6 +22,8 @@ class GenreViewController: UIViewController {
     // MARK: - Properties
 
     let viewModel = GenreViewModel()
+    let filterViewReactor = FilterReactor()
+    lazy var filterViewController = FilterViewController(reactor: filterViewReactor)
     let genreTitle: String
 
     // MARK: - Binding
@@ -41,11 +43,24 @@ class GenreViewController: UIViewController {
             }
             .disposed(by: disposeBag)
 
+        filterButtonItem.rx.tap
+            .subscribe(with: self) { owner, _ in
+                owner.filterViewController.preferredSheetSizing = .fit
+                owner.present(owner.filterViewController, animated: true)
+            }
+            .disposed(by: disposeBag)
+
         dropDown.rx.itemSelected
             .map { $0.row }
             .bind(to: viewModel.selectedDropDownItemRow)
             .disposed(by: disposeBag)
 
+        filterViewReactor.state.map { $0.isDismiss }
+            .filter { $0 == true }
+            .map { _ in () }
+            .bind(to: viewModel.filterViewDidDismiss)
+            .disposed(by: disposeBag)
+        
         // MARK: - State
 
         viewModel.dropDownItems
@@ -88,6 +103,8 @@ class GenreViewController: UIViewController {
     private let dropDown: CategoryPaperView = {
         let view = CategoryPaperView()
         view.presentationStyle = .dissolveAtCenter
+        view.width = UIScreen.main.bounds.size.width * 157 / 375
+        view.cellHeight = 35
         return view
     }()
 
