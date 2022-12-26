@@ -21,10 +21,9 @@ class GenreViewController: UIViewController {
 
     // MARK: - Properties
 
-    let viewModel = GenreViewModel()
+    let viewModel: GenreViewModel
     let filterViewReactor = FilterReactor()
     lazy var filterViewController = FilterViewController(reactor: filterViewReactor)
-    let genreTitle: String
 
     // MARK: - Binding
 
@@ -65,7 +64,7 @@ class GenreViewController: UIViewController {
 
         viewModel.dropDownItems
             .drive(with: self) { owner, items in
-                let title = owner.genreTitle
+                let title = owner.viewModel.genreTitle
                 owner.dropDown.configure(with: items, title: title)
             }
             .disposed(by: disposeBag)
@@ -79,8 +78,8 @@ class GenreViewController: UIViewController {
 
     // MARK: - Initializing
 
-    init(genreTitle: String) {
-        self.genreTitle = genreTitle
+    init(viewModel: GenreViewModel) {
+        self.viewModel = viewModel
 
         super.init(nibName: nil, bundle: nil)
     }
