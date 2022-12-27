@@ -59,6 +59,11 @@ class GenreViewController: UIViewController {
             .map { _ in () }
             .bind(to: viewModel.filterViewDidDismiss)
             .disposed(by: disposeBag)
+
+        collectionView.rx.itemSelected
+            .map { $0.row }
+            .bind(to: viewModel.didTapTattooItem)
+            .disposed(by: disposeBag)
         
         // MARK: - State
 
@@ -72,6 +77,12 @@ class GenreViewController: UIViewController {
         viewModel.categoryItems
             .drive(collectionView.rx.items(Reusable.genreCell)) { _, viewModel, cell in
                 cell.bind(to: viewModel)
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.pushToTattooDetailVC
+            .drive(with: self) { owner, _ in
+                print("Push To Tattoo Detail VC")
             }
             .disposed(by: disposeBag)
     }
