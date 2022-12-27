@@ -48,12 +48,10 @@ class BookmarkViewController: UIViewController {
 
     private func bind(to viewModel: BookmarkViewModel) {
         cancelRightBarButtonItem.rx.tap
-            .map { _ in self.editMode }
             .bind(to: viewModel.didTapCancelBarButtonItem)
             .disposed(by: disposeBag)
 
         editRightBarButtonItem.rx.tap
-            .map { _ in self.editMode }
             .bind(to: viewModel.didTapEditBarButtonItem)
             .disposed(by: disposeBag)
 

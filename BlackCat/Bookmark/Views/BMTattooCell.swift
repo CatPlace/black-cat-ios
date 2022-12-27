@@ -25,7 +25,7 @@ class BMTattooCell: UICollectionViewCell {
             thumbnailImageView.image = UIImage(named: "DummyPict")
         }
 
-        viewModel.showEditView
+        viewModel.shouldHideEditView
             .drive(with: self) { owner, isHidden in
                 owner.editFilterView.isHidden = isHidden
             }

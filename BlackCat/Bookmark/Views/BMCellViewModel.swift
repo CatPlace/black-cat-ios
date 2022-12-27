@@ -13,19 +13,19 @@ import RxSwift
 struct BMCellViewModel {
     var imageURLString: String
     var selectNumber = PublishRelay<Int>()
-    var showing = PublishRelay<Bool>()
+    var editModeIsNormal = PublishRelay<Bool>()
 
-    let showEditView: Driver<Bool>
+    let shouldHideEditView: Driver<Bool>
     let selectNumberText: Driver<String>
 
     init(imageURLString: String) {
         self.imageURLString = imageURLString
 
-        showEditView = showing
+        shouldHideEditView = editModeIsNormal
+            .debug("ShouldHideEditView")
             .asDriver(onErrorJustReturn: true)
 
         selectNumberText = selectNumber
-            .debug("===Select Number===")
             .map { $0 == 0 ? "" : String($0) }
             .asDriver(onErrorJustReturn: "")
     }
