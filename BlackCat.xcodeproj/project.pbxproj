@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		782728B4295A934C00049436 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782728B3295A934C00049436 /* ProfileViewController.swift */; };
 		784B021D29375713004ED20A /* MagazineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B021C29375713004ED20A /* MagazineModel.swift */; };
 		784B021F29375719004ED20A /* MagazineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B021E29375719004ED20A /* MagazineViewModel.swift */; };
 		784B02302937579E004ED20A /* MyPageTestUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B02222937579E004ED20A /* MyPageTestUseCase.swift */; };
@@ -219,6 +220,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		782728B3295A934C00049436 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		784B021C29375713004ED20A /* MagazineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineModel.swift; sourceTree = "<group>"; };
 		784B021E29375719004ED20A /* MagazineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineViewModel.swift; sourceTree = "<group>"; };
 		784B02222937579E004ED20A /* MyPageTestUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageTestUseCase.swift; sourceTree = "<group>"; };
@@ -453,6 +455,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		782728B2295A932D00049436 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				782728B3295A934C00049436 /* ProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		784B02202937579E004ED20A /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -995,6 +1005,7 @@
 				B1D89C88290E78B300C8B7F1 /* BusinessProfile */,
 				B1CDE8F529165A1000ACB9AC /* BPPriceInfoEdit */,
 				784B02202937579E004ED20A /* MyPage */,
+				782728B2295A932D00049436 /* Profile */,
 				B1E986AF28FE8D5B00962F5B /* BaseArchitecture */,
 				B1D127E028F09223007E3667 /* Utils */,
 				B12C1DC528ED21830089964E /* Extension */,
@@ -1438,6 +1449,7 @@
 				B1E3F7D9290EE8CE00005F17 /* BPMultiCastDelegate.swift in Sources */,
 				B1CDE8E02916088F00ACB9AC /* BPProfileModel.swift in Sources */,
 				8E8848822949C3F80039F99A /* PresentationStyle.swift in Sources */,
+				782728B4295A934C00049436 /* ProfileViewController.swift in Sources */,
 				B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */,
 				B1E986AE28FE8D4F00962F5B /* BaseRealmProtocol.swift in Sources */,
 				B1D3362528F142A400826636 /* CALayer+.swift in Sources */,

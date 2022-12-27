@@ -44,6 +44,16 @@ final class TabBarViewController: UITabBarController {
 //                                   title: "폰트",
 //                                   image: .ic_board,
 //                                   selectedImage: .ic_board_fill)
+    
+    let vc9 = TabBarFactory.create(viewController: ProfileViewController(viewModel: .init(nameInputViewModel: .init(title: "이름"),
+                                                                                          emailInputViewModel: .init(title: "이메일"),
+                                                                                          phoneNumberInputViewModel: .init(title: "전화번호"),
+                                                                                          genderInputViewModel: .init(),
+                                                                                          areaInputViewModel: .init())),
+                                   title: "프로필 수정",
+                                   image: .ic_board,
+                                   selectedImage: .ic_board_fill)
+    
     //    var homeViewController: UINavigationController
     //    var magazineViewController: UINavigationController
     //    var chatViewController: UINavigationController
@@ -57,7 +67,7 @@ final class TabBarViewController: UITabBarController {
         modalPresentationStyle = .fullScreen
         UITabBar.clearShadow()
         tabBar.layer.applyShadow(color: .gray, alpha: 0.3, x: 0, y: 0, blur: 12)
-        viewControllers = [homeVC, magazineVC, myPageVC]
+        viewControllers = [homeVC, magazineVC, myPageVC, vc9]
     }
     
 }
