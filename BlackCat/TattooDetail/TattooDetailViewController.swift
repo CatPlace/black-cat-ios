@@ -27,6 +27,14 @@ final class TattooDetailViewController: UIViewController {
 
     private func bind(to viewModel: TattooDetailViewModel) {
         pageControl.numberOfPages = viewModel.imageURLStrings.count
+
+        disposeBag.insert {
+            askButton.rx.tap
+                .bind(to: viewModel.didTapAskButton)
+
+            heartButton.rx.tap
+                .bind(to: viewModel.didTapBookmarkButton)
+        }
     }
 
     // function
@@ -126,7 +134,7 @@ final class TattooDetailViewController: UIViewController {
         $0.numberOfLines = 0
         return $0
     }(UILabel())
-    
+
     private let askButton: UIButton = {
         $0.setTitle("문의하기", for: .normal)
         $0.backgroundColor = .init(hex: "#333333FF")
