@@ -26,6 +26,7 @@ final class TattooDetailViewController: UIViewController {
     // MARK: - Binding
 
     private func bind(to viewModel: TattooDetailViewModel) {
+        pageControl.numberOfPages = viewModel.imageURLStrings.count
     }
 
     // function
@@ -49,6 +50,7 @@ final class TattooDetailViewController: UIViewController {
 
         setNavigationBar()
         setUI()
+        bind(to: viewModel)
     }
 
     // MARK: - UIComponents
@@ -58,25 +60,32 @@ final class TattooDetailViewController: UIViewController {
     private let contentView = UIView()
 
     private lazy var flowLayout: UICollectionViewLayout = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 0.0
-        layout.minimumInteritemSpacing = 0.0
-        layout.scrollDirection = .horizontal
+        $0.minimumLineSpacing = 0.0
+        $0.minimumInteritemSpacing = 0.0
+        $0.scrollDirection = .horizontal
         let width = UIScreen.main.bounds.width
         let height: CGFloat = cellHeight
-        layout.itemSize = .init(width: width, height: height)
-        return layout
-    }()
+        $0.itemSize = .init(width: width, height: height)
+        return $0
+    }(UICollectionViewFlowLayout())
 
     private lazy var collectionView: UICollectionView = {
-        let cv = UICollectionView(frame: .zero,
-                                  collectionViewLayout: flowLayout)
-        cv.register(Reusable.tattooDetailCell)
-        cv.isPagingEnabled = true
-        cv.dataSource = self
-        cv.showsHorizontalScrollIndicator = false
-        return cv
-    }()
+        $0.register(Reusable.tattooDetailCell)
+        $0.isPagingEnabled = true
+        $0.dataSource = self
+        $0.delegate = self
+        $0.showsHorizontalScrollIndicator = false
+        return $0
+    }(UICollectionView(frame: .zero, collectionViewLayout: flowLayout))
+
+    private let pageControl: CHIPageControlJaloro = {
+        $0.currentPageTintColor = .init(hex: "#333333FF")
+        $0.tintColor = .init(hex: "#FFFFFFFF")?.withAlphaComponent(0.7)
+        $0.radius = 3
+        $0.elementWidth = 30
+        $0.padding = 8
+        return $0
+    }(CHIPageControlJaloro())
 
     private let shareRightBarButtonItem: UIBarButtonItem = {
         let image = UIImage(systemName: "square.and.arrow.up")?.withTintColor(.white)
@@ -117,9 +126,7 @@ final class TattooDetailViewController: UIViewController {
         $0.numberOfLines = 0
         return $0
     }(UILabel())
-
-    private let blankView = UIView()
-
+    
     private let askButton: UIButton = {
         $0.setTitle("문의하기", for: .normal)
         $0.backgroundColor = .init(hex: "#333333FF")
@@ -170,11 +177,17 @@ extension TattooDetailViewController {
             $0.width.equalToSuperview()
         }
 
-        [collectionView, tattooTitle, tattooProfileImageView, tattooistNameLabel, dateLabel, descriptionLabel].forEach { contentView.addSubview($0) }
+        [collectionView, pageControl, tattooTitle, tattooProfileImageView, tattooistNameLabel, dateLabel, descriptionLabel].forEach { contentView.addSubview($0) }
 
         collectionView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(cellHeight)
+        }
+
+        pageControl.snp.makeConstraints {
+            $0.height.equalTo(6)
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalTo(collectionView.snp.bottom).offset(-10)
         }
 
         tattooTitle.snp.makeConstraints {
@@ -237,7 +250,7 @@ extension TattooDetailViewController {
     }
 }
 
-extension TattooDetailViewController: UICollectionViewDataSource {
+extension TattooDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
         return viewModel.imageURLStrings.count
@@ -248,5 +261,13 @@ extension TattooDetailViewController: UICollectionViewDataSource {
         cell.configure(with: viewModel.imageURLStrings[indexPath.row])
 
         return cell
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let offset = scrollView.contentOffset.x
+        let width = UIScreen.main.bounds.width
+        let currentPage = Int(offset / width)
+
+        pageControl.set(progress: currentPage, animated: true)
     }
 }

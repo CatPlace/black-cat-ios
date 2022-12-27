@@ -149,7 +149,7 @@ class MagazineViewController: UIViewController {
 }
 
 extension MagazineViewController {
-    
+
     func setUI() {
         [magazineCollectionView, headerMarginView].forEach { view.addSubview($0) }
         

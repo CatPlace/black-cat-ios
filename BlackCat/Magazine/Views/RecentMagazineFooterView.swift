@@ -66,6 +66,7 @@ class RecentMagazineFooterView: UICollectionReusableView {
         pc.currentPageTintColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
         pc.radius = 3
         pc.elementWidth = 30
+        pc.padding = 8
         return pc
     }()
 }
