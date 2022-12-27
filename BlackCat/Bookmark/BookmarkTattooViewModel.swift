@@ -7,11 +7,14 @@
 
 import Foundation
 
+import BlackCatSDK
 import RxCocoa
 import RxSwift
 
 class BookmarkTattooViewModel {
-    typealias EditingCellIndexToSelectNumberDict = Dictionary<Int, Int>
+    typealias CellIndex = Int
+    typealias SelectNumber = Int
+    typealias EditingCellIndexToSelectNumberDict = Dictionary<CellIndex, SelectNumber>
 
     let disposeBag = DisposeBag()
 
@@ -24,7 +27,8 @@ class BookmarkTattooViewModel {
 
     // MARK: - Output
 
-    let editMode = PublishRelay<EditMode>()
+    let didTapEditButton = BehaviorRelay<EditMode>(value: .normal)
+    let editMode = BehaviorRelay<EditMode>(value: .normal)
     let didSelectItem = PublishRelay<Int>()
     let selectedEditingCellIndexes = BehaviorRelay<Set<Int>>(value: [])
 
@@ -33,22 +37,26 @@ class BookmarkTattooViewModel {
     init() {
         let editingCellManagingDict = BehaviorRelay<EditingCellIndexToSelectNumberDict>(value: [:])
 
-        let cellViewModels = Observable.just([
-            BMCellViewModel(imageURLString: "100"),
-            BMCellViewModel(imageURLString: "200"),
-            BMCellViewModel(imageURLString: "300"),
-            BMCellViewModel(imageURLString: "400"),
-        ])
+        let cellViewModels = Observable.just(UserDefaultManager.bookmarkedTattoo
+            .map { BMCellViewModel(imageURLString: $0.imageURLStrings.first ?? "") }
+        )
 
         let bookmarkCellViewModelsWhenFirstLoad = viewDidLoad
             .withLatestFrom(cellViewModels)
 
-        let editingCellIndex = didSelectItem
-            .withLatestFrom(editMode) { (index: $0, editMode: $1) }
+        let editModeWhenItemSelected = didSelectItem
+            .withLatestFrom(didTapEditButton) { (index: $0, editMode: $1) }
+            .share()
+
+        let cellIndexForEdit = editModeWhenItemSelected
+            .filter { $0.editMode == .edit }
+            .map { $0.index }
+
+        let cellIndexForPush = editModeWhenItemSelected
             .filter { $0.editMode == .normal }
             .map { $0.index }
 
-        let cellShouldBeEdited = editingCellIndex
+        let cellShouldBeEdited = cellIndexForEdit
             .withLatestFrom(editingCellManagingDict) { selectItemIndex, editingCellIndexToSelectNumberDict -> (shouldEdit: Bool, index: Int) in
                 let isDictionaryContainsCellIndex = editingCellIndexToSelectNumberDict.contains { $0.key == selectItemIndex }
 
@@ -95,23 +103,47 @@ class BookmarkTattooViewModel {
             }
             .disposed(by: disposeBag)
 
+        let bookmarkCellViewModelsAfterEdited = didTapEditButton
+            .filter { $0 == .normal }
+            .withLatestFrom(editingCellManagingDict)
+            .filter { $0.count != 0 }
+            .do { editingCellDict in
+                var dict = editingCellDict
+                dict.forEach { cellIndex, _ in
+                    UserDefaultManager.bookmarkedTattoo.remove(at: cellIndex)
+                    dict[cellIndex] = nil
+                }
+                editingCellManagingDict.accept(dict)
+            }
+            .flatMap{ _ in
+                Observable.just(UserDefaultManager.bookmarkedTattoo
+                    .map { BMCellViewModel(imageURLString: $0.imageURLStrings.first ?? "") } )
+            }
+
         Observable.merge([
             viewWillDisappear.asObservable(),
             refreshSelectedCells.asObservable()
         ])
         .withLatestFrom(Observable.combineLatest(editingCellManagingDict, cellViewModels)) {
-            let dict = $1.0
+            var dict = $1.0
             let cellViewModels = $1.1
-            dict.forEach { removeSelectNumber(from: cellViewModels[$0.key]) }
+            dict.forEach { cellIndex, _ in
+                removeSelectNumber(from: cellViewModels[cellIndex])
+                dict[cellIndex] = nil
+            }
             editingCellManagingDict.accept(dict)
         }
             .subscribe()
             .disposed(by: disposeBag)
 
-        tattooItems = bookmarkCellViewModelsWhenFirstLoad
+        tattooItems = Observable.merge([
+            bookmarkCellViewModelsWhenFirstLoad,
+            bookmarkCellViewModelsAfterEdited
+        ])
             .asDriver(onErrorJustReturn: [])
 
         func removeSelectNumber(from viewModel: BMCellViewModel) {
+            print(viewModel)
             viewModel.selectNumber.accept(0)
         }
     }
