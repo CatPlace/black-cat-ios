@@ -30,6 +30,8 @@ struct TattooDetailViewModel {
 
     // MARK: - Output
 
+    let shouldFillHeartButton: Driver<Bool>
+
     init(tattooModel: Model.Tattoo) {
         self.tattooModel = tattooModel
 
@@ -40,12 +42,31 @@ struct TattooDetailViewModel {
         self.imageURLStrings = tattooModel.imageURLStrings
         self.address = tattooModel.address
 
+        let isBookmarkedTattooWhenFirstLoad = BehaviorRelay<Bool>(value: UserDefaultManager.bookmarkedTattoo.contains { $0.id == tattooModel.id } )
+
         didTapAskButton
             .subscribe { _ in print("Did Tap Ask Button") }
             .disposed(by: disposeBag)
 
-        didTapBookmarkButton
-            .subscribe { _ in print("Did Tap Bookmark Button") }
-            .disposed(by: disposeBag)
+        let isBookmarkedTattooAfterTapBookmarkButton = didTapBookmarkButton
+            .map { _ in UserDefaultManager.bookmarkedTattoo.contains { $0.id == tattooModel.id } }
+            .do { isBookmarked in
+                if isBookmarked {
+                    let index = UserDefaultManager.bookmarkedTattoo.firstIndex { $0.id == tattooModel.id }!
+                    UserDefaultManager.bookmarkedTattoo.remove(at: index)
+                } else {
+                    UserDefaultManager.bookmarkedTattoo.append(tattooModel)
+                }
+            }
+            .map { !$0 }
+
+        let isBookmarkedTattoo = Observable.merge([
+            isBookmarkedTattooWhenFirstLoad.asObservable(),
+            isBookmarkedTattooAfterTapBookmarkButton
+        ])
+
+        shouldFillHeartButton = isBookmarkedTattoo
+            .map { $0 }
+            .asDriver(onErrorJustReturn: false)
     }
 }

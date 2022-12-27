@@ -34,10 +34,22 @@ final class TattooDetailViewController: UIViewController {
 
             heartButton.rx.tap
                 .bind(to: viewModel.didTapBookmarkButton)
+
+            viewModel.shouldFillHeartButton
+                .drive(with: self) { owner, shouldFill in
+                    owner.switchHeartButton(shouldFill: shouldFill)
+                }
         }
     }
 
     // function
+
+    private func switchHeartButton(shouldFill: Bool) {
+        let heartImage = shouldFill ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+        heartImage?.withRenderingMode(.alwaysOriginal).withTintColor(.white)
+
+        heartButton.setImage(heartImage, for: .normal)
+    }
 
     // MARK: - Initialize
 
