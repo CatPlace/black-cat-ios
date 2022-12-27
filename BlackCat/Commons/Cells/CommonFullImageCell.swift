@@ -13,9 +13,9 @@ import Nuke
 import SnapKit
 
 class CommonFullImageCellViewModel {
-    let imageURLString: String
+    let imageURLString: String?
 
-    init(imageURLString: String) {
+    init(imageURLString: String?) {
         self.imageURLString = imageURLString
     }
 }
@@ -29,7 +29,8 @@ class CommonFullImageCell: UICollectionViewCell {
     // MARK: - Binding
 
     func bind(to viewModel: CommonFullImageCellViewModel) {
-        if let url = URL(string: viewModel.imageURLString) {
+        guard let imageURLString = viewModel.imageURLString else { return }
+        if let url = URL(string: imageURLString) {
             Nuke.loadImage(with: url, into: thumbnailImageView)
         }
     }

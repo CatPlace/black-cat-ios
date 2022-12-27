@@ -21,10 +21,9 @@ class GenreViewController: UIViewController {
 
     // MARK: - Properties
 
-    let viewModel = GenreViewModel()
+    let viewModel: GenreViewModel
     let filterViewReactor = FilterReactor()
     lazy var filterViewController = FilterViewController(reactor: filterViewReactor)
-    let genreTitle: String
 
     // MARK: - Binding
 
@@ -60,12 +59,17 @@ class GenreViewController: UIViewController {
             .map { _ in () }
             .bind(to: viewModel.filterViewDidDismiss)
             .disposed(by: disposeBag)
+
+        collectionView.rx.itemSelected
+            .map { $0.row }
+            .bind(to: viewModel.didTapTattooItem)
+            .disposed(by: disposeBag)
         
         // MARK: - State
 
         viewModel.dropDownItems
             .drive(with: self) { owner, items in
-                let title = owner.genreTitle
+                let title = owner.viewModel.genreTitle
                 owner.dropDown.configure(with: items, title: title)
             }
             .disposed(by: disposeBag)
@@ -75,12 +79,18 @@ class GenreViewController: UIViewController {
                 cell.bind(to: viewModel)
             }
             .disposed(by: disposeBag)
+
+        viewModel.pushToTattooDetailVC
+            .drive(with: self) { owner, _ in
+                print("Push To Tattoo Detail VC")
+            }
+            .disposed(by: disposeBag)
     }
 
     // MARK: - Initializing
 
-    init(genreTitle: String) {
-        self.genreTitle = genreTitle
+    init(viewModel: GenreViewModel) {
+        self.viewModel = viewModel
 
         super.init(nibName: nil, bundle: nil)
     }

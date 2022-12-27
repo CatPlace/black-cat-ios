@@ -99,7 +99,7 @@ class HomeViewController: UIViewController {
         viewModel.pushToGenreViewController
             .debug()
             .drive(with: self) { owner, genreTitle in
-                let genreViewController = GenreViewController(genreTitle: genreTitle)
+                let genreViewController = GenreViewController(viewModel: .init(genreTitle: genreTitle))
                 owner.navigationController?.pushViewController(genreViewController, animated: true)
             }
             .disposed(by: disposeBag)
