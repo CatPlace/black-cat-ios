@@ -88,6 +88,7 @@
 		8E88488D2949C4A90039F99A /* RecentTattooHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B022E2937579E004ED20A /* RecentTattooHeaderView.swift */; };
 		8E99DFF2295A916D00B8CF6A /* TattooDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E99DFF1295A916D00B8CF6A /* TattooDetailViewController.swift */; };
 		8E99DFF4295A91AF00B8CF6A /* TattooDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E99DFF3295A91AF00B8CF6A /* TattooDetailViewModel.swift */; };
+		8E99DFF7295A99B300B8CF6A /* TattooDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E99DFF6295A99B300B8CF6A /* TattooDetailCell.swift */; };
 		8EBB61422927389600F640F5 /* BMTattooCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB61412927389600F640F5 /* BMTattooCell.swift */; };
 		8EBB6144292738FA00F640F5 /* BMCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB6143292738FA00F640F5 /* BMCellViewModel.swift */; };
 		8EBB614629273CE300F640F5 /* BMEditFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB614529273CE300F640F5 /* BMEditFilterView.swift */; };
@@ -311,6 +312,7 @@
 		8E8848862949C3FE0039F99A /* GenreViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenreViewModel.swift; sourceTree = "<group>"; };
 		8E99DFF1295A916D00B8CF6A /* TattooDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooDetailViewController.swift; sourceTree = "<group>"; };
 		8E99DFF3295A91AF00B8CF6A /* TattooDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooDetailViewModel.swift; sourceTree = "<group>"; };
+		8E99DFF6295A99B300B8CF6A /* TattooDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooDetailCell.swift; sourceTree = "<group>"; };
 		8EBB61412927389600F640F5 /* BMTattooCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTattooCell.swift; sourceTree = "<group>"; };
 		8EBB6143292738FA00F640F5 /* BMCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMCellViewModel.swift; sourceTree = "<group>"; };
 		8EBB614529273CE300F640F5 /* BMEditFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMEditFilterView.swift; sourceTree = "<group>"; };
@@ -810,8 +812,17 @@
 			children = (
 				8E99DFF1295A916D00B8CF6A /* TattooDetailViewController.swift */,
 				8E99DFF3295A91AF00B8CF6A /* TattooDetailViewModel.swift */,
+				8E99DFF5295A99A800B8CF6A /* Views */,
 			);
 			path = TattooDetail;
+			sourceTree = "<group>";
+		};
+		8E99DFF5295A99A800B8CF6A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8E99DFF6295A99B300B8CF6A /* TattooDetailCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		8EBB613C2927361A00F640F5 /* Views */ = {
@@ -1359,6 +1370,7 @@
 				B1E4985828EE85A800B469AC /* MagazineDetailViewController.swift in Sources */,
 				784B021F29375719004ED20A /* MagazineViewModel.swift in Sources */,
 				8E2D8C5F28F2EE69004B514D /* HomeRecommendCellViewModel.swift in Sources */,
+				8E99DFF7295A99B300B8CF6A /* TattooDetailCell.swift in Sources */,
 				8E7E9CE0291C910B00D09157 /* UIPageViewController+.swift in Sources */,
 				78B00BB828F5661000A9915D /* LastMagazineCell.swift in Sources */,
 				8E88488B2949C4930039F99A /* BPPriceInfoEditViewController.swift in Sources */,
