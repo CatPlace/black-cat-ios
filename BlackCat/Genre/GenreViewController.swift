@@ -81,8 +81,9 @@ class GenreViewController: UIViewController {
             .disposed(by: disposeBag)
 
         viewModel.pushToTattooDetailVC
-            .drive(with: self) { owner, _ in
-                print("Push To Tattoo Detail VC")
+            .drive(with: self) { owner, viewModel in
+                let tattooDetailVC = TattooDetailViewController(viewModel: viewModel)
+                owner.navigationController?.pushViewController(tattooDetailVC, animated: true)
             }
             .disposed(by: disposeBag)
     }

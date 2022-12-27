@@ -73,7 +73,7 @@ class GenreViewModel {
     let dropDownItems: Driver<[String]>
     // Home에서도 사용하는 Cell이라 Common으로 이동할 필요가 있어 보입니다.
     let categoryItems: Driver<[CommonFullImageCellViewModel]>
-    let pushToTattooDetailVC: Driver<Void>
+    let pushToTattooDetailVC: Driver<TattooDetailViewModel>
 
     init(genreTitle: String) {
         self.genreTitle = genreTitle
@@ -138,7 +138,7 @@ class GenreViewModel {
 
         pushToTattooDetailVC = didTapTattooItem
             .withLatestFrom(fetchedItems) { row, items in items[row] }
-            .map { _ in () }
-            .asDriver(onErrorJustReturn: ())
+            .map { model in TattooDetailViewModel(tattooModel: model) }
+            .asDriver(onErrorJustReturn: .init(tattooModel: .empty))
     }
 }
