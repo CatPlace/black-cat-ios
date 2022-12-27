@@ -66,44 +66,53 @@ class GenreViewModel {
     let viewWillAppear = PublishRelay<Void>()
     let filterViewDidDismiss = PublishRelay<Void>()
     let selectedDropDownItemRow = PublishRelay<Int>()
+    let didTapTattooItem = PublishRelay<Int>()
 
     // MARK: - Output
 
     let dropDownItems: Driver<[String]>
     // Home에서도 사용하는 Cell이라 Common으로 이동할 필요가 있어 보입니다.
     let categoryItems: Driver<[CommonFullImageCellViewModel]>
+    let pushToTattooDetailVC: Driver<Void>
 
     init(genreTitle: String) {
         self.genreTitle = genreTitle
 
         let filterService = FilterService()
 
-        let filteredTask = filterViewDidDismiss
+        let filteredTask = Observable.merge([
+            viewWillAppear.asObservable(),
+            filterViewDidDismiss.asObservable()
+        ])
             .flatMap { filterService.taskService.fetch()
                 .map { $0.filter { $0.isSubscribe == true } } }
 
-        let filteredLocation = filterViewDidDismiss
+        let filteredLocation = Observable.merge([
+            viewWillAppear.asObservable(),
+            filterViewDidDismiss.asObservable()
+        ])
             .flatMap { filterService.locationService.fetch()
                 .map { $0.filter { $0.isSubscribe == true } } }
 
         let filteredInfo = Observable.zip(filteredTask, filteredLocation)
 
+        let defaultGenreTitle = viewWillAppear
+            .map { _ in genreTitle }
+
         let changedGenreTitle = selectedDropDownItemRow
-            .do { print($0) }
             .map { row in GenreType(rawValue: row)?.title ?? "전체보기" }
 
-        let newGenreTitle = Observable.merge([
-            Observable.just(genreTitle),
+        let currentGenreTitle = Observable.merge([
+            defaultGenreTitle,
             changedGenreTitle
         ])
-            .do { print("new Title", $0) }
 
         let fetchedItems = Observable.merge([
             viewWillAppear.asObservable(),
             filterViewDidDismiss.asObservable(),
             selectedDropDownItemRow.map { _ in () }.asObservable()
         ])
-            .withLatestFrom(newGenreTitle) { $1 }
+            .withLatestFrom(currentGenreTitle) { $1 }
             .flatMap { CatSDKNetworkTattoo.rx.fetchTattosInSpecificCategory(categoryID: GenreType.id($0)) }
             .withLatestFrom(filteredInfo) { tattoos, filteredInfo in
                 return tattoos.filter { tattoo in
@@ -126,5 +135,10 @@ class GenreViewModel {
                 }
             }
             .asDriver(onErrorJustReturn: [])
+
+        pushToTattooDetailVC = didTapTattooItem
+            .withLatestFrom(fetchedItems) { row, items in items[row] }
+            .map { _ in () }
+            .asDriver(onErrorJustReturn: ())
     }
 }
