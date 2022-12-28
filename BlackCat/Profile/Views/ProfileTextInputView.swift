@@ -74,6 +74,7 @@ class ProfileTextInputView: UIView {
     init(viewModel: ProfileTextInputViewModel) {
         super.init(frame: .zero)
         profileTextField.delegate = self
+        profileTextField.backgroundColor = .white
         setUI()
         bind(to: viewModel)
     }
@@ -133,6 +134,6 @@ extension ProfileTextInputView {
 extension ProfileTextInputView: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return false }
-        return text.count < 19 || range.length == 1
+        return text.count < 18 || range.length == 1
     }
 }
