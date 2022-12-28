@@ -17,14 +17,17 @@ final class MyPageViewModel {
     // MARK: - Input
     let viewWillAppear = PublishRelay<Void>()
     let selectedItem = PublishRelay<IndexPath>()
+    let profileEditButtonTapped = PublishRelay<Void>()
     
     // MARK: - Output
     let dataSourceDriver: Driver<[MyPageSection]>
     let logoutDriver: Driver<Void>
+    let pushToProfileEditViewDriver: Driver<Void>
     
     init(useCase: MyPageUseCase = MyPageUseCase()) {
         let profileSectionDataObservable = viewWillAppear
             .flatMap { useCase.userProfile() }
+            .map { MyPageProfileCellViewModel(user: $0) }
         
         let recentTattooSectionDataObservable = viewWillAppear
             .flatMap { useCase.recentTattoo() }
@@ -39,13 +42,16 @@ final class MyPageViewModel {
             .withdrawal
         ])
         
+        pushToProfileEditViewDriver = profileEditButtonTapped
+            .asDriver(onErrorJustReturn: ())
+        
         dataSourceDriver = Observable.combineLatest(
             profileSectionDataObservable,
             recentTattooSectionDataObservable,
             menuSectionDataObservable
         ) { firstSectionData, secondSectionData, thirdSectionData in
-            [
-                MyPageSection(items: [.profileSection(.init(user: firstSectionData))] ),
+            return [
+                MyPageSection(items: [.profileSection(firstSectionData)] ),
                 MyPageSection(items: secondSectionData.map { .recentTattooSection(.init(tattoo: $0)) }),
                 MyPageSection(items: thirdSectionData.map { .menuSection(.init(type: $0)) })
             ]

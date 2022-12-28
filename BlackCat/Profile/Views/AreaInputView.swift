@@ -93,7 +93,6 @@ class AreaInputView: UIView {
                 .drive { viewModel.updateCells(selectedAreas: $0) }
             
             collectionView.rx.itemSelected
-                .debug("아이템 선택")
                 .bind(to: viewModel.selectedAreaIndexRelay)
         }
         
@@ -116,6 +115,8 @@ class AreaInputView: UIView {
     // MARK: - UIComponents
     let titleLabel: UILabel = {
         $0.text = "지역"
+        $0.textColor = .init(hex: "#666666FF")
+        $0.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 16)
         return $0
     }(UILabel())
     var layout: UICollectionViewFlowLayout = {
@@ -127,7 +128,7 @@ class AreaInputView: UIView {
     lazy var collectionView: UICollectionView = {
         $0.register(Reusable.areaCell.self)
         $0.isScrollEnabled = false
-        $0.backgroundColor = .red
+        $0.backgroundColor = .clear
         return $0
     }(UICollectionView(frame: .zero, collectionViewLayout: layout))
     
@@ -137,9 +138,9 @@ class AreaInputView: UIView {
             $0.top.leading.equalToSuperview()
         }
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(10)
             $0.height.equalTo(UIScreen.main.bounds.width * 100/375 * 0.4 * 3 + 10 * 2).priority(.high)
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.leading.trailing.bottom.equalToSuperview().inset(5)
         }
     }
 }

@@ -50,7 +50,14 @@ class MyPageProfileCell: MyPageBaseCell {
     var disposeBag = DisposeBag()
     
     // MARK: - Binding
-    func bind(to viewModel: MyPageProfileCellViewModel) {
+    func bind(to viewModel: MyPageProfileCellViewModel, with superViewModel: MyPageViewModel) {
+        
+        profileEditButton.rx.tapGesture()
+            .when(.recognized)
+            .map { _ in () }
+            .bind(to: superViewModel.profileEditButtonTapped)
+            .disposed(by: disposeBag)
+        
         viewModel.showLoginViewDriver
             .drive(with: self) { owner, _ in
                 owner.showLoginView()

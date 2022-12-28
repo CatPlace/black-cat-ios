@@ -28,10 +28,10 @@ final class TabBarViewController: UITabBarController {
                                    title: "매거진",
                                    image: .ic_board,
                                    selectedImage: .ic_board_fill)
-//    let vc4 = TabBarFactory.create(viewController: BusinessProfileViewController(),
-//                                   title: "임시뷰",
-//                                   image: .ic_board,
-//                                   selectedImage: .ic_board_fill)
+    let vc4 = TabBarFactory.create(viewController: BusinessProfileViewController(),
+                                   title: "임시뷰",
+                                   image: .ic_board,
+                                   selectedImage: .ic_board_fill)
 //    let vc5 = TabBarFactory.create(viewController: BPEditTempViewController(),
 //                                   title: "에딧",
 //                                   image: .ic_board,
@@ -67,7 +67,7 @@ final class TabBarViewController: UITabBarController {
         modalPresentationStyle = .fullScreen
         UITabBar.clearShadow()
         tabBar.layer.applyShadow(color: .gray, alpha: 0.3, x: 0, y: 0, blur: 12)
-        viewControllers = [homeVC, magazineVC, myPageVC, vc9]
+        viewControllers = [homeVC, magazineVC, myPageVC, vc9, vc4]
     }
     
 }

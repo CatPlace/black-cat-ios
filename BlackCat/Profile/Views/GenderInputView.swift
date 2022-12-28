@@ -79,7 +79,6 @@ class GenderInputView: UIView {
         disposeBag.insert {
             
             collectionView.rx.itemSelected
-                .debug("아이템 선택")
                 .bind(to: viewModel.selectedGenderIndexRelay)
             
             viewModel.cellViewModelsDriver
@@ -114,6 +113,8 @@ class GenderInputView: UIView {
     // MARK: - UIComponents
     let titleLabel: UILabel = {
         $0.text = "성별"
+        $0.textColor = .init(hex: "#666666FF")
+        $0.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 16)
         return $0
     }(UILabel())
     var layout: UICollectionViewFlowLayout = {
@@ -125,6 +126,7 @@ class GenderInputView: UIView {
     lazy var collectionView: UICollectionView = {
         $0.isScrollEnabled = false
         $0.register(Reusable.genderCell.self)
+        $0.backgroundColor = .clear
         return $0
     }(UICollectionView(frame: .zero, collectionViewLayout: layout))
     
@@ -134,9 +136,12 @@ class GenderInputView: UIView {
             $0.leading.centerY.equalToSuperview()
         }
         collectionView.snp.makeConstraints {
-            $0.leading.equalTo(titleLabel.snp.trailing)
+//            $0.leading.equalTo(titleLabel.snp.trailing)
             $0.height.equalTo(UIScreen.main.bounds.width * 100/375 * 0.4).priority(.high)
-            $0.trailing.top.bottom.equalToSuperview()
+            $0.top.bottom.equalToSuperview()
+            $0.width.equalTo(UIScreen.main.bounds.width * 100/375 * 2 + 10)
+            $0.centerX.equalToSuperview()
+//            $0.trailing.top.bottom.equalToSuperview()
         }
     }
 }
