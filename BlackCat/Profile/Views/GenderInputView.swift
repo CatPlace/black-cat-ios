@@ -35,7 +35,6 @@ class GenderInputViewModel {
     
     
     init(genders: [Model.Gender] = Model.Gender.allCases) {
-        print(CatSDKUser.user())
         self.genders = genders
         
         CatSDKUser.initUserCache()
@@ -78,6 +77,11 @@ class GenderInputView: UIView {
     // MARK: - Binding
     func bind(to viewModel: GenderInputViewModel) {
         disposeBag.insert {
+            
+            collectionView.rx.itemSelected
+                .debug("아이템 선택")
+                .bind(to: viewModel.selectedGenderIndexRelay)
+            
             viewModel.cellViewModelsDriver
                 .drive(collectionView.rx.items) { cv, row, data in
                     let cell = cv.dequeue(Reusable.genderCell.self, for: IndexPath(row: row, section: 0))
@@ -85,10 +89,6 @@ class GenderInputView: UIView {
                     cell.viewModel = data
                     return cell
                 }
-            //TODO: - itemSelected
-            collectionView.rx.itemSelected
-                .debug("아이템 선택")
-                .bind(to: viewModel.selectedGenderIndexRelay)
             
             viewModel.shouldUpdateGenderCells
                 .drive { viewModel.updateCelles(selectedGender: $0) }
