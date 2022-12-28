@@ -42,10 +42,11 @@ class BookmarkTattooViewController: UIViewController {
 
         viewModel.tattooItems
             .drive(collectionView.rx.items(Reusable.tattooCell)) { [weak self] _, viewModel, cell in
+                print("=========Tattoo Items==========")
                 self?.viewModel.editMode
                     .map { $0 == .normal }
                     .bind(to: viewModel.editModeIsNormal)
-                    .disposed(by: cell.disposeBag)
+                    .disposed(by: self!.disposeBag)
 
                 cell.bind(to: viewModel)
             }

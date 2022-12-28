@@ -37,15 +37,14 @@ class BookmarkTattooViewModel {
     init() {
         let editingCellManagingDict = BehaviorRelay<EditingCellIndexToSelectNumberDict>(value: [:])
 
-        let cellViewModels = Observable.just(UserDefaultManager.bookmarkedTattoo
-            .map { BMCellViewModel(imageURLString: $0.imageURLStrings.first ?? "") }
-        )
+        let cellViewModels = BehaviorSubject<[BMCellViewModel]>(value: UserDefaultManager.bookmarkedTattoo
+            .map { BMCellViewModel(imageURLString: $0.imageURLStrings.first ?? "") } )
 
         let bookmarkCellViewModelsWhenFirstLoad = viewDidLoad
             .withLatestFrom(cellViewModels)
 
         let editModeWhenItemSelected = didSelectItem
-            .withLatestFrom(didTapEditButton) { (index: $0, editMode: $1) }
+            .withLatestFrom(editMode) { (index: $0, editMode: $1) }
             .share()
 
         let cellIndexForEdit = editModeWhenItemSelected
@@ -57,8 +56,10 @@ class BookmarkTattooViewModel {
             .map { $0.index }
 
         let cellShouldBeEdited = cellIndexForEdit
-            .withLatestFrom(editingCellManagingDict) { selectItemIndex, editingCellIndexToSelectNumberDict -> (shouldEdit: Bool, index: Int) in
-                let isDictionaryContainsCellIndex = editingCellIndexToSelectNumberDict.contains { $0.key == selectItemIndex }
+            .debug("🥵🥵🥵🥵🥵🥵 CellIndexForEdit 🥵🥵🥵🥵🥵🥵")
+            .withLatestFrom(editingCellManagingDict) {
+                selectItemIndex, editingCellManagingDict -> (shouldEdit: Bool, index: Int) in
+                let isDictionaryContainsCellIndex = editingCellManagingDict.contains { $0.key == selectItemIndex }
 
                 return (shouldEdit: !isDictionaryContainsCellIndex, index: selectItemIndex)
             }
@@ -71,6 +72,27 @@ class BookmarkTattooViewModel {
         let cellIndexShouldBeRemoveFromManagingDict = cellShouldBeEdited
             .filter { !$0.shouldEdit }
             .map { $0.index }
+
+        let removeSelectedItem = didTapEditButton
+            .filter { $0 == .normal }
+            .withLatestFrom(editingCellManagingDict)
+            .filter { !$0.isEmpty }
+            .share()
+
+        let bookmarkCellViewModelsAfterSelecedItemRemove = removeSelectedItem
+            .do { editingCellDict in
+                var dict = editingCellDict
+                dict.sorted { $0.key > $1.key }.forEach { cellIndex, _ in
+                    UserDefaultManager.bookmarkedTattoo.remove(at: cellIndex)
+                    dict[cellIndex] = nil
+                }
+                editingCellManagingDict.accept(dict)
+            }
+            .do { _ in
+                cellViewModels.onNext(UserDefaultManager.bookmarkedTattoo
+                    .map { BMCellViewModel(imageURLString: $0.imageURLStrings.first ?? "") } )
+            }
+            .withLatestFrom(cellViewModels)
 
         cellIndexShouldBeAddInManagingDict
             .withLatestFrom(editingCellManagingDict) { selectedItemIndex, editingCellDict in
@@ -99,26 +121,13 @@ class BookmarkTattooViewModel {
         editingCellManagingDict
             .withLatestFrom(cellViewModels) { (dict: $0, cellViewModels: $1) }
             .subscribe { returned in
+                print("🥶🥶🥶🥶🥶🥶 dict.values", returned.dict.keys)
+                print("cellViewModel.count", returned.cellViewModels.count)
                 returned.dict.forEach { returned.cellViewModels[$0.key].selectNumber.accept($0.value) }
             }
             .disposed(by: disposeBag)
 
-        let bookmarkCellViewModelsAfterEdited = didTapEditButton
-            .filter { $0 == .normal }
-            .withLatestFrom(editingCellManagingDict)
-            .filter { $0.count != 0 }
-            .do { editingCellDict in
-                var dict = editingCellDict
-                dict.forEach { cellIndex, _ in
-                    UserDefaultManager.bookmarkedTattoo.remove(at: cellIndex)
-                    dict[cellIndex] = nil
-                }
-                editingCellManagingDict.accept(dict)
-            }
-            .flatMap{ _ in
-                Observable.just(UserDefaultManager.bookmarkedTattoo
-                    .map { BMCellViewModel(imageURLString: $0.imageURLStrings.first ?? "") } )
-            }
+        // TODO: - 셀 지우고 초기화 해줘야함!
 
         Observable.merge([
             viewWillDisappear.asObservable(),
@@ -128,9 +137,9 @@ class BookmarkTattooViewModel {
             var dict = $1.0
             let cellViewModels = $1.1
             dict.forEach { cellIndex, _ in
-                removeSelectNumber(from: cellViewModels[cellIndex])
                 dict[cellIndex] = nil
             }
+            cellViewModels.forEach { removeSelectNumber(from: $0) }
             editingCellManagingDict.accept(dict)
         }
             .subscribe()
@@ -138,8 +147,9 @@ class BookmarkTattooViewModel {
 
         tattooItems = Observable.merge([
             bookmarkCellViewModelsWhenFirstLoad,
-            bookmarkCellViewModelsAfterEdited
+            bookmarkCellViewModelsAfterSelecedItemRemove
         ])
+        .debug("🥵🥵🥵🥵🥵🥵 CellIndexForEdit 🥵🥵🥵🥵🥵🥵")
             .asDriver(onErrorJustReturn: [])
 
         func removeSelectNumber(from viewModel: BMCellViewModel) {
