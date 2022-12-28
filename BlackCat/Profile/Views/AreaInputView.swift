@@ -26,7 +26,7 @@ class AreaInputViewModel {
             }
     )
     let selectedAreaIndexRelay = PublishRelay<IndexPath>()
-    
+    let updateAreaCellsDriver: Driver<Set<Model.Area>>
     let cellViewModelsDriver: Driver<[FilterCellViewModel]>
     //    let shouldUpdateAreaCells: Driver<Model.Area>
     init() {
@@ -35,6 +35,36 @@ class AreaInputViewModel {
         self.cellViewModelsDriver = areaCellInfosRelay.map {
             $0.map { .init(typeString: $0.name, isSubscribe: $0.isSelected)}
         }.asDriver(onErrorJustReturn: [])
+        
+        updateAreaCellsDriver = selectedAreaIndexRelay
+            .map { $0.row }
+            .withLatestFrom(areaCellInfosRelay) { ($0, $1) }
+            .map { selectedRow, areaCellInfos in
+                return updateArea(with: selectedRow)
+            }.asDriver(onErrorJustReturn: Set())
+        
+        func updateArea(with row: Int? = nil) -> Set<Model.Area> {
+            var user = CatSDKUser.userCache()
+            if let row {
+                var newAreas = user.areas
+                if let selectedArea = Model.Area(rawValue: row) {
+                    if newAreas.contains(selectedArea) {
+                        newAreas.remove(selectedArea)
+                    } else {
+                        newAreas.insert(selectedArea)
+                    }
+                }
+                user.areas = newAreas
+                CatSDKUser.updateUserCache(user: user)
+            }
+            return user.areas
+        }
+    }
+    
+    func updateCells(selectedAreas: Set<Model.Area>) {
+        areaCellInfosRelay.accept(
+            areas.map { .init(name: $0.asString(), isSelected: selectedAreas.contains($0)) }
+        )
     }
 
     
@@ -49,6 +79,7 @@ class AreaInputView: UIView {
     
     // MARK: - Binding
     func bind(to viewModel: AreaInputViewModel) {
+
         disposeBag.insert {
             viewModel.cellViewModelsDriver
                 .drive(collectionView.rx.items) { cv, row, data in
@@ -57,15 +88,16 @@ class AreaInputView: UIView {
                     cell.viewModel = data
                     return cell
                 }
-//            //TODO: - itemSelected
-//            collectionView.rx.itemSelected
-//                .debug("아이템 선택")
-//                .bind(to: viewModel.selectedGenderIndexRelay)
-//
-//            viewModel.shouldUpdateGenderCells
-//                .drive { viewModel.updateCelles(selectedGender: $0) }
             
+            viewModel.updateAreaCellsDriver
+                .drive { viewModel.updateCells(selectedAreas: $0) }
+            
+            collectionView.rx.itemSelected
+                .debug("아이템 선택")
+                .bind(to: viewModel.selectedAreaIndexRelay)
         }
+        
+
     }
     
     // MARK: - Initializer
