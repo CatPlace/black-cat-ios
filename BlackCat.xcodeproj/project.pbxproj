@@ -7,12 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7828DB5D295C8D2B0053B0A0 /* JHBusinessProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB5C295C8D2B0053B0A0 /* JHBusinessProfileViewController.swift */; };
-		7828DB5F295C912F0053B0A0 /* JHBusinessProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB5E295C912F0053B0A0 /* JHBusinessProfileViewModel.swift */; };
-		7828DB61295C951A0053B0A0 /* JHBPContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB60295C951A0053B0A0 /* JHBPContentCell.swift */; };
-		7828DB63295C99410053B0A0 /* JHBPThumbnailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB62295C99410053B0A0 /* JHBPThumbnailImageCell.swift */; };
-		7828DB65295C9D500053B0A0 /* JHBPContentSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB64295C9D500053B0A0 /* JHBPContentSectionHeaderView.swift */; };
-		7828DB69295CB7110053B0A0 /* JHBPMulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB68295CB7110053B0A0 /* JHBPMulticastDelegate.swift */; };
 		782728B4295A934C00049436 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782728B3295A934C00049436 /* ProfileViewController.swift */; };
 		7828DB54295B5D620053B0A0 /* AreaInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB53295B5D620053B0A0 /* AreaInputView.swift */; };
 		7828DB56295B5D7E0053B0A0 /* GenderInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB55295B5D7E0053B0A0 /* GenderInputView.swift */; };
@@ -236,12 +230,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		7828DB5C295C8D2B0053B0A0 /* JHBusinessProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBusinessProfileViewController.swift; sourceTree = "<group>"; };
-		7828DB5E295C912F0053B0A0 /* JHBusinessProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBusinessProfileViewModel.swift; sourceTree = "<group>"; };
-		7828DB60295C951A0053B0A0 /* JHBPContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBPContentCell.swift; sourceTree = "<group>"; };
-		7828DB62295C99410053B0A0 /* JHBPThumbnailImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBPThumbnailImageCell.swift; sourceTree = "<group>"; };
-		7828DB64295C9D500053B0A0 /* JHBPContentSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBPContentSectionHeaderView.swift; sourceTree = "<group>"; };
-		7828DB68295CB7110053B0A0 /* JHBPMulticastDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBPMulticastDelegate.swift; sourceTree = "<group>"; };
 		782728B3295A934C00049436 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		7828DB53295B5D620053B0A0 /* AreaInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaInputView.swift; sourceTree = "<group>"; };
 		7828DB55295B5D7E0053B0A0 /* GenderInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderInputView.swift; sourceTree = "<group>"; };
@@ -487,33 +475,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7828DB5B295C8D0F0053B0A0 /* JHBusinessProfile */ = {
-			isa = PBXGroup;
-			children = (
-				7828DB5C295C8D2B0053B0A0 /* JHBusinessProfileViewController.swift */,
-				7828DB5E295C912F0053B0A0 /* JHBusinessProfileViewModel.swift */,
-				7828DB68295CB7110053B0A0 /* JHBPMulticastDelegate.swift */,
-				7828DB6B295CD54C0053B0A0 /* Cells */,
-				7828DB6A295CD5400053B0A0 /* Views */,
-			);
-			path = JHBusinessProfile;
-			sourceTree = "<group>";
-		};
-		7828DB6A295CD5400053B0A0 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				7828DB64295C9D500053B0A0 /* JHBPContentSectionHeaderView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		7828DB6B295CD54C0053B0A0 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				7828DB60295C951A0053B0A0 /* JHBPContentCell.swift */,
-				7828DB62295C99410053B0A0 /* JHBPThumbnailImageCell.swift */,
-			);
-			path = Cells;
 		782728B2295A932D00049436 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -529,6 +490,10 @@
 				7828DB57295B5DE20053B0A0 /* ProfileTextInputView.swift */,
 				7828DB55295B5D7E0053B0A0 /* GenderInputView.swift */,
 				7828DB53295B5D620053B0A0 /* AreaInputView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		7828DB5B295C8D0F0053B0A0 /* JHBusinessProfile */ = {
 			isa = PBXGroup;
 			children = (
