@@ -36,8 +36,9 @@ extension JHBUsinessProfileViewModel {
         
         let contentProfile = JHBPSectionFactory.makeContentCell(order: 0)
         let contentProduct = JHBPSectionFactory.makeContentCell(order: 1)
+        let contentPriceInfo = JHBPSectionFactory.makeContentCell(order: 2)
         
-        let contentSection = JHBusinessProfileCellSection.contentCell([contentProfile, contentProduct])
+        let contentSection = JHBusinessProfileCellSection.contentCell([contentProfile, contentProduct, contentPriceInfo])
         
         return [thumbnailSection, contentSection]
     }

@@ -51,14 +51,16 @@ class WebViewController: UIViewController, WKUIDelegate {
     }
     
     // MARK: - UIComponents
-    var webView: WKWebView = WKWebView(frame: .zero)
+    lazy var webView: WKWebView = {
+        $0.uiDelegate = self
+        $0.navigationDelegate = self
+        return $0
+    }(WKWebView(frame: .zero))
+    
     var indicator = UIActivityIndicatorView()
     
     func setUI() {
         [webView, indicator].forEach { view.addSubview($0) }
-        
-        webView.uiDelegate = self
-        webView.navigationDelegate = self
         
         webView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)

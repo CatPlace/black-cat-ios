@@ -24,7 +24,10 @@ final class TabBarViewController: UITabBarController {
                                    title: "마이페이지",
                                    image: .ic_board,
                                    selectedImage: .ic_board_fill)
-
+    let temp1 = TabBarFactory.create(viewController: BusinessProfileViewController(reactor: .init(initialState: .init())),
+                                     title: "작가프로필(건우)",
+                                     image: .ic_board,
+                                     selectedImage: .ic_board_fill)
     let temp = TabBarFactory.create(viewController: JHBusinessProfileViewController(viewModel: .init()),
                                    title: "작가프로필(지훈)",
                                    image: .ic_board,
@@ -43,7 +46,7 @@ final class TabBarViewController: UITabBarController {
         modalPresentationStyle = .fullScreen
         UITabBar.clearShadow()
         tabBar.layer.applyShadow(color: .gray, alpha: 0.3, x: 0, y: 0, blur: 12)
-        viewControllers = [homeVC, bookmarkVC, myPageVC, temp]
+        viewControllers = [homeVC, bookmarkVC, myPageVC, temp, temp1]
     }
     
 }

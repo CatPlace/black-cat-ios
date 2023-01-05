@@ -23,7 +23,7 @@ enum MyPageMenuType: Int {
     func linkString() -> String? {
         switch self {
         case .notice:
-            return "http://play.afreecatv.com/phonics1/244378743"
+            return "https://play.afreecatv.com/phonics1/244378743"
         case .feedback:
             return "https://tattoomap.notion.site/1-ef60c84317204542b27583ab82693671"
         case .termOfService:

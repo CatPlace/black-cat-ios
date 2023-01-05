@@ -10,6 +10,10 @@
 		782728B4295A934C00049436 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782728B3295A934C00049436 /* ProfileViewController.swift */; };
 		78277E832966BACB004CFDF4 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78277E822966BACB004CFDF4 /* ProfileViewModel.swift */; };
 		78277E862966C320004CFDF4 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78277E852966C320004CFDF4 /* WebViewController.swift */; };
+		78277E882966DC6F004CFDF4 /* JHPBPriceInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78277E872966DC6F004CFDF4 /* JHPBPriceInfoCell.swift */; };
+		78277E8B296735A8004CFDF4 /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78277E8A296735A8004CFDF4 /* ProfileEditViewController.swift */; };
+		78277E8D296735CB004CFDF4 /* ProductEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78277E8C296735CB004CFDF4 /* ProductEditViewController.swift */; };
+		78277E8F296735D6004CFDF4 /* PriceInfoEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78277E8E296735D6004CFDF4 /* PriceInfoEditViewController.swift */; };
 		7828DB54295B5D620053B0A0 /* AreaInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB53295B5D620053B0A0 /* AreaInputView.swift */; };
 		7828DB56295B5D7E0053B0A0 /* GenderInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB55295B5D7E0053B0A0 /* GenderInputView.swift */; };
 		7828DB58295B5DE20053B0A0 /* ProfileTextInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB57295B5DE20053B0A0 /* ProfileTextInputView.swift */; };
@@ -234,6 +238,10 @@
 		782728B3295A934C00049436 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		78277E822966BACB004CFDF4 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		78277E852966C320004CFDF4 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		78277E872966DC6F004CFDF4 /* JHPBPriceInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHPBPriceInfoCell.swift; sourceTree = "<group>"; };
+		78277E8A296735A8004CFDF4 /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
+		78277E8C296735CB004CFDF4 /* ProductEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductEditViewController.swift; sourceTree = "<group>"; };
+		78277E8E296735D6004CFDF4 /* PriceInfoEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceInfoEditViewController.swift; sourceTree = "<group>"; };
 		7828DB53295B5D620053B0A0 /* AreaInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaInputView.swift; sourceTree = "<group>"; };
 		7828DB55295B5D7E0053B0A0 /* GenderInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderInputView.swift; sourceTree = "<group>"; };
 		7828DB57295B5DE20053B0A0 /* ProfileTextInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTextInputView.swift; sourceTree = "<group>"; };
@@ -495,6 +503,16 @@
 			path = WebView;
 			sourceTree = "<group>";
 		};
+		78277E8929673599004CFDF4 /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				78277E8A296735A8004CFDF4 /* ProfileEditViewController.swift */,
+				78277E8C296735CB004CFDF4 /* ProductEditViewController.swift */,
+				78277E8E296735D6004CFDF4 /* PriceInfoEditViewController.swift */,
+			);
+			path = Edit;
+			sourceTree = "<group>";
+		};
 		7828DB52295B5D470053B0A0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -511,6 +529,7 @@
 				7828DB5C295C8D2B0053B0A0 /* JHBusinessProfileViewController.swift */,
 				7828DB5E295C912F0053B0A0 /* JHBusinessProfileViewModel.swift */,
 				7828DB68295CB7110053B0A0 /* JHBPMulticastDelegate.swift */,
+				78277E8929673599004CFDF4 /* Edit */,
 				7828DB6B295CD54C0053B0A0 /* Cells */,
 				7828DB6A295CD5400053B0A0 /* Views */,
 			);
@@ -530,6 +549,7 @@
 			children = (
 				7828DB60295C951A0053B0A0 /* JHBPContentCell.swift */,
 				7828DB62295C99410053B0A0 /* JHBPThumbnailImageCell.swift */,
+				78277E872966DC6F004CFDF4 /* JHPBPriceInfoCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1518,6 +1538,7 @@
 				7828DB5F295C912F0053B0A0 /* JHBusinessProfileViewModel.swift in Sources */,
 				8E7E9CDD291C8EA700D09157 /* BMTabMenuAnimation.swift in Sources */,
 				B1EE64F828FA4ABE0055A4F1 /* FilterExampleViewController.swift in Sources */,
+				78277E8D296735CB004CFDF4 /* ProductEditViewController.swift in Sources */,
 				8E8848892949C4170039F99A /* FilterCellViewModel.swift in Sources */,
 				B160DBF928FF3CBD00C0D682 /* BaseCollectionViewCell.swift in Sources */,
 				8E8848872949C3FE0039F99A /* GenreViewController.swift in Sources */,
@@ -1527,9 +1548,11 @@
 				B1E3F7C2290EC1F700005F17 /* BPContentModel.swift in Sources */,
 				B1E3F7C6290EC98600005F17 /* BPBaseCollectionReusableView.swift in Sources */,
 				8E2D8C5A28F2EE69004B514D /* HomeCategoryCellViewModel.swift in Sources */,
+				78277E882966DC6F004CFDF4 /* JHPBPriceInfoCell.swift in Sources */,
 				B1E3F7D9290EE8CE00005F17 /* BPMultiCastDelegate.swift in Sources */,
 				B1CDE8E02916088F00ACB9AC /* BPProfileModel.swift in Sources */,
 				8E8848822949C3F80039F99A /* PresentationStyle.swift in Sources */,
+				78277E8B296735A8004CFDF4 /* ProfileEditViewController.swift in Sources */,
 				782728B4295A934C00049436 /* ProfileViewController.swift in Sources */,
 				B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */,
 				B1E986AE28FE8D4F00962F5B /* BaseRealmProtocol.swift in Sources */,
@@ -1548,6 +1571,7 @@
 				8E7E9CE2291C927200D09157 /* BookmarkTattooViewController.swift in Sources */,
 				8E88487E2949C3F80039F99A /* CategoryPaperView.swift in Sources */,
 				B1D3364328F1CD1B00826636 /* UITableView+.swift in Sources */,
+				78277E8F296735D6004CFDF4 /* PriceInfoEditViewController.swift in Sources */,
 				B1E3F7C8290ECAA100005F17 /* BPContentSectionHeaderReactor.swift in Sources */,
 				B1CA040628F00CC1004A6027 /* MagazineDetailImageCell.swift in Sources */,
 				7828DB69295CB7110053B0A0 /* JHBPMulticastDelegate.swift in Sources */,
