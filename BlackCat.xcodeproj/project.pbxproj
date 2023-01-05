@@ -14,6 +14,7 @@
 		78277E8B296735A8004CFDF4 /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78277E8A296735A8004CFDF4 /* ProfileEditViewController.swift */; };
 		78277E8D296735CB004CFDF4 /* ProductEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78277E8C296735CB004CFDF4 /* ProductEditViewController.swift */; };
 		78277E8F296735D6004CFDF4 /* PriceInfoEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78277E8E296735D6004CFDF4 /* PriceInfoEditViewController.swift */; };
+		78277E92296740E4004CFDF4 /* LoginAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78277E91296740E3004CFDF4 /* LoginAlertViewController.swift */; };
 		7828DB54295B5D620053B0A0 /* AreaInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB53295B5D620053B0A0 /* AreaInputView.swift */; };
 		7828DB56295B5D7E0053B0A0 /* GenderInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB55295B5D7E0053B0A0 /* GenderInputView.swift */; };
 		7828DB58295B5DE20053B0A0 /* ProfileTextInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB57295B5DE20053B0A0 /* ProfileTextInputView.swift */; };
@@ -242,6 +243,7 @@
 		78277E8A296735A8004CFDF4 /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
 		78277E8C296735CB004CFDF4 /* ProductEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductEditViewController.swift; sourceTree = "<group>"; };
 		78277E8E296735D6004CFDF4 /* PriceInfoEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceInfoEditViewController.swift; sourceTree = "<group>"; };
+		78277E91296740E3004CFDF4 /* LoginAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAlertViewController.swift; sourceTree = "<group>"; };
 		7828DB53295B5D620053B0A0 /* AreaInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaInputView.swift; sourceTree = "<group>"; };
 		7828DB55295B5D7E0053B0A0 /* GenderInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderInputView.swift; sourceTree = "<group>"; };
 		7828DB57295B5DE20053B0A0 /* ProfileTextInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTextInputView.swift; sourceTree = "<group>"; };
@@ -511,6 +513,14 @@
 				78277E8E296735D6004CFDF4 /* PriceInfoEditViewController.swift */,
 			);
 			path = Edit;
+			sourceTree = "<group>";
+		};
+		78277E90296740CE004CFDF4 /* LoginAlert */ = {
+			isa = PBXGroup;
+			children = (
+				78277E91296740E3004CFDF4 /* LoginAlertViewController.swift */,
+			);
+			path = LoginAlert;
 			sourceTree = "<group>";
 		};
 		7828DB52295B5D470053B0A0 /* Views */ = {
@@ -1087,6 +1097,7 @@
 				B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */,
 				B1D127DC28F08DCA007E3667 /* TabBarViewController.swift */,
 				784B023B29375949004ED20A /* Login */,
+				78277E90296740CE004CFDF4 /* LoginAlert */,
 				8E2D8C4628F2EBFA004B514D /* Home */,
 				8E7E9CD0291C8CAA00D09157 /* Bookmark */,
 				8E99DFF0295A915600B8CF6A /* TattooDetail */,
@@ -1513,6 +1524,7 @@
 				B1CDE8F729165E6A00ACB9AC /* BPEditTempViewController.swift in Sources */,
 				784B02312937579E004ED20A /* MyPageViewController.Layout.swift in Sources */,
 				B1E4986528EE957E00B469AC /* MagazineDetailModel.swift in Sources */,
+				78277E92296740E4004CFDF4 /* LoginAlertViewController.swift in Sources */,
 				B1E3F7DE290F009F00005F17 /* BusinessProfileViewController.BPMulticastDelegate.swift in Sources */,
 				B1E4986728EE9BE800B469AC /* MagazineDetailBaseCell.swift in Sources */,
 				8E2D8C5928F2EE69004B514D /* HomeEmptyCell.swift in Sources */,
