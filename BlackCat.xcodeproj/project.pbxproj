@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		782728B4295A934C00049436 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782728B3295A934C00049436 /* ProfileViewController.swift */; };
+		78277E832966BACB004CFDF4 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78277E822966BACB004CFDF4 /* ProfileViewModel.swift */; };
 		7828DB54295B5D620053B0A0 /* AreaInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB53295B5D620053B0A0 /* AreaInputView.swift */; };
 		7828DB56295B5D7E0053B0A0 /* GenderInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB55295B5D7E0053B0A0 /* GenderInputView.swift */; };
 		7828DB58295B5DE20053B0A0 /* ProfileTextInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB57295B5DE20053B0A0 /* ProfileTextInputView.swift */; };
@@ -26,7 +27,6 @@
 		784B02332937579E004ED20A /* MyPageMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B02262937579E004ED20A /* MyPageMenuCell.swift */; };
 		784B02342937579E004ED20A /* MyPageProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B02272937579E004ED20A /* MyPageProfileCell.swift */; };
 		784B02352937579E004ED20A /* CommonTattooInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B02282937579E004ED20A /* CommonTattooInfoCell.swift */; };
-		784B02362937579F004ED20A /* MyPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B02292937579E004ED20A /* MyPageModel.swift */; };
 		784B02372937579F004ED20A /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B022A2937579E004ED20A /* MyPageViewController.swift */; };
 		784B023A2937579F004ED20A /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B022F2937579E004ED20A /* MyPageViewModel.swift */; };
 		784B023F29375949004ED20A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B023D29375949004ED20A /* LoginViewController.swift */; };
@@ -231,6 +231,7 @@
 
 /* Begin PBXFileReference section */
 		782728B3295A934C00049436 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		78277E822966BACB004CFDF4 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		7828DB53295B5D620053B0A0 /* AreaInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaInputView.swift; sourceTree = "<group>"; };
 		7828DB55295B5D7E0053B0A0 /* GenderInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderInputView.swift; sourceTree = "<group>"; };
 		7828DB57295B5DE20053B0A0 /* ProfileTextInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTextInputView.swift; sourceTree = "<group>"; };
@@ -249,7 +250,6 @@
 		784B02262937579E004ED20A /* MyPageMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageMenuCell.swift; sourceTree = "<group>"; };
 		784B02272937579E004ED20A /* MyPageProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageProfileCell.swift; sourceTree = "<group>"; };
 		784B02282937579E004ED20A /* CommonTattooInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonTattooInfoCell.swift; sourceTree = "<group>"; };
-		784B02292937579E004ED20A /* MyPageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageModel.swift; sourceTree = "<group>"; };
 		784B022A2937579E004ED20A /* MyPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		784B022C2937579E004ED20A /* MyPageSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageSection.swift; sourceTree = "<group>"; };
 		784B022E2937579E004ED20A /* RecentTattooHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentTattooHeaderView.swift; sourceTree = "<group>"; };
@@ -479,6 +479,7 @@
 			isa = PBXGroup;
 			children = (
 				782728B3295A934C00049436 /* ProfileViewController.swift */,
+				78277E822966BACB004CFDF4 /* ProfileViewModel.swift */,
 				7828DB52295B5D470053B0A0 /* Views */,
 			);
 			path = Profile;
@@ -529,7 +530,6 @@
 				784B022A2937579E004ED20A /* MyPageViewController.swift */,
 				784B02232937579E004ED20A /* MyPageViewController.Layout.swift */,
 				784B022F2937579E004ED20A /* MyPageViewModel.swift */,
-				784B02292937579E004ED20A /* MyPageModel.swift */,
 				784B022B2937579E004ED20A /* MyPageSection */,
 				784B02242937579E004ED20A /* Cells */,
 				784B022D2937579E004ED20A /* Views */,
@@ -1557,10 +1557,10 @@
 				8EE9A0C328F3CD25003D7761 /* HomeCompositionalLayoutSection.swift in Sources */,
 				8E2D8C5B28F2EE69004B514D /* HomeCategoryCell.swift in Sources */,
 				B1D127DB28F047A9007E3667 /* MagazineDetailBulletedCell.swift in Sources */,
+				78277E832966BACB004CFDF4 /* ProfileViewModel.swift in Sources */,
 				8E88488C2949C4A30039F99A /* MyPageSection.swift in Sources */,
 				B1D89C8E290E7CEE00C8B7F1 /* BPThumbnailImageCell.swift in Sources */,
 				7867A63429374D0500FC1160 /* BottomSheetController.swift in Sources */,
-				784B02362937579F004ED20A /* MyPageModel.swift in Sources */,
 				784B023F29375949004ED20A /* LoginViewController.swift in Sources */,
 				784B023A2937579F004ED20A /* MyPageViewModel.swift in Sources */,
 				784B02342937579E004ED20A /* MyPageProfileCell.swift in Sources */,
