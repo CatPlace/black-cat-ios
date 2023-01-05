@@ -10,6 +10,7 @@ import UIKit
 import BlackCatSDK
 import RxCocoa
 import RxSwift
+import RxGesture
 import SnapKit
 
 final class TattooDetailViewController: UIViewController {
@@ -29,11 +30,27 @@ final class TattooDetailViewController: UIViewController {
         pageControl.numberOfPages = viewModel.imageURLStrings.count
 
         disposeBag.insert {
-            askButton.rx.tap
-                .bind(to: viewModel.didTapAskButton)
+            tattooProfileImageView.rx.tapGesture()
+                .when(.recognized)
+                .map { _ in () }
+                .bind(to: viewModel.didTapProfileImageView)
 
-            heartButton.rx.tap
-                .bind(to: viewModel.didTapBookmarkButton)
+            tattooistNameLabel.rx.tapGesture()
+                .when(.recognized)
+                .map { _ in () }
+                .bind(to: viewModel.didTapTattooistNameLabel)
+
+//            askButton.rx.tap
+//                .bind(to: viewModel.didTapAskButton)
+//
+//            heartButton.rx.tap
+//                .bind(to: viewModel.didTapBookmarkButton)
+
+            viewModel.pushToTattooistDetailVC
+                .drive(with: self) { owner, _ in
+                    let tattooistDetailVC = BusinessProfileViewController()
+                    owner.navigationController?.pushViewController(tattooistDetailVC, animated: true)
+                }
         }
     }
 
@@ -135,33 +152,7 @@ final class TattooDetailViewController: UIViewController {
         return $0
     }(UILabel())
 
-    private let askButton: UIButton = {
-        $0.setTitle("문의하기", for: .normal)
-        $0.backgroundColor = .init(hex: "#333333FF")
-        $0.layer.cornerRadius = 20
-        return $0
-    }(UIButton())
-
-    private let bookmarkView: UIView = {
-        $0.backgroundColor = .init(hex: "#333333FF")
-        $0.layer.cornerRadius = 20
-        return $0
-    }(UIView())
-
-    private let heartButton: UIButton = {
-        let heartImage = UIImage(systemName: "heart")?.withTintColor(.white).withRenderingMode(.alwaysOriginal)
-        $0.setImage(heartImage, for: .normal)
-        $0.contentMode = .scaleAspectFit
-        return $0
-    }(UIButton())
-
-    private let bookmarkCountLabel: UILabel = {
-        $0.font = .systemFont(ofSize: 18)
-        $0.adjustsFontSizeToFitWidth = true
-        $0.textColor = .white
-        $0.text = "25"
-        return $0
-    }(UILabel())
+    private let askBottomView = AskBottomView()
 }
 
 extension TattooDetailViewController {
@@ -225,35 +216,12 @@ extension TattooDetailViewController {
             $0.bottom.equalToSuperview().inset(60)
         }
 
-        [askButton, bookmarkView].forEach { view.addSubview($0) }
+        view.addSubview(askBottomView)
 
-        bookmarkView.snp.makeConstraints {
-            $0.width.equalTo(72)
-            $0.height.equalTo(60)
-            $0.trailing.equalToSuperview().inset(20)
+        askBottomView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(20)
             $0.bottom.equalToSuperview().inset(28)
-        }
-
-        askButton.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(20)
-            $0.trailing.equalTo(bookmarkView.snp.leading).offset(-12)
             $0.height.equalTo(60)
-            $0.bottom.equalToSuperview().inset(28)
-        }
-
-        [heartButton, bookmarkCountLabel].forEach { bookmarkView.addSubview($0) }
-
-        heartButton.snp.makeConstraints {
-            $0.leading.equalTo(14)
-            $0.centerY.equalToSuperview()
-            $0.width.equalTo(20)
-            $0.height.equalTo(18)
-        }
-
-        bookmarkCountLabel.snp.makeConstraints {
-            $0.leading.equalTo(heartButton.snp.trailing).offset(5)
-            $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(14)
         }
     }
 }

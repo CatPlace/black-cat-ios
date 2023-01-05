@@ -94,6 +94,7 @@
 		8EBB614629273CE300F640F5 /* BMEditFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB614529273CE300F640F5 /* BMEditFilterView.swift */; };
 		8EBB614829274C0800F640F5 /* BookmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB614729274C0800F640F5 /* BookmarkViewModel.swift */; };
 		8EBB614A29274D9300F640F5 /* BookmarkTattooViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB614929274D9300F640F5 /* BookmarkTattooViewModel.swift */; };
+		8ECAF0AD295C3AC70038DC4D /* AskBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECAF0AC295C3AC70038DC4D /* AskBottomView.swift */; };
 		8EE9A0C128F3CB0D003D7761 /* HomeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9A0C028F3CB0D003D7761 /* HomeSection.swift */; };
 		8EE9A0C328F3CD25003D7761 /* HomeCompositionalLayoutSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9A0C228F3CD25003D7761 /* HomeCompositionalLayoutSection.swift */; };
 		8EFC9FE1291205B400A83D3D /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFC9FE0291205B400A83D3D /* UIView+.swift */; };
@@ -318,6 +319,7 @@
 		8EBB614529273CE300F640F5 /* BMEditFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMEditFilterView.swift; sourceTree = "<group>"; };
 		8EBB614729274C0800F640F5 /* BookmarkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewModel.swift; sourceTree = "<group>"; };
 		8EBB614929274D9300F640F5 /* BookmarkTattooViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkTattooViewModel.swift; sourceTree = "<group>"; };
+		8ECAF0AC295C3AC70038DC4D /* AskBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskBottomView.swift; sourceTree = "<group>"; };
 		8EE9A0C028F3CB0D003D7761 /* HomeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSection.swift; sourceTree = "<group>"; };
 		8EE9A0C228F3CD25003D7761 /* HomeCompositionalLayoutSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCompositionalLayoutSection.swift; sourceTree = "<group>"; };
 		8EED4EDA29027E5700DA3887 /* GenreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreViewController.swift; sourceTree = "<group>"; };
@@ -543,6 +545,7 @@
 		7867A62629374D0500FC1160 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				8ECAF0AB295C3AB10038DC4D /* AskBottomView */,
 				7867A62729374D0500FC1160 /* MulticastDelegate.swift */,
 				7867A62829374D0500FC1160 /* BottomSheet */,
 				7867A62B29374D0500FC1160 /* CommonCells */,
@@ -834,6 +837,14 @@
 				8EBB614529273CE300F640F5 /* BMEditFilterView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		8ECAF0AB295C3AB10038DC4D /* AskBottomView */ = {
+			isa = PBXGroup;
+			children = (
+				8ECAF0AC295C3AC70038DC4D /* AskBottomView.swift */,
+			);
+			path = AskBottomView;
 			sourceTree = "<group>";
 		};
 		8EE9A0BE28F3CAED003D7761 /* HomeModel */ = {
@@ -1409,6 +1420,7 @@
 				8E8848882949C3FE0039F99A /* GenreViewModel.swift in Sources */,
 				B1D2D109290AC8FA005B76BD /* Observable+.swift in Sources */,
 				78B00BBD28F5661000A9915D /* MagazineViewController.swift in Sources */,
+				8ECAF0AD295C3AC70038DC4D /* AskBottomView.swift in Sources */,
 				8E99DFF2295A916D00B8CF6A /* TattooDetailViewController.swift in Sources */,
 				8E2D8C4828F2EC27004B514D /* HomeViewController.swift in Sources */,
 				8E88488D2949C4A90039F99A /* RecentTattooHeaderView.swift in Sources */,
