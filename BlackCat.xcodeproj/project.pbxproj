@@ -491,7 +491,7 @@
 				7828DB55295B5D7E0053B0A0 /* GenderInputView.swift */,
 				7828DB53295B5D620053B0A0 /* AreaInputView.swift */,
 			);
-			path = Profile;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		7828DB5B295C8D0F0053B0A0 /* JHBusinessProfile */ = {
