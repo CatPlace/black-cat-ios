@@ -30,8 +30,8 @@ final class MyPageViewModel {
             .map { MyPageProfileCellViewModel(user: $0) }
         
         let recentTattooSectionDataObservable = viewWillAppear
-            .flatMap { useCase.recentTattoo() }
-        
+            .map{ CatSDKTattoo.recentViewTattoos() }
+            
         let menuSectionDataObservable: Observable<[MyPageMenuType]> = Observable.just([
             .notice,
             .inquiry,
