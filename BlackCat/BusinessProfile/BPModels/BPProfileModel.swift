@@ -19,8 +19,8 @@ struct BPProfileModel {
 
 extension BPProfileModel {
     static func fetch() -> [BPProfileModel] {
-        var result: [BPProfileModel] = []
         
+        var result: [BPProfileModel] = []
         // MARK: - Cell 1
         let name = "이름영역입니다."
         let address = "서울시 종로"

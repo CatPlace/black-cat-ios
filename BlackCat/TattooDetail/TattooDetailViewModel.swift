@@ -27,10 +27,13 @@ struct TattooDetailViewModel {
 
     let didTapAskButton = PublishRelay<Void>()
     let didTapBookmarkButton = PublishRelay<Void>()
+    let didTapProfileImageView = PublishRelay<Void>()
+    let didTapTattooistNameLabel = PublishRelay<Void>()
 
     // MARK: - Output
 
     let shouldFillHeartButton: Driver<Bool>
+    let pushToTattooistDetailVC: Driver<Void>
 
     init(tattooModel: Model.Tattoo) {
         self.tattooModel = tattooModel
@@ -68,5 +71,14 @@ struct TattooDetailViewModel {
         shouldFillHeartButton = isBookmarkedTattoo
             .map { $0 }
             .asDriver(onErrorJustReturn: false)
+        didTapBookmarkButton
+            .subscribe { _ in print("Did Tap Bookmark Button") }
+            .disposed(by: disposeBag)
+
+        pushToTattooistDetailVC = Observable.merge([
+            didTapProfileImageView.asObservable(),
+            didTapTattooistNameLabel.asObservable()
+        ])
+        .asDriver(onErrorJustReturn: ())
     }
 }

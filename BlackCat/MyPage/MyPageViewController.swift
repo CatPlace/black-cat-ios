@@ -24,21 +24,28 @@ final class MyPageViewController: UIViewController {
     
     // MARK: - Properties
     let disposeBag = DisposeBag()
+    var viewModel: MyPageViewModel
     
     lazy var dataSource = RxCollectionViewSectionedReloadDataSource<MyPageSection> (
         configureCell: { _, collectionView, indexPath, item in
             switch item {
             case .profileSection(let viewModel):
                 let cell = collectionView.dequeue(Reusable.profileCell, for: indexPath)
-                cell.bind(to: viewModel)
+                
+                cell.bind(to: viewModel, with: self.viewModel)
+
                 return cell
             case .recentTattooSection(let viewModel):
                 let cell = collectionView.dequeue(Reusable.tattooCell, for: indexPath)
+                
                 cell.bind(to: viewModel)
+                
                 return cell
             case .menuSection(let viewModel):
                 let cell = collectionView.dequeue(Reusable.menuCell, for: indexPath)
+                
                 cell.bind(viewModel: viewModel)
+                
                 return cell
             }
         },
@@ -51,8 +58,6 @@ final class MyPageViewController: UIViewController {
             v.bind(to: .init(text: "최근 본 타투", backgroundColor: .clear))
             return v
         }
-        
-        
     )
     
     // MARK: - Binding
@@ -62,13 +67,40 @@ final class MyPageViewController: UIViewController {
             .bind(to: viewModel.viewWillAppear)
             .disposed(by: disposeBag)
         
+        myPageCollectionView.rx.itemSelected
+            .bind(to: viewModel.selectedItem)
+            .disposed(by: disposeBag)
+        
         viewModel.dataSourceDriver
             .drive(myPageCollectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
+        
+        viewModel.logoutDriver
+            .drive(with: self) { owner, _ in
+                //TODO: Alert 추가
+                owner.dismiss(animated: false)
+            }.disposed(by: disposeBag)
+        
+        viewModel.pushToProfileEditViewDriver
+            .drive(with: self) { owner, _ in
+                print("as")
+                let vc = ProfileViewController(
+                    viewModel: .init(
+                        nameInputViewModel: .init(title: "이름"),
+                        emailInputViewModel: .init(title: "이메일"),
+                        phoneNumberInputViewModel: .init(title: "전화번호"),
+                        genderInputViewModel: .init(),
+                        areaInputViewModel: .init()
+                    )
+                )
+                vc.hidesBottomBarWhenPushed = true
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }.disposed(by: disposeBag)
     }
     
     // MARK: - Initializer
     init(viewModel: MyPageViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         setUI()
         bind(to: viewModel)

@@ -23,10 +23,9 @@ class LoginViewController: UIViewController {
                 .disposed(by: disposeBag)
         }
         
-        viewModel.loginSuccessDriver
-            .debug("처리 드라이버 😡")
-            .drive { _ in
-                print("홈화면 진입")
+        viewModel.showHomeViewControllerDriver
+            .drive(with: self) { owner, _ in
+                owner.present(TabBarViewController(), animated: false)
             }.disposed(by: disposeBag)
         
         viewModel.loginFailureDriver
@@ -36,11 +35,9 @@ class LoginViewController: UIViewController {
         
         lookAroundLabel.rx.tapGesture()
             .when(.recognized)
-            .withUnretained(self)
-            .debug("둘러보기")
-            .bind { owner, _ in
-                owner.present(TabBarViewController(), animated: false)
-            }.disposed(by: disposeBag)
+            .map { _ in () }
+            .bind(to: viewModel.lookAroundTrigger)
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Functions

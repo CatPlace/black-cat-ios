@@ -31,6 +31,15 @@ extension UIFont {
             case regular = "Didot"
             case title = "Didot Title"
         }
+        
+        enum AppleSDGothic: String {
+            case regular = "Regular"
+            case bold = "Bold"
+            case medium = "Medium"
+            func fontName() -> String {
+                "AppleSDGothicNeo-\(self.rawValue)"
+            }
+        }
     }
     
     static func pretendardFont(size: CGFloat = 15, style: FontType.Pretentdard = .regular) -> UIFont {
@@ -56,6 +65,15 @@ extension UIFont {
             return font
         } else {
             print("didotFont 폰트 유실 에러", style)
+            return systemFont(ofSize: size)
+        }
+    }
+    
+    static func appleSDGoithcFont(size: CGFloat = 15, style: FontType.AppleSDGothic = .regular) -> UIFont {
+        if let font = UIFont(name: style.fontName(), size: size) {
+            return font
+        } else {
+            print("apple 폰트 유실 에러", style)
             return systemFont(ofSize: size)
         }
     }
