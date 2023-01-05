@@ -71,12 +71,14 @@ final class MyPageViewModel {
     let viewWillAppear = PublishRelay<Void>()
     let selectedItem = PublishRelay<IndexPath>()
     let profileEditButtonTapped = PublishRelay<Void>()
+    let loginButtonTapped = PublishRelay<Void>()
     
     // MARK: - Output
     let dataSourceDriver: Driver<[MyPageSection]>
     let logoutDriver: Driver<Void>
     let pushToProfileEditViewDriver: Driver<Void>
     let pushToWebViewDriver: Driver<String>
+    let showLoginAlertVCDrvier: Driver<Void>
     
     init(useCase: MyPageUseCase = MyPageUseCase()) {
         let profileSectionDataObservable = viewWillAppear
@@ -116,5 +118,8 @@ final class MyPageViewModel {
         
         pushToWebViewDriver = selectedMenu.compactMap { $0.linkString() }
             .asDriver(onErrorJustReturn: "")
+        
+        showLoginAlertVCDrvier = loginButtonTapped
+            .asDriver(onErrorJustReturn: ())
     }
 }

@@ -15,6 +15,7 @@
 		78277E8D296735CB004CFDF4 /* ProductEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78277E8C296735CB004CFDF4 /* ProductEditViewController.swift */; };
 		78277E8F296735D6004CFDF4 /* PriceInfoEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78277E8E296735D6004CFDF4 /* PriceInfoEditViewController.swift */; };
 		78277E92296740E4004CFDF4 /* LoginAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78277E91296740E3004CFDF4 /* LoginAlertViewController.swift */; };
+		78277E9529675982004CFDF4 /* VisualEffectView in Frameworks */ = {isa = PBXBuildFile; productRef = 78277E9429675982004CFDF4 /* VisualEffectView */; };
 		7828DB54295B5D620053B0A0 /* AreaInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB53295B5D620053B0A0 /* AreaInputView.swift */; };
 		7828DB56295B5D7E0053B0A0 /* GenderInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB55295B5D7E0053B0A0 /* GenderInputView.swift */; };
 		7828DB58295B5DE20053B0A0 /* ProfileTextInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB57295B5DE20053B0A0 /* ProfileTextInputView.swift */; };
@@ -478,6 +479,7 @@
 				B1E4985B28EE873100B469AC /* Differentiator in Frameworks */,
 				B1E4984B28EE83D800B469AC /* ReactorKit in Frameworks */,
 				B1EABEC428FBE0400029B6BC /* RxGesture in Frameworks */,
+				78277E9529675982004CFDF4 /* VisualEffectView in Frameworks */,
 				B1E4983828EE838700B469AC /* SnapKit in Frameworks */,
 				B1CDE90129169F8E00ACB9AC /* URLMatcher in Frameworks */,
 				B160DC1E28FF53C400C0D682 /* RxRelay in Frameworks */,
@@ -617,6 +619,7 @@
 			children = (
 				784B023D29375949004ED20A /* LoginViewController.swift */,
 				78C8D46F293BAD59006A4DF5 /* LoginViewModel.swift */,
+				78277E90296740CE004CFDF4 /* LoginAlert */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1097,7 +1100,6 @@
 				B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */,
 				B1D127DC28F08DCA007E3667 /* TabBarViewController.swift */,
 				784B023B29375949004ED20A /* Login */,
-				78277E90296740CE004CFDF4 /* LoginAlert */,
 				8E2D8C4628F2EBFA004B514D /* Home */,
 				8E7E9CD0291C8CAA00D09157 /* Bookmark */,
 				8E99DFF0295A915600B8CF6A /* TattooDetail */,
@@ -1361,6 +1363,7 @@
 				B1CDE90029169F8E00ACB9AC /* URLMatcher */,
 				B1CDE90229169F8E00ACB9AC /* URLNavigator */,
 				B1E87AEF29195CD800EB28DE /* RxKeyboard */,
+				78277E9429675982004CFDF4 /* VisualEffectView */,
 			);
 			productName = BlackCat;
 			productReference = B1D79CA728EB0EF9008487D0 /* BlackCat.app */;
@@ -1408,6 +1411,7 @@
 				B1E3F7CF290ECC0500005F17 /* XCRemoteSwiftPackageReference "FlexLayout" */,
 				B1CDE8FF29169F8D00ACB9AC /* XCRemoteSwiftPackageReference "URLNavigator" */,
 				B1E87AEE29195CD800EB28DE /* XCRemoteSwiftPackageReference "RxKeyboard" */,
+				78277E9329675982004CFDF4 /* XCRemoteSwiftPackageReference "VisualEffectView" */,
 			);
 			productRefGroup = B1D79CA828EB0EF9008487D0 /* Products */;
 			projectDirPath = "";
@@ -1897,6 +1901,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		78277E9329675982004CFDF4 /* XCRemoteSwiftPackageReference "VisualEffectView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/efremidze/VisualEffectView";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 4.1.0;
+			};
+		};
 		B160DC1228FF535600C0D682 /* XCRemoteSwiftPackageReference "Quick" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Quick/Quick.git";
@@ -2004,6 +2016,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		78277E9429675982004CFDF4 /* VisualEffectView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 78277E9329675982004CFDF4 /* XCRemoteSwiftPackageReference "VisualEffectView" */;
+			productName = VisualEffectView;
+		};
 		B160DC1328FF535700C0D682 /* Quick */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B160DC1228FF535600C0D682 /* XCRemoteSwiftPackageReference "Quick" */;

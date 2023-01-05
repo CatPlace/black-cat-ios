@@ -102,6 +102,12 @@ final class MyPageViewController: UIViewController {
                 owner.navigationController?.pushViewController(vc, animated: true)
                 print(linkString)
             }.disposed(by: disposeBag)
+        
+        viewModel.showLoginAlertVCDrvier
+            .drive(with: self) { owner, _ in
+                let vc = LoginAlertViewController(viewModel: .init())
+                owner.present(vc, animated: true)
+            }.disposed(by: disposeBag)
     }
     
     // MARK: - Initializer

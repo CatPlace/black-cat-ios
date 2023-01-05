@@ -58,6 +58,11 @@ class MyPageProfileCell: MyPageBaseCell {
             .bind(to: superViewModel.profileEditButtonTapped)
             .disposed(by: disposeBag)
         
+        loginView.rx.tapGesture()
+            .when(.recognized)
+            .map { _ in () }
+            .bind(to: superViewModel.loginButtonTapped)
+        
         viewModel.showLoginViewDriver
             .drive(with: self) { owner, _ in
                 owner.showLoginView()
