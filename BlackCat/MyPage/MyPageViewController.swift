@@ -83,7 +83,6 @@ final class MyPageViewController: UIViewController {
         
         viewModel.pushToProfileEditViewDriver
             .drive(with: self) { owner, _ in
-                print("as")
                 let vc = ProfileViewController(
                     viewModel: .init(
                         nameInputViewModel: .init(title: "이름"),

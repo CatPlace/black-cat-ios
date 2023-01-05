@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.backgroundColor = .systemBackground
         window?.rootViewController = LoginViewController(viewModel: .init())
-//        window?.rootViewController = MagazineDetailViewController(reactor: MagazineDetailViewReactor())
+        CatSDKUser.updateUser(user: .init(id: -2))
         window?.makeKeyAndVisible()
     }
 

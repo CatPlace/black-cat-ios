@@ -24,12 +24,12 @@ class MyPageProfileCellViewModel {
         let userObservable: Observable<Model.User> = .just(user)
         
         showLoginViewDriver = userObservable
-            .filter { _ in user.jwt == "" }
+            .filter { _ in CatSDKUser.userType() == .guest }
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
         
         let loggedInUser = userObservable
-            .filter { _ in user.jwt != "" }
+            .filter { _ in CatSDKUser.userType() != .guest }
         
         showUserViewDriver = loggedInUser
             .map { _ in () }
