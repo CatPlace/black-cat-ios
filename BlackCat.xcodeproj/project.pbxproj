@@ -12,6 +12,12 @@
 		7828DB56295B5D7E0053B0A0 /* GenderInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB55295B5D7E0053B0A0 /* GenderInputView.swift */; };
 		7828DB58295B5DE20053B0A0 /* ProfileTextInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB57295B5DE20053B0A0 /* ProfileTextInputView.swift */; };
 		7828DB5A295C40240053B0A0 /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB59295C40240053B0A0 /* UITextField+.swift */; };
+		7828DB5D295C8D2B0053B0A0 /* JHBusinessProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB5C295C8D2B0053B0A0 /* JHBusinessProfileViewController.swift */; };
+		7828DB5F295C912F0053B0A0 /* JHBusinessProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB5E295C912F0053B0A0 /* JHBusinessProfileViewModel.swift */; };
+		7828DB61295C951A0053B0A0 /* JHBPContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB60295C951A0053B0A0 /* JHBPContentCell.swift */; };
+		7828DB63295C99410053B0A0 /* JHBPThumbnailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB62295C99410053B0A0 /* JHBPThumbnailImageCell.swift */; };
+		7828DB65295C9D500053B0A0 /* JHBPContentSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB64295C9D500053B0A0 /* JHBPContentSectionHeaderView.swift */; };
+		7828DB69295CB7110053B0A0 /* JHBPMulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB68295CB7110053B0A0 /* JHBPMulticastDelegate.swift */; };
 		784B021D29375713004ED20A /* MagazineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B021C29375713004ED20A /* MagazineModel.swift */; };
 		784B021F29375719004ED20A /* MagazineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B021E29375719004ED20A /* MagazineViewModel.swift */; };
 		784B02302937579E004ED20A /* MyPageTestUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B02222937579E004ED20A /* MyPageTestUseCase.swift */; };
@@ -229,6 +235,12 @@
 		7828DB55295B5D7E0053B0A0 /* GenderInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderInputView.swift; sourceTree = "<group>"; };
 		7828DB57295B5DE20053B0A0 /* ProfileTextInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTextInputView.swift; sourceTree = "<group>"; };
 		7828DB59295C40240053B0A0 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
+		7828DB5C295C8D2B0053B0A0 /* JHBusinessProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBusinessProfileViewController.swift; sourceTree = "<group>"; };
+		7828DB5E295C912F0053B0A0 /* JHBusinessProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBusinessProfileViewModel.swift; sourceTree = "<group>"; };
+		7828DB60295C951A0053B0A0 /* JHBPContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBPContentCell.swift; sourceTree = "<group>"; };
+		7828DB62295C99410053B0A0 /* JHBPThumbnailImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBPThumbnailImageCell.swift; sourceTree = "<group>"; };
+		7828DB64295C9D500053B0A0 /* JHBPContentSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBPContentSectionHeaderView.swift; sourceTree = "<group>"; };
+		7828DB68295CB7110053B0A0 /* JHBPMulticastDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBPMulticastDelegate.swift; sourceTree = "<group>"; };
 		784B021C29375713004ED20A /* MagazineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineModel.swift; sourceTree = "<group>"; };
 		784B021E29375719004ED20A /* MagazineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineViewModel.swift; sourceTree = "<group>"; };
 		784B02222937579E004ED20A /* MyPageTestUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageTestUseCase.swift; sourceTree = "<group>"; };
@@ -480,6 +492,35 @@
 				7828DB53295B5D620053B0A0 /* AreaInputView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		7828DB5B295C8D0F0053B0A0 /* JHBusinessProfile */ = {
+			isa = PBXGroup;
+			children = (
+				7828DB5C295C8D2B0053B0A0 /* JHBusinessProfileViewController.swift */,
+				7828DB5E295C912F0053B0A0 /* JHBusinessProfileViewModel.swift */,
+				7828DB68295CB7110053B0A0 /* JHBPMulticastDelegate.swift */,
+				7828DB6B295CD54C0053B0A0 /* Cells */,
+				7828DB6A295CD5400053B0A0 /* Views */,
+			);
+			path = JHBusinessProfile;
+			sourceTree = "<group>";
+		};
+		7828DB6A295CD5400053B0A0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7828DB64295C9D500053B0A0 /* JHBPContentSectionHeaderView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7828DB6B295CD54C0053B0A0 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				7828DB60295C951A0053B0A0 /* JHBPContentCell.swift */,
+				7828DB62295C99410053B0A0 /* JHBPThumbnailImageCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		784B02202937579E004ED20A /* MyPage */ = {
@@ -1043,6 +1084,7 @@
 		B1D89C88290E78B300C8B7F1 /* BusinessProfile */ = {
 			isa = PBXGroup;
 			children = (
+				7828DB5B295C8D0F0053B0A0 /* JHBusinessProfile */,
 				B1D89C86290E78AF00C8B7F1 /* BusinessProfileViewController.swift */,
 				B1E3F7BF290EC1AD00005F17 /* BusinessProfileReactor.swift */,
 				B1D89C92290E810000C8B7F1 /* BusinessProfileViewController.Layout.swift */,
@@ -1383,12 +1425,14 @@
 			files = (
 				8E2D8C5E28F2EE69004B514D /* HomeTattooAlbumCellViewModel.swift in Sources */,
 				784B021D29375713004ED20A /* MagazineModel.swift in Sources */,
+				7828DB63295C99410053B0A0 /* JHBPThumbnailImageCell.swift in Sources */,
 				784B02302937579E004ED20A /* MyPageTestUseCase.swift in Sources */,
 				8EFC9FE1291205B400A83D3D /* UIView+.swift in Sources */,
 				B1D2D107290AC7B5005B76BD /* UIScrollView+Rx.swift in Sources */,
 				B1D89C96290E845700C8B7F1 /* BPThumbnailModel.swift in Sources */,
 				8E88488A2949C4600039F99A /* MagazineDetailViewReactor.swift in Sources */,
 				8E99DFF4295A91AF00B8CF6A /* TattooDetailViewModel.swift in Sources */,
+				7828DB61295C951A0053B0A0 /* JHBPContentCell.swift in Sources */,
 				8EBB614A29274D9300F640F5 /* BookmarkTattooViewModel.swift in Sources */,
 				B1D89C98290E879B00C8B7F1 /* BPBaseCollectionViewCell.swift in Sources */,
 				B1E3F7C0290EC1AD00005F17 /* BusinessProfileReactor.swift in Sources */,
@@ -1407,6 +1451,7 @@
 				8E2D8C5D28F2EE69004B514D /* HomeRecommendCell.swift in Sources */,
 				B1D127DD28F08DCA007E3667 /* TabBarViewController.swift in Sources */,
 				B1E4986228EE8BFE00B469AC /* MagazineDetailTextCell.swift in Sources */,
+				7828DB5D295C8D2B0053B0A0 /* JHBusinessProfileViewController.swift in Sources */,
 				B1D558F02923D7EF00405DAD /* BPPriceInfoModel.swift in Sources */,
 				B1D89C8B290E7C6400C8B7F1 /* BPSection.swift in Sources */,
 				8E7E9CDB291C8EA700D09157 /* BMTabBarIndicator.swift in Sources */,
@@ -1458,6 +1503,7 @@
 				8E99DFF2295A916D00B8CF6A /* TattooDetailViewController.swift in Sources */,
 				8E2D8C4828F2EC27004B514D /* HomeViewController.swift in Sources */,
 				8E88488D2949C4A90039F99A /* RecentTattooHeaderView.swift in Sources */,
+				7828DB5F295C912F0053B0A0 /* JHBusinessProfileViewModel.swift in Sources */,
 				8E7E9CDD291C8EA700D09157 /* BMTabMenuAnimation.swift in Sources */,
 				B1EE64F828FA4ABE0055A4F1 /* FilterExampleViewController.swift in Sources */,
 				8E8848892949C4170039F99A /* FilterCellViewModel.swift in Sources */,
@@ -1482,6 +1528,7 @@
 				78B00BBA28F5661000A9915D /* MagazineModel.dummy.swift in Sources */,
 				7867A63729374D0500FC1160 /* FilterBaseCell.swift in Sources */,
 				78B00BBC28F5661000A9915D /* MagazineViewController.Layout.swift in Sources */,
+				7828DB65295C9D500053B0A0 /* JHBPContentSectionHeaderView.swift in Sources */,
 				B1D127DF28F09200007E3667 /* UIImage+.swift in Sources */,
 				8E8848802949C3F80039F99A /* CategoryPaperView.UITableView.swift in Sources */,
 				B1E3F7D7290EDFD500005F17 /* BPSectionFactory.swift in Sources */,
@@ -1491,6 +1538,7 @@
 				B1D3364328F1CD1B00826636 /* UITableView+.swift in Sources */,
 				B1E3F7C8290ECAA100005F17 /* BPContentSectionHeaderReactor.swift in Sources */,
 				B1CA040628F00CC1004A6027 /* MagazineDetailImageCell.swift in Sources */,
+				7828DB69295CB7110053B0A0 /* JHBPMulticastDelegate.swift in Sources */,
 				8E7E9CD2291C8CF700D09157 /* BookmarkViewController.swift in Sources */,
 				B12C1DC728ED219C0089964E /* UIVIewController+Rx.swift in Sources */,
 				78B00BB728F5661000A9915D /* RecentMagazineCell.swift in Sources */,

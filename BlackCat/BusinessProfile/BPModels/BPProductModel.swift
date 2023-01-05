@@ -19,7 +19,7 @@ struct BPProductModel {
 extension BPProductModel {
     static func fetch() -> [BPProductModel] {
         var result: [BPProductModel] = []
-        (0...40).forEach { _ in
+        (0...100).forEach { _ in
             result += [BPProductModel(imageUrlString: "https://raw.githubusercontent.com/kean/Nuke/master/Documentation/NukeUI.docc/Resources/nukeui-preview.png")]
         }
         return result

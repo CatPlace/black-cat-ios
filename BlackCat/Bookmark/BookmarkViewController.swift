@@ -152,7 +152,7 @@ class BookmarkViewController: UIViewController {
 
 extension BookmarkViewController {
     private func setNavigationBar() {
-        title = "🖤 찜한 컨텐츠"
+        navigationItem.title = "🖤 찜한 컨텐츠"
         navigationItem.rightBarButtonItems = [editRightBarButtonItem, cancelRightBarButtonItem]
     }
 
