@@ -51,4 +51,8 @@ class LoginViewModel {
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
     }
+    func isLogin() -> Bool {
+        print("로그인 왜", CatSDKUser.userType() != .guest)
+        return CatSDKUser.userType() != .guest
+    }
 }

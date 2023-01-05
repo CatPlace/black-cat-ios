@@ -7,7 +7,7 @@
 
 import UIKit
 import ReactorKit
-
+import BlackCatSDK
 final class TabBarViewController: UITabBarController {
     
     // MARK: - Properties
@@ -24,19 +24,11 @@ final class TabBarViewController: UITabBarController {
                                    title: "마이페이지",
                                    image: .ic_board,
                                    selectedImage: .ic_board_fill)
-    let temp1 = TabBarFactory.create(viewController: BusinessProfileViewController(reactor: .init(initialState: .init())),
-                                     title: "작가프로필(건우)",
-                                     image: .ic_board,
-                                     selectedImage: .ic_board_fill)
+    
     let temp = TabBarFactory.create(viewController: JHBusinessProfileViewController(viewModel: .init()),
                                    title: "작가프로필(지훈)",
                                    image: .ic_board,
                                    selectedImage: .ic_board_fill)
-    
-    //    var homeViewController: UINavigationController
-    //    var magazineViewController: UINavigationController
-    //    var chatViewController: UINavigationController
-    //    var boardViewController: UINavigationController
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -46,7 +38,8 @@ final class TabBarViewController: UITabBarController {
         modalPresentationStyle = .fullScreen
         UITabBar.clearShadow()
         tabBar.layer.applyShadow(color: .gray, alpha: 0.3, x: 0, y: 0, blur: 12)
-        viewControllers = [homeVC, bookmarkVC, myPageVC, temp, temp1]
+        viewControllers = [homeVC, bookmarkVC, myPageVC, temp]
+        delegate = self
     }
     
 }
@@ -62,5 +55,18 @@ struct TabBarFactory {
                                                  selectedImage: UIImage(selectedImage) ?? UIImage())
         
         return UINavigationController(rootViewController: viewController)
+    }
+}
+
+extension TabBarViewController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        if let navigationController = viewController as? UINavigationController, let nextVC = navigationController.viewControllers.first {
+            if nextVC is BookmarkViewController && CatSDKUser.userType() == .guest {
+                // TODO: Alert
+                print("게스트여서 안된다 Alert!", print(CatSDKUser.user()))
+                return false
+            }
+        }
+        return true
     }
 }

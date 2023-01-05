@@ -26,8 +26,13 @@ class LoginAlertViewController: UIViewController {
         
         viewModel.showHomeViewControllerDriver
             .drive(with: self) { owner, _ in
-                print("로그인 성공!")
-                owner.dismiss(animated: true)
+                owner.dismiss(animated: true) {
+                    if viewModel.isLogin() {
+                        if let vc = UIApplication.getMostTopViewController() as? MyPageViewController  {
+                            vc.viewModel.viewWillAppear.accept(())
+                        }
+                    }
+                }
             }.disposed(by: disposeBag)
         
         viewModel.loginFailureDriver

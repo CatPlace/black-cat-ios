@@ -86,9 +86,10 @@ final class MyPageViewModel {
             .map { MyPageProfileCellViewModel(user: $0) }
         
         let recentTattooSectionDataObservable = viewWillAppear
-            .map{ CatSDKTattoo.recentViewTattoos() }
+            .map { CatSDKTattoo.recentViewTattoos() }
         
-        let menuSectionDataObservable: Observable<[MyPageMenuType]> = Observable.just(MyPageMenuType.menus())
+        let menuSectionDataObservable = viewWillAppear
+            .map { MyPageMenuType.menus() }
         
         let selectedMenu = selectedItem
             .filter { MyPageSectionType(rawValue: $0.section) == .menu }
