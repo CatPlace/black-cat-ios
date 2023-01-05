@@ -24,7 +24,7 @@ class BMMagazineCell: UICollectionViewCell {
             Nuke.loadImage(with: url, into: thumbnailImageView)
         }
 
-        viewModel.showEditView
+        viewModel.shouldHideEditView
             .debug("BMMagazineCell EditView isHidden")
             .drive(with: self) { owner, isHidden in
                 owner.editFilterView.isHidden = isHidden

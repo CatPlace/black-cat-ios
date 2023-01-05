@@ -7,6 +7,7 @@
 
 import Foundation
 
+import BlackCatSDK
 import RxCocoa
 import RxSwift
 
@@ -18,9 +19,8 @@ class BookmarkViewModel {
     // MARK: - Input
 
     let viewDidLoad = PublishRelay<Void>()
-    let didTap = PublishRelay<EditMode>()
-    let didTapEditBarButtonItem = PublishRelay<EditMode>()
-    let didTapCancelBarButtonItem = PublishRelay<EditMode>()
+    let didTapEditBarButtonItem = PublishRelay<Void>()
+    let didTapCancelBarButtonItem = PublishRelay<Void>()
     let currentShowingPageIndex = BehaviorRelay<Int>(value: 0)
 
     // MARK: - Output
@@ -30,14 +30,22 @@ class BookmarkViewModel {
     init(bookmarkPageViewModels: [BookmarkTattooViewModel]) {
         self.bookmarkPageViewModels = bookmarkPageViewModels
 
+        let currentEditMode = BehaviorRelay<EditMode>(value: .normal)
+
         let currentShowingPageViewModel = currentShowingPageIndex
             .distinctUntilChanged()
             .map { bookmarkPageViewModels[$0] }
 
         let editModeWhenDidTapEditButton = didTapEditBarButtonItem
+            .withLatestFrom(currentEditMode) { $1 == .normal ? EditMode.edit : EditMode.normal }
+            .withLatestFrom(currentShowingPageViewModel) { editMode, viewModel in
+                viewModel.didTapEditButton.accept(editMode)
+                return editMode
+            }
             .share()
 
         let editModeWhenDidTapCancelButton = didTapCancelBarButtonItem
+            .withLatestFrom(currentEditMode) { $1 == .normal ? EditMode.edit : EditMode.normal }
             .withLatestFrom(currentShowingPageViewModel) { editMode, viewModel -> (editMode: EditMode, viewModel: BookmarkTattooViewModel) in
                 return (editMode, viewModel)
             }
@@ -48,23 +56,24 @@ class BookmarkViewModel {
             editModeWhenDidTapEditButton,
             editModeWhenDidTapCancelButton
         ])
+            .do { currentEditMode.accept($0) }
             .withLatestFrom(currentShowingPageViewModel) { ($0, $1) }
             .do { editMode, viewModel in viewModel.editMode.accept(editMode) }
             .map { editMode, _ in editMode }
-            .map { $0.toggle() }
 
         let childViewWillDisappearObservables = bookmarkPageViewModels
             .map { $0.viewWillDisappear.asObservable() }
 
         let viewWillDisappear = Observable.merge(childViewWillDisappearObservables)
             .withLatestFrom(currentShowingPageViewModel) { _, showingPageViewModel in
-                showingPageViewModel.editMode.accept(.edit)
+                showingPageViewModel.didTapEditButton.accept(.edit)
             }
 
         updateModeDriver = Observable.merge([
             viewWillDisappear.map { _ in EditMode.normal },
             updateEditMode
         ])
+        .do { print("EditMode DRiver: \($0)") }
         .asDriver(onErrorJustReturn: .normal)
     }
 }

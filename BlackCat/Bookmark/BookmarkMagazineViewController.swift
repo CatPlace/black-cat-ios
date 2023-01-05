@@ -43,8 +43,8 @@ class BookmarkMagazineViewController: UIViewController {
         viewModel.tattooItems
             .drive(collectionView.rx.items(Reusable.magazineCell)) { [weak self] _, viewModel, cell in
                 self?.viewModel.editMode
-                    .map { $0 != .normal }
-                    .bind(to: viewModel.showing)
+                    .map { $0 == .normal }
+                    .bind(to: viewModel.editModeIsNormal)
                     .disposed(by: cell.disposeBag)
 
                 cell.bind(to: viewModel)

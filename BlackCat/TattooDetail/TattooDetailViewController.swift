@@ -35,16 +35,25 @@ final class TattooDetailViewController: UIViewController {
                 .map { _ in () }
                 .bind(to: viewModel.didTapProfileImageView)
 
+            askBottomView.heartButton.rx.tap
+                .bind(to: viewModel.didTapBookmarkButton)
+
             tattooistNameLabel.rx.tapGesture()
                 .when(.recognized)
                 .map { _ in () }
                 .bind(to: viewModel.didTapTattooistNameLabel)
 
-//            askButton.rx.tap
-//                .bind(to: viewModel.didTapAskButton)
-//
-//            heartButton.rx.tap
-//                .bind(to: viewModel.didTapBookmarkButton)
+            viewModel.shouldFillHeartButton
+                .drive(with: self) { owner, shouldFill in
+                    owner.switchHeartButton(shouldFill: shouldFill)
+
+                    //            askButton.rx.tap
+                    //                .bind(to: viewModel.didTapAskButton)
+                    //
+                    //            heartButton.rx.tap
+                    //                .bind(to: viewModel.didTapBookmarkButton)
+
+                }
 
             viewModel.pushToTattooistDetailVC
                 .drive(with: self) { owner, _ in
@@ -55,6 +64,13 @@ final class TattooDetailViewController: UIViewController {
     }
 
     // function
+
+    private func switchHeartButton(shouldFill: Bool) {
+        let heartImage = shouldFill ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+        heartImage?.withRenderingMode(.alwaysOriginal).withTintColor(.white)
+
+        askBottomView.heartButton.setImage(heartImage, for: .normal)
+    }
 
     // MARK: - Initialize
 

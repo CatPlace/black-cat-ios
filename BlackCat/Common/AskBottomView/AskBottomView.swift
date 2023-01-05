@@ -70,7 +70,7 @@ final class AskBottomView: UIView {
         return $0
     }(UIView())
 
-    private let heartButton: UIButton = {
+    let heartButton: UIButton = {
         let heartImage = UIImage(systemName: "heart")?.withTintColor(.white).withRenderingMode(.alwaysOriginal)
         $0.setImage(heartImage, for: .normal)
         $0.contentMode = .scaleAspectFit

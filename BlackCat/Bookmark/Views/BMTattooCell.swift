@@ -15,7 +15,7 @@ import Nuke
 class BMTattooCell: UICollectionViewCell {
     // MARK: - Properties
 
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
 
     // MARK: - Binding
 
@@ -25,7 +25,7 @@ class BMTattooCell: UICollectionViewCell {
             thumbnailImageView.image = UIImage(named: "DummyPict")
         }
 
-        viewModel.showEditView
+        viewModel.shouldHideEditView
             .drive(with: self) { owner, isHidden in
                 owner.editFilterView.isHidden = isHidden
             }
@@ -48,6 +48,15 @@ class BMTattooCell: UICollectionViewCell {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        print("======= BMTattooCell DEINIT =======")
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
     }
 
     // MARK: - UIComponents
