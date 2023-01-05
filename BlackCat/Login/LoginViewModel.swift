@@ -35,7 +35,7 @@ class LoginViewModel {
         
         let loginSuccessResult = loginResult
             .filter { $0.id != -2 }
-            .do { CatSDKUser.updateLocalUser(user: $0)}
+            .do { CatSDKUser.updateUser(user: $0)}
             .map { _ in () }
         
         showHomeViewControllerDriver = Observable.merge([lookAroundTrigger.asObservable(), loginSuccessResult])
