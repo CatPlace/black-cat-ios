@@ -11,7 +11,46 @@ import RxSwift
 import RxCocoa
 import RxRelay
 import BlackCatSDK
-
+// 문의하기랑 신고 및 피드백 ... ?
+enum MyPageMenuType: Int {
+    case notice
+    case feedback
+    case termOfService
+    case PersonalInfoAgreement
+    case logout
+    case withdrawal
+    
+    func linkString() -> String? {
+        switch self {
+        case .notice:
+            return "http://play.afreecatv.com/phonics1/244378743"
+        case .feedback:
+            return "https://tattoomap.notion.site/1-ef60c84317204542b27583ab82693671"
+        case .termOfService:
+            return "https://tattoomap.notion.site/d2c332b8900c414b96fc6ad97e774a27"
+        case .PersonalInfoAgreement:
+            return "https://tattoomap.notion.site/3af8802e66f74bba8d25a186a3c6d24d"
+        default:
+            return nil
+        }
+    }
+    func menuTitle() -> String {
+        switch self {
+        case .notice:
+            return "공지사항"
+        case .feedback:
+            return "문의하기"
+        case .termOfService:
+            return "서비스 이용약관"
+        case .PersonalInfoAgreement:
+            return "개인정보 처리방침"
+        case .logout:
+            return "로그아웃"
+        case .withdrawal:
+            return "회원 탈퇴"
+        }
+    }
+}
 final class MyPageViewModel {
     
     // MARK: - Input
@@ -23,6 +62,7 @@ final class MyPageViewModel {
     let dataSourceDriver: Driver<[MyPageSection]>
     let logoutDriver: Driver<Void>
     let pushToProfileEditViewDriver: Driver<Void>
+    let pushToWebViewDriver: Driver<String>
     
     init(useCase: MyPageUseCase = MyPageUseCase()) {
         let profileSectionDataObservable = viewWillAppear
@@ -34,13 +74,16 @@ final class MyPageViewModel {
             
         let menuSectionDataObservable: Observable<[MyPageMenuType]> = Observable.just([
             .notice,
-            .inquiry,
+            .feedback,
             .termOfService,
             .PersonalInfoAgreement,
-            .feedback,
             .logout,
             .withdrawal
         ])
+        
+        let selectedMenu = selectedItem
+            .filter { MyPageSectionType(rawValue: $0.section) == .menu }
+            .compactMap {  MyPageMenuType(rawValue: $0.row) }
         
         pushToProfileEditViewDriver = profileEditButtonTapped
             .asDriver(onErrorJustReturn: ())
@@ -58,10 +101,13 @@ final class MyPageViewModel {
         }.asDriver(onErrorJustReturn: [])
      
         //TODO: - 알러트 추가 후 수정
-        logoutDriver = selectedItem.filter { MyPageSectionType(rawValue: $0.section) == .menu }
-            .filter { MyPageMenuType(rawValue: $0.row)?.menuTitle() == "로그아웃" }
-            .map { _ in () }
+        logoutDriver = selectedMenu
+            .filter { $0 == .logout }
             .do { _ in CatSDKUser.logout() }
+            .map { _ in () }
             .asDriver(onErrorJustReturn: ())
+        
+        pushToWebViewDriver = selectedMenu.compactMap { $0.linkString() }
+            .asDriver(onErrorJustReturn: "")
     }
 }

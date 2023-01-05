@@ -96,6 +96,13 @@ final class MyPageViewController: UIViewController {
                 vc.hidesBottomBarWhenPushed = true
                 owner.navigationController?.pushViewController(vc, animated: true)
             }.disposed(by: disposeBag)
+        
+        viewModel.pushToWebViewDriver
+            .drive(with: self) { owner, linkString in
+                let vc = WebViewController(linkString: linkString)
+                owner.navigationController?.pushViewController(vc, animated: true)
+                print(linkString)
+            }.disposed(by: disposeBag)
     }
     
     // MARK: - Initializer

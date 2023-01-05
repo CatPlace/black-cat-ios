@@ -37,7 +37,9 @@ class WebViewController: UIViewController, WKUIDelegate {
     func loadWebView() {
         DispatchQueue.global(qos: .background).async { [weak self] in
             guard  let url = URL(string: self?.linkString ?? "") else {
-                self?.navigationController?.popViewController(animated: true)
+                DispatchQueue.main.async {
+                    self?.navigationController?.popViewController(animated: true)
+                }
                 return
             }
             let request = URLRequest(url: url)
