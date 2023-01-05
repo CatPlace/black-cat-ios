@@ -103,12 +103,13 @@ class JHBPContentSectionHeaderView: JHBPBaseCollectionReusableView{
     let rootFlexContainer: UIView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 30))
     
     enum JHBPContentHeaderButtonType: Int, CaseIterable {
-        case profile, product
+        case profile, product, info
         
         func asString() -> String {
             switch self {
             case .profile: return "프로필"
             case .product: return "작품 보기"
+            case .info: return "견적 안내"
             }
         }
     }

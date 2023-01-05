@@ -51,6 +51,10 @@ final class JHBusinessProfileViewController: UIViewController {
     
     func bind(viewModel: JHBUsinessProfileViewModel) {
         disposeBag.insert {
+            editButton.rx.tap
+                .bind(with: self) { owner, _ in
+                    owner.pushToEditVC()
+                }
             viewModel.sections
                 .bind(to: self.collectionView.rx.items(dataSource: dataSource))
             
@@ -59,18 +63,54 @@ final class JHBusinessProfileViewController: UIViewController {
                     return (didEnd.at, will.at)
                 }.bind(to: viewModel.cellDisplayingIndexPathRelay)
         }
+        
         viewModel.visibleCellIndexPath
-            .drive { indexPath in
-                print("🌈🌈🌈", indexPath.row)
+            .drive(with: self) { owner, indexPath in
                 // MARK: - 분기처리 !!!! button tag = 프로필땐 0, 작품보기땐 1
+                owner.updateEditButtonUI(selectedRow: indexPath.row)
                 // 하나의 버튼으로
                 // tag가 0일 땐: (이미지: 연필, 동작: 자기소개 수정화면 present)
                 // tag가 1일 땐: (이미지: +, 동작: 타투 등록 페이지 present)
-                // -> 그럼 여기서 tag만 변경해주면 된다 !
                 JHBPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
                     delegate.notifyContentHeader(indexPath: indexPath, forType: .init(rawValue: indexPath.row) ?? .profile)
                 }
             }.disposed(by: disposeBag)
+        
+    }
+    
+    // MARK: function
+    func updateEditButtonUI(selectedRow: Int) {
+        typealias JHBPContentHeaderButtonType = JHBPContentSectionHeaderView.JHBPContentHeaderButtonType
+        
+        editButton.tag = selectedRow
+        let type = JHBPContentHeaderButtonType(rawValue: selectedRow)
+        
+        switch type {
+        case .profile:
+            editButton.setTitle("프로필 수정", for: .normal)
+        case .product:
+            editButton.setTitle("타투 추가", for: .normal)
+        case .info:
+            editButton.setTitle("견적 수정", for: .normal)
+        case .none: break
+        }
+        
+    }
+    
+    func pushToEditVC() {
+        typealias JHBPContentHeaderButtonType = JHBPContentSectionHeaderView.JHBPContentHeaderButtonType
+        
+        let type = JHBPContentHeaderButtonType(rawValue: editButton.tag)
+        
+        switch type {
+        case .profile:
+            print("프로필 수정 클릭 !")
+        case .product:
+            print("타투 추가 클릭 !")
+        case .info:
+            print("견적 수정 클릭!")
+        case .none: break
+        }
     }
     
     // MARK: Initialize
@@ -103,7 +143,15 @@ final class JHBusinessProfileViewController: UIViewController {
         
         return cv
     }()
+    let editButton: UIButton = {
+        $0.tag = 0
+        $0.setTitle("수정", for: .normal)
+        $0.setTitleColor(.red, for: .normal)
+        $0.backgroundColor = .black
+        return $0
+    }(UIButton())
 }
+
 extension JHBusinessProfileViewController {
     func setUI() {
         self.navigationController?.navigationBar.isHidden = true
@@ -111,6 +159,11 @@ extension JHBusinessProfileViewController {
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        view.addSubview(editButton)
+        editButton.snp.makeConstraints {
+            $0.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(30)
         }
     }
     
