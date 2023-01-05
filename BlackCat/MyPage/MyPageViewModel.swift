@@ -12,11 +12,11 @@ import RxCocoa
 import RxRelay
 import BlackCatSDK
 // 문의하기랑 신고 및 피드백 ... ?
-enum MyPageMenuType: Int {
+enum MyPageMenuType: Int, CaseIterable {
     case notice
     case feedback
     case termOfService
-    case PersonalInfoAgreement
+    case personalInfoAgreement
     case logout
     case withdrawal
     
@@ -28,12 +28,13 @@ enum MyPageMenuType: Int {
             return "https://tattoomap.notion.site/1-ef60c84317204542b27583ab82693671"
         case .termOfService:
             return "https://tattoomap.notion.site/d2c332b8900c414b96fc6ad97e774a27"
-        case .PersonalInfoAgreement:
+        case .personalInfoAgreement:
             return "https://tattoomap.notion.site/3af8802e66f74bba8d25a186a3c6d24d"
         default:
             return nil
         }
     }
+    
     func menuTitle() -> String {
         switch self {
         case .notice:
@@ -42,12 +43,25 @@ enum MyPageMenuType: Int {
             return "문의하기"
         case .termOfService:
             return "서비스 이용약관"
-        case .PersonalInfoAgreement:
+        case .personalInfoAgreement:
             return "개인정보 처리방침"
         case .logout:
             return "로그아웃"
         case .withdrawal:
             return "회원 탈퇴"
+        }
+    }
+    
+    static func menus() -> [MyPageMenuType] {
+        let menus = allCases
+        // 제외할 것들
+        switch CatSDKUser.userType() {
+        case .guest:
+            return menus.filter { !($0 == .logout || $0 == .withdrawal) }
+        case .normal:
+            return menus
+        case .business:
+            return menus
         }
     }
 }
@@ -71,15 +85,8 @@ final class MyPageViewModel {
         
         let recentTattooSectionDataObservable = viewWillAppear
             .map{ CatSDKTattoo.recentViewTattoos() }
-            
-        let menuSectionDataObservable: Observable<[MyPageMenuType]> = Observable.just([
-            .notice,
-            .feedback,
-            .termOfService,
-            .PersonalInfoAgreement,
-            .logout,
-            .withdrawal
-        ])
+        
+        let menuSectionDataObservable: Observable<[MyPageMenuType]> = Observable.just(MyPageMenuType.menus())
         
         let selectedMenu = selectedItem
             .filter { MyPageSectionType(rawValue: $0.section) == .menu }
