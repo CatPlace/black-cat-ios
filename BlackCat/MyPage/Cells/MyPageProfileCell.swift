@@ -15,25 +15,15 @@ import BlackCatSDK
 class MyPageProfileCellViewModel {
     
     // MARK: - Output
-    let showLoginViewDriver: Driver<Void>
-    let showUserViewDriver: Driver<Void>
     let profileImageUrlStringDriver: Driver<String>
     let userNameDriver: Driver<String>
+    let userTypeStringDriver: Driver<String>
     
     init(user: Model.User) {
         let userObservable: Observable<Model.User> = .just(user)
         
-        showLoginViewDriver = userObservable
-            .filter { _ in CatSDKUser.userType() == .guest }
-            .map { _ in () }
-            .asDriver(onErrorJustReturn: ())
-        
         let loggedInUser = userObservable
             .filter { _ in CatSDKUser.userType() != .guest }
-        
-        showUserViewDriver = loggedInUser
-            .map { _ in () }
-            .asDriver(onErrorJustReturn: ())
         
         profileImageUrlStringDriver = loggedInUser
             .map { $0.imageUrl ?? "TEST" }
@@ -42,6 +32,9 @@ class MyPageProfileCellViewModel {
         userNameDriver = loggedInUser
             .map { $0.name ?? "TEST" }
             .asDriver(onErrorJustReturn: "")
+        
+        userTypeStringDriver = userObservable.map { $0.userType.profileString() }
+            .asDriver(onErrorJustReturn: "유저 타입 오류")
     }
 }
 
@@ -58,21 +51,6 @@ class MyPageProfileCell: MyPageBaseCell {
             .bind(to: superViewModel.profileEditButtonTapped)
             .disposed(by: disposeBag)
         
-        loginView.rx.tapGesture()
-            .when(.recognized)
-            .map { _ in () }
-            .bind(to: superViewModel.loginButtonTapped)
-        
-        viewModel.showLoginViewDriver
-            .drive(with: self) { owner, _ in
-                owner.showLoginView()
-            }.disposed(by: disposeBag)
-        
-        viewModel.showUserViewDriver
-            .drive(with: self) { owner, _ in
-                owner.showUserView()
-            }.disposed(by: disposeBag)
-        
         viewModel.profileImageUrlStringDriver
             .compactMap { URL(string: $0) }
             .drive(with: self) { owner, urlString in
@@ -83,22 +61,14 @@ class MyPageProfileCell: MyPageBaseCell {
             .drive(userNameLabel.rx.text)
             .disposed(by: disposeBag)
         
+        viewModel.userTypeStringDriver
+            .drive(userTypeLabel.rx.text)
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Function
-    func showLoginView() {
-        userView.isHidden = true
-        loginView.isHidden = false
-    }
-    
-    func showUserView() {
-        loginView.isHidden = true
-        userView.isHidden = false
-    }
-    
     // MARK: - Initializer
     override func initialize() {
-        configureCell()
         setUI()
     }
     
@@ -107,24 +77,32 @@ class MyPageProfileCell: MyPageBaseCell {
         disposeBag = DisposeBag()
     }
     
-    override func layoutSubviews() {
-        layoutIfNeeded()
-        userImageView.layer.cornerRadius = userImageView.frame.width / 2.0
-    }
-    
     // MARK: - UIComponents
-    let loginView = UIView()
-    let userView = UIView()
-    let loginLabel: UILabel = {
-        let l = UILabel()
-        l.text = "로그인"
-        l.font = .boldSystemFont(ofSize: 20)
-        return l
-    }()
+    let VStackView: UIStackView = {
+        $0.axis = .vertical
+        $0.distribution = .fillProportionally
+        $0.spacing = 20
+        return $0
+    }(UIStackView())
+    let profileView: UIView = {
+        $0.layer.applyShadow(alpha: 0.25, y: 1, blur: UIScreen.main.bounds.width * 40 / 375.0)
+        $0.layer.cornerRadius = 15
+        $0.backgroundColor = .white
+        return $0
+    }(UIView())
+    let manageView: UIView = {
+        return $0
+    }(UIView())
+    let userTypeLabel: UILabel = {
+        $0.textColor = .init(hex: "#7210A0FF")
+        $0.font = .appleSDGoithcFont(size: 12, style: .regular)
+        return $0
+    }(UILabel())
     let userImageView: UIImageView = {
         let v = UIImageView()
         v.contentMode = .scaleAspectFill
         v.clipsToBounds = true
+        v.layer.cornerRadius = 30 * UIScreen.main.bounds.width / 375
         return v
     }()
     let userNameLabel: UILabel = {
@@ -147,92 +125,34 @@ class MyPageProfileCell: MyPageBaseCell {
         b.semanticContentAttribute = .forceRightToLeft
         return b
     }()
-    let horizontalLineView: UIView = {
-        let v = UIView()
-        v.backgroundColor = .init(hex: "#C4C4C4FF")
-        return v
-    }()
-    let bookmarkClickView = UIView()
-    let mySubscriptionView = UIView()
-    let heartImageView: UIImageView = {
-        let v = UIImageView()
-        v.image = UIImage(named: "heart.fill")
-        return v
-    }()
-    let bookmarkLabel: UILabel = {
-        let l = UILabel()
-        l.text = "찜한 컨텐츠"
-        l.font = .systemFont(ofSize: 16)
-        l.textColor = .init(hex: "#666666FF")
-        return l
-    }()
-    let mySubscriptionLabel: UILabel = {
-        let l = UILabel()
-        l.text = "MY 구독"
-        l.font = .systemFont(ofSize: 16)
-        l.textColor = .init(hex: "#666666FF")
-        return l
-    }()
-    let verticalLineView: UIView = {
-        let v = UIView()
-        v.backgroundColor = .init(hex: "#C4C4C4FF")
-        return v
-    }()
-    
-    
+    let subscribeManageButton = ProfileManageButton(title: "구독 관리")
+    let businessProfileManageButton = ProfileManageButton(title: "비지니스 프로필 관리")
 }
 
 extension MyPageProfileCell {
     func setUI() {
-        [loginView, userView, horizontalLineView, bookmarkClickView, verticalLineView, mySubscriptionView].forEach { contentView.addSubview($0) }
+        contentView.addSubview(VStackView)
+        [profileView, manageView].forEach { VStackView.addArrangedSubview($0) }
         
-        horizontalLineView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(frame.height * 82 / 132.0)
-            $0.leading.trailing.equalToSuperview().inset(10)
-            $0.height.equalTo(1)
+        VStackView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
         
-        verticalLineView.snp.makeConstraints {
-            $0.top.equalTo(horizontalLineView.snp.bottom).offset(15)
-            $0.bottom.equalToSuperview().inset(15)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(1)
-        }
-        [loginView, userView].forEach {
-            $0.snp.makeConstraints {
-                $0.top.leading.trailing.equalToSuperview()
-                $0.bottom.equalTo(horizontalLineView.snp.top)
-            }
-        }
-        
-        bookmarkClickView.snp.makeConstraints {
-            $0.top.equalTo(horizontalLineView.snp.bottom)
-            $0.leading.bottom.equalToSuperview()
-            $0.trailing.equalTo(verticalLineView.snp.leading)
-        }
-        
-        mySubscriptionView.snp.makeConstraints {
-            $0.top.equalTo(horizontalLineView.snp.bottom)
-            $0.leading.equalTo(verticalLineView.snp.trailing)
-            $0.trailing.bottom.equalToSuperview()
-        }
-        
-        loginView.addSubview(loginLabel)
-        
-        loginLabel.snp.makeConstraints {
-            $0.center.equalToSuperview()
-        }
-        
-        [userImageView, userNameLabel, userPoliteLabel, profileEditButton].forEach { userView.addSubview($0) }
+        [userImageView, userTypeLabel, userNameLabel, userPoliteLabel, profileEditButton].forEach { profileView.addSubview($0) }
         
         userImageView.snp.makeConstraints {
-            $0.top.leading.bottom.equalToSuperview().inset(10)
-            $0.width.equalTo(userImageView.snp.height)
+            $0.top.leading.bottom.equalToSuperview().inset(15)
+            $0.width.height.equalTo(60 * UIScreen.main.bounds.width / 375)
+        }
+        
+        userTypeLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview().offset(-12)
+            $0.leading.equalTo(userImageView.snp.trailing).offset(12)
         }
         
         userNameLabel.snp.makeConstraints {
-            $0.centerY.equalToSuperview().offset(-12)
-            $0.leading.equalTo(userImageView.snp.trailing).offset(10)
+            $0.centerY.equalToSuperview().offset(12)
+            $0.leading.equalTo(userImageView.snp.trailing).offset(12)
         }
         
         userPoliteLabel.snp.makeConstraints {
@@ -241,28 +161,39 @@ extension MyPageProfileCell {
         }
         
         profileEditButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview().offset(12)
-            $0.leading.equalTo(userImageView.snp.trailing).offset(10)
-        }
-        
-        [heartImageView, bookmarkLabel].forEach { bookmarkClickView.addSubview($0) }
-        
-        heartImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.centerX.equalToSuperview().offset(-26)
+            $0.trailing.equalToSuperview().inset(10)
         }
         
-        bookmarkLabel.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.centerX.equalToSuperview().offset(26)
+        manageView.snp.makeConstraints {
+            $0.height.equalTo(50)
         }
         
-        mySubscriptionView.addSubview(mySubscriptionLabel)
+        [subscribeManageButton, businessProfileManageButton].forEach { manageView.addSubview($0) }
         
-        mySubscriptionLabel.snp.makeConstraints {
-            $0.center.equalToSuperview()
+        subscribeManageButton.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview()
+            $0.leading.equalToSuperview().inset(9).priority(.high)
+            $0.width.equalToSuperview().multipliedBy(0.3).priority(.high)
         }
-        
+        businessProfileManageButton.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview()
+            $0.leading.equalTo(subscribeManageButton.snp.trailing).offset(35)
+            $0.trailing.equalToSuperview().inset(15)
+        }
     }
 }
 
+class ProfileManageButton: UIButton {
+    init(title: String) {
+        super.init(frame: .zero)
+        backgroundColor = .init(hex: "#7210A0FF")
+        setTitle(title, for: .normal)
+        titleLabel?.font = .pretendardFont(size: 16, style: .regular)
+        layer.cornerRadius = 15
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}

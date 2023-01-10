@@ -22,18 +22,18 @@ extension MyPageViewController {
     
     func profileSection() -> NSCollectionLayoutSection {
         let itemWidthRatio: CGFloat = 335 / 375
-        let itemHeightRatio: CGFloat = 132 / 335
+//        let itemHeightRatio: CGFloat = 132 / 335
         let itemLeadingTrailingInset: CGFloat = view.frame.width * (1 - itemWidthRatio) / 2.0
         
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalWidth(itemHeightRatio)
+            heightDimension: .estimated(500)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalWidth(itemHeightRatio)
+            heightDimension: .estimated(500)
         )
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,

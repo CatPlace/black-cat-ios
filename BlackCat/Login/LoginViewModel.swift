@@ -28,6 +28,7 @@ class LoginViewModel {
         let loginResult = didTapSocialLoginButton
             .map { types[$0] }
             .flatMap(CatSDKUser.login)
+            .debug("로그인 결과")
             .catch { error in
                 print(error)
                 return .just(.init(id: -2))
@@ -43,7 +44,9 @@ class LoginViewModel {
             }
             .map { _ in () }
         
+        // TODO: - do 삭제 !
         showHomeViewControllerDriver = Observable.merge([lookAroundTrigger.asObservable(), loginSuccessResult])
+            .do { _ in CatSDKUser.updateUser(user: .init(id: 8, jwt: "aa", name: "김지훈", imageUrl: "ㅁㄴㅇ", email: "", phoneNumber: "", gender: .남자, areas: [], userType: .normal)) }
             .asDriver(onErrorJustReturn: ())
         
         loginFailureDriver = loginResult

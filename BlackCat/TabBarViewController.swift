@@ -38,7 +38,7 @@ final class TabBarViewController: UITabBarController {
         modalPresentationStyle = .fullScreen
         UITabBar.clearShadow()
         tabBar.layer.applyShadow(color: .gray, alpha: 0.3, x: 0, y: 0, blur: 12)
-        viewControllers = [homeVC, bookmarkVC, myPageVC, temp]
+        viewControllers = [homeVC, bookmarkVC, myPageVC, temp, temp, temp, temp, temp]
         delegate = self
     }
     
@@ -49,7 +49,6 @@ struct TabBarFactory {
                        title: String,
                        image: Asset,
                        selectedImage: Asset) -> UINavigationController {
-        
         viewController.tabBarItem = UITabBarItem(title: title,
                                                  image: UIImage(image) ?? UIImage(),
                                                  selectedImage: UIImage(selectedImage) ?? UIImage())
