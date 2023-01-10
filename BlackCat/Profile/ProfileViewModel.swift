@@ -28,7 +28,7 @@ class ProfileViewModel {
     let completeButtonTapped = PublishRelay<Void>()
     
     // MARK: - Output
-    let completeAlertDriver: Driver<Void>
+    let completeAlertDriver: Driver<Purpose>
     let alertMassageDriver: Driver<String>
     
     init(nameInputViewModel: ProfileTextInputViewModel,
@@ -38,8 +38,6 @@ class ProfileViewModel {
          areaInputViewModel: AreaInputViewModel,
          type: Purpose = .edit) {
         
-        CatSDKUser.initUserCache()
-        
         self.nameInputViewModel = nameInputViewModel
         self.emailInputViewModel = emailInputViewModel
         self.phoneNumberInputViewModel = phoneNumberInputViewModel
@@ -47,18 +45,26 @@ class ProfileViewModel {
         self.areaInputViewModel = areaInputViewModel
         
         // TODO: 데이터 -> 캐시데이터 -> 완료버튼 누르면 서버 후 알러트
-//        let combinedInputs = Observable.combineLatest(
-//            nameInputViewModel.inputStringRelay,
-//            emailInputViewModel.inputStringRelay,
-//            phoneNumberInputViewModel.inputStringRelay,
-//            genderInputViewModel.genderCellInfosRelay,
-//            areaInputViewModel.areaCellInfosRelay
-//        ) {
-//            ($0, $1, $2, $3, $4, )
-//        }
+        let combinedInputs = Observable.combineLatest(
+            nameInputViewModel.inputStringRelay,
+            emailInputViewModel.inputStringRelay,
+            phoneNumberInputViewModel.inputStringRelay,
+            genderInputViewModel.genderCellInfosRelay,
+            areaInputViewModel.areaCellInfosRelay,
+            Observable.just(type)
+        ) {
+            ($0, $1, $2, $3, $4, $5)
+        }
         
         let inputs = completeButtonTapped
-            .map { _ in (CatSDKUser.userCache(), type)}
+            .withLatestFrom(combinedInputs) {
+                var user = CatSDKUser.userCache()
+                print(user, CatSDKUser.user())
+                user.name = $1.0
+                user.email = $1.1
+                user.phoneNumber = $1.2
+                return (user, $1.5)
+            }
             .share()
         
         let alertMessage = inputs
@@ -73,15 +79,18 @@ class ProfileViewModel {
         
         // TODO: - 서버통신 분기처리 ? 에러 및 성공
         completeAlertDriver = updatedResult
-            .asDriver(onErrorJustReturn: ())
+            .map { _ in type }
+            .asDriver(onErrorJustReturn: .edit)
         
         alertMassageDriver = alertMessage
             .asDriver(onErrorJustReturn: "일시적인 오류입니다. 문의 해주시면 감사드리곘습니다.")
         
         func checkValidInputs(inputs user: Model.User) -> Bool {
+            print(user)
             guard let name = user.name, let email = user.email, let phoneNumber = user.phoneNumber, let _ = user.gender else {
                 return false
             }
+            
             return !name.isEmpty &&
             !email.isEmpty &&
             !phoneNumber.isEmpty &&

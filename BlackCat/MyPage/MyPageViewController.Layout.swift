@@ -22,18 +22,18 @@ extension MyPageViewController {
     
     func profileSection() -> NSCollectionLayoutSection {
         let itemWidthRatio: CGFloat = 335 / 375
-//        let itemHeightRatio: CGFloat = 132 / 335
+        let itemHeightRatio: CGFloat = 82 / 335
         let itemLeadingTrailingInset: CGFloat = view.frame.width * (1 - itemWidthRatio) / 2.0
         
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(500)
+            heightDimension: .fractionalWidth(itemHeightRatio)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(500)
+            heightDimension: .fractionalWidth(itemHeightRatio)
         )
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
@@ -45,6 +45,20 @@ extension MyPageViewController {
                                       leading: itemLeadingTrailingInset,
                                       bottom: 40,
                                       trailing: itemLeadingTrailingInset)
+        
+        
+        
+        let footer = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .absolute(90)
+            ),
+            elementKind: UICollectionView.elementKindSectionFooter,
+            alignment: .bottom
+        )
+        
+        section.boundarySupplementaryItems = viewModel.userType() == .business ? [footer] : []
+        
         return section
     }
     
@@ -78,6 +92,8 @@ extension MyPageViewController {
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top
         )
+        
+
         
         section.boundarySupplementaryItems = [header]
         

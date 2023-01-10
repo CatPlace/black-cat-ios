@@ -30,11 +30,13 @@ class LoginViewModel {
             .flatMap(CatSDKUser.login)
             .debug("로그인 결과")
             .catch { error in
-                print(error)
+                print(error, "로그인 에러발생")
                 return .just(.init(id: -2))
-            }
+            }.share()
+            .debug("로그인 결과 333")
         
         let loginSuccessResult = loginResult
+            .debug("로그인 결과@22")
             .filter { $0.id != -2 }
         // TODO: - 서버통신 후 권한 받아서 집어넣기 (유저디폴트에 의존하면 새로 로그인 시 이사람이 비즈니스 계정인지 명확하지 않음)
             .do {
@@ -44,9 +46,11 @@ class LoginViewModel {
             }
             .map { _ in () }
         
+        let lookAroundTriggerResult = lookAroundTrigger
+            .do { _ in CatSDKUser.updateUser(user: .init(id: -2))}
+        
         // TODO: - do 삭제 !
-        showHomeViewControllerDriver = Observable.merge([lookAroundTrigger.asObservable(), loginSuccessResult])
-            .do { _ in CatSDKUser.updateUser(user: .init(id: 8, jwt: "aa", name: "김지훈", imageUrl: "ㅁㄴㅇ", email: "", phoneNumber: "", gender: .남자, areas: [], userType: .normal)) }
+        showHomeViewControllerDriver = Observable.merge([lookAroundTriggerResult, loginSuccessResult])
             .asDriver(onErrorJustReturn: ())
         
         loginFailureDriver = loginResult

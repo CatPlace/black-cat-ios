@@ -19,6 +19,7 @@ enum MyPageMenuType: Int, CaseIterable {
     case personalInfoAgreement
     case logout
     case withdrawal
+    case upgrade
     
     func linkString() -> String? {
         switch self {
@@ -49,6 +50,8 @@ enum MyPageMenuType: Int, CaseIterable {
             return "로그아웃"
         case .withdrawal:
             return "회원 탈퇴"
+        case .upgrade:
+            return "안녕하세요 타투이스트 님!\n 타투를 등록하고싶으세요?"
         }
     }
     
@@ -71,7 +74,7 @@ final class MyPageViewModel {
     let viewWillAppear = PublishRelay<Void>()
     let selectedItem = PublishRelay<IndexPath>()
     let profileEditButtonTapped = PublishRelay<Void>()
-    let loginButtonTapped = PublishRelay<Void>()
+//    let loginButtonTapped = PublishRelay<Void>()
     
     // MARK: - Output
     let dataSourceDriver: Driver<[MyPageSection]>
@@ -79,10 +82,11 @@ final class MyPageViewModel {
     let pushToProfileEditViewDriver: Driver<Void>
     let pushToWebViewDriver: Driver<String>
     let showLoginAlertVCDrvier: Driver<Void>
+    let showUpgradeVCDriver: Driver<Void>
     
     init(useCase: MyPageUseCase = MyPageUseCase()) {
         let profileSectionDataObservable = viewWillAppear
-            .flatMap { useCase.userProfile() }
+            .map { CatSDKUser.user() }
             .map { MyPageProfileCellViewModel(user: $0) }
         
         let recentTattooSectionDataObservable = viewWillAppear
@@ -93,7 +97,8 @@ final class MyPageViewModel {
         
         let selectedMenu = selectedItem
             .filter { MyPageSectionType(rawValue: $0.section) == .menu }
-            .compactMap {  MyPageMenuType(rawValue: $0.row) }
+            .withLatestFrom(menuSectionDataObservable) { ($0, $1) }
+            .compactMap {  $0.1[$0.0.row] }
         
         pushToProfileEditViewDriver = profileEditButtonTapped
             .asDriver(onErrorJustReturn: ())
@@ -112,6 +117,7 @@ final class MyPageViewModel {
      
         //TODO: - 알러트 추가 후 수정
         logoutDriver = selectedMenu
+            .debug("로그아웃")
             .filter { $0 == .logout }
             .do { _ in CatSDKUser.logout() }
             .map { _ in () }
@@ -120,7 +126,21 @@ final class MyPageViewModel {
         pushToWebViewDriver = selectedMenu.compactMap { $0.linkString() }
             .asDriver(onErrorJustReturn: "")
         
-        showLoginAlertVCDrvier = loginButtonTapped
+        let didTapUpgrade = selectedMenu
+            .filter { $0 == .upgrade }
+        
+        showLoginAlertVCDrvier = didTapUpgrade
+            .filter { _ in CatSDKUser.userType() == .guest }
+            .map { _ in () }
             .asDriver(onErrorJustReturn: ())
+
+        showUpgradeVCDriver = didTapUpgrade
+            .filter { _ in CatSDKUser.userType() != .guest }
+            .map { _ in () }
+            .asDriver(onErrorJustReturn: ())
+    }
+    
+    func userType() -> Model.UserType {
+        CatSDKUser.userType()
     }
 }

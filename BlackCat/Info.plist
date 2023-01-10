@@ -4,8 +4,9 @@
 <dict>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+        <string>kakao15dc66fefb2499ef2fb14ce048a69f5f</string>
 		<string>kakaolink</string>
-		<string>kakaocompassauth</string>
+		<string>kakaokompassauth</string>
 	</array>
 	<key>CFBundleURLTypes</key>
 	<array>

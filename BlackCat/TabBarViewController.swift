@@ -38,11 +38,11 @@ final class TabBarViewController: UITabBarController {
         modalPresentationStyle = .fullScreen
         UITabBar.clearShadow()
         tabBar.layer.applyShadow(color: .gray, alpha: 0.3, x: 0, y: 0, blur: 12)
-        viewControllers = [homeVC, bookmarkVC, myPageVC, temp, temp, temp, temp, temp]
+        viewControllers = [homeVC, bookmarkVC, myPageVC, temp]
         delegate = self
     }
-    
 }
+
 
 struct TabBarFactory {
     static func create(viewController: UIViewController,

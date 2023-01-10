@@ -37,6 +37,8 @@
 		784B02372937579F004ED20A /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B022A2937579E004ED20A /* MyPageViewController.swift */; };
 		784B023A2937579F004ED20A /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B022F2937579E004ED20A /* MyPageViewModel.swift */; };
 		784B023F29375949004ED20A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B023D29375949004ED20A /* LoginViewController.swift */; };
+		78651174296D371D00A0C506 /* ProfileFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78651173296D371D00A0C506 /* ProfileFooterView.swift */; };
+		78651177296D5A2500A0C506 /* UpgradeBusinessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78651176296D5A2500A0C506 /* UpgradeBusinessViewController.swift */; };
 		7867A63229374D0500FC1160 /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7867A62729374D0500FC1160 /* MulticastDelegate.swift */; };
 		7867A63329374D0500FC1160 /* BottomSheetTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7867A62929374D0500FC1160 /* BottomSheetTransitioningDelegate.swift */; };
 		7867A63429374D0500FC1160 /* BottomSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7867A62A29374D0500FC1160 /* BottomSheetController.swift */; };
@@ -268,6 +270,8 @@
 		784B022E2937579E004ED20A /* RecentTattooHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentTattooHeaderView.swift; sourceTree = "<group>"; };
 		784B022F2937579E004ED20A /* MyPageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		784B023D29375949004ED20A /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		78651173296D371D00A0C506 /* ProfileFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFooterView.swift; sourceTree = "<group>"; };
+		78651176296D5A2500A0C506 /* UpgradeBusinessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeBusinessViewController.swift; sourceTree = "<group>"; };
 		7867A5FC2935CD1B00FC1160 /* BlackCat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BlackCat.entitlements; sourceTree = "<group>"; };
 		7867A62729374D0500FC1160 /* MulticastDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MulticastDelegate.swift; sourceTree = "<group>"; };
 		7867A62929374D0500FC1160 /* BottomSheetTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomSheetTransitioningDelegate.swift; sourceTree = "<group>"; };
@@ -610,6 +614,7 @@
 			isa = PBXGroup;
 			children = (
 				784B022E2937579E004ED20A /* RecentTattooHeaderView.swift */,
+				78651173296D371D00A0C506 /* ProfileFooterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -622,6 +627,14 @@
 				78277E90296740CE004CFDF4 /* LoginAlert */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		78651175296D5A0E00A0C506 /* UpgradeBusiness */ = {
+			isa = PBXGroup;
+			children = (
+				78651176296D5A2500A0C506 /* UpgradeBusinessViewController.swift */,
+			);
+			path = UpgradeBusiness;
 			sourceTree = "<group>";
 		};
 		7867A6022937359600FC1160 /* Recovered References */ = {
@@ -1095,6 +1108,7 @@
 		B1D79CA928EB0EF9008487D0 /* BlackCat */ = {
 			isa = PBXGroup;
 			children = (
+				78651175296D5A0E00A0C506 /* UpgradeBusiness */,
 				7867A5FC2935CD1B00FC1160 /* BlackCat.entitlements */,
 				B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */,
 				B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */,
@@ -1525,6 +1539,7 @@
 				B1E3F7BE290EBE3900005F17 /* BPContentCell.Layout.swift in Sources */,
 				B160DBFB28FF3D8E00C0D682 /* BaseTableViewCell.swift in Sources */,
 				B1E3F7BA290EBAB100005F17 /* BPProductCell.swift in Sources */,
+				78651174296D371D00A0C506 /* ProfileFooterView.swift in Sources */,
 				B1CDE8F729165E6A00ACB9AC /* BPEditTempViewController.swift in Sources */,
 				784B02312937579E004ED20A /* MyPageViewController.Layout.swift in Sources */,
 				B1E4986528EE957E00B469AC /* MagazineDetailModel.swift in Sources */,
@@ -1621,6 +1636,7 @@
 				787D5843293CD6BC00A3E610 /* UIFont+.swift in Sources */,
 				B1EABEBF28FBA8E10029B6BC /* FilterReactor.swift in Sources */,
 				B1EABEBC28FBA87C0029B6BC /* FilterTask.swift in Sources */,
+				78651177296D5A2500A0C506 /* UpgradeBusinessViewController.swift in Sources */,
 				7867A63229374D0500FC1160 /* MulticastDelegate.swift in Sources */,
 				7867A63529374D0500FC1160 /* FilterCell.swift in Sources */,
 				8E8848832949C3F80039F99A /* PresentationView.swift in Sources */,

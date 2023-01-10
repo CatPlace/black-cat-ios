@@ -26,9 +26,9 @@ class ProfileViewController: UIViewController {
         }
         
         viewModel.completeAlertDriver
-            .drive { _ in
+            .drive { type in
                 // TODO: Alert
-                print("저장 성공!")
+                print("저장 성공!", type)
             }.disposed(by: disposeBag)
         
         viewModel.alertMassageDriver
