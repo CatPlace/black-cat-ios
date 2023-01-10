@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "login_apple (1).png",
+      "filename" : "appleLogin.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "login_apple (2).png",
+      "filename" : "appleLogin_2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "login_apple (3).png",
+      "filename" : "appleLogin_3.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

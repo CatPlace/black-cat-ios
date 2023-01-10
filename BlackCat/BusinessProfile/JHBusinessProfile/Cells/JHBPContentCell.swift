@@ -15,12 +15,14 @@ final class JHBPContentCellViewModel {
     var contentModel: BehaviorRelay<BPContentModel> // 🐻‍❄️ NOTE: - 이거 enum으로 개선가능
     var profiles: BehaviorRelay<[BPProfileModel]>
     var products: BehaviorRelay<[BPProductModel]>
+    var priceInfos: BehaviorRelay<[BPPriceInfoModel]>
     var provider: BPContentCellServiceProtocol = BPContentCellService()
     
     init(contentModel: BPContentModel) {
         self.contentModel = .init(value: contentModel)
         profiles = .init(value: provider.fetchProfiles())
         products = .init(value: provider.fetchProducts())
+        priceInfos = .init(value: provider.fetchPriceInfos())
     }
 }
 
@@ -28,14 +30,15 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
     enum Reusable {
         static let profileCell = ReusableCell<BPProfileCell>()
         static let productCell = ReusableCell<BPProductCell>()
+        static let priceInfoCell = ReusableCell<JHBPPriceInfoCell>()
     }
     
     enum JHBPContentType: Int, CaseIterable {
-        case profile, product
+        case profile, product, priceInfo
     }
     
     func bind(viewModel: JHBPContentCellViewModel) {
-        [productCollectionView, profileCollectionView]
+        [productCollectionView, profileCollectionView, priceInfoCollectionView]
             .forEach { $0.rx.setDelegate(self).disposed(by: disposeBag) }
         
         viewModel.profiles
@@ -60,12 +63,25 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
                 
                 cell.configureCell(with: item)
             }.disposed(by: self.disposeBag)
+        
+        viewModel.priceInfos
+            .withLatestFrom(viewModel.contentModel) { ($0, $1) }
+            .filter { $0.1.order == 2 }
+            .map { $0.0 }
+            .bind(to: priceInfoCollectionView.rx.items(Reusable.priceInfoCell)) { [weak self] index, item, cell in
+                guard let self = self else { return }
+                self.setCollectionViewHidden(forType: .priceInfo)
+
+                cell.configureCell(with: item)
+            }.disposed(by: self.disposeBag)
     }
     
     
     func setCollectionViewHidden(forType type: JHBPContentType) {
         [profileCollectionView,
-         productCollectionView].enumerated().forEach { index, view in
+         productCollectionView,
+         priceInfoCollectionView
+        ].enumerated().forEach { index, view in
             view.isHidden = type.rawValue != index
         }
     }
@@ -101,6 +117,16 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
         
         return cv
     }()
+    
+    lazy var priceInfoCollectionView: UICollectionView = {
+        let layout = createLayout(forType: .priceInfo)
+        var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        
+        cv.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
+        cv.register(Reusable.priceInfoCell)
+        
+        return cv
+    }()
 }
 
 extension JHBPContentCell: UIScrollViewDelegate {
@@ -130,6 +156,11 @@ extension JHBPContentCell {
         productCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        
+        contentView.addSubview(priceInfoCollectionView)
+        productCollectionView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
     
     func createLayout(forType type: JHBPContentType) -> UICollectionViewCompositionalLayout {
@@ -139,6 +170,7 @@ extension JHBPContentCell {
             switch type {
             case .profile: return self.profileLayoutSection()
             case .product: return self.productLayoutSection()
+            case .priceInfo: return self.priceInfoLayoutSection()
             }
         }
     }
@@ -162,6 +194,18 @@ extension JHBPContentCell {
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                                          heightDimension: .fractionalWidth(0.33)),
+                                                       subitems: [item])
+        let section = NSCollectionLayoutSection(group: group)
+        
+        return section
+    }
+    
+    private func priceInfoLayoutSection() -> NSCollectionLayoutSection {
+        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1.0),
+                                                            heightDimension: .estimated(100)))
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1),
+                                                                         heightDimension: .estimated(100)),
                                                        subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         

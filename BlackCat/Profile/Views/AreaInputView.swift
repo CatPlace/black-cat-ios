@@ -30,6 +30,7 @@ class AreaInputViewModel {
     let cellViewModelsDriver: Driver<[FilterCellViewModel]>
     //    let shouldUpdateAreaCells: Driver<Model.Area>
     init() {
+        CatSDKUser.initUserCache()
         areas = Model.Area.allCases
     
         self.cellViewModelsDriver = areaCellInfosRelay.map {

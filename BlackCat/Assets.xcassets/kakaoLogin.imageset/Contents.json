@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "login_kakao (1).png",
+      "filename" : "kakaoLogin.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "login_kakao (2).png",
+      "filename" : "kakaoLogin_2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "login_kakao (3).png",
+      "filename" : "kakaoLogin_3.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -10,17 +10,17 @@ import RxSwift
 import RxCocoa
 import RxRelay
 import Nuke
-
+import BlackCatSDK
 class CommonTattooInfoCellViewModel {
     
     let imageUrlStringDriver: Driver<String>
     let titleDrvier: Driver<String>
     let userNameDriver: Driver<String>
     
-    init(tattoo: Tattoo) {
-        imageUrlStringDriver = .just(tattoo.imageUrl)
-        titleDrvier = .just(tattoo.title)
-        userNameDriver = .just(tattoo.userName)
+    init(tattoo: Model.Tattoo) {
+        imageUrlStringDriver = .just(tattoo.imageURLStrings.first ?? "")
+        titleDrvier = .just(tattoo.description)
+        userNameDriver = .just(tattoo.ownerName)
     }
 }
 

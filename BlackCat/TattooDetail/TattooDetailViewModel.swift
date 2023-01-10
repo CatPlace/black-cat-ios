@@ -24,7 +24,6 @@ struct TattooDetailViewModel {
     let address: String
 
     // MARK: - Input
-
     let didTapAskButton = PublishRelay<Void>()
     let didTapBookmarkButton = PublishRelay<Void>()
     let didTapProfileImageView = PublishRelay<Void>()
@@ -80,5 +79,7 @@ struct TattooDetailViewModel {
             didTapTattooistNameLabel.asObservable()
         ])
         .asDriver(onErrorJustReturn: ())
+        
+        CatSDKTattoo.updateRecentViewTattoos(tattoo: tattooModel)
     }
 }

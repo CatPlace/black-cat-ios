@@ -1,14 +1,15 @@
 //
-//  LoginViewController.swift
+//  LoginAlertViewController.swift
 //  BlackCat
 //
-//  Created by 김지훈 on 2022/11/18.
+//  Created by 김지훈 on 2023/01/06.
 //
 
 import UIKit
 import RxSwift
+import VisualEffectView
 
-class LoginViewController: UIViewController {
+class LoginAlertViewController: UIViewController {
     // MARK: - Properties
     var disposeBag = DisposeBag()
     var viewModel: LoginViewModel
@@ -24,9 +25,14 @@ class LoginViewController: UIViewController {
         }
         
         viewModel.showHomeViewControllerDriver
-            
             .drive(with: self) { owner, _ in
-                owner.present(TabBarViewController(), animated: false)
+                owner.dismiss(animated: true) {
+                    if viewModel.isLogin() {
+                        if let vc = UIApplication.getMostTopViewController() as? MyPageViewController  {
+                            vc.viewModel.viewWillAppear.accept(())
+                        }
+                    }
+                }
             }.disposed(by: disposeBag)
         
         viewModel.loginFailureDriver
@@ -57,6 +63,7 @@ class LoginViewController: UIViewController {
         setUI()
         setVStackView()
         bind(to: viewModel)
+        modalPresentationStyle = .overFullScreen
     }
     
     required init?(coder: NSCoder) {
@@ -66,17 +73,24 @@ class LoginViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(hex: "#333333FF")
     }
     
     // MARK: - UIComponents
-    var appNameLabel: UILabel = {
+    let blurEffectView: VisualEffectView = {
+        let v = VisualEffectView()
+        v.colorTintAlpha = 1
+        v.backgroundColor = .black.withAlphaComponent(0.6)
+        v.blurRadius = 5
+        return v
+    }()
+    
+    var decriptionLabel: UILabel = {
         let l = UILabel()
-        l.text = "Black\nCat"
+        l.text = "로그인 후\n사용할 수 있습니다"
         l.textAlignment = .center
         l.numberOfLines = 0
         l.textColor = .white
-        l.font = .boldSystemFont(ofSize: 48)
+        l.font = .appleSDGoithcFont(size: 16, style: .bold)
         return l
     }()
     var VStackView: UIStackView = {
@@ -88,7 +102,7 @@ class LoginViewController: UIViewController {
     }()
     var lookAroundLabel: UILabel = {
         let l = UILabel()
-        l.attributedText = NSAttributedString(string: "둘러보기",
+        l.attributedText = NSAttributedString(string: "닫기 ?",
                                               attributes: [
                                                 NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue
                                               ])
@@ -99,24 +113,32 @@ class LoginViewController: UIViewController {
     
 }
 
-extension LoginViewController {
+extension LoginAlertViewController {
     func setUI() {
-        [appNameLabel, VStackView, lookAroundLabel].forEach { view.addSubview($0) }
+        [blurEffectView, decriptionLabel, VStackView, lookAroundLabel].forEach { view.addSubview($0) }
         
-        appNameLabel.snp.makeConstraints {
+        blurEffectView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+
+        decriptionLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.centerY.equalToSuperview().offset(-80)
         }
         
         VStackView.snp.makeConstraints {
-            $0.top.equalTo(appNameLabel.snp.bottom).offset(70)
+            $0.top.equalTo(decriptionLabel.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview().multipliedBy(48/75.0)
         }
         
         lookAroundLabel.snp.makeConstraints {
-            $0.top.equalTo(VStackView.snp.bottom).offset(20)
-            $0.centerX.equalToSuperview()
+            $0.top.leading.equalTo(view.safeAreaLayoutGuide)
         }
     }
 }
+
+extension UIView {
+    
+}
+

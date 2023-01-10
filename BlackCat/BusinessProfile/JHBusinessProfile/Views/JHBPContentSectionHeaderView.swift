@@ -51,6 +51,9 @@ class JHBPContentSectionHeaderView: JHBPBaseCollectionReusableView{
             .bind(with: self) { owner, type in
                 owner.updateButtonUI(type: type)
                 owner.notifyCollectionView(type: type)
+                JHBPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
+                    delegate.notifyContentHeader(indexPath: IndexPath(row: type.rawValue, section: 1), forType: type)
+                }
             }
             .disposed(by: disposeBag)
     }
