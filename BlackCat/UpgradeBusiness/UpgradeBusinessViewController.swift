@@ -42,10 +42,7 @@ class UpgradeBusinessViewController: UIViewController {
         super.viewDidLoad()
         print(navigationController?.viewControllers)
         navigationController?.navigationBar.backgroundColor = .red
-//        var user = CatSDKUser.user()
-//        user.userType = .business
-//        CatSDKUser.updateUser(user: user)
-//        owner.tabBarController?.viewControllers![2].loadView()
+
         
         view.backgroundColor = .orange
     }

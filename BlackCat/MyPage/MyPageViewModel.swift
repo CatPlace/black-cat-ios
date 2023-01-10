@@ -24,13 +24,13 @@ enum MyPageMenuType: Int, CaseIterable {
     func linkString() -> String? {
         switch self {
         case .notice:
-            return "https://play.afreecatv.com/phonics1/244378743"
+            return "https://tattoomap.notion.site/fa94adab104043eca1127287909b9925"
         case .feedback:
-            return "https://tattoomap.notion.site/1-ef60c84317204542b27583ab82693671"
+            return "https://tattoomap.notion.site/87e0fa8faea0466bb3b83643283e70e1"
         case .termOfService:
-            return "https://tattoomap.notion.site/d2c332b8900c414b96fc6ad97e774a27"
+            return "https://tattoomap.notion.site/62b2ccf1a1f1408e8874c8fb214bdcc6"
         case .personalInfoAgreement:
-            return "https://tattoomap.notion.site/3af8802e66f74bba8d25a186a3c6d24d"
+            return "https://tattoomap.notion.site/2ad2e7fec3a647638ef6b06800d05d89"
         default:
             return nil
         }

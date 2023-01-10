@@ -26,9 +26,15 @@ class ProfileViewController: UIViewController {
         }
         
         viewModel.completeAlertDriver
-            .drive { type in
+            .drive(with: self) { owner, type in
                 // TODO: Alert
                 print("저장 성공!", type)
+                if type == .upgrade {
+                    var user = CatSDKUser.user()
+                    user.userType = .business
+                    CatSDKUser.updateUser(user: user)
+                    owner.tabBarController?.viewControllers![2].loadView()
+                }
             }.disposed(by: disposeBag)
         
         viewModel.alertMassageDriver
