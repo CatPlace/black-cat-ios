@@ -58,7 +58,7 @@ enum GenreType: Int, CaseIterable {
 class GenreViewModel {
 
     let disposeBag = DisposeBag()
-    var genreTitle: String
+    var genre: Model.Category
 
     // MARK: - Input
 
@@ -75,8 +75,8 @@ class GenreViewModel {
     let categoryItems: Driver<[CommonFullImageCellViewModel]>
     let pushToTattooDetailVC: Driver<TattooDetailViewModel>
 
-    init(genreTitle: String) {
-        self.genreTitle = genreTitle
+    init(genre: Model.Category) {
+        self.genre = genre
 
         let filterService = FilterService()
 
@@ -97,7 +97,7 @@ class GenreViewModel {
         let filteredInfo = Observable.zip(filteredTask, filteredLocation)
 
         let defaultGenreTitle = viewWillAppear
-            .map { _ in genreTitle }
+            .map { _ in genre.name }
 
         let changedGenreTitle = selectedDropDownItemRow
             .map { row in GenreType(rawValue: row)?.title ?? "전체보기" }

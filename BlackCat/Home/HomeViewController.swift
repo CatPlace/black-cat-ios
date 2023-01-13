@@ -104,8 +104,8 @@ class HomeViewController: UIViewController {
 
         viewModel.pushToGenreViewController
             .debug()
-            .drive(with: self) { owner, genreTitle in
-                let genreViewController = GenreViewController(viewModel: .init(genreTitle: genreTitle))
+            .drive(with: self) { owner, genre in
+                let genreViewController = GenreViewController(viewModel: .init(genre: genre))
                 genreViewController.hidesBottomBarWhenPushed = true
                 owner.navigationController?.pushViewController(genreViewController, animated: true)
             }

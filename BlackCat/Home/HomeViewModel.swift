@@ -13,7 +13,7 @@ import RxDataSources
 import RxSwift
 
 class HomeViewModel {
-    typealias GenreTitle = String
+    typealias Genre = Model.Category
 
     private let disposeBag = DisposeBag()
     private let categoryItemTitles = Observable<[HomeModel.Category]>.just(HomeModel.Category.default)
@@ -30,7 +30,7 @@ class HomeViewModel {
 
     let homeItems: Driver<[HomeSection]>
     let pushToBookmarkViewController: Driver<Void>
-    let pushToGenreViewController: Driver<GenreTitle>
+    let pushToGenreViewController: Driver<Genre>
 
     init() {
         let fetchedRecommendItems = viewDidLoad
@@ -87,10 +87,10 @@ class HomeViewModel {
             .disposed(by: disposeBag)
 
         pushToGenreViewController = didTapGenreItem
-            .withLatestFrom(categoryItemTitles) { index, titles in
-                titles[index].title
+            .withLatestFrom(fetchedCategoryList) { index, list in
+                list[index]
             }
-            .asDriver(onErrorJustReturn: "")
+            .asDriver(onErrorJustReturn: Model.Category(id: 0, name: "", count: 0))
     }
 }
 
