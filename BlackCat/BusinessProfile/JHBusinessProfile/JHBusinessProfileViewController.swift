@@ -55,27 +55,10 @@ final class JHBusinessProfileViewController: UIViewController {
                 .bind(with: self) { owner, _ in
                     owner.pushToEditVC()
                 }
+            
             viewModel.sections
                 .bind(to: self.collectionView.rx.items(dataSource: dataSource))
-            
-            collectionView.rx.didEndDisplayingCell
-                .withLatestFrom(collectionView.rx.willDisplayCell) { didEnd, will -> (IndexPath, IndexPath) in
-                    return (didEnd.at, will.at)
-                }.bind(to: viewModel.cellDisplayingIndexPathRelay)
         }
-        
-        viewModel.visibleCellIndexPath
-            .drive(with: self) { owner, indexPath in
-                // MARK: - 분기처리 !!!! button tag = 프로필땐 0, 작품보기땐 1
-                owner.updateEditButtonUI(selectedRow: indexPath.row)
-                // 하나의 버튼으로
-                // tag가 0일 땐: (이미지: 연필, 동작: 자기소개 수정화면 present)
-                // tag가 1일 땐: (이미지: +, 동작: 타투 등록 페이지 present)
-                JHBPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
-                    delegate.notifyContentHeader(indexPath: indexPath, forType: .init(rawValue: indexPath.row) ?? .profile)
-                }
-            }.disposed(by: disposeBag)
-        
     }
     
     // MARK: function
@@ -99,24 +82,29 @@ final class JHBusinessProfileViewController: UIViewController {
     
     func pushToEditVC() {
         typealias JHBPContentHeaderButtonType = JHBPContentSectionHeaderView.JHBPContentHeaderButtonType
-        
         let type = JHBPContentHeaderButtonType(rawValue: editButton.tag)
-        
+        // TODO: - 현재 가지고 있는 모델을 그대로 가져가기 ~ (수정)
+        let nextVC: UIViewController
         switch type {
         case .profile:
-            print("프로필 수정 클릭 !")
+            nextVC = ProfileEditViewController()
         case .product:
-            print("타투 추가 클릭 !")
+            nextVC = ProductEditViewController()
         case .info:
-            print("견적 수정 클릭!")
-        case .none: break
+            nextVC = PriceInfoEditViewController()
+        case .none:
+            nextVC = UIViewController()
         }
+        let nextVCWithNavi = UINavigationController(rootViewController: nextVC)
+        nextVCWithNavi.modalPresentationStyle = .overFullScreen
+        present(nextVCWithNavi, animated: true)
     }
     
     // MARK: Initialize
     init(viewModel: JHBUsinessProfileViewModel) {
         super.init(nibName: nil, bundle: nil)
         bind(viewModel: viewModel)
+        updateEditButtonUI(selectedRow: 0)
     }
     
     required init?(coder: NSCoder) {
@@ -144,13 +132,12 @@ final class JHBusinessProfileViewController: UIViewController {
         return cv
     }()
     let editButton: UIButton = {
-        $0.tag = 0
-        $0.setTitle("수정", for: .normal)
         $0.setTitleColor(.red, for: .normal)
         $0.backgroundColor = .black
         return $0
     }(UIButton())
 }
+
 
 extension JHBusinessProfileViewController {
     func setUI() {
@@ -216,7 +203,9 @@ extension JHBusinessProfileViewController {
 }
 
 extension JHBusinessProfileViewController: JHBPMulticastDelegate {
-    
+    func notifyContentHeader(indexPath: IndexPath, forType: type) {
+        updateEditButtonUI(selectedRow: indexPath.row)
+    }
     func notifyContentCell(indexPath: IndexPath?, forType: type) {
         collectionView.scrollToItem(at: IndexPath(row: forType.rawValue, section: 1),
                                     at: .top,

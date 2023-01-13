@@ -12,55 +12,6 @@ import RxRelay
 import RxGesture
 import BlackCatSDK
 
-class ProfileViewModel {
-    let nameInputViewModel: ProfileTextInputViewModel
-    let emailInputViewModel: ProfileTextInputViewModel
-    let phoneNumberInputViewModel: ProfileTextInputViewModel
-    let genderInputViewModel: GenderInputViewModel
-    let areaInputViewModel: AreaInputViewModel
-    
-    
-    let viewWillApearRelay = PublishRelay<Void>()
-    let completeButtonTapped = PublishRelay<Void>()
-    let completeAlertDriver: Driver<Void>
-    
-    init(nameInputViewModel: ProfileTextInputViewModel,
-         emailInputViewModel: ProfileTextInputViewModel,
-         phoneNumberInputViewModel: ProfileTextInputViewModel,
-         genderInputViewModel: GenderInputViewModel,
-         areaInputViewModel: AreaInputViewModel) {
-        self.nameInputViewModel = nameInputViewModel
-        self.emailInputViewModel = emailInputViewModel
-        self.phoneNumberInputViewModel = phoneNumberInputViewModel
-        self.genderInputViewModel = genderInputViewModel
-        self.areaInputViewModel = areaInputViewModel
-        
-        // TODO: 데이터 -> 캐시데이터 -> 완료버튼 누르면 서버 후 알러트
-        let combinedInputs = Observable.combineLatest(
-            nameInputViewModel.inputStringRelay,
-            emailInputViewModel.inputStringRelay,
-            phoneNumberInputViewModel.inputStringRelay,
-            genderInputViewModel.genderCellInfosRelay,
-            areaInputViewModel.areaCellInfosRelay
-        )
-        
-        // TODO: - 서버통신
-        completeAlertDriver = completeButtonTapped
-            .withLatestFrom(combinedInputs)
-            .do { name, email, phone, gender, area in
-                    print(name, email, phone)
-                    print(gender.filter { $0.isSelected })
-                    print(area.filter { $0.isSelected })
-            }.map { _ in () }
-            .asDriver(onErrorJustReturn: ())
-            
-    }
-    
-    func initUserCache() {
-        CatSDKUser.initUserCache()
-    }
-}
-
 class ProfileViewController: UIViewController {
     // MARK: - Properties
     var disposeBag = DisposeBag()
@@ -68,22 +19,29 @@ class ProfileViewController: UIViewController {
     // MARK: - Binding
     func bind(to viewModel: ProfileViewModel) {
         disposeBag.insert {
-            rx.viewWillAppear
-                .map { _ in () }
-                .do { _ in viewModel.initUserCache() }
-                .bind(to: viewModel.viewWillApearRelay)
-            
             completeButtonLabel.rx.tapGesture()
                 .when(.recognized)
                 .map { _ in () }
                 .bind(to: viewModel.completeButtonTapped)
-            
-            viewModel.completeAlertDriver
-                .drive {
-                    // TODO
-                    print("알러트 !")
-                }
         }
+        
+        viewModel.completeAlertDriver
+            .drive(with: self) { owner, type in
+                // TODO: Alert
+                print("저장 성공!", type)
+                if type == .upgrade {
+                    var user = CatSDKUser.user()
+                    user.userType = .business
+                    CatSDKUser.updateUser(user: user)
+                    owner.tabBarController?.viewControllers![2].loadView()
+                }
+            }.disposed(by: disposeBag)
+        
+        viewModel.alertMassageDriver
+            .drive { message in
+                // TODO: Alert
+                print(message)
+            }.disposed(by: disposeBag)
     }
     
     // MARK: - Initializer

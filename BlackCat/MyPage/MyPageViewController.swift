@@ -20,6 +20,7 @@ final class MyPageViewController: UIViewController {
         static let tattooCell = ReusableCell<CommonTattooInfoCell>()
         static let menuCell = ReusableCell<MyPageMenuCell>()
         static let tattooHeaderView = ReusableView<RecentTattooHeaderView>()
+        static let profileFooterView = ReusableView<ProfileFooterView>()
     }
     
     // MARK: - Properties
@@ -33,7 +34,7 @@ final class MyPageViewController: UIViewController {
                 let cell = collectionView.dequeue(Reusable.profileCell, for: indexPath)
                 
                 cell.bind(to: viewModel, with: self.viewModel)
-
+                
                 return cell
             case .recentTattooSection(let viewModel):
                 let cell = collectionView.dequeue(Reusable.tattooCell, for: indexPath)
@@ -50,13 +51,21 @@ final class MyPageViewController: UIViewController {
             }
         },
         configureSupplementaryView: { [weak self] _, collectionView, kind, indexPath -> UICollectionReusableView in
-            guard MyPageSectionType(rawValue: indexPath.section) == .recentTattoo,
+            guard let section = MyPageSectionType(rawValue: indexPath.section),
                   let self
             else { return UICollectionReusableView() }
-            
-            let v = collectionView.dequeue(Reusable.tattooHeaderView, kind: .header, for: indexPath)
-            v.bind(to: .init(text: "최근 본 타투", backgroundColor: .clear))
-            return v
+            switch section {
+            case .profile:
+                let v = collectionView.dequeue(Reusable.profileFooterView, kind: .footer, for: indexPath)
+                v.bind(to: .init())
+                return v
+            case .recentTattoo:
+                let v = collectionView.dequeue(Reusable.tattooHeaderView, kind: .header, for: indexPath)
+                v.bind(to: .init(text: "최근 본 타투", backgroundColor: .clear))
+                return v
+            case .menu:
+                return UICollectionReusableView()
+            }
         }
     )
     
@@ -83,7 +92,6 @@ final class MyPageViewController: UIViewController {
         
         viewModel.pushToProfileEditViewDriver
             .drive(with: self) { owner, _ in
-                print("as")
                 let vc = ProfileViewController(
                     viewModel: .init(
                         nameInputViewModel: .init(title: "이름"),
@@ -96,6 +104,26 @@ final class MyPageViewController: UIViewController {
                 vc.hidesBottomBarWhenPushed = true
                 owner.navigationController?.pushViewController(vc, animated: true)
             }.disposed(by: disposeBag)
+        
+        viewModel.pushToWebViewDriver
+            .drive(with: self) { owner, linkString in
+                let vc = WebViewController(linkString: linkString)
+                owner.navigationController?.pushViewController(vc, animated: true)
+                print(linkString)
+            }.disposed(by: disposeBag)
+        
+        viewModel.showLoginAlertVCDrvier
+            .drive(with: self) { owner, _ in
+                let vc = LoginAlertViewController(viewModel: .init())
+                owner.present(vc, animated: true)
+            }.disposed(by: disposeBag)
+        
+        viewModel.showUpgradeVCDriver
+            .drive(with: self) { owner, _ in
+                let vc = UpgradeBusinessViewController()
+                owner.present(vc, animated: true)
+                print("업그레이드 클릭 !")
+            }.disposed(by: disposeBag)
     }
     
     // MARK: - Initializer
@@ -104,6 +132,7 @@ final class MyPageViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         setUI()
         bind(to: viewModel)
+        view.backgroundColor = .red
     }
     
     required init?(coder: NSCoder) {
@@ -114,12 +143,15 @@ final class MyPageViewController: UIViewController {
     lazy var myPageCollectionView: UICollectionView = {
         let layout = createLayout()
         let v = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        
         v.register(Reusable.profileCell)
         v.register(Reusable.tattooCell)
         v.register(Reusable.menuCell)
         v.register(Reusable.tattooHeaderView, kind: .header)
+        v.register(Reusable.profileFooterView, kind: .footer)
         return v
     }()
+    
     
     deinit {
         print("deinit")

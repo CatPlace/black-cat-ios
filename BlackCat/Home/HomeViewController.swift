@@ -77,7 +77,7 @@ class HomeViewController: UIViewController {
         viewModel.viewDidLoad
             .debug("유저")
             .bind {
-            print(CatSDKUser.fetchLocalUser())
+            print(CatSDKUser.user())
         }.disposed(by: disposeBag)
         
         collectionView.rx.nextFetchPage

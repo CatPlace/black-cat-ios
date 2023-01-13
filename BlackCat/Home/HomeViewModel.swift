@@ -34,7 +34,8 @@ class HomeViewModel {
 
     init() {
         let fetchedRecommendItems = viewDidLoad
-            .map { _ in Array(repeating: Tattoo(imageUrl: "A", title: "A", userName: "김타투"), count: 5) }
+            .map { _ in Array(repeating: Model.Tattoo(id: 1, ownerName: "김타투", price: 0, description: "제목", liked: false, imageURLStrings: [], address: "주소"), count: 5) }
+            
         let startFetchItems = viewDidLoad.share()
         let didTapGenreItem = PublishRelay<Int>()
         let didTapRecommendItem = PublishRelay<Int>()
