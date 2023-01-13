@@ -7,6 +7,7 @@
 
 import UIKit
 
+import BlackCatSDK
 import RxCocoa
 import RxSwift
 import SnapKit
@@ -20,7 +21,7 @@ class HomeCategoryCell: UICollectionViewCell {
     // MARK: - Binding
 
     func bind(to viewModel: HomeCategoryCellViewModel) {
-        categoryTitleLabel.text = viewModel.category.title
+        categoryTitleLabel.text = viewModel.category.name
     }
 
     // MARK: - Initializing

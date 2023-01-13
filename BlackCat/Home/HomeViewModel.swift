@@ -41,6 +41,9 @@ class HomeViewModel {
         let didTapRecommendItem = PublishRelay<Int>()
         let didTapTattooAlbumItem = PublishRelay<Int>()
 
+        let fetchedCategoryList = startFetchItems
+            .flatMap { _ in CatSDKNetworkCategory.rx.fetchCategories() }
+
         let fetchedTattooAlbumItems = nextFetchPage
             .distinct()
             .flatMap { nextFetchPage in fetchTattoAlbumItems(at: nextFetchPage) }
@@ -50,7 +53,7 @@ class HomeViewModel {
 
         homeItems = Observable
             .combineLatest(
-                categoryItemTitles, fetchedRecommendItems, fetchedTattooAlbumItems
+                fetchedCategoryList, fetchedRecommendItems, fetchedTattooAlbumItems
             ) { categoryItems, recommendItems, tattooAlbumItems -> [HomeSection] in
                 [HomeSection(header: .empty,
                              items: categoryItems.map { .categoryCell(HomeCategoryCellViewModel(with: $0)) }),
@@ -71,6 +74,7 @@ class HomeViewModel {
         func fetchTattoAlbumItems(at page: Int) -> Observable<[HomeModel.TattooAlbum]> {
             return .just(Array(repeating: HomeModel.TattooAlbum(imageURLString: ""), count: 15))
         }
+
         didTapCollectionViewItem
             .bind { indexPath in
                 switch indexPath.section {
