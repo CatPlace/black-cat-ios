@@ -514,9 +514,9 @@
 		78277E8929673599004CFDF4 /* Edit */ = {
 			isa = PBXGroup;
 			children = (
-				78277E8A296735A8004CFDF4 /* ProfileEditViewController.swift */,
-				78277E8C296735CB004CFDF4 /* ProductEditViewController.swift */,
-				78277E8E296735D6004CFDF4 /* PriceInfoEditViewController.swift */,
+				78D3E9332977BDC90015BA75 /* Profile */,
+				78D3E9342977BDDB0015BA75 /* Product */,
+				78D3E9352977BDE20015BA75 /* PriceInfo */,
 			);
 			path = Edit;
 			sourceTree = "<group>";
@@ -823,6 +823,45 @@
 				78B00BB528F5661000A9915D /* RecentMagazineFooterView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		78D3E9332977BDC90015BA75 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				78277E8A296735A8004CFDF4 /* ProfileEditViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		78D3E9342977BDDB0015BA75 /* Product */ = {
+			isa = PBXGroup;
+			children = (
+				78277E8C296735CB004CFDF4 /* ProductEditViewController.swift */,
+			);
+			path = Product;
+			sourceTree = "<group>";
+		};
+		78D3E9352977BDE20015BA75 /* PriceInfo */ = {
+			isa = PBXGroup;
+			children = (
+				78277E8E296735D6004CFDF4 /* PriceInfoEditViewController.swift */,
+			);
+			path = PriceInfo;
+			sourceTree = "<group>";
+		};
+		78D3E9362977BE580015BA75 /* GunWoo */ = {
+			isa = PBXGroup;
+			children = (
+				B1D89C86290E78AF00C8B7F1 /* BusinessProfileViewController.swift */,
+				B1E3F7BF290EC1AD00005F17 /* BusinessProfileReactor.swift */,
+				B1D89C92290E810000C8B7F1 /* BusinessProfileViewController.Layout.swift */,
+				B1E3F7DD290F009F00005F17 /* BusinessProfileViewController.BPMulticastDelegate.swift */,
+				B1E3F7DA290EE91300005F17 /* BPMultiCast */,
+				B1D89C94290E844300C8B7F1 /* BPModels */,
+				B1D89C89290E7C3300C8B7F1 /* BPSection */,
+				B1D89C8C290E7CD300C8B7F1 /* BPCell */,
+			);
+			path = GunWoo;
 			sourceTree = "<group>";
 		};
 		8E2D8C4628F2EBFA004B514D /* Home */ = {
@@ -1143,14 +1182,7 @@
 			isa = PBXGroup;
 			children = (
 				7828DB5B295C8D0F0053B0A0 /* JHBusinessProfile */,
-				B1D89C86290E78AF00C8B7F1 /* BusinessProfileViewController.swift */,
-				B1E3F7BF290EC1AD00005F17 /* BusinessProfileReactor.swift */,
-				B1D89C92290E810000C8B7F1 /* BusinessProfileViewController.Layout.swift */,
-				B1E3F7DD290F009F00005F17 /* BusinessProfileViewController.BPMulticastDelegate.swift */,
-				B1E3F7DA290EE91300005F17 /* BPMultiCast */,
-				B1D89C94290E844300C8B7F1 /* BPModels */,
-				B1D89C89290E7C3300C8B7F1 /* BPSection */,
-				B1D89C8C290E7CD300C8B7F1 /* BPCell */,
+				78D3E9362977BE580015BA75 /* GunWoo */,
 			);
 			path = BusinessProfile;
 			sourceTree = "<group>";

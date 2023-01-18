@@ -8,8 +8,13 @@
 import UIKit
 import RxSwift
 
+class ProfileEditViewModel {
+    
+}
+
 class ProfileEditViewController: UIViewController {
     var disposeBag = DisposeBag()
+    var viewModel = ProfileEditViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .red

@@ -7,7 +7,6 @@
 
 import UIKit
 import RxSwift
-
 class PriceInfoEditViewController: UIViewController {
     var disposeBag = DisposeBag()
     override func viewDidLoad() {
