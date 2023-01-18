@@ -12,19 +12,19 @@ import RxDataSources
 final class JHBUsinessProfileViewModel {
     typealias Will = IndexPath
     typealias Did = IndexPath
-    var sections: BehaviorRelay<[JHBusinessProfileCellSection]>
-    var cellDisplayingIndexPathRelay = PublishRelay<(Will, Did)>()
     
-    var visibleCellIndexPath: Driver<IndexPath>
+    var sections: BehaviorRelay<[JHBusinessProfileCellSection]>
+    var cellDisplayingIndexRowRelay = PublishRelay<CGFloat>()
+    
+    var visibleCellIndexPath: Driver<Int>
     
     init(sections: BehaviorRelay<[JHBusinessProfileCellSection]> = .init(value: configurationSections())) {
         self.sections = sections
-        let visibleCellIndex = cellDisplayingIndexPathRelay
-            .filter { didEnd, will in return (didEnd != will) && (didEnd.section != 0) }
-            .map { didEnd, will in return will }
     
-        visibleCellIndexPath = visibleCellIndex
-            .asDriver(onErrorJustReturn: .init(row: 0, section: 1))
+        visibleCellIndexPath = cellDisplayingIndexRowRelay
+            .distinctUntilChanged()
+            .map { Int($0) }
+            .asDriver(onErrorJustReturn: 0)
     }
     
 }
