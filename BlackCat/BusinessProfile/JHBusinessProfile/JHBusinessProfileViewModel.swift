@@ -10,9 +10,6 @@ import RxCocoa
 import RxRelay
 import RxDataSources
 final class JHBUsinessProfileViewModel {
-    typealias Will = IndexPath
-    typealias Did = IndexPath
-    
     var sections: BehaviorRelay<[JHBusinessProfileCellSection]>
     var cellDisplayingIndexRowRelay = PublishRelay<CGFloat>()
     

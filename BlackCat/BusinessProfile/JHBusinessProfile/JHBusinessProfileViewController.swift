@@ -65,7 +65,6 @@ final class JHBusinessProfileViewController: UIViewController {
         viewModel.visibleCellIndexPath
             .drive { row in
                 guard let type = JHBPContentSectionHeaderView.JHBPContentHeaderButtonType(rawValue: row) else { return }
-                print(type, row)
                 JHBPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
                     delegate.notifyContentHeader(indexPath: IndexPath(row: row, section: 0), forType: type)
                 }
@@ -75,40 +74,26 @@ final class JHBusinessProfileViewController: UIViewController {
     // MARK: function
     func updateEditButtonUI(selectedRow: Int) {
         typealias JHBPContentHeaderButtonType = JHBPContentSectionHeaderView.JHBPContentHeaderButtonType
-        
+        // TODO: - 유저 비교 (유저디폴트에 있는 id 와 현재 상세페이지의 id) true 부분
+        guard let type = JHBPContentHeaderButtonType(rawValue: selectedRow), true else { return }
+       
         bottomView.setAskButtonTag(selectedRow)
-        let type = JHBPContentHeaderButtonType(rawValue: selectedRow)
-        var text = "test"
-        switch type {
-        case .profile:
-            text = "수정하기"
-        case .product:
-            text = "타투 업로드"
-        case .info:
-            text = "견정 수정"
-        case .none: break
-        }
-        bottomView.setAskingText(text)
+        bottomView.setAskingText(type.editButtonText())
+
     }
     
     func pushToEditVC() {
         typealias JHBPContentHeaderButtonType = JHBPContentSectionHeaderView.JHBPContentHeaderButtonType
-        let type = JHBPContentHeaderButtonType(rawValue: bottomView.askButtonTag())
         // TODO: - 현재 가지고 있는 모델을 그대로 가져가기 ~ (수정)
-        let nextVC: UIViewController
-        switch type {
-        case .profile:
-            nextVC = ProfileEditViewController()
-        case .product:
-            nextVC = ProductEditViewController()
-        case .info:
-            nextVC = PriceInfoEditViewController()
-        case .none:
-            nextVC = UIViewController()
+        
+        if let type = JHBPContentHeaderButtonType(rawValue: bottomView.askButtonTag()) {
+            let nextVCWithNavi = UINavigationController(rootViewController: type.editVC())
+            nextVCWithNavi.modalPresentationStyle = .overFullScreen
+            present(nextVCWithNavi, animated: true)
+        } else { // TODO: - 문의하기
+            print("문의하기 TODO")
         }
-        let nextVCWithNavi = UINavigationController(rootViewController: nextVC)
-        nextVCWithNavi.modalPresentationStyle = .overFullScreen
-        present(nextVCWithNavi, animated: true)
+
     }
     
     // MARK: Initialize
@@ -116,8 +101,9 @@ final class JHBusinessProfileViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         bind(viewModel: viewModel)
-        updateEditButtonUI(selectedRow: 0)
-        
+        if true { // TODO: - 유저 비교 (유저디폴트에 있는 id 와 현재 상세페이지의 id)
+            updateEditButtonUI(selectedRow: 0)
+        }
     }
     
     required init?(coder: NSCoder) {

@@ -73,6 +73,8 @@ final class AskBottomView: UIView {
         $0.setTitle("문의하기", for: .normal)
         $0.backgroundColor = .init(hex: "#333333FF")
         $0.layer.cornerRadius = 20
+        $0.tag = -1
+        $0.titleLabel?.font = .appleSDGoithcFont(size: 24, style: .bold)
         return $0
     }(UIButton())
 

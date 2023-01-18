@@ -115,6 +115,23 @@ class JHBPContentSectionHeaderView: JHBPBaseCollectionReusableView{
             case .info: return "견적 안내"
             }
         }
+        
+        func editButtonText() -> String {
+            switch self {
+            case .profile: return "수정하기"
+            case .product: return "타투 업로드"
+            case .info: return "견적 수정"
+            }
+        }
+        
+        func editVC() -> UIViewController {
+            switch self {
+            case .profile: return ProfileEditViewController()
+            case .product: return ProductEditViewController()
+            case .info: return PriceInfoEditViewController()
+            }
+        }
+        
     }
     private lazy var headerButtons: [UIButton] = {
         $0.map { type in
