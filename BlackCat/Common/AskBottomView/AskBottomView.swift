@@ -17,7 +17,7 @@ struct AskBottomViewModel {
 
     let didTapAskButton = PublishRelay<Void>()
     let didTapBookmarkButton = PublishRelay<Void>()
-
+    
     init() {
         didTapAskButton
             .subscribe { _ in print("Did Tap Ask Button") }
@@ -45,7 +45,19 @@ final class AskBottomView: UIView {
                 .bind(to: viewModel.didTapBookmarkButton)
         }
     }
+    
+    func setAskingText(_ text: String) {
+        askButton.setTitle(text, for: .normal)
+    }
 
+    func askButtonTag() -> Int {
+        askButton.tag
+    }
+    
+    func setAskButtonTag(_ tag: Int) {
+        askButton.tag = tag
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
 
