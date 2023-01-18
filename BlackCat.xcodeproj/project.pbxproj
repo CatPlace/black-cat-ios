@@ -63,6 +63,7 @@
 		787D5845293CD8CB00A3E610 /* FontExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787D5844293CD8CB00A3E610 /* FontExampleViewController.swift */; };
 		78858BEC28F6F4E400EC7BF7 /* MagazineSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78858BEB28F6F4E300EC7BF7 /* MagazineSection.swift */; };
 		789D65BA2978043000156FBD /* VerticalScrollableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D65B92978043000156FBD /* VerticalScrollableViewController.swift */; };
+		789D65BC2978219400156FBD /* TattooImageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D65BB2978219300156FBD /* TattooImageInputView.swift */; };
 		78B00BB728F5661000A9915D /* RecentMagazineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BAB28F5661000A9915D /* RecentMagazineCell.swift */; };
 		78B00BB828F5661000A9915D /* LastMagazineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BAC28F5661000A9915D /* LastMagazineCell.swift */; };
 		78B00BB928F5661000A9915D /* MagazineTestUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BAE28F5661000A9915D /* MagazineTestUseCase.swift */; };
@@ -315,6 +316,7 @@
 		787D5849293CDF5B00A3E610 /* Didot Title.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Didot Title.otf"; sourceTree = "<group>"; };
 		78858BEB28F6F4E300EC7BF7 /* MagazineSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineSection.swift; sourceTree = "<group>"; };
 		789D65B92978043000156FBD /* VerticalScrollableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalScrollableViewController.swift; sourceTree = "<group>"; };
+		789D65BB2978219300156FBD /* TattooImageInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooImageInputView.swift; sourceTree = "<group>"; };
 		78B00BAB28F5661000A9915D /* RecentMagazineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentMagazineCell.swift; sourceTree = "<group>"; };
 		78B00BAC28F5661000A9915D /* LastMagazineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastMagazineCell.swift; sourceTree = "<group>"; };
 		78B00BAE28F5661000A9915D /* MagazineTestUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineTestUseCase.swift; sourceTree = "<group>"; };
@@ -791,6 +793,14 @@
 			path = MagazineSection;
 			sourceTree = "<group>";
 		};
+		789D65BD2978219600156FBD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				789D65BB2978219300156FBD /* TattooImageInputView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		78B00BA928F5661000A9915D /* Magazine */ = {
 			isa = PBXGroup;
 			children = (
@@ -844,6 +854,7 @@
 			isa = PBXGroup;
 			children = (
 				78277E8C296735CB004CFDF4 /* ProductEditViewController.swift */,
+				789D65BD2978219600156FBD /* Views */,
 			);
 			path = Product;
 			sourceTree = "<group>";
@@ -1682,6 +1693,7 @@
 				784B023F29375949004ED20A /* LoginViewController.swift in Sources */,
 				784B023A2937579F004ED20A /* MyPageViewModel.swift in Sources */,
 				784B02342937579E004ED20A /* MyPageProfileCell.swift in Sources */,
+				789D65BC2978219400156FBD /* TattooImageInputView.swift in Sources */,
 				78D3E93B2977C04B0015BA75 /* TextInputView.swift in Sources */,
 				784B02332937579E004ED20A /* MyPageMenuCell.swift in Sources */,
 				B1DD25DD28EF0BC800103FF1 /* UIColor+.swift in Sources */,
