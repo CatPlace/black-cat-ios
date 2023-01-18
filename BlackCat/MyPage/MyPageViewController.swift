@@ -94,9 +94,9 @@ final class MyPageViewController: UIViewController {
             .drive(with: self) { owner, _ in
                 let vc = ProfileViewController(
                     viewModel: .init(
-                        nameInputViewModel: .init(title: "이름"),
-                        emailInputViewModel: .init(title: "이메일"),
-                        phoneNumberInputViewModel: .init(title: "전화번호"),
+                        nameInputViewModel: .init(type: .profileName),
+                        emailInputViewModel: .init(type: .profileEmail),
+                        phoneNumberInputViewModel: .init(type: .profliePhoneNumber),
                         genderInputViewModel: .init(),
                         areaInputViewModel: .init()
                     )
