@@ -46,9 +46,9 @@ class ProfileViewController: UIViewController {
     
     // MARK: - Initializer
     init(viewModel: ProfileViewModel) {
-        nameInputView = ProfileTextInputView(viewModel: viewModel.nameInputViewModel)
-        emailInputView = ProfileTextInputView(viewModel: viewModel.emailInputViewModel)
-        phoneNumberInputView = ProfileTextInputView(viewModel: viewModel.phoneNumberInputViewModel)
+        nameInputView = SimpleInputView(viewModel: viewModel.nameInputViewModel)
+        emailInputView = SimpleInputView(viewModel: viewModel.emailInputViewModel)
+        phoneNumberInputView = SimpleInputView(viewModel: viewModel.phoneNumberInputViewModel)
         genderInputView = GenderInputView(viewModel: viewModel.genderInputViewModel)
         areaInputView = AreaInputView(viewModel: viewModel.areaInputViewModel)
         
@@ -77,9 +77,9 @@ class ProfileViewController: UIViewController {
         v.layer.cornerRadius = view.frame.width * 4 / 25
         return v
     }()
-    let nameInputView: ProfileTextInputView
-    let emailInputView: ProfileTextInputView
-    let phoneNumberInputView: ProfileTextInputView
+    let nameInputView: SimpleInputView
+    let emailInputView: SimpleInputView
+    let phoneNumberInputView: SimpleInputView
     var HLineView: UIView = {
         $0.backgroundColor = UIColor(hex: "#666666FF")
         return $0

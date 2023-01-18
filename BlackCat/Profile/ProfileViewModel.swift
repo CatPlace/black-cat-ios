@@ -17,9 +17,9 @@ class ProfileViewModel {
     }
     
     // MARK: - SubViewModels
-    let nameInputViewModel: ProfileTextInputViewModel
-    let emailInputViewModel: ProfileTextInputViewModel
-    let phoneNumberInputViewModel: ProfileTextInputViewModel
+    let nameInputViewModel: SimpleInputViewModel
+    let emailInputViewModel: SimpleInputViewModel
+    let phoneNumberInputViewModel: SimpleInputViewModel
     let genderInputViewModel: GenderInputViewModel
     let areaInputViewModel: AreaInputViewModel
     
@@ -31,9 +31,9 @@ class ProfileViewModel {
     let completeAlertDriver: Driver<Purpose>
     let alertMassageDriver: Driver<String>
     
-    init(nameInputViewModel: ProfileTextInputViewModel,
-         emailInputViewModel: ProfileTextInputViewModel,
-         phoneNumberInputViewModel: ProfileTextInputViewModel,
+    init(nameInputViewModel: SimpleInputViewModel,
+         emailInputViewModel: SimpleInputViewModel,
+         phoneNumberInputViewModel: SimpleInputViewModel,
          genderInputViewModel: GenderInputViewModel,
          areaInputViewModel: AreaInputViewModel,
          type: Purpose = .edit) {
