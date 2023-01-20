@@ -19,14 +19,14 @@ class TattooImageInputViewModel {
     let cellViewModelsDrvier: Driver<[Data?]>
     let countLimitLabelTextDriver: Driver<String>
     
-    init(imageDataList: [Data] = [Data(), Data()]) {
+    init(imageDataList: [Data] = []) {
         var imageDataListInitialValue: Array<Data?> = .init(repeating: nil, count: 5)
         imageDataList.enumerated().forEach { index, data in
             imageDataListInitialValue[index] = data
         }
         
         imageDataListRelay = .init(value: imageDataListInitialValue)
-
+        
         cellViewModelsDrvier = imageDataListRelay
             .asDriver(onErrorJustReturn: [])
         
@@ -54,6 +54,7 @@ class TattooImageInputView: UIView {
             .drive(collectionView.rx.items) { cv, row, viewModel in
                 let cell = cv.dequeue(Reusable.tattooImageInputCell, for: IndexPath(row: row, section: 0))
                 cell.configureCell(with: viewModel)
+                
                 return cell
             }.disposed(by: disposeBag)
         
@@ -68,7 +69,6 @@ class TattooImageInputView: UIView {
         super.init(frame: .zero)
         bind(to: viewModel)
         setUI()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -121,8 +121,8 @@ class TattooImageInputView: UIView {
         collectionView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(cellWidth + 2.1)
             $0.bottom.equalToSuperview()
-            $0.height.equalTo(cellWidth + 2)
         }
     }
 }
@@ -147,6 +147,12 @@ class TattooImageInputCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+        
+    override func prepareForReuse() {
+        imageView.image = nil
+        contentView.backgroundColor = .clear
+        controlImageView.transform = CGAffineTransformIdentity
     }
     
     let imageView = UIImageView()

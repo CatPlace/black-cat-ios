@@ -9,30 +9,7 @@ import UIKit
 import RxSwift
 import RxRelay
 import RxCocoa
-import BlackCatSDK
 import RxKeyboard
-
-enum ProductInputType {
-    case add, modify
-    
-    func title() -> String {
-        switch self {
-        case .add: return "타투 업로드"
-        case .modify: return "타투 수정"
-        }
-    }
-}
-
-class ProductEditViewModel {
-    let tattooImageInputViewModel = TattooImageInputViewModel()
-    let genreInputViewModel = GenreInputViewModel()
-    
-    let type: ProductInputType
-    
-    init(type: ProductInputType) {
-        self.type = type
-    }
-}
 
 class ProductEditViewController: VerticalScrollableViewController {
     // MARK: - Properties
@@ -42,36 +19,57 @@ class ProductEditViewController: VerticalScrollableViewController {
     // MARK: - Binding
     func bind(to viewModel: ProductEditViewModel) {
         tattooImageInputView.collectionView.rx.itemSelected
-            .bind(with: self) { owner, indexPath in
-                owner.didTapCameraImageView()
-                
-            }.disposed(by: disposeBag)
+            .bind(to: viewModel.selectedIndexRelay)
+            .disposed(by: disposeBag)
         
         completeButton.rx.tap
-            .bind { _ in
-                print("타투 수정 페이지 완료 tap")
-            }.disposed(by: disposeBag)
+            .bind(to: viewModel.didTapCompleteButton)
+            .disposed(by: disposeBag)
         
         RxKeyboard.instance.visibleHeight
             .drive(with: self) { owner, keyboardVisibleHeight in
                 owner.updateView(with: keyboardVisibleHeight)
             }.disposed(by: disposeBag)
+        
+        viewModel.limitExcessDriver
+            .drive { _ in
+                print("개수 초과 !")
+            }.disposed(by: disposeBag)
+        
+        viewModel.newImageDataListDrvier
+            .drive(viewModel.tattooImageInputViewModel.imageDataListRelay)
+            .disposed(by: disposeBag)
+        
+        viewModel.showImagePickerViewDriver
+            .drive(with: self) { owner, _ in
+                owner.showImagePickerView()
+            }.disposed(by: disposeBag)
+        
+        viewModel.showWarningRemoveViewDrvier
+            .drive { indexPath, prevData in
+                // TODO: - Alert 후 확인버튼 바인딩
+                viewModel.didTapWariningRemoveViewConfirmButton.accept((indexPath, prevData))
+            }.disposed(by: disposeBag)
+        
+        viewModel.showCompleteAlertViewDriver
+            .drive { _ in
+                print("TODO: 업데이트 됐다고 Alert~")
+            }.disposed(by: disposeBag)
     }
     
-    func didTapCameraImageView() {
+    func showImagePickerView() {
         let imagePickerManager = ImagePickerManager()
-    
+        
         presentImagePicker(imagePickerManager.imagePicker) { _ in
         } deselect: { _ in
         } cancel: { _ in
-        } finish: { [weak self] (assets) in
-            imagePickerManager.convertAssetToImages(assets)
-            print(imagePickerManager.photoImages)
-        } completion: { [weak self] in
-            print(imagePickerManager.photoImages)
+        } finish: { [weak self] assets in
+            guard let self else { return }
+            self.viewModel.imageDataListInputRelay.accept(imagePickerManager.convertAssetToImageDataList(assets))
         }
-    
     }
+    
+    
     
     func updateView(with height: CGFloat) {
         scrollView.snp.updateConstraints {
@@ -90,15 +88,20 @@ class ProductEditViewController: VerticalScrollableViewController {
         }
     }
     // MARK: - Initializer
-    init(viewModel: ProductEditViewModel = ProductEditViewModel(type: .add)) {
+    init(viewModel: ProductEditViewModel = ProductEditViewModel()) {
         self.viewModel = viewModel
-        self.tattooImageInputView = .init(viewModel: viewModel.tattooImageInputViewModel)
-        self.genreInputView = .init(viewModel: viewModel.genreInputViewModel)
+        titleInputView = .init(viewModel: viewModel.titleInputViewModel)
+        tattooImageInputView = .init(viewModel: viewModel.tattooImageInputViewModel)
+        descriptionInputView = .init(viewModel: viewModel.descriptionInputViewModel)
+        genreInputView = .init(viewModel: viewModel.genreInputViewModel)
+        
         super.init(nibName: nil, bundle: nil)
         setUI()
         bind(to: viewModel)
         appendNavigationLeftBackButton()
         appendNavigationLeftLabel(title: viewModel.type.title())
+        view.layoutIfNeeded()
+        print(tattooImageInputView.collectionView.contentSize)
     }
     
     required init?(coder: NSCoder) {
@@ -116,9 +119,9 @@ class ProductEditViewController: VerticalScrollableViewController {
     }
     
     // MARK: - UIComponents
-    let titleInputView = SimpleInputView(viewModel: .init(type: .tattooTitle))
+    let titleInputView:SimpleInputView
     let tattooImageInputView: TattooImageInputView
-    let descriptionInputView = TextInputView(viewModel: .init(title: "내용"))
+    let descriptionInputView:TextInputView
     let genreInputView: GenreInputView
     let firstHLine: UIView = {
         $0.backgroundColor = .init(hex: "#666666FF")
