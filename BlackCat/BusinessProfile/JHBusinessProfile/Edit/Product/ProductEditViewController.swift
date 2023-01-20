@@ -42,8 +42,9 @@ class ProductEditViewController: VerticalScrollableViewController {
     // MARK: - Binding
     func bind(to viewModel: ProductEditViewModel) {
         tattooImageInputView.collectionView.rx.itemSelected
-            .bind { indexPath in
-                print(indexPath, "selected")
+            .bind(with: self) { owner, indexPath in
+                owner.didTapCameraImageView()
+                
             }.disposed(by: disposeBag)
         
         completeButton.rx.tap
@@ -55,6 +56,21 @@ class ProductEditViewController: VerticalScrollableViewController {
             .drive(with: self) { owner, keyboardVisibleHeight in
                 owner.updateView(with: keyboardVisibleHeight)
             }.disposed(by: disposeBag)
+    }
+    
+    func didTapCameraImageView() {
+        let imagePickerManager = ImagePickerManager()
+    
+        presentImagePicker(imagePickerManager.imagePicker) { _ in
+        } deselect: { _ in
+        } cancel: { _ in
+        } finish: { [weak self] (assets) in
+            imagePickerManager.convertAssetToImages(assets)
+            print(imagePickerManager.photoImages)
+        } completion: { [weak self] in
+            print(imagePickerManager.photoImages)
+        }
+    
     }
     
     func updateView(with height: CGFloat) {
@@ -169,51 +185,3 @@ extension ProductEditViewController {
 
 
 
-//import UIKit
-//import BSImagePicker
-//import Photos
-//import RxSwift
-//extension AddProductViewController {
-//    func convertAssetToImages(_ sender: [PHAsset]) {
-//        for i in 0..<sender.count {
-//
-//            let imageManager = PHImageManager.default()
-//            let option = PHImageRequestOptions()
-//            option.isSynchronous = true
-//            option.deliveryMode = .highQualityFormat
-//            imageManager.requestImage(for: sender[i],
-//                                      targetSize: .zero,
-//                                      contentMode: .aspectFill,
-//                                      options: option) { [weak self] (result, info) in
-//                self?.viewModel.photoImages.append(result!)
-//            }
-//
-//        }
-//        self.viewModel.photoInput.onNext(self.viewModel.photoImages)
-//    }
-//}
-//
-////func didTapCameraImageView() {
-////    let imagePicker = ImagePickerController()
-////    imagePicker.settings.fetch.assets.supportedMediaTypes = [.image]
-////
-////    presentImagePicker(imagePicker) { _ in
-////    } deselect: { _ in
-////    } cancel: { _ in
-////    } finish: { [weak self] (assets) in
-////        guard let self else { return }
-////
-////        if assets.count + self.viewModel.photoImages.count < 13 {
-////            self.convertAssetToImages(assets)
-////        } else {
-////            self.photoCount = -1
-////        }
-////    } completion: { [weak self] in
-////        guard let self else { return }
-////        if self.photoCount == -1 {
-////            self.present(AlertViewController(message: "최대 사진 개수를 초과했습니다"), animated: true)
-////            self.photoCount = self.viewModel.photoImages.count
-////        }
-////    }
-////
-////}

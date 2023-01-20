@@ -26,6 +26,8 @@
 		7828DB63295C99410053B0A0 /* JHBPThumbnailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB62295C99410053B0A0 /* JHBPThumbnailImageCell.swift */; };
 		7828DB65295C9D500053B0A0 /* JHBPContentSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB64295C9D500053B0A0 /* JHBPContentSectionHeaderView.swift */; };
 		7828DB69295CB7110053B0A0 /* JHBPMulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB68295CB7110053B0A0 /* JHBPMulticastDelegate.swift */; };
+		78431C96297A91660002F1E7 /* BSImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 78431C95297A91660002F1E7 /* BSImagePicker */; };
+		78431C98297A918D0002F1E7 /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78431C97297A918D0002F1E7 /* ImagePickerManager.swift */; };
 		784B021D29375713004ED20A /* MagazineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B021C29375713004ED20A /* MagazineModel.swift */; };
 		784B021F29375719004ED20A /* MagazineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B021E29375719004ED20A /* MagazineViewModel.swift */; };
 		784B02302937579E004ED20A /* MyPageTestUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B02222937579E004ED20A /* MyPageTestUseCase.swift */; };
@@ -263,6 +265,7 @@
 		7828DB62295C99410053B0A0 /* JHBPThumbnailImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBPThumbnailImageCell.swift; sourceTree = "<group>"; };
 		7828DB64295C9D500053B0A0 /* JHBPContentSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBPContentSectionHeaderView.swift; sourceTree = "<group>"; };
 		7828DB68295CB7110053B0A0 /* JHBPMulticastDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBPMulticastDelegate.swift; sourceTree = "<group>"; };
+		78431C97297A918D0002F1E7 /* ImagePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerManager.swift; sourceTree = "<group>"; };
 		784B021C29375713004ED20A /* MagazineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineModel.swift; sourceTree = "<group>"; };
 		784B021E29375719004ED20A /* MagazineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineViewModel.swift; sourceTree = "<group>"; };
 		784B02222937579E004ED20A /* MyPageTestUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageTestUseCase.swift; sourceTree = "<group>"; };
@@ -486,6 +489,7 @@
 				B1CDE90329169F8E00ACB9AC /* URLNavigator in Frameworks */,
 				B1D3363728F1CA2000826636 /* BlackCatSDK.framework in Frameworks */,
 				B1E3F7D3290ECC0500005F17 /* FlexLayoutYoga in Frameworks */,
+				78431C96297A91660002F1E7 /* BSImagePicker in Frameworks */,
 				B1E3F7D5290ECC0500005F17 /* FlexLayoutYogaKit in Frameworks */,
 				B1E4985D28EE873100B469AC /* RxDataSources in Frameworks */,
 				B1E4984628EE83BD00B469AC /* Realm in Frameworks */,
@@ -860,6 +864,7 @@
 			children = (
 				78277E8C296735CB004CFDF4 /* ProductEditViewController.swift */,
 				789D65BD2978219600156FBD /* Views */,
+				78431C97297A918D0002F1E7 /* ImagePickerManager.swift */,
 			);
 			path = Product;
 			sourceTree = "<group>";
@@ -1444,6 +1449,7 @@
 				B1CDE90229169F8E00ACB9AC /* URLNavigator */,
 				B1E87AEF29195CD800EB28DE /* RxKeyboard */,
 				78277E9429675982004CFDF4 /* VisualEffectView */,
+				78431C95297A91660002F1E7 /* BSImagePicker */,
 			);
 			productName = BlackCat;
 			productReference = B1D79CA728EB0EF9008487D0 /* BlackCat.app */;
@@ -1492,6 +1498,7 @@
 				B1CDE8FF29169F8D00ACB9AC /* XCRemoteSwiftPackageReference "URLNavigator" */,
 				B1E87AEE29195CD800EB28DE /* XCRemoteSwiftPackageReference "RxKeyboard" */,
 				78277E9329675982004CFDF4 /* XCRemoteSwiftPackageReference "VisualEffectView" */,
+				78431C94297A91660002F1E7 /* XCRemoteSwiftPackageReference "BSImagePicker" */,
 			);
 			productRefGroup = B1D79CA828EB0EF9008487D0 /* Products */;
 			projectDirPath = "";
@@ -1602,6 +1609,7 @@
 				B1D5BD2429174EEC00A85D4A /* UIViewController+.swift in Sources */,
 				8E88487C2949C3F80039F99A /* CommonFullImageCell.swift in Sources */,
 				78B00BB928F5661000A9915D /* MagazineTestUseCase.swift in Sources */,
+				78431C98297A918D0002F1E7 /* ImagePickerManager.swift in Sources */,
 				B1D39E6E2923594C0058BE37 /* BPPriceInfoEditReactor.swift in Sources */,
 				B1E3F7BE290EBE3900005F17 /* BPContentCell.Layout.swift in Sources */,
 				B160DBFB28FF3D8E00C0D682 /* BaseTableViewCell.swift in Sources */,
@@ -1997,6 +2005,14 @@
 				minimumVersion = 4.1.0;
 			};
 		};
+		78431C94297A91660002F1E7 /* XCRemoteSwiftPackageReference "BSImagePicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mikaoj/BSImagePicker";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 3.3.0;
+			};
+		};
 		B160DC1228FF535600C0D682 /* XCRemoteSwiftPackageReference "Quick" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Quick/Quick.git";
@@ -2108,6 +2124,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 78277E9329675982004CFDF4 /* XCRemoteSwiftPackageReference "VisualEffectView" */;
 			productName = VisualEffectView;
+		};
+		78431C95297A91660002F1E7 /* BSImagePicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 78431C94297A91660002F1E7 /* XCRemoteSwiftPackageReference "BSImagePicker" */;
+			productName = BSImagePicker;
 		};
 		B160DC1328FF535700C0D682 /* Quick */ = {
 			isa = XCSwiftPackageProductDependency;
