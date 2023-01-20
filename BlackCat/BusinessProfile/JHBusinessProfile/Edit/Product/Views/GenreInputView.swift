@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxRelay
+import BlackCatSDK
 
 enum GenreInput: Int, CaseIterable {
     case lettering
@@ -45,23 +46,48 @@ enum GenreInput: Int, CaseIterable {
         }
     }
 }
-class GenreInputCell {
-    
+
+class GenreInputCellViewModel: HomeGenreCellViewModel {
+    var isSelected: Bool
+    init(genre: Model.Category, isSelected: Bool = false) {
+        self.isSelected = isSelected
+        super.init(with: genre)
+    }
 }
-class GenreInputViewModel {
+
+class GenreInputCell: HomeGenreCell {
     
 }
 
+class GenreInputViewModel {
+    
+    let cellViewModelsDriver: Driver<[GenreInputCellViewModel]>
+    
+    init(genres: Observable<[Model.Category]>, selectedGenres: [Model.Category] = []) {
+        print(genres)
+        cellViewModelsDriver = genres.map { $0 .map { genre in GenreInputCellViewModel(genre: genre,
+                                                                              isSelected: selectedGenres.contains(where: { selectedGenre in
+            return genre.id == selectedGenre.id
+        }) ) } }
+            .asDriver(onErrorJustReturn: [])
+    }
+}
+
 class GenreInputView: UIView {
-//    enum Reusable {
-//        static let genreInputCell = ReusableCell<TattooImageInputCell>()
-//    }
+    enum Reusable {
+        static let genreInputCell = ReusableCell<GenreInputCell>()
+    }
     // MARK: - Properties
     var disposeBag = DisposeBag()
     
     // MARK: - Binding
     func bind(to viewModel: GenreInputViewModel) {
-        
+        viewModel.cellViewModelsDriver
+            .drive(collectionView.rx.items) { cv, row, data in
+                let cell = cv.dequeue(Reusable.genreInputCell, for: .init(row: row, section: 0))
+                print(row, data)
+                return cell
+            }.disposed(by: disposeBag)
     }
     
     // MARK: - Initializer
@@ -88,27 +114,30 @@ class GenreInputView: UIView {
         $0.font = .appleSDGoithcFont(size: 12, style: .medium)
         return $0
     }(UILabel())
-//    lazy var collectionView: UICollectionView = {
-//        let layout = UICollectionViewFlowLayout()
-//        
-//        layout.itemSize = .init(width: cellWidth, height: cellWidth)
-//        layout.scrollDirection = .horizontal
-//        layout.minimumLineSpacing = 1
-//        layout.sectionInset = .init(top: 1, left: 1, bottom: 1, right: 1)
-//        
-//        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-//        cv.backgroundColor = .white
-//        cv.isScrollEnabled = false
-//        cv.showsHorizontalScrollIndicator = false
-//        cv.register(Reusable.tattooImageInputCell)
-//
-//        return cv
-//    }()
+    lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let cellSpacing: CGFloat = 12
+        let sectionLeadingInset: CGFloat = 14
+        let sectionTrailinginset: CGFloat = 14
+        let cellWidth = (UIScreen.main.bounds.width - (cellSpacing * 4) - (sectionLeadingInset + sectionTrailinginset)) / 5
+        layout.itemSize = .init(width: cellWidth, height: cellWidth)
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = cellSpacing
+        layout.sectionInset = .init(top: 1, left: sectionLeadingInset, bottom: 1, right: sectionTrailinginset)
+        
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.backgroundColor = .white
+        cv.isScrollEnabled = false
+        cv.showsHorizontalScrollIndicator = false
+        cv.register(Reusable.genreInputCell)
+
+        return cv
+    }()
 }
 
 extension GenreInputView {
     func setUI() {
-        [titleLabel, descriptionLabel].forEach { addSubview($0) }
+        [titleLabel, descriptionLabel, collectionView].forEach { addSubview($0) }
         
         titleLabel.snp.makeConstraints {
             $0.top.centerX.equalToSuperview()
@@ -117,6 +146,12 @@ extension GenreInputView {
         descriptionLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(10)
             $0.centerX.equalToSuperview()
+        }
+        
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(descriptionLabel.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(600)
             $0.bottom.equalToSuperview()
         }
     }

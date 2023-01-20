@@ -24,6 +24,9 @@ enum ProductInputType {
 
 class ProductEditViewModel {
     
+    // MARK: - Property
+    let type: ProductInputType
+    
     // MARK: - SubViewModels
     let titleInputViewModel: SimpleInputViewModel
     let tattooImageInputViewModel: TattooImageInputViewModel
@@ -44,8 +47,6 @@ class ProductEditViewModel {
     let showImagePickerViewDriver: Driver<Void>
     let showCompleteAlertViewDriver: Driver<Void>
     
-    let type: ProductInputType
-    
     init(tattoo: Model.Tattoo? = nil) {
         self.type = tattoo == nil ? .add : .modify
         
@@ -55,11 +56,17 @@ class ProductEditViewModel {
                 return try? Data(contentsOf: url)
             } ?? []
         
+        let fetcedGenreList = CatSDKNetworkCategory.rx.fetchCategories()
+            .debug("장르 ~")
+            .share()
+        
         // TODO: - 타투모델에 제목이 없음... 왜?
         titleInputViewModel = .init(type: .tattooTitle, content: tattoo?.description)
         tattooImageInputViewModel = .init(imageDataList: initialImageDataList)
         descriptionInputViewModel = .init(title: "내용", content: tattoo?.description ?? "")
-        genreInputViewModel = .init()
+        
+        // TODO: - 타투모델에 장르가 없음... 왜 ?
+        genreInputViewModel = .init(genres: fetcedGenreList)
         
         
         let shouldUpdateData = selectedIndexRelay
@@ -86,7 +93,7 @@ class ProductEditViewModel {
             addedImageDataList,
             removedImageDataList
         ]).share()
-        
+    
         let inputs = Observable.combineLatest(titleInputViewModel.inputStringRelay,
                                                newImageDataList,
                                                descriptionInputViewModel.inputStringRelay
