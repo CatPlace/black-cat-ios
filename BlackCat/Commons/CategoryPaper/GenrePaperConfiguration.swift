@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CategoryPaperConfiguration {
+class GenrePaperConfiguration {
     private let presentationView = PresentationView()
     lazy var tableView = presentationView.tableView
     lazy var backgroundView = presentationView.backgroundView
