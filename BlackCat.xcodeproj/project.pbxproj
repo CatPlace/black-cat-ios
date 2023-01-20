@@ -29,6 +29,8 @@
 		78431C96297A91660002F1E7 /* BSImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 78431C95297A91660002F1E7 /* BSImagePicker */; };
 		78431C98297A918D0002F1E7 /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78431C97297A918D0002F1E7 /* ImagePickerManager.swift */; };
 		78431C9A297B13770002F1E7 /* ProductEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78431C99297B13770002F1E7 /* ProductEditViewModel.swift */; };
+		78431C9C297B18B10002F1E7 /* TattooImageInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78431C9B297B18B10002F1E7 /* TattooImageInputViewModel.swift */; };
+		78431C9F297B190B0002F1E7 /* TattooImageInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78431C9E297B190B0002F1E7 /* TattooImageInputCell.swift */; };
 		784B021D29375713004ED20A /* MagazineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B021C29375713004ED20A /* MagazineModel.swift */; };
 		784B021F29375719004ED20A /* MagazineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B021E29375719004ED20A /* MagazineViewModel.swift */; };
 		784B02302937579E004ED20A /* MyPageTestUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B02222937579E004ED20A /* MyPageTestUseCase.swift */; };
@@ -268,6 +270,8 @@
 		7828DB68295CB7110053B0A0 /* JHBPMulticastDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBPMulticastDelegate.swift; sourceTree = "<group>"; };
 		78431C97297A918D0002F1E7 /* ImagePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerManager.swift; sourceTree = "<group>"; };
 		78431C99297B13770002F1E7 /* ProductEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductEditViewModel.swift; sourceTree = "<group>"; };
+		78431C9B297B18B10002F1E7 /* TattooImageInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooImageInputViewModel.swift; sourceTree = "<group>"; };
+		78431C9E297B190B0002F1E7 /* TattooImageInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooImageInputCell.swift; sourceTree = "<group>"; };
 		784B021C29375713004ED20A /* MagazineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineModel.swift; sourceTree = "<group>"; };
 		784B021E29375719004ED20A /* MagazineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineViewModel.swift; sourceTree = "<group>"; };
 		784B02222937579E004ED20A /* MyPageTestUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageTestUseCase.swift; sourceTree = "<group>"; };
@@ -587,6 +591,14 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		78431C9D297B18EF0002F1E7 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				78431C9E297B190B0002F1E7 /* TattooImageInputCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		784B02202937579E004ED20A /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -688,6 +700,7 @@
 		7867A62629374D0500FC1160 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				78431C97297A918D0002F1E7 /* ImagePickerManager.swift */,
 				78D3E9372977C0040015BA75 /* InputViews */,
 				8ECAF0AB295C3AB10038DC4D /* AskBottomView */,
 				7867A62729374D0500FC1160 /* MulticastDelegate.swift */,
@@ -807,6 +820,7 @@
 			isa = PBXGroup;
 			children = (
 				789D65BB2978219300156FBD /* TattooImageInputView.swift */,
+				78431C9B297B18B10002F1E7 /* TattooImageInputViewModel.swift */,
 				789D65BE2978675300156FBD /* GenreInputView.swift */,
 			);
 			path = Views;
@@ -864,10 +878,10 @@
 		78D3E9342977BDDB0015BA75 /* Product */ = {
 			isa = PBXGroup;
 			children = (
-				78431C99297B13770002F1E7 /* ProductEditViewModel.swift */,
 				78277E8C296735CB004CFDF4 /* ProductEditViewController.swift */,
+				78431C99297B13770002F1E7 /* ProductEditViewModel.swift */,
 				789D65BD2978219600156FBD /* Views */,
-				78431C97297A918D0002F1E7 /* ImagePickerManager.swift */,
+				78431C9D297B18EF0002F1E7 /* Cells */,
 			);
 			path = Product;
 			sourceTree = "<group>";
@@ -1632,6 +1646,7 @@
 				B1D89C91290E7D2100C8B7F1 /* BPContentCell.swift in Sources */,
 				B1E3F7BC290EBABE00005F17 /* BPReviewCell.swift in Sources */,
 				8E2D8C4F28F2ED53004B514D /* HomeHeaderView.swift in Sources */,
+				78431C9F297B190B0002F1E7 /* TattooImageInputCell.swift in Sources */,
 				8E7E9CDA291C8EA700D09157 /* BMTabButton.swift in Sources */,
 				B1E3F7E0290F042B00005F17 /* BPContentCellReactor.swift in Sources */,
 				8E8848812949C3F80039F99A /* CategoryPaperTableViewCell.swift in Sources */,
@@ -1659,6 +1674,7 @@
 				B1E3F7C2290EC1F700005F17 /* BPContentModel.swift in Sources */,
 				B1E3F7C6290EC98600005F17 /* BPBaseCollectionReusableView.swift in Sources */,
 				8E2D8C5A28F2EE69004B514D /* HomeGenreCellViewModel.swift in Sources */,
+				78431C9C297B18B10002F1E7 /* TattooImageInputViewModel.swift in Sources */,
 				78277E882966DC6F004CFDF4 /* JHPBPriceInfoCell.swift in Sources */,
 				B1E3F7D9290EE8CE00005F17 /* BPMultiCastDelegate.swift in Sources */,
 				B1CDE8E02916088F00ACB9AC /* BPProfileModel.swift in Sources */,
