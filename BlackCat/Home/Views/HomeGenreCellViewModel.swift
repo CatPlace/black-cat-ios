@@ -7,10 +7,12 @@
 
 import Foundation
 
-final class HomeCategoryCellViewModel {
-    let category: HomeModel.Category
+import BlackCatSDK
 
-    init(with category: HomeModel.Category) {
+final class HomeGenreCellViewModel {
+    let category: Model.Category
+
+    init(with category: Model.Category) {
         self.category = category
     }
 }

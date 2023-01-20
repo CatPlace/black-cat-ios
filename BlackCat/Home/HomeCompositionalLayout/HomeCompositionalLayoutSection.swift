@@ -8,14 +8,14 @@
 import UIKit
 
 enum HomeCompositionalLayoutSection: Int {
-    case category
+    case genre
     case recommend
     case empty
     case tattooAlbum
 
     func createLayout() -> NSCollectionLayoutSection {
         switch self {
-        case .category:
+        case .genre:
             let itemSpacing: CGFloat = 12
             let sectionLeadingInset: CGFloat = 14
             let sectionTrailinginset: CGFloat = 14

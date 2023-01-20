@@ -13,10 +13,9 @@ import RxDataSources
 import RxSwift
 
 class HomeViewModel {
-    typealias GenreTitle = String
+    typealias Genre = Model.Category
 
     private let disposeBag = DisposeBag()
-    private let categoryItemTitles = Observable<[HomeModel.Category]>.just(HomeModel.Category.default)
 
     // MARK: - Input
 
@@ -30,7 +29,7 @@ class HomeViewModel {
 
     let homeItems: Driver<[HomeSection]>
     let pushToBookmarkViewController: Driver<Void>
-    let pushToGenreViewController: Driver<GenreTitle>
+    let pushToGenreViewController: Driver<Genre>
 
     init() {
         let fetchedRecommendItems = viewDidLoad
@@ -41,6 +40,9 @@ class HomeViewModel {
         let didTapRecommendItem = PublishRelay<Int>()
         let didTapTattooAlbumItem = PublishRelay<Int>()
 
+        let fetchedGenreList = startFetchItems
+            .flatMap { _ in CatSDKNetworkCategory.rx.fetchCategories() }
+
         let fetchedTattooAlbumItems = nextFetchPage
             .distinct()
             .flatMap { nextFetchPage in fetchTattoAlbumItems(at: nextFetchPage) }
@@ -50,15 +52,15 @@ class HomeViewModel {
 
         homeItems = Observable
             .combineLatest(
-                categoryItemTitles, fetchedRecommendItems, fetchedTattooAlbumItems
-            ) { categoryItems, recommendItems, tattooAlbumItems -> [HomeSection] in
+                fetchedGenreList, fetchedRecommendItems, fetchedTattooAlbumItems
+            ) { genreItems, recommendItems, tattooAlbumItems -> [HomeSection] in
                 [HomeSection(header: .empty,
-                             items: categoryItems.map { .categoryCell(HomeCategoryCellViewModel(with: $0)) }),
-                 HomeSection(header: .title("추천 항목"),
+                             items: genreItems.map { .genreCell(HomeGenreCellViewModel(with: $0)) }),
+                 HomeSection(header: .title("추천 타투"),
                              items: recommendItems.map { .recommendCell(CommonTattooInfoCellViewModel(tattoo: $0)) }),
                  HomeSection(header: .empty,
                              items: [.emptyCell(HomeModel.Empty())]),
-                 HomeSection(header: .title("전체 보기"),
+                 HomeSection(header: .title("실시간 인기 타투"),
                              items: tattooAlbumItems.map { .allTattoosCell(HomeTattooAlbumCellViewModel(with: $0)) })]
             }
             .asDriver(onErrorJustReturn: [])
@@ -71,6 +73,7 @@ class HomeViewModel {
         func fetchTattoAlbumItems(at page: Int) -> Observable<[HomeModel.TattooAlbum]> {
             return .just(Array(repeating: HomeModel.TattooAlbum(imageURLString: ""), count: 15))
         }
+
         didTapCollectionViewItem
             .bind { indexPath in
                 switch indexPath.section {
@@ -83,10 +86,10 @@ class HomeViewModel {
             .disposed(by: disposeBag)
 
         pushToGenreViewController = didTapGenreItem
-            .withLatestFrom(categoryItemTitles) { index, titles in
-                titles[index].title
+            .withLatestFrom(fetchedGenreList) { index, list in
+                list[index]
             }
-            .asDriver(onErrorJustReturn: "")
+            .asDriver(onErrorJustReturn: Model.Category(id: 0, name: "", count: 0))
     }
 }
 

@@ -7,11 +7,12 @@
 
 import UIKit
 
+import BlackCatSDK
 import RxCocoa
 import RxSwift
 import SnapKit
 
-class HomeCategoryCell: UICollectionViewCell {
+class HomeGenreCell: UICollectionViewCell {
 
     // MARK: - Properties
     
@@ -19,8 +20,8 @@ class HomeCategoryCell: UICollectionViewCell {
 
     // MARK: - Binding
 
-    func bind(to viewModel: HomeCategoryCellViewModel) {
-        categoryTitleLabel.text = viewModel.category.title
+    func bind(to viewModel: HomeGenreCellViewModel) {
+        categoryTitleLabel.text = viewModel.category.name
     }
 
     // MARK: - Initializing
@@ -40,7 +41,7 @@ class HomeCategoryCell: UICollectionViewCell {
     let categoryTitleLabel = UILabel()
 }
 
-extension HomeCategoryCell {
+extension HomeGenreCell {
     private func setUI() {
         layer.cornerRadius = 12
         layer.masksToBounds = true

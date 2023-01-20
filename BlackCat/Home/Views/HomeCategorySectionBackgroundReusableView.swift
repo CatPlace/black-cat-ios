@@ -7,11 +7,11 @@
 
 import UIKit
 
-class HomeCategorySectionBackgroundReusableView: UICollectionReusableView {
+class HomeGenreSectionBackgroundReusableView: UICollectionReusableView {
 
     // MARK: - Properties
 
-    static let identifier = String(describing: HomeCategorySectionBackgroundReusableView.self)
+    static let identifier = String(describing: HomeGenreSectionBackgroundReusableView.self)
 
     // MARK: - Initializing
 

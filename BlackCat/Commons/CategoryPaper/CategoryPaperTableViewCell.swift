@@ -9,14 +9,14 @@ import UIKit
 
 import SnapKit
 
-final class CategoryListTableViewCell: UITableViewCell {
+final class GenreListTableViewCell: UITableViewCell {
 
-    static let identifier = String(describing: CategoryListTableViewCell.self)
+    static let identifier = String(describing: GenreListTableViewCell.self)
 
     // MARK: - Functions
 
-    func configure(with categoryName: String) {
-        categoryLabel.text = categoryName
+    func configure(with genreName: String) {
+        genreLabel.text = genreName
     }
 
     // MARK: - Initializing
@@ -36,7 +36,7 @@ final class CategoryListTableViewCell: UITableViewCell {
 
     // MARK: - UIComponents
 
-    private let categoryLabel: UILabel = {
+    private let genreLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
         label.textAlignment = .center
@@ -46,11 +46,11 @@ final class CategoryListTableViewCell: UITableViewCell {
     }()
 }
 
-extension CategoryListTableViewCell {
+extension GenreListTableViewCell {
     private func setUI() {
-        contentView.addSubview(categoryLabel)
+        contentView.addSubview(genreLabel)
 
-        categoryLabel.snp.makeConstraints {
+        genreLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(10)
             $0.top.bottom.equalToSuperview()
         }

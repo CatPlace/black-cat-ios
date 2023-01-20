@@ -13,11 +13,15 @@ import RxDataSources
 import RxSwift
 import SnapKit
 
+// TODO: - 2023.01.20
+// 1. Category -> Genre 네이밍 변경
+// 2. CategoryCell, ViewModel 글로벌하게
+
 class HomeViewController: UIViewController {
 
     let disposeBag = DisposeBag()
     enum Reusable {
-        static let categoryCell = ReusableCell<HomeCategoryCell>()
+        static let genreCell = ReusableCell<HomeGenreCell>()
         static let recommendCell = ReusableCell<CommonTattooInfoCell>()
         static let emptyCell = ReusableCell<HomeEmptyCell>()
         static let tattooAlbumCell = ReusableCell<HomeTattooAlbumCell>()
@@ -30,10 +34,10 @@ class HomeViewController: UIViewController {
     private let dataSource = RxCollectionViewSectionedReloadDataSource<HomeSection>(
         configureCell: { _, collectionView, indexPath, item in
             switch item {
-            case .categoryCell(let categoryCellViewModel):
-                let cell = collectionView.dequeue(Reusable.categoryCell, for: indexPath)
+            case .genreCell(let genreCellViewModel):
+                let cell = collectionView.dequeue(Reusable.genreCell, for: indexPath)
 
-                cell.bind(to: categoryCellViewModel)
+                cell.bind(to: genreCellViewModel)
                 return cell
             case .recommendCell(let recommendCellViewModel):
                 let cell = collectionView.dequeue(Reusable.recommendCell, for: indexPath)
@@ -104,8 +108,8 @@ class HomeViewController: UIViewController {
 
         viewModel.pushToGenreViewController
             .debug()
-            .drive(with: self) { owner, genreTitle in
-                let genreViewController = GenreViewController(viewModel: .init(genreTitle: genreTitle))
+            .drive(with: self) { owner, genre in
+                let genreViewController = GenreViewController(viewModel: .init(genre: genre))
                 genreViewController.hidesBottomBarWhenPushed = true
                 owner.navigationController?.pushViewController(genreViewController, animated: true)
             }
@@ -158,7 +162,7 @@ class HomeViewController: UIViewController {
                                    collectionViewLayout: compositionalLayout)
 
         cv.backgroundColor = .init(hex: "#F4F4F4FF")
-        cv.register(Reusable.categoryCell)
+        cv.register(Reusable.genreCell)
         cv.register(Reusable.recommendCell)
         cv.register(Reusable.emptyCell)
         cv.register(Reusable.tattooAlbumCell)
@@ -174,8 +178,8 @@ class HomeViewController: UIViewController {
             return sectionType.createLayout()
         }
 
-        layout.register(HomeCategorySectionBackgroundReusableView.self,
-                        forDecorationViewOfKind: HomeCategorySectionBackgroundReusableView.identifier)
+        layout.register(HomeGenreSectionBackgroundReusableView.self,
+                        forDecorationViewOfKind: HomeGenreSectionBackgroundReusableView.identifier)
 
         return layout
     }()

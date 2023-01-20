@@ -10,8 +10,8 @@ import UIKit
 final class PresentationView {
     let tableView: UITableView = {
         let tv = UITableView()
-        tv.register(CategoryListTableViewCell.self,
-                    forCellReuseIdentifier: CategoryListTableViewCell.identifier)
+        tv.register(GenreListTableViewCell.self,
+                    forCellReuseIdentifier: GenreListTableViewCell.identifier)
         tv.separatorStyle = .none
         tv.layer.cornerRadius = 30
         tv.isScrollEnabled = false
