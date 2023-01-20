@@ -102,9 +102,16 @@ class BaseTextView: UITextView {
 }
 
 struct TextInputViewModel {
+    
+    // MARK: - SubViewModels
     let baseTextViewModel: BaseTextViewModel
-    let textCountLimitDriver: Driver<String>
+    
+    // MARK: - Input
     let inputStringRelay: BehaviorRelay<String>
+    
+    // MARK: - Output
+    let textCountLimitDriver: Driver<String>
+    
     
     // MARK: - Output
     let titleStringDriver: Driver<String>
