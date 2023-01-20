@@ -86,8 +86,8 @@ class BaseTextView: UITextView {
         sizeToFit()
         isScrollEnabled = false
         font = .appleSDGoithcFont(size: 12, style: .medium)
-        contentInset = .init(top: 5, left: 5, bottom: -5, right: 5)
-        textContainerInset = .init(top: 0, left: 0, bottom: 10, right: 10)
+        contentInset = .init(top: 5, left: 5, bottom: 0, right: 0)
+        textContainerInset = .init(top: 8, left: 0, bottom: 28, right: 8)
         placeholerLabel.numberOfLines = 0
     }
     

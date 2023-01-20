@@ -112,19 +112,19 @@ class SimpleInputView: UIView {
     // MARK: - UIComponents
     let titleLabel: UILabel = {
         $0.textColor = .init(hex: "#666666FF")
-        $0.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 16)
+        $0.font = .appleSDGoithcFont(size: 16, style: .bold)
         return $0
     }(UILabel())
     let profileTextField: UITextField = {
         $0.setLeftPaddingPoints(10)
         $0.textColor = .init(hex: "#999999FF")
-        $0.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 12)
+        $0.font = .appleSDGoithcFont(size: 12, style: .regular)
         return $0
     }(UITextField())
     let textCountLimitLabel: UILabel = {
         let l = UILabel()
         $0.textColor = .init(hex: "#999999FF")
-        $0.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 12)
+        $0.font = .appleSDGoithcFont(size: 12, style: .regular)
         return $0
     }(UILabel())
 }
