@@ -64,6 +64,8 @@
 		78858BEC28F6F4E400EC7BF7 /* MagazineSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78858BEB28F6F4E300EC7BF7 /* MagazineSection.swift */; };
 		789D65BA2978043000156FBD /* VerticalScrollableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D65B92978043000156FBD /* VerticalScrollableViewController.swift */; };
 		789D65BC2978219400156FBD /* TattooImageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D65BB2978219300156FBD /* TattooImageInputView.swift */; };
+		789D65BF2978675300156FBD /* GenreInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D65BE2978675300156FBD /* GenreInputView.swift */; };
+		789D65C129786A9200156FBD /* CompleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D65C029786A9200156FBD /* CompleteButton.swift */; };
 		78B00BB728F5661000A9915D /* RecentMagazineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BAB28F5661000A9915D /* RecentMagazineCell.swift */; };
 		78B00BB828F5661000A9915D /* LastMagazineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BAC28F5661000A9915D /* LastMagazineCell.swift */; };
 		78B00BB928F5661000A9915D /* MagazineTestUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BAE28F5661000A9915D /* MagazineTestUseCase.swift */; };
@@ -317,6 +319,8 @@
 		78858BEB28F6F4E300EC7BF7 /* MagazineSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineSection.swift; sourceTree = "<group>"; };
 		789D65B92978043000156FBD /* VerticalScrollableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalScrollableViewController.swift; sourceTree = "<group>"; };
 		789D65BB2978219300156FBD /* TattooImageInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooImageInputView.swift; sourceTree = "<group>"; };
+		789D65BE2978675300156FBD /* GenreInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreInputView.swift; sourceTree = "<group>"; };
+		789D65C029786A9200156FBD /* CompleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteButton.swift; sourceTree = "<group>"; };
 		78B00BAB28F5661000A9915D /* RecentMagazineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentMagazineCell.swift; sourceTree = "<group>"; };
 		78B00BAC28F5661000A9915D /* LastMagazineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastMagazineCell.swift; sourceTree = "<group>"; };
 		78B00BAE28F5661000A9915D /* MagazineTestUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineTestUseCase.swift; sourceTree = "<group>"; };
@@ -797,6 +801,7 @@
 			isa = PBXGroup;
 			children = (
 				789D65BB2978219300156FBD /* TattooImageInputView.swift */,
+				789D65BE2978675300156FBD /* GenreInputView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1037,6 +1042,7 @@
 			isa = PBXGroup;
 			children = (
 				8ECAF0AC295C3AC70038DC4D /* AskBottomView.swift */,
+				789D65C029786A9200156FBD /* CompleteButton.swift */,
 			);
 			path = AskBottomView;
 			sourceTree = "<group>";
@@ -1649,6 +1655,7 @@
 				782728B4295A934C00049436 /* ProfileViewController.swift in Sources */,
 				B1D79CAB28EB0EF9008487D0 /* AppDelegate.swift in Sources */,
 				B1E986AE28FE8D4F00962F5B /* BaseRealmProtocol.swift in Sources */,
+				789D65BF2978675300156FBD /* GenreInputView.swift in Sources */,
 				B1D3362528F142A400826636 /* CALayer+.swift in Sources */,
 				8E7E9CDC291C8EA700D09157 /* BMTabBarCornerStyle.swift in Sources */,
 				B1D89C87290E78AF00C8B7F1 /* BusinessProfileViewController.swift in Sources */,
@@ -1694,6 +1701,7 @@
 				784B023A2937579F004ED20A /* MyPageViewModel.swift in Sources */,
 				784B02342937579E004ED20A /* MyPageProfileCell.swift in Sources */,
 				789D65BC2978219400156FBD /* TattooImageInputView.swift in Sources */,
+				789D65C129786A9200156FBD /* CompleteButton.swift in Sources */,
 				78D3E93B2977C04B0015BA75 /* TextInputView.swift in Sources */,
 				784B02332937579E004ED20A /* MyPageMenuCell.swift in Sources */,
 				B1DD25DD28EF0BC800103FF1 /* UIColor+.swift in Sources */,
