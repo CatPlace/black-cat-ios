@@ -13,7 +13,7 @@ enum PresentationStyle {
 }
 
 extension PresentationStyle {
-    func show(withConfiguration configuration: CategoryPaperConfiguration) {
+    func show(withConfiguration configuration: GenrePaperConfiguration) {
         switch self {
         case .dropDown:
             showDropDown(withConfiguration: configuration)
@@ -22,7 +22,7 @@ extension PresentationStyle {
         }
     }
 
-    func hide(withConfiguration configuration: CategoryPaperConfiguration) {
+    func hide(withConfiguration configuration: GenrePaperConfiguration) {
         switch self {
         case .dropDown:
             hideDropDown(withConfiguration: configuration)
@@ -31,7 +31,7 @@ extension PresentationStyle {
         }
     }
 
-    private func showDropDown(withConfiguration configuration: CategoryPaperConfiguration) {
+    private func showDropDown(withConfiguration configuration: GenrePaperConfiguration) {
         let tableView = configuration.tableView
         let backgroundView = configuration.backgroundView
 
@@ -45,7 +45,7 @@ extension PresentationStyle {
         }
     }
 
-    private func hideDropDown(withConfiguration configuration: CategoryPaperConfiguration) {
+    private func hideDropDown(withConfiguration configuration: GenrePaperConfiguration) {
         let tableView = configuration.tableView
         let backgroundView = configuration.backgroundView
         let menuWrapper = configuration.menuWrapper
@@ -62,7 +62,7 @@ extension PresentationStyle {
         }
     }
 
-    private func showDissolve(withConfiguration configuration: CategoryPaperConfiguration) {
+    private func showDissolve(withConfiguration configuration: GenrePaperConfiguration) {
         let tableView = configuration.tableView
         let backgroundView = configuration.backgroundView
         tableView.alpha = 0
@@ -77,7 +77,7 @@ extension PresentationStyle {
         }
     }
 
-    private func hideDissolve(withConfiguration configuration: CategoryPaperConfiguration) {
+    private func hideDissolve(withConfiguration configuration: GenrePaperConfiguration) {
         let tableView = configuration.tableView
         let backgroundView = configuration.backgroundView
         let menuWrapper = configuration.menuWrapper

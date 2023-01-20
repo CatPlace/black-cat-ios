@@ -16,7 +16,6 @@ class HomeViewModel {
     typealias Genre = Model.Category
 
     private let disposeBag = DisposeBag()
-    private let categoryItemTitles = Observable<[HomeModel.Category]>.just(HomeModel.Category.default)
 
     // MARK: - Input
 
@@ -41,7 +40,7 @@ class HomeViewModel {
         let didTapRecommendItem = PublishRelay<Int>()
         let didTapTattooAlbumItem = PublishRelay<Int>()
 
-        let fetchedCategoryList = startFetchItems
+        let fetchedGenreList = startFetchItems
             .flatMap { _ in CatSDKNetworkCategory.rx.fetchCategories() }
 
         let fetchedTattooAlbumItems = nextFetchPage
@@ -53,15 +52,15 @@ class HomeViewModel {
 
         homeItems = Observable
             .combineLatest(
-                fetchedCategoryList, fetchedRecommendItems, fetchedTattooAlbumItems
-            ) { categoryItems, recommendItems, tattooAlbumItems -> [HomeSection] in
+                fetchedGenreList, fetchedRecommendItems, fetchedTattooAlbumItems
+            ) { genreItems, recommendItems, tattooAlbumItems -> [HomeSection] in
                 [HomeSection(header: .empty,
-                             items: categoryItems.map { .categoryCell(HomeCategoryCellViewModel(with: $0)) }),
-                 HomeSection(header: .title("추천 항목"),
+                             items: genreItems.map { .genreCell(HomeGenreCellViewModel(with: $0)) }),
+                 HomeSection(header: .title("추천 타투"),
                              items: recommendItems.map { .recommendCell(CommonTattooInfoCellViewModel(tattoo: $0)) }),
                  HomeSection(header: .empty,
                              items: [.emptyCell(HomeModel.Empty())]),
-                 HomeSection(header: .title("전체 보기"),
+                 HomeSection(header: .title("실시간 인기 타투"),
                              items: tattooAlbumItems.map { .allTattoosCell(HomeTattooAlbumCellViewModel(with: $0)) })]
             }
             .asDriver(onErrorJustReturn: [])
@@ -87,7 +86,7 @@ class HomeViewModel {
             .disposed(by: disposeBag)
 
         pushToGenreViewController = didTapGenreItem
-            .withLatestFrom(fetchedCategoryList) { index, list in
+            .withLatestFrom(fetchedGenreList) { index, list in
                 list[index]
             }
             .asDriver(onErrorJustReturn: Model.Category(id: 0, name: "", count: 0))

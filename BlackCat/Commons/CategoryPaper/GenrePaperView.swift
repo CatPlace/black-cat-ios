@@ -12,7 +12,7 @@ import RxSwift
 import SnapKit
 
 /// intrinsic size가 있습니다.
-class CategoryPaperView: UIView {
+class GenrePaperView: UIView {
 
     // MARK: - Properties
 
@@ -89,11 +89,11 @@ class CategoryPaperView: UIView {
 
     func configure(with items: [String], title: String) {
         self.items = items
-        categoryTitleLabel.text = title
+        genreTitleLabel.text = title
     }
 
     @objc
-    private func didTapCategoryTitleView() {
+    private func didTapGenreTitleView() {
         if isShown {
             hidePresentationView()
         } else {
@@ -141,7 +141,7 @@ class CategoryPaperView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        categoryTitleView.snp.updateConstraints {
+        genreTitleView.snp.updateConstraints {
             $0.width.equalTo(width)
         }
         tableViewFrame = self.globalFrame ?? .zero
@@ -149,11 +149,11 @@ class CategoryPaperView: UIView {
 
     // MARK: - UIComponents
 
-    let configuration = CategoryPaperConfiguration()
+    let configuration = GenrePaperConfiguration()
 
-    private let categoryTitleView = UIView()
+    private let genreTitleView = UIView()
 
-    let categoryTitleLabel: UILabel = {
+    let genreTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20, weight: .semibold)
         label.adjustsFontSizeToFitWidth = true
@@ -169,26 +169,26 @@ class CategoryPaperView: UIView {
     }()
 }
 
-extension CategoryPaperView {
+extension GenrePaperView {
     private func setUI() {
         let dismissListGesture = UITapGestureRecognizer(target: self,
-                                                        action: #selector(didTapCategoryTitleView))
+                                                        action: #selector(didTapGenreTitleView))
         let backgroundView = configuration.backgroundView
 
         backgroundView.addGestureRecognizer(dismissListGesture)
 
-        addSubview(categoryTitleView)
-        categoryTitleView.snp.makeConstraints {
+        addSubview(genreTitleView)
+        genreTitleView.snp.makeConstraints {
             $0.top.bottom.leading.equalToSuperview()
             $0.width.equalTo(width)
             $0.trailing.equalToSuperview()
         }
 
-        categoryTitleView.addGestureRecognizer(
-            UITapGestureRecognizer(target: self,action: #selector(didTapCategoryTitleView))
+        genreTitleView.addGestureRecognizer(
+            UITapGestureRecognizer(target: self,action: #selector(didTapGenreTitleView))
         )
 
-        categoryTitleView.addSubview(arrowImageView)
+        genreTitleView.addSubview(arrowImageView)
 
         arrowImageView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(18)
@@ -197,9 +197,9 @@ extension CategoryPaperView {
             $0.height.equalTo(10)
         }
 
-        categoryTitleView.addSubview(categoryTitleLabel)
+        genreTitleView.addSubview(genreTitleLabel)
 
-        categoryTitleLabel.snp.makeConstraints {
+        genreTitleLabel.snp.makeConstraints {
             $0.top.leading.equalToSuperview().inset(10)
             $0.bottom.equalToSuperview().inset(8)
             $0.trailing.equalTo(arrowImageView.snp.leading).offset(-10)
@@ -235,7 +235,7 @@ extension CategoryPaperView {
     }
 }
 
-extension Reactive where Base: CategoryPaperView {
+extension Reactive where Base: GenrePaperView {
     var itemSelected: ControlEvent<IndexPath> {
         return base.configuration.tableView.rx.itemSelected
     }

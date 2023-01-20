@@ -62,7 +62,7 @@ class GenreViewModel {
 
     // MARK: - Input
 
-    private let categoryList = Observable<[String]>.just(["전체보기", "레터링", "미니 타투", "감성 타투", "이레즈미", "블랙&그레이", "라인워크", "헤나", "커버업", "뉴스쿨", "올드스쿨", "잉크 스플래쉬", "치카노", "컬러", "캐릭터"])
+    private let genreList = Observable<[String]>.just(["전체보기", "레터링", "미니 타투", "감성 타투", "이레즈미", "블랙&그레이", "라인워크", "헤나", "커버업", "뉴스쿨", "올드스쿨", "잉크 스플래쉬", "치카노", "컬러", "캐릭터"])
     let viewWillAppear = PublishRelay<Void>()
     let filterViewDidDismiss = PublishRelay<Void>()
     let selectedDropDownItemRow = PublishRelay<Int>()
@@ -72,7 +72,7 @@ class GenreViewModel {
 
     let dropDownItems: Driver<[String]>
     // Home에서도 사용하는 Cell이라 Common으로 이동할 필요가 있어 보입니다.
-    let categoryItems: Driver<[CommonFullImageCellViewModel]>
+    let genreItems: Driver<[CommonFullImageCellViewModel]>
     let pushToTattooDetailVC: Driver<TattooDetailViewModel>
 
     init(genre: Model.Category) {
@@ -121,10 +121,10 @@ class GenreViewModel {
             }
 
         dropDownItems = viewWillAppear
-            .withLatestFrom(categoryList)
+            .withLatestFrom(genreList)
             .asDriver(onErrorJustReturn: [])
 
-        categoryItems = fetchedItems
+        genreItems = fetchedItems
             .map { tattoos in
                 return tattoos.map { tattoo -> CommonFullImageCellViewModel in
                     if let imageURLString = tattoo.imageURLStrings.first {

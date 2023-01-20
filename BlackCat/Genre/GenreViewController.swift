@@ -74,7 +74,7 @@ class GenreViewController: UIViewController {
             }
             .disposed(by: disposeBag)
 
-        viewModel.categoryItems
+        viewModel.genreItems
             .drive(collectionView.rx.items(Reusable.genreCell)) { _, viewModel, cell in
                 cell.bind(to: viewModel)
             }
@@ -111,8 +111,8 @@ class GenreViewController: UIViewController {
     }
 
     // MARK: - UIComponents
-    private let dropDown: CategoryPaperView = {
-        let view = CategoryPaperView()
+    private let dropDown: GenrePaperView = {
+        let view = GenrePaperView()
         view.presentationStyle = .dissolveAtCenter
         view.width = UIScreen.main.bounds.size.width * 157 / 375
         view.cellHeight = 35

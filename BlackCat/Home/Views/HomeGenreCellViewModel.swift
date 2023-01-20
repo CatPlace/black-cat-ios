@@ -9,7 +9,7 @@ import Foundation
 
 import BlackCatSDK
 
-final class HomeCategoryCellViewModel {
+final class HomeGenreCellViewModel {
     let category: Model.Category
 
     init(with category: Model.Category) {
