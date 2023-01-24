@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import BlackCatSDK
 
 extension MyPageViewController {
     func createLayout() -> UICollectionViewCompositionalLayout {
@@ -22,7 +23,7 @@ extension MyPageViewController {
     
     func profileSection() -> NSCollectionLayoutSection {
         let itemWidthRatio: CGFloat = 335 / 375
-        let itemHeightRatio: CGFloat = 82 / 335
+        let itemHeightRatio: CGFloat = (CatSDKUser.userType() == .business ? 131 : 82) / 335
         let itemLeadingTrailingInset: CGFloat = view.frame.width * (1 - itemWidthRatio) / 2.0
         
         let itemSize = NSCollectionLayoutSize(

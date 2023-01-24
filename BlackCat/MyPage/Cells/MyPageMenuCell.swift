@@ -14,9 +14,15 @@ import RxRelay
 class MyPageMenuCellViewModel {
     
     let titleDriver: Driver<String>
-    
+    let backgroundColorDriver: Driver<UIColor?>
+    let textColorDriver: Driver<UIColor?>
+    let chevronRightIsHiddenDriver: Driver<Bool>
     init(type: MyPageMenuType) {
         titleDriver = .just(type.menuTitle())
+        let isAdditionalMenu = (type == .login || type == .upgrade)
+        textColorDriver = .just(isAdditionalMenu ? .white : .init(hex: "#666666FF"))
+        backgroundColorDriver = .just(isAdditionalMenu ? .init(hex: "#7210A0FF") : .white)
+        chevronRightIsHiddenDriver = .just(isAdditionalMenu)
     }
 }
 
@@ -26,14 +32,13 @@ class MyPageMenuCell: MyPageBaseCell {
     
     // MARK: - Initializer
     override func initialize() {
-        configureCell()
+        configureCell(y: 4)
         setUI()
     }
     
     // MARK: - Life Cycle
     override func prepareForReuse() {
         disposeBag = DisposeBag()
-        
     }
     
     // MARK: - Binding
@@ -41,14 +46,21 @@ class MyPageMenuCell: MyPageBaseCell {
         viewModel.titleDriver
             .drive(titleLabel.rx.text)
             .disposed(by: disposeBag)
+        
+        viewModel.textColorDriver
+            .drive(titleLabel.rx.textColor)
+            .disposed(by: disposeBag)
+        
+        viewModel.backgroundColorDriver
+            .drive(contentView.rx.backgroundColor)
+            .disposed(by: disposeBag)
     }
     
     // MARK: - UIComponents
     let titleLabel: UILabel = {
-        let l = UILabel()
-        l.textColor = .init(hex: "#666666FF")
-        return l
-    }()
+        $0.font = .appleSDGoithcFont(size: 16, style: .bold)
+        return $0
+    }(UILabel())
     
     func setUI() {
         addSubview(titleLabel)
