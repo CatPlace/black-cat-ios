@@ -49,12 +49,16 @@ class ProductEditViewModel {
     
     init(tattoo: Model.Tattoo? = nil) {
         self.type = tattoo == nil ? .add : .modify
+        var initialImageUrlStrings: [String] = tattoo?.imageURLStrings ?? []
+        var serverImageUrlStrings: [String?] = tattoo?.imageURLStrings ?? []
         
-        let initialImageDataList: [Data] = tattoo?.imageURLStrings
-            .compactMap {
-                guard let url = URL(string: $0) else { return nil }
+        serverImageUrlStrings = ["https://www.chemicalnews.co.kr/news/photo/202106/3636_10174_4958.jpg", "https://www.chemicalnews.co.kr/news/photo/202106/3636_10174_4958.jpg"]
+        
+        let initialImageDataList: [Data] = serverImageUrlStrings
+            .compactMap { urlString in
+                guard let urlString, let url = URL(string: urlString) else { return nil }
                 return try? Data(contentsOf: url)
-            } ?? []
+            }
         
         let fetcedGenreList = CatSDKNetworkCategory.rx.fetchCategories()
             .debug("장르 ~")
@@ -78,6 +82,7 @@ class ProductEditViewModel {
             .withLatestFrom(tattooImageInputViewModel.imageDataListRelay) { inputData, prevData in
                 var newDataList = prevData.compactMap { $0 }
                 newDataList.append(contentsOf: inputData)
+                serverImageUrlStrings.append(contentsOf: Array(repeating: nil, count: inputData.count))
                 return newDataList
             }
         
@@ -85,6 +90,7 @@ class ProductEditViewModel {
             .map { (indexPath, preData) in
                 var newData = preData
                 newData.remove(at: indexPath.row)
+                serverImageUrlStrings.remove(at: indexPath.row)
                 return newData
             }
         
@@ -92,12 +98,12 @@ class ProductEditViewModel {
             .just(initialImageDataList),
             addedImageDataList,
             removedImageDataList
-        ]).share()
+        ]).share(replay: 1)
     
         let inputs = Observable.combineLatest(titleInputViewModel.inputStringRelay,
                                                newImageDataList,
                                                descriptionInputViewModel.inputStringRelay
-                                              ).share()
+        ).share()
         
         
         showWarningRemoveViewDrvier = shouldUpdateData
@@ -126,7 +132,11 @@ class ProductEditViewModel {
             .asDriver(onErrorJustReturn: ())
         
         showCompleteAlertViewDriver = didTapCompleteButton
+        // TODO: -
+        //  deletedImageUrl = initialImageUrlStrings 순회 -> serverImageUrlStrings에 없는거
+        // addedImageData = serverImageUrlStrings이 nil이면 그 인덱스에 해당하는 이미지 Data들
             .withLatestFrom(inputs)
+            .do { _ in print(serverImageUrlStrings) }
             .debug("TODO: - 서버 통신")
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())

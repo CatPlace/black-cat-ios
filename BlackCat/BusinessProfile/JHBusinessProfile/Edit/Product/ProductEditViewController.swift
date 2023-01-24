@@ -26,6 +26,11 @@ class ProductEditViewController: VerticalScrollableViewController {
             .bind(to: viewModel.didTapCompleteButton)
             .disposed(by: disposeBag)
         
+        viewModel.showCompleteAlertViewDriver
+            .drive { _ in
+                print("TODO: 업데이트 됐다고 Alert~")
+            }.disposed(by: disposeBag)
+        
         RxKeyboard.instance.visibleHeight
             .drive(with: self) { owner, keyboardVisibleHeight in
                 owner.updateView(with: keyboardVisibleHeight)
@@ -51,10 +56,7 @@ class ProductEditViewController: VerticalScrollableViewController {
                 viewModel.didTapWariningRemoveViewConfirmButton.accept((indexPath, prevData))
             }.disposed(by: disposeBag)
         
-        viewModel.showCompleteAlertViewDriver
-            .drive { _ in
-                print("TODO: 업데이트 됐다고 Alert~")
-            }.disposed(by: disposeBag)
+
     }
     
     func showImagePickerView() {
