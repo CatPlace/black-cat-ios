@@ -57,7 +57,9 @@ class ProductEditViewModel {
         let initialImageDataList: [Data] = serverImageUrlStrings
             .compactMap { urlString in
                 guard let urlString, let url = URL(string: urlString) else { return nil }
-                return try? Data(contentsOf: url)
+                return url
+            }.flatMap {
+
             }
         
         let fetcedGenreList = CatSDKNetworkCategory.rx.fetchCategories()

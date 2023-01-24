@@ -8,10 +8,7 @@
 import UIKit
 import RxSwift
 import RxKeyboard
-
-class ProfileEditViewModel {
-    
-}
+import PhotosUI
 
 class ProfileEditViewController: VerticalScrollableViewController {
     // MARK: - Properties
@@ -21,8 +18,8 @@ class ProfileEditViewController: VerticalScrollableViewController {
     // MARK: - Binding
     func bind(to viewModel: ProfileEditViewModel) {
         coverImageChangeButton.rx.tap
-            .bind { _ in
-                print("커버 이미지 교체 tap")
+            .bind(with: self) { owner, _ in
+                owner.openImageLibrary()
             }.disposed(by: disposeBag)
         
         completeButton.rx.tap
@@ -34,8 +31,17 @@ class ProfileEditViewController: VerticalScrollableViewController {
             .drive(with: self) { owner, keyboardVisibleHeight in
                 owner.updateView(with: keyboardVisibleHeight)
             }.disposed(by: disposeBag)
+        
+        viewModel.imageDriver
+            .drive(coverImageView.rx.image)
+            .disposed(by: disposeBag)
     }
     
+    func openImageLibrary() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        present(imagePicker, animated: true)
+    }
    func updateView(with height: CGFloat) {
         scrollView.snp.updateConstraints {
             $0.bottom.equalToSuperview().inset(height)
@@ -132,5 +138,14 @@ extension ProfileEditViewController {
             $0.height.equalTo(Constant.height * 60)
             $0.centerX.equalToSuperview()
         }
+    }
+}
+
+extension ProfileEditViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            // 사진 촬영, 이미지 정보가 넘어옴
+        let selectedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage
+        viewModel.imageRelay.accept(selectedImage)
+        picker.dismiss(animated: true, completion: nil)
     }
 }
