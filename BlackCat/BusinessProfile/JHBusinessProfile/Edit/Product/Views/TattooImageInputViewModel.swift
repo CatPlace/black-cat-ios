@@ -5,7 +5,7 @@
 //  Created by 김지훈 on 2023/01/21.
 //
 
-import Foundation
+import UIKit
 import RxSwift
 import RxCocoa
 import RxRelay
@@ -13,26 +13,31 @@ import BlackCatSDK
 
 class TattooImageInputViewModel {
     // MARK: - Input
-    let imageDataListRelay: BehaviorRelay<[Data?]>
+    let imageDataListRelay: BehaviorRelay<[Any]>
     
     // MARK: - Output
-    let cellViewModelsDrvier: Driver<[Data?]>
+    let cellViewModelsDrvier: Driver<[Any?]>
     let countLimitLabelTextDriver: Driver<String>
     
-    init(imageDataList: [Data] = []) {
-        var imageDataListInitialValue: Array<Data?> = .init(repeating: nil, count: 5)
-        imageDataList.enumerated().forEach { index, data in
-            imageDataListInitialValue[index] = data
-        }
-        
-        imageDataListRelay = .init(value: imageDataListInitialValue)
-        
+    init() {
+        imageDataListRelay = .init(value: [])
         cellViewModelsDrvier = imageDataListRelay
+            .debug("셀 븀델")
+            .map(convertToViewImageList)
             .asDriver(onErrorJustReturn: [])
         
         countLimitLabelTextDriver = imageDataListRelay
             .map { "(\($0.compactMap { $0 }.count)/\(5))" }
             .asDriver(onErrorJustReturn: "")
         
+        func convertToViewImageList(_ images: [Any]) -> [Any?] {
+            var viewImageList: Array<Any?> = .init(repeating: nil, count: 5)
+            images.enumerated().forEach { index, image in
+                viewImageList[index] = image
+            }
+            return viewImageList
+        }
+        
+
     }
 }

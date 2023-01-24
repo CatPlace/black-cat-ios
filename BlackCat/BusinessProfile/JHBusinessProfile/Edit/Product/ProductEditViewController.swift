@@ -41,7 +41,8 @@ class ProductEditViewController: VerticalScrollableViewController {
                 print("개수 초과 !")
             }.disposed(by: disposeBag)
         
-        viewModel.newImageDataListDrvier
+        viewModel.imageListDrvier
+            .debug("보내준다")
             .drive(viewModel.tattooImageInputViewModel.imageDataListRelay)
             .disposed(by: disposeBag)
         
@@ -51,9 +52,9 @@ class ProductEditViewController: VerticalScrollableViewController {
             }.disposed(by: disposeBag)
         
         viewModel.showWarningRemoveViewDrvier
-            .drive { indexPath, prevData in
+            .drive { index in
                 // TODO: - Alert 후 확인버튼 바인딩
-                viewModel.didTapWariningRemoveViewConfirmButton.accept((indexPath, prevData))
+                viewModel.didTapWariningRemoveViewConfirmButton.accept(index)
             }.disposed(by: disposeBag)
         
 
@@ -67,7 +68,7 @@ class ProductEditViewController: VerticalScrollableViewController {
         } cancel: { _ in
         } finish: { [weak self] assets in
             guard let self else { return }
-            self.viewModel.imageDataListInputRelay.accept(imagePickerManager.convertAssetToImageDataList(assets))
+            self.viewModel.imageListInputRelay.accept(imagePickerManager.convertAssetToImage(assets))
         }
     }
     

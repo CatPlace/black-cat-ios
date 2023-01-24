@@ -12,8 +12,8 @@ import Photos
 class ImagePickerManager {
     let imagePicker = ImagePickerController()
     
-    func convertAssetToImageDataList(_ sender: [PHAsset]) -> [Data] {
-        var imageDataList: [Data] = []
+    func convertAssetToImage(_ sender: [PHAsset]) -> [UIImage] {
+        var imageDataList: [UIImage] = []
         for i in 0..<sender.count {
             
             let imageManager = PHImageManager.default()
@@ -25,8 +25,8 @@ class ImagePickerManager {
                                       targetSize: .zero,
                                       contentMode: .aspectFill,
                                       options: option) { result, _ in
-                guard let imageData = result?.jpegData(compressionQuality: 0.1) else { return }
-                imageDataList.append(imageData)
+                guard let result else { return }
+                imageDataList.append(result)
             }
         }
         return imageDataList

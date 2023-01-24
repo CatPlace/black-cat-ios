@@ -34,114 +34,99 @@ class ProductEditViewModel {
     let genreInputViewModel: GenreInputViewModel
     
     // MARK: - Input
-    let imageDataListInputRelay = PublishRelay<[Data]>()
+    let imageListInputRelay = PublishRelay<[UIImage]>()
     let selectedIndexRelay = PublishRelay<IndexPath>()
-    let newImageDataListRelay = PublishRelay<[Data]>()
-    let didTapWariningRemoveViewConfirmButton = PublishRelay<(IndexPath, [Data])>()
+    let didTapWariningRemoveViewConfirmButton = PublishRelay<Int>()
     let didTapCompleteButton = PublishRelay<Void>()
     
     // MARK: - Output
-    let newImageDataListDrvier: Driver<[Data?]>
+    let imageListDrvier: Driver<[Any]>
     let limitExcessDriver: Driver<Void>
-    let showWarningRemoveViewDrvier: Driver<(IndexPath, [Data])>
+    let showWarningRemoveViewDrvier: Driver<Int>
     let showImagePickerViewDriver: Driver<Void>
     let showCompleteAlertViewDriver: Driver<Void>
     
     init(tattoo: Model.Tattoo? = nil) {
         self.type = tattoo == nil ? .add : .modify
-        var initialImageUrlStrings: [String] = tattoo?.imageURLStrings ?? []
-        var serverImageUrlStrings: [String?] = tattoo?.imageURLStrings ?? []
-        
-        serverImageUrlStrings = ["https://www.chemicalnews.co.kr/news/photo/202106/3636_10174_4958.jpg", "https://www.chemicalnews.co.kr/news/photo/202106/3636_10174_4958.jpg"]
-        
-        let initialImageDataList: [Data] = serverImageUrlStrings
-            .compactMap { urlString in
-                guard let urlString, let url = URL(string: urlString) else { return nil }
-                return url
-            }.flatMap {
-
-            }
-        
         let fetcedGenreList = CatSDKNetworkCategory.rx.fetchCategories()
             .debug("장르 ~")
             .share()
         
         // TODO: - 타투모델에 제목이 없음... 왜?
         titleInputViewModel = .init(type: .tattooTitle, content: tattoo?.description)
-        tattooImageInputViewModel = .init(imageDataList: initialImageDataList)
+        tattooImageInputViewModel = .init()
         descriptionInputViewModel = .init(title: "내용", content: tattoo?.description ?? "")
         
         // TODO: - 타투모델에 장르가 없음... 왜 ?
         genreInputViewModel = .init(genres: fetcedGenreList)
         
+        // TODO:  서버 요청
+        let fetchedImages = Observable.just(["https://www.chemicalnews.co.kr/news/photo/202106/3636_10174_4958.jpg", "https://www.chemicalnews.co.kr/news/photo/202106/3636_10174_4958.jpg"])
+            .map { $0.map { $0 as Any } }
+            .share()
         
-        let shouldUpdateData = selectedIndexRelay
-            .withLatestFrom(tattooImageInputViewModel.imageDataListRelay) { indexPath, prevData in
-                (indexPath, prevData.compactMap { $0 })
+        let addedResultImages = imageListInputRelay
+            .withLatestFrom(tattooImageInputViewModel.imageDataListRelay) { inputImages, prevImages in
+                var newImages = prevImages
+                newImages.append(contentsOf: inputImages)
+                return newImages
             }.share()
         
-        let addedImageDataList = imageDataListInputRelay
-            .withLatestFrom(tattooImageInputViewModel.imageDataListRelay) { inputData, prevData in
-                var newDataList = prevData.compactMap { $0 }
-                newDataList.append(contentsOf: inputData)
-                serverImageUrlStrings.append(contentsOf: Array(repeating: nil, count: inputData.count))
-                return newDataList
+        let removedResultImages = didTapWariningRemoveViewConfirmButton
+            .withLatestFrom(tattooImageInputViewModel.imageDataListRelay) { index, prevImages in
+                print(index, prevImages)
+                var newImages = prevImages
+                newImages.remove(at: index)
+                return newImages
             }
+
+        let shouldUpdatedImages = addedResultImages
+            .filter { $0.count <= 5 }
+            
+        let images: Observable<[Any]> = Observable.merge([fetchedImages, shouldUpdatedImages, removedResultImages])
+            .debug("이미지들")
+            .share(replay: 1)
         
-        let removedImageDataList = didTapWariningRemoveViewConfirmButton
-            .map { (indexPath, preData) in
-                var newData = preData
-                newData.remove(at: indexPath.row)
-                serverImageUrlStrings.remove(at: indexPath.row)
-                return newData
-            }
+        let shouldUpdateData = selectedIndexRelay
+            .withLatestFrom(images) {
+                ($0, $1)
+            }.share()
         
-        let newImageDataList = Observable.merge([
-            .just(initialImageDataList),
-            addedImageDataList,
-            removedImageDataList
-        ]).share(replay: 1)
-    
         let inputs = Observable.combineLatest(titleInputViewModel.inputStringRelay,
-                                               newImageDataList,
+                                              images,
                                                descriptionInputViewModel.inputStringRelay
-        ).share()
-        
-        
+        )
+
         showWarningRemoveViewDrvier = shouldUpdateData
-            .filter { indexPath, prevData in
-                prevData.count > indexPath.row
-            }.asDriver(onErrorJustReturn: (IndexPath(), []))
+            .filter { indexPath, images in
+                indexPath.row < images.count
+            }.map { $0.0.row }
+            .asDriver(onErrorJustReturn: -1)
         
         showImagePickerViewDriver = shouldUpdateData
-            .filter { indexPath, prevData in
-                prevData.count <= indexPath.row
+            .filter { indexPath, images in
+                indexPath.row >= images.count
             }.map { _ in () }
             .asDriver(onErrorJustReturn: ())
         
-        newImageDataListDrvier = newImageDataList.filter { $0.count <= 5 }
-            .map { imageDataList in
-                var newDataList: [Data?] = imageDataList
-                while newDataList.count < 5 {
-                    newDataList.append(nil)
-                }
-                return newDataList
-            }
-            .asDriver(onErrorJustReturn: [])
-        
-        limitExcessDriver = newImageDataList.filter { $0.count > 5 }
+        limitExcessDriver = addedResultImages
+            .filter { $0.count > 5 }
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
         
         showCompleteAlertViewDriver = didTapCompleteButton
-        // TODO: -
-        //  deletedImageUrl = initialImageUrlStrings 순회 -> serverImageUrlStrings에 없는거
-        // addedImageData = serverImageUrlStrings이 nil이면 그 인덱스에 해당하는 이미지 Data들
             .withLatestFrom(inputs)
-            .do { _ in print(serverImageUrlStrings) }
+            .withLatestFrom(fetchedImages){ inputs, fetchedImages in
+                (inputs, fetchedImages)
+            }
+            // NOTE: - 서버에 보낼 때
+            // fetchedImage가 inputs에 포함되어 있지 않으면 deletedImages
+            // UIImage타입이면 addedImages
             .debug("TODO: - 서버 통신")
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
         
+        imageListDrvier = images
+            .asDriver(onErrorJustReturn: [])
     }
 }
