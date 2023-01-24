@@ -23,6 +23,7 @@ final class JHBusinessProfileViewController: UIViewController {
     
     var disposeBag: DisposeBag = DisposeBag()
     let viewModel: JHBUsinessProfileViewModel
+    
     let dataSource: ManageMentDataSource = ManageMentDataSource { _, collectionView, indexPath, items in
         switch items {
         case .thumbnailImageItem(let viewModel):
@@ -73,9 +74,10 @@ final class JHBusinessProfileViewController: UIViewController {
     
     // MARK: function
     func updateEditButtonUI(selectedRow: Int) {
+        
+        guard let type = JHBPContentHeaderButtonType(rawValue: selectedRow), viewModel.isOwner else { return }
+        
         typealias JHBPContentHeaderButtonType = JHBPContentSectionHeaderView.JHBPContentHeaderButtonType
-        // TODO: - 유저 비교 (유저디폴트에 있는 id 와 현재 상세페이지의 id) true 부분
-        guard let type = JHBPContentHeaderButtonType(rawValue: selectedRow), true else { return }
        
         bottomView.setAskButtonTag(selectedRow)
         bottomView.setAskingText(type.editButtonText())
@@ -101,7 +103,7 @@ final class JHBusinessProfileViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         bind(viewModel: viewModel)
-        if true { // TODO: - 유저 비교 (유저디폴트에 있는 id 와 현재 상세페이지의 id)
+        if viewModel.isOwner {
             updateEditButtonUI(selectedRow: 0)
         }
     }
