@@ -78,6 +78,7 @@
 		78B00BBC28F5661000A9915D /* MagazineViewController.Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BB128F5661000A9915D /* MagazineViewController.Layout.swift */; };
 		78B00BBD28F5661000A9915D /* MagazineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BB228F5661000A9915D /* MagazineViewController.swift */; };
 		78B00BBF28F5661000A9915D /* RecentMagazineFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B00BB528F5661000A9915D /* RecentMagazineFooterView.swift */; };
+		78B194D5298058480092244B /* CGPoint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B194D4298058480092244B /* CGPoint+.swift */; };
 		78C8D470293BAD59006A4DF5 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8D46F293BAD59006A4DF5 /* LoginViewModel.swift */; };
 		78D3E93B2977C04B0015BA75 /* TextInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D3E93A2977C04B0015BA75 /* TextInputView.swift */; };
 		78D3E93D2977C84A0015BA75 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D3E93C2977C84A0015BA75 /* Constant.swift */; };
@@ -337,6 +338,7 @@
 		78B00BB128F5661000A9915D /* MagazineViewController.Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineViewController.Layout.swift; sourceTree = "<group>"; };
 		78B00BB228F5661000A9915D /* MagazineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineViewController.swift; sourceTree = "<group>"; };
 		78B00BB528F5661000A9915D /* RecentMagazineFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentMagazineFooterView.swift; sourceTree = "<group>"; };
+		78B194D4298058480092244B /* CGPoint+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+.swift"; sourceTree = "<group>"; };
 		78C8D46F293BAD59006A4DF5 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		78D3E93A2977C04B0015BA75 /* TextInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputView.swift; sourceTree = "<group>"; };
 		78D3E93C2977C84A0015BA75 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
@@ -625,8 +627,8 @@
 			isa = PBXGroup;
 			children = (
 				784B02252937579E004ED20A /* MyPageBaseCell.swift */,
-				784B02262937579E004ED20A /* MyPageMenuCell.swift */,
 				784B02272937579E004ED20A /* MyPageProfileCell.swift */,
+				784B02262937579E004ED20A /* MyPageMenuCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1110,6 +1112,7 @@
 				8EFC9FE0291205B400A83D3D /* UIView+.swift */,
 				787D5842293CD6BC00A3E610 /* UIFont+.swift */,
 				7828DB59295C40240053B0A0 /* UITextField+.swift */,
+				78B194D4298058480092244B /* CGPoint+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1743,6 +1746,7 @@
 				B1D3362728F1457700826636 /* UITabBar+.swift in Sources */,
 				B1CEF7332913A0EC00814113 /* BPProfileCell.swift in Sources */,
 				8EBB614629273CE300F640F5 /* BMEditFilterView.swift in Sources */,
+				78B194D5298058480092244B /* CGPoint+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
