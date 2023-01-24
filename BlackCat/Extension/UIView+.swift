@@ -38,6 +38,6 @@ extension UIView {
         shape.fillColor = UIColor.clear.cgColor
         gradient.mask = shape
         layer.addSublayer(gradient)
-        
+
     }
 }

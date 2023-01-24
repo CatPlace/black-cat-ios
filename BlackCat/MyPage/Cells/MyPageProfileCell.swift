@@ -47,7 +47,7 @@ class MyPageProfileCellViewModel {
             .asDriver(onErrorJustReturn: ())
         
         showImageViewBorderDriver = userObservable
-            .filter { $0.userType == .guest }
+            .filter { $0.userType == .business }
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
         
@@ -151,6 +151,8 @@ class MyPageProfileCell: MyPageBaseCell {
         let v = UIImageView()
         v.image = UIImage(systemName: "trash")
         v.contentMode = .scaleAspectFill
+        v.layer.cornerRadius = 30 * UIScreen.main.bounds.width / 375
+        v.clipsToBounds = true
         return v
     }()
     let userNameLabel: UILabel = {
