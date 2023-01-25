@@ -94,7 +94,8 @@ class ProductEditViewModel {
         
         let inputs = Observable.combineLatest(titleInputViewModel.inputStringRelay,
                                               images,
-                                               descriptionInputViewModel.inputStringRelay
+                                               descriptionInputViewModel.inputStringRelay,
+                                              genreInputViewModel.selectedGenresRelay
         )
 
         showWarningRemoveViewDrvier = shouldUpdateData

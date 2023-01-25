@@ -11,68 +11,6 @@ import RxCocoa
 import RxRelay
 import BlackCatSDK
 
-enum GenreInput: Int, CaseIterable {
-    case lettering
-    case mini
-    case 감성
-    case 이레즈미
-    case blackAndGray
-    case lineWork
-    case 헤나
-    case coverUp
-    case newSchool
-    case oldSchool
-    case inkSplash
-    case chicano
-    case color
-    case character
-    
-    func asTitle() -> String {
-        switch self {
-        case .lettering: return "레터링"
-        case .mini: return "미니 타투"
-        case .감성: return "감성 타투"
-        case .이레즈미: return "이레즈미"
-        case .blackAndGray: return "블랙&\n그레이"
-        case .lineWork: return "라인워크"
-        case .헤나: return "혜나"
-        case .coverUp: return "커버업"
-        case .newSchool: return "뉴스쿨"
-        case .oldSchool: return "올드스쿨"
-        case .inkSplash: return "잉크\n스플래쉬"
-        case .chicano: return "치카노"
-        case .color: return "컬러"
-        case .character: return "캐릭터"
-        }
-    }
-}
-
-class GenreInputCellViewModel: HomeGenreCellViewModel {
-    var isSelected: Bool
-    init(genre: Model.Category, isSelected: Bool = false) {
-        self.isSelected = isSelected
-        super.init(with: genre)
-    }
-}
-
-class GenreInputCell: HomeGenreCell {
-    
-}
-
-class GenreInputViewModel {
-    
-    let cellViewModelsDriver: Driver<[GenreInputCellViewModel]>
-    
-    init(genres: Observable<[Model.Category]>, selectedGenres: [Model.Category] = []) {
-        print(genres)
-        cellViewModelsDriver = genres.map { $0 .map { genre in GenreInputCellViewModel(genre: genre,
-                                                                              isSelected: selectedGenres.contains(where: { selectedGenre in
-            return genre.id == selectedGenre.id
-        }) ) } }
-            .asDriver(onErrorJustReturn: [])
-    }
-}
-
 class GenreInputView: UIView {
     enum Reusable {
         static let genreInputCell = ReusableCell<GenreInputCell>()
@@ -82,12 +20,20 @@ class GenreInputView: UIView {
     
     // MARK: - Binding
     func bind(to viewModel: GenreInputViewModel) {
+        collectionView.rx.itemSelected
+            .bind(to: viewModel.selectedIndexRelay)
+            .disposed(by: disposeBag)
+        
         viewModel.cellViewModelsDriver
             .drive(collectionView.rx.items) { cv, row, data in
                 let cell = cv.dequeue(Reusable.genreInputCell, for: .init(row: row, section: 0))
-                print(row, data)
+                cell.bind(to: data)
                 return cell
             }.disposed(by: disposeBag)
+        
+        viewModel.updateIndexSetDriver
+            .drive(viewModel.selectedGenresRelay)
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Initializer
@@ -121,16 +67,14 @@ class GenreInputView: UIView {
         let sectionTrailinginset: CGFloat = 14
         let cellWidth = (UIScreen.main.bounds.width - (cellSpacing * 4) - (sectionLeadingInset + sectionTrailinginset)) / 5
         layout.itemSize = .init(width: cellWidth, height: cellWidth)
-        layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = cellSpacing
         layout.sectionInset = .init(top: 1, left: sectionLeadingInset, bottom: 1, right: sectionTrailinginset)
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = .white
         cv.isScrollEnabled = false
         cv.showsHorizontalScrollIndicator = false
         cv.register(Reusable.genreInputCell)
-
+        cv.backgroundColor = .clear
         return cv
     }()
 }
@@ -149,9 +93,9 @@ extension GenreInputView {
         }
         
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(descriptionLabel.snp.bottom)
+            $0.top.equalTo(descriptionLabel.snp.bottom).offset(15)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(600)
+            $0.height.equalTo(((UIScreen.main.bounds.width - (12 * 4) - (14 + 14)) / 5) * 3 + 24)
             $0.bottom.equalToSuperview()
         }
     }

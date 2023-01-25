@@ -22,7 +22,6 @@ class TattooImageInputViewModel {
     init() {
         imageDataListRelay = .init(value: [])
         cellViewModelsDrvier = imageDataListRelay
-            .debug("셀 븀델")
             .map(convertToViewImageList)
             .asDriver(onErrorJustReturn: [])
         

@@ -168,7 +168,7 @@ extension ProductEditViewController {
         
         genreInputView.snp.makeConstraints {
             $0.top.equalTo(firstHLine.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview().inset(14)
+            $0.leading.trailing.equalToSuperview()
         }
         
         secondHLine.snp.makeConstraints {
