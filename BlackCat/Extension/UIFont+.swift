@@ -33,6 +33,12 @@ extension UIFont {
         }
         
         enum AppleSDGothic: String {
+            case heavy = "Heavy"
+            case light = "Light"
+            case semiBold = "SemiBold"
+            case thin = "Thin"
+            case UltraLight = "UltraLight"
+            case ExtraBold = "ExtraBold"
             case regular = "Regular"
             case bold = "Bold"
             case medium = "Medium"

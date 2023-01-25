@@ -91,9 +91,7 @@ class GenderInputView: UIView {
             
             viewModel.shouldUpdateGenderCells
                 .drive { viewModel.updateCelles(selectedGender: $0) }
-            
         }
-
     }
     
     // MARK: - Initializer
@@ -103,7 +101,6 @@ class GenderInputView: UIView {
         super.init(frame: .zero)
         bind(to: viewModel)
         setUI()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -136,12 +133,10 @@ class GenderInputView: UIView {
             $0.leading.centerY.equalToSuperview()
         }
         collectionView.snp.makeConstraints {
-//            $0.leading.equalTo(titleLabel.snp.trailing)
             $0.height.equalTo(UIScreen.main.bounds.width * 100/375 * 0.4).priority(.high)
             $0.top.bottom.equalToSuperview()
             $0.width.equalTo(UIScreen.main.bounds.width * 100/375 * 2 + 10)
             $0.centerX.equalToSuperview()
-//            $0.trailing.top.bottom.equalToSuperview()
         }
     }
 }

@@ -51,19 +51,32 @@ class SimpleInputViewModel {
     let titleDriver: Driver<String>
     let placeholderDriver: Driver<String>
     let textCountLimitDriver: Driver<String>
+    let placeholderNSAttributedString: Driver<NSAttributedString>
     
     // MARK: - Property
     let textCountLimit: Int
     
     init(type: SimpleInputType, content: String? = nil, placeholder: String = "텍스트를 입력해주세요", textCountLimit: Int = 18) {
         self.textCountLimit = textCountLimit
+        
         inputStringRelay =  .init(value: content ?? type.content() ?? "")
+        
         titleDriver = .just(type.title())
+        
         placeholderDriver = .just(placeholder)
+        
         textCountLimitDriver = inputStringRelay
             .map { "(\($0.count)/\(textCountLimit))" }
             .asDriver(onErrorJustReturn: "")
         
+        placeholderNSAttributedString = placeholderDriver
+            .map {
+                NSAttributedString(string: $0,
+                                      attributes: [
+                                        .foregroundColor: UIColor.init(hex: "#999999FF"),
+                                        .font: UIFont.appleSDGoithcFont(size: 12, style: .regular)
+                                      ])
+            }
     }
 }
 
@@ -87,7 +100,11 @@ class SimpleInputView: UIView {
             
             viewModel.textCountLimitDriver
                 .drive(textCountLimitLabel.rx.text)
+            
+            viewModel.placeholderNSAttributedString
+                .drive(profileTextField.rx.attributedPlaceholder)
         }
+        
     }
     
     // MARK: - Initializer
@@ -115,10 +132,11 @@ class SimpleInputView: UIView {
         $0.font = .appleSDGoithcFont(size: 16, style: .bold)
         return $0
     }(UILabel())
-    let profileTextField: UITextField = {
+    lazy var profileTextField: UITextField = {
         $0.setLeftPaddingPoints(10)
-        $0.textColor = .init(hex: "#999999FF")
-        $0.font = .appleSDGoithcFont(size: 12, style: .regular)
+        
+//        $0.textColor = .init(hex: "#999999FF")
+        $0.font = .appleSDGoithcFont(size: 16, style: .regular)
         return $0
     }(UITextField())
     let textCountLimitLabel: UILabel = {

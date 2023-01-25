@@ -77,7 +77,7 @@ class BaseTextView: UITextView {
     // MARK: UIComponents
     let placeholerLabel: UILabel = {
         let l = UILabel()
-        l.font = .pretendardFont(size: 12, style: .regular)
+        l.font = .appleSDGoithcFont(size: 12, style: .regular)
         l.textColor = .init(hex: "#999999FF")
         return l
     }()
@@ -85,9 +85,9 @@ class BaseTextView: UITextView {
     func configure() {
         sizeToFit()
         isScrollEnabled = false
-        font = .appleSDGoithcFont(size: 12, style: .medium)
+        font = .appleSDGoithcFont(size: 16, style: .medium)
         contentInset = .init(top: 5, left: 5, bottom: 0, right: 0)
-        textContainerInset = .init(top: 8, left: 0, bottom: 28, right: 8)
+        textContainerInset = .init(top: 10, left: 3, bottom: 28, right: 8)
         placeholerLabel.numberOfLines = 0
     }
     
@@ -95,8 +95,8 @@ class BaseTextView: UITextView {
         addSubview(placeholerLabel)
         
         placeholerLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(8)
-            $0.leading.equalToSuperview().inset(5)
+            $0.top.equalToSuperview().inset(13)
+            $0.leading.equalToSuperview().inset(8)
         }
     }
 }
