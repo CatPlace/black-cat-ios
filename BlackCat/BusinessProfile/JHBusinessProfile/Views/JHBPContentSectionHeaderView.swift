@@ -110,7 +110,7 @@ class JHBPContentSectionHeaderView: JHBPBaseCollectionReusableView{
         
         func asString() -> String {
             switch self {
-            case .profile: return "프로필"
+            case .profile: return "소개"
             case .product: return "작품 보기"
             case .info: return "견적 안내"
             }

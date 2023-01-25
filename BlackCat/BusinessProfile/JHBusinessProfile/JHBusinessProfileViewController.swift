@@ -51,8 +51,16 @@ final class JHBusinessProfileViewController: UIViewController {
         }
     }
     
+    // MARK: - Bindings
     func bind(viewModel: JHBUsinessProfileViewModel) {
         disposeBag.insert {
+            editLabel.rx.tapGesture()
+                .when(.recognized)
+                .withUnretained(self)
+                .bind { owner, _ in
+                    print("편집 탭 !")
+                }
+            
             bottomView.askButton.rx.tap
                 .bind(with: self) { owner, _ in
                     owner.pushToEditVC()
@@ -61,7 +69,6 @@ final class JHBusinessProfileViewController: UIViewController {
             viewModel.sections
                 .bind(to: self.collectionView.rx.items(dataSource: dataSource))
         }
-        
         
         viewModel.visibleCellIndexPath
             .drive { row in
@@ -81,6 +88,7 @@ final class JHBusinessProfileViewController: UIViewController {
        
         bottomView.setAskButtonTag(selectedRow)
         bottomView.setAskingText(type.editButtonText())
+        editLabel.isHidden = selectedRow != 1
 
     }
     
@@ -117,6 +125,10 @@ final class JHBusinessProfileViewController: UIViewController {
         super.viewDidLoad()
         self.setUI()
         JHBPDispatchSystem.dispatch.multicastDelegate.addDelegate(self)
+        setNavigationBackgroundColor(color: .white.withAlphaComponent(0))
+        appendNavigationLeftBackButton(color: .white)
+        appendNavigationLeftLabel(title: "TEST", color: .white)
+        appendNavigationRightLabel(editLabel)
     }
     
     // MARK: - UIComponents
@@ -133,16 +145,21 @@ final class JHBusinessProfileViewController: UIViewController {
         return cv
     }()
     let bottomView = AskBottomView()
+    let editLabel: UILabel = {
+        $0.text = "편집"
+        $0.textColor = .white
+        $0.font = .appleSDGoithcFont(size: 15, style: .regular)
+        $0.isHidden = true
+        return $0
+    }(UILabel())
 }
 
 
 extension JHBusinessProfileViewController {
     func setUI() {
-        self.navigationController?.navigationBar.isHidden = true
-        
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
+            $0.edges.equalToSuperview()
         }
         
         view.addSubview(bottomView)

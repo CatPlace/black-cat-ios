@@ -112,11 +112,18 @@ final class MyPageViewController: UIViewController {
                 owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
         
+        // TODO: 업그레이드 로직
         viewModel.showUpgradeVCDriver
             .drive(with: self) { owner, _ in
                 let vc = UpgradeBusinessViewController()
                 owner.present(vc, animated: true)
                 print("업그레이드 클릭 !")
+            }.disposed(by: disposeBag)
+        
+        viewModel.showBusinessProfileDriver
+            .map { JHBusinessProfileViewController(viewModel: .init(tattooistId: $0)) }
+            .drive(with: self) { owner, nextVC in
+                owner.navigationController?.pushViewController(nextVC, animated: true)
             }.disposed(by: disposeBag)
     }
     

@@ -76,8 +76,8 @@ final class MyPageViewModel {
     let viewWillAppear = PublishRelay<Void>()
     let selectedItem = PublishRelay<IndexPath>()
     let profileEditButtonTapped = PublishRelay<Void>()
-//    let loginButtonTapped = PublishRelay<Void>()
-//    let additionalMenu
+    let manageButtonTapped = PublishRelay<Void>()
+    
     // MARK: - Output
     let dataSourceDriver: Driver<[MyPageSection]>
     let logoutDriver: Driver<Void>
@@ -85,6 +85,7 @@ final class MyPageViewModel {
     let pushToWebViewDriver: Driver<String>
     let showLoginAlertVCDrvier: Driver<Void>
     let showUpgradeVCDriver: Driver<Void>
+    let showBusinessProfileDriver: Driver<Int>
     
     init(useCase: MyPageUseCase = MyPageUseCase()) {
         let profileSectionDataObservable = viewWillAppear
@@ -143,6 +144,10 @@ final class MyPageViewModel {
             .filter { _ in CatSDKUser.userType() != .guest }
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
+        
+        showBusinessProfileDriver = manageButtonTapped
+            .map { _ in CatSDKUser.user().id }
+            .asDriver(onErrorJustReturn: -1)
     }
     
     func userType() -> Model.UserType {

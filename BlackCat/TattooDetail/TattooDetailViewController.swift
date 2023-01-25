@@ -57,7 +57,7 @@ final class TattooDetailViewController: UIViewController {
 
             viewModel.pushToTattooistDetailVC
                 .drive(with: self) { owner, _ in
-                    let tattooistDetailVC = JHBusinessProfileViewController(viewModel: .init())
+                    let tattooistDetailVC = JHBusinessProfileViewController(viewModel: .init(tattooistId: -1)) // TODO: - 타투이스트 id 내려주기
                     owner.navigationController?.pushViewController(tattooistDetailVC, animated: true)
                 }
         }

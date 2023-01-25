@@ -54,8 +54,6 @@ class MyPageProfileCellViewModel {
         profileEditIsHiddenDriver = userObservable
             .map { $0.userType == .guest }
             .asDriver(onErrorJustReturn: true)
-        
-        
     }
 }
 
@@ -69,6 +67,12 @@ class MyPageProfileCell: MyPageBaseCell {
             .when(.recognized)
             .map { _ in () }
             .bind(to: superViewModel.profileEditButtonTapped)
+            .disposed(by: disposeBag)
+        
+        manageLabel.rx.tapGesture()
+            .when(.recognized)
+            .map { _ in () }
+            .bind(to: superViewModel.manageButtonTapped)
             .disposed(by: disposeBag)
         
         viewModel.profileImageUrlStringDriver

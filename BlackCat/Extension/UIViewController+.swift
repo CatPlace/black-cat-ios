@@ -32,16 +32,35 @@ extension UIViewController {
         [backButtonSpacer, backButton].forEach { navigationItem.leftBarButtonItems?.append($0) }
     }
     
+    func appendNavigationLeftLabel(_ sender: UILabel) {
+        let titleLabel = UIBarButtonItem(customView: sender)
+        
+        if navigationItem.leftBarButtonItems == nil {
+            navigationItem.leftBarButtonItems = []
+        }
+        navigationItem.leftBarButtonItems?.append(titleLabel)
+    }
+    
     func appendNavigationLeftLabel(title: String = "", color: UIColor = .white) {
         let label = UILabel()
         label.text = title
         label.textColor = color
         label.font = .appleSDGoithcFont(size: 20, style: .bold)
         let titleLabel = UIBarButtonItem(customView: label)
+        label.largeContentImageInsets = .init(top: 10, left: 0, bottom: 0, right: 0)
+        titleLabel.imageInsets = .init(top: 10, left: 10, bottom: 10, right: 10)
         if navigationItem.leftBarButtonItems == nil {
             navigationItem.leftBarButtonItems = []
         }
         navigationItem.leftBarButtonItems?.append(titleLabel)
+    }
+    
+    func appendNavigationRightLabel(_ sender: UILabel) {
+        let titleLabel = UIBarButtonItem(customView: sender)
+        if navigationItem.rightBarButtonItems == nil {
+            navigationItem.rightBarButtonItems = []
+        }
+        navigationItem.rightBarButtonItems?.append(titleLabel)
     }
     
     @objc

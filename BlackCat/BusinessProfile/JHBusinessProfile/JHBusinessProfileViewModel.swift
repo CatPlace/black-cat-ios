@@ -20,11 +20,9 @@ final class JHBUsinessProfileViewModel {
     var visibleCellIndexPath: Driver<Int>
     
     init(sections: BehaviorRelay<[JHBusinessProfileCellSection]> = .init(value: configurationSections()),
-         tattooistId: Int! = nil) {
+         tattooistId: Int) {
         // TODO: - 유저 구분
-//        isOwner = tattooistId == CatSDKUser.user().id
-        isOwner = true
-        
+        isOwner = tattooistId == CatSDKUser.user().id
         self.sections = sections
         
         
