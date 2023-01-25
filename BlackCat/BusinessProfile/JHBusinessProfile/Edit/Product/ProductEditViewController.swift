@@ -42,7 +42,6 @@ class ProductEditViewController: VerticalScrollableViewController {
             }.disposed(by: disposeBag)
         
         viewModel.imageListDrvier
-            .debug("보내준다")
             .drive(viewModel.tattooImageInputViewModel.imageDataListRelay)
             .disposed(by: disposeBag)
         
@@ -56,8 +55,6 @@ class ProductEditViewController: VerticalScrollableViewController {
                 // TODO: - Alert 후 확인버튼 바인딩
                 viewModel.didTapWariningRemoveViewConfirmButton.accept(index)
             }.disposed(by: disposeBag)
-        
-
     }
     
     func showImagePickerView() {
@@ -93,12 +90,14 @@ class ProductEditViewController: VerticalScrollableViewController {
     // MARK: - Initializer
     init(viewModel: ProductEditViewModel = ProductEditViewModel()) {
         self.viewModel = viewModel
+        tattooTypeInputView = .init(viewModel: viewModel.tattooTypeViewModel)
         titleInputView = .init(viewModel: viewModel.titleInputViewModel)
         tattooImageInputView = .init(viewModel: viewModel.tattooImageInputViewModel)
         descriptionInputView = .init(viewModel: viewModel.descriptionInputViewModel)
         genreInputView = .init(viewModel: viewModel.genreInputViewModel)
-        
+    
         super.init(nibName: nil, bundle: nil)
+    
         setUI()
         bind(to: viewModel)
         appendNavigationLeftBackButton()
@@ -122,9 +121,17 @@ class ProductEditViewController: VerticalScrollableViewController {
     }
     
     // MARK: - UIComponents
-    let titleInputView:SimpleInputView
+    let tattooTypeInputView: TattooTypeInputView
+    let warningLabel: UILabel = {
+        $0.numberOfLines = 0
+        $0.text = "작품 타입 선택이 부정확한 경우,\n비공개 처리되며 수정 요청드릴 수 있습니다."
+        $0.textColor = .init(hex: "#999999FF")
+        $0.font = .appleSDGoithcFont(size: 12, style: .regular)
+        return $0
+    }(UILabel())
+    let titleInputView: SimpleInputView
     let tattooImageInputView: TattooImageInputView
-    let descriptionInputView:TextInputView
+    let descriptionInputView: TextInputView
     let genreInputView: GenreInputView
     let firstHLine: UIView = {
         $0.backgroundColor = .init(hex: "#666666FF")
@@ -142,10 +149,26 @@ class ProductEditViewController: VerticalScrollableViewController {
 
 extension ProductEditViewController {
     func setUI() {
-        [titleInputView, tattooImageInputView, descriptionInputView, firstHLine, genreInputView, secondHLine].forEach { contentView.addSubview($0) }
+        [tattooTypeInputView, firstHLine, warningLabel, titleInputView, tattooImageInputView, descriptionInputView, secondHLine, genreInputView, firstHLine].forEach { contentView.addSubview($0) }
+        
+        tattooTypeInputView.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(30)
+            $0.leading.trailing.equalToSuperview().inset(20)
+        }
+        
+        warningLabel.snp.makeConstraints {
+            $0.top.equalTo(tattooTypeInputView.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(20)
+        }
+        
+        firstHLine.snp.makeConstraints {
+            $0.top.equalTo(warningLabel.snp.bottom).offset(30)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(1)
+        }
         
         titleInputView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(30)
+            $0.top.equalTo(firstHLine.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview().inset(20)
         }
         
@@ -157,25 +180,19 @@ extension ProductEditViewController {
         descriptionInputView.snp.makeConstraints {
             $0.top.equalTo(tattooImageInputView.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.greaterThanOrEqualTo(Constant.height * 279)
+            $0.height.greaterThanOrEqualTo(Constant.height * 305)
         }
         
-        firstHLine.snp.makeConstraints {
+        secondHLine.snp.makeConstraints {
             $0.top.equalTo(descriptionInputView.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(1)
         }
         
         genreInputView.snp.makeConstraints {
-            $0.top.equalTo(firstHLine.snp.bottom).offset(30)
+            $0.top.equalTo(secondHLine.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview()
-        }
-        
-        secondHLine.snp.makeConstraints {
-            $0.top.equalTo(genreInputView.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(1)
-            $0.bottom.equalToSuperview().inset(203)
+            $0.bottom.equalToSuperview().inset(133)
         }
         
         view.addSubview(completeButton)

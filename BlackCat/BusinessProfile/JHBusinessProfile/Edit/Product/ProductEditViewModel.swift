@@ -28,6 +28,7 @@ class ProductEditViewModel {
     let type: ProductInputType
     
     // MARK: - SubViewModels
+    let tattooTypeViewModel: TattooTypeInputViewModel
     let titleInputViewModel: SimpleInputViewModel
     let tattooImageInputViewModel: TattooImageInputViewModel
     let descriptionInputViewModel: TextInputViewModel
@@ -52,6 +53,8 @@ class ProductEditViewModel {
             .debug("장르 ~")
             .share()
         
+        // TODO: - 타투모델에 타투타입 추가
+        tattooTypeViewModel = .init(tattooType: "Test")
         // TODO: - 타투모델에 제목이 없음... 왜?
         titleInputViewModel = .init(type: .tattooTitle, content: tattoo?.description)
         tattooImageInputViewModel = .init()
@@ -79,10 +82,10 @@ class ProductEditViewModel {
                 newImages.remove(at: index)
                 return newImages
             }
-
+        
         let shouldUpdatedImages = addedResultImages
             .filter { $0.count <= 5 }
-            
+        
         let images: Observable<[Any]> = Observable.merge([fetchedImages, shouldUpdatedImages, removedResultImages])
             .debug("이미지들")
             .share(replay: 1)
@@ -92,12 +95,14 @@ class ProductEditViewModel {
                 ($0, $1)
             }.share()
         
-        let inputs = Observable.combineLatest(titleInputViewModel.inputStringRelay,
-                                              images,
-                                               descriptionInputViewModel.inputStringRelay,
-                                              genreInputViewModel.selectedGenresRelay
+        let inputs = Observable.combineLatest(
+            tattooTypeViewModel.tattooTypeRelay,
+            titleInputViewModel.inputStringRelay,
+            images,
+            descriptionInputViewModel.inputStringRelay,
+            genreInputViewModel.selectedGenresRelay
         )
-
+        
         showWarningRemoveViewDrvier = shouldUpdateData
             .filter { indexPath, images in
                 indexPath.row < images.count
@@ -120,9 +125,9 @@ class ProductEditViewModel {
             .withLatestFrom(fetchedImages){ inputs, fetchedImages in
                 (inputs, fetchedImages)
             }
-            // NOTE: - 서버에 보낼 때
-            // fetchedImage가 inputs에 포함되어 있지 않으면 deletedImages
-            // UIImage타입이면 addedImages
+        // NOTE: - 서버에 보낼 때
+        // fetchedImage가 inputs에 포함되어 있지 않으면 deletedImages
+        // UIImage타입이면 addedImages
             .debug("TODO: - 서버 통신")
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())

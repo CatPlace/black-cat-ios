@@ -81,6 +81,8 @@
 		78B194D7298065360092244B /* ProfileEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B194D6298065360092244B /* ProfileEditViewModel.swift */; };
 		78B194DB298121340092244B /* GenreInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B194DA298121340092244B /* GenreInputViewModel.swift */; };
 		78B194DE2981215A0092244B /* GenreInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B194DD2981215A0092244B /* GenreInputCell.swift */; };
+		78B194E029812D590092244B /* TattooTypeInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B194DF29812D590092244B /* TattooTypeInputView.swift */; };
+		78B194E2298135570092244B /* TattooTypeInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B194E1298135570092244B /* TattooTypeInputViewModel.swift */; };
 		78C8D470293BAD59006A4DF5 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8D46F293BAD59006A4DF5 /* LoginViewModel.swift */; };
 		78D3E93B2977C04B0015BA75 /* TextInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D3E93A2977C04B0015BA75 /* TextInputView.swift */; };
 		78D3E93D2977C84A0015BA75 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D3E93C2977C84A0015BA75 /* Constant.swift */; };
@@ -343,6 +345,8 @@
 		78B194D6298065360092244B /* ProfileEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewModel.swift; sourceTree = "<group>"; };
 		78B194DA298121340092244B /* GenreInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreInputViewModel.swift; sourceTree = "<group>"; };
 		78B194DD2981215A0092244B /* GenreInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreInputCell.swift; sourceTree = "<group>"; };
+		78B194DF29812D590092244B /* TattooTypeInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooTypeInputView.swift; sourceTree = "<group>"; };
+		78B194E1298135570092244B /* TattooTypeInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooTypeInputViewModel.swift; sourceTree = "<group>"; };
 		78C8D46F293BAD59006A4DF5 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		78D3E93A2977C04B0015BA75 /* TextInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputView.swift; sourceTree = "<group>"; };
 		78D3E93C2977C84A0015BA75 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
@@ -829,6 +833,8 @@
 				78431C9B297B18B10002F1E7 /* TattooImageInputViewModel.swift */,
 				789D65BE2978675300156FBD /* GenreInputView.swift */,
 				78B194DA298121340092244B /* GenreInputViewModel.swift */,
+				78B194DF29812D590092244B /* TattooTypeInputView.swift */,
+				78B194E1298135570092244B /* TattooTypeInputViewModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1640,6 +1646,7 @@
 				78431C98297A918D0002F1E7 /* ImagePickerManager.swift in Sources */,
 				B1D39E6E2923594C0058BE37 /* BPPriceInfoEditReactor.swift in Sources */,
 				B1E3F7BE290EBE3900005F17 /* BPContentCell.Layout.swift in Sources */,
+				78B194E2298135570092244B /* TattooTypeInputViewModel.swift in Sources */,
 				B160DBFB28FF3D8E00C0D682 /* BaseTableViewCell.swift in Sources */,
 				B1E3F7BA290EBAB100005F17 /* BPProductCell.swift in Sources */,
 				78D3E93D2977C84A0015BA75 /* Constant.swift in Sources */,
@@ -1736,6 +1743,7 @@
 				8E88488C2949C4A30039F99A /* MyPageSection.swift in Sources */,
 				B1D89C8E290E7CEE00C8B7F1 /* BPThumbnailImageCell.swift in Sources */,
 				7867A63429374D0500FC1160 /* BottomSheetController.swift in Sources */,
+				78B194E029812D590092244B /* TattooTypeInputView.swift in Sources */,
 				784B023F29375949004ED20A /* LoginViewController.swift in Sources */,
 				784B023A2937579F004ED20A /* MyPageViewModel.swift in Sources */,
 				784B02342937579E004ED20A /* MyPageProfileCell.swift in Sources */,
