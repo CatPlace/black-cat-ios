@@ -77,7 +77,7 @@ class LoginViewController: UIViewController {
         l.textAlignment = .center
         l.numberOfLines = 0
         l.textColor = .white
-        l.font = .boldSystemFont(ofSize: 48)
+        l.font = .heirOfLightFont(size: 48, style: .bold)
         return l
     }()
     var VStackView: UIStackView = {
@@ -97,12 +97,16 @@ class LoginViewController: UIViewController {
         l.font = .systemFont(ofSize: 14)
         return l
     }()
+    let catEarImageView: UIImageView = {
+        $0.image = UIImage(named: "catEar")
+        return $0
+    }(UIImageView())
     
 }
 
 extension LoginViewController {
     func setUI() {
-        [appNameLabel, VStackView, lookAroundLabel].forEach { view.addSubview($0) }
+        [appNameLabel, VStackView, lookAroundLabel, catEarImageView].forEach { view.addSubview($0) }
         
         appNameLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -118,6 +122,11 @@ extension LoginViewController {
         lookAroundLabel.snp.makeConstraints {
             $0.top.equalTo(VStackView.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
+        }
+        
+        catEarImageView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
     }
 }
