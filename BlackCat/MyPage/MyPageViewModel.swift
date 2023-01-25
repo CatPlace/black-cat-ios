@@ -66,7 +66,7 @@ enum MyPageMenuType: Int, CaseIterable {
         case .normal:
             return menus.filter { $0 != .login }
         case .business:
-            return menus.filter { $0 != .login || $0 != .upgrade }
+            return menus.filter { $0 != .login && $0 != .upgrade }
         }
     }
 }
@@ -91,12 +91,16 @@ final class MyPageViewModel {
         let profileSectionDataObservable = viewWillAppear
             .map { CatSDKUser.user() }
             .map { MyPageProfileCellViewModel(user: $0) }
+            .share()
         
         let recentTattooSectionDataObservable = viewWillAppear
             .map { CatSDKTattoo.recentViewTattoos() }
+            .share()
         
         let menuSectionDataObservable = viewWillAppear
             .map { MyPageMenuType.menus() }
+            .debug("메뉴 들~")
+            .share()
         
         let selectedMenu = selectedItem
             .filter { MyPageSectionType(rawValue: $0.section) == .menu }
@@ -134,7 +138,6 @@ final class MyPageViewModel {
         let didTapUpgrade = selectedMenu
             .filter { $0 == .upgrade }
         
-        
         showLoginAlertVCDrvier = didTapLogin
             .filter { _ in CatSDKUser.userType() == .guest }
             .map { _ in () }
@@ -148,9 +151,5 @@ final class MyPageViewModel {
         showBusinessProfileDriver = manageButtonTapped
             .map { _ in CatSDKUser.user().id }
             .asDriver(onErrorJustReturn: -1)
-    }
-    
-    func userType() -> Model.UserType {
-        CatSDKUser.userType()
     }
 }

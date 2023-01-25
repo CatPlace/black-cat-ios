@@ -47,7 +47,6 @@ class LoginViewModel {
         let lookAroundTriggerResult = lookAroundTrigger
             .do { _ in CatSDKUser.updateUser(user: .init(id: -2, userType: .business))} // TODO: userType 삭제
         
-        // TODO: - do 삭제 !
         showHomeViewControllerDriver = Observable.merge([lookAroundTriggerResult, loginSuccessResult])
             .asDriver(onErrorJustReturn: ())
         
