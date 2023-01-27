@@ -42,6 +42,7 @@ class ProfileEditViewController: VerticalScrollableViewController {
         imagePicker.delegate = self
         present(imagePicker, animated: true)
     }
+    
    func updateView(with height: CGFloat) {
         scrollView.snp.updateConstraints {
             $0.bottom.equalToSuperview().inset(height)
@@ -59,14 +60,16 @@ class ProfileEditViewController: VerticalScrollableViewController {
         }
     }
     
+    func configure() {
+        view.backgroundColor = .init(hex: "#F4F4F4FF")
+        appendNavigationLeftBackButton()
+        appendNavigationLeftLabel(title: "소개")
+    }
+    
     // MARK: - Initializer
     init(viewModel: ProfileEditViewModel = ProfileEditViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        appendNavigationLeftBackButton()
-        appendNavigationLeftLabel(title: "소개")
-        setUI()
-        bind(to: viewModel)
     }
     
     required init?(coder: NSCoder) {
@@ -76,7 +79,9 @@ class ProfileEditViewController: VerticalScrollableViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .init(hex: "#F4F4F4FF")
+        setUI()
+        bind(to: viewModel)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -88,6 +93,7 @@ class ProfileEditViewController: VerticalScrollableViewController {
     let coverImageView: UIImageView = {
         $0.image = .init(named: "DummyPict")
         $0.contentMode = .scaleAspectFill
+        $0.clipsToBounds = true
         return $0
     }(UIImageView())
     let coverImageChangeButton: UIButton = {

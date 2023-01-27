@@ -99,7 +99,6 @@ final class MyPageViewModel {
         
         let menuSectionDataObservable = viewWillAppear
             .map { MyPageMenuType.menus() }
-            .debug("메뉴 들~")
             .share()
         
         let selectedMenu = selectedItem

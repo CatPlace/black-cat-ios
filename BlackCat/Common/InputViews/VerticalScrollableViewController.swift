@@ -10,7 +10,7 @@ import UIKit
 class VerticalScrollableViewController: UIViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        configure()
+        setupLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -20,7 +20,7 @@ class VerticalScrollableViewController: UIViewController {
     let scrollView = UIScrollView()
     let contentView = UIView()
 
-    func configure() {
+    func setupLayout() {
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints {
             $0.edges.equalToSuperview()

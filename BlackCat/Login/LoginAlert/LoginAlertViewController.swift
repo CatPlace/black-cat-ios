@@ -58,7 +58,7 @@ class LoginAlertViewController: UIViewController {
     }
     
     // MARK: - Initializer
-    init(viewModel: LoginViewModel) {
+    init(viewModel: LoginViewModel = LoginViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         setUI()

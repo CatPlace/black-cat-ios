@@ -87,17 +87,9 @@ final class MyPageViewController: UIViewController {
         
         viewModel.pushToProfileEditViewDriver
             .drive(with: self) { owner, _ in
-                let vc = ProfileViewController(
-                    viewModel: .init(
-                        nameInputViewModel: .init(type: .profileName),
-                        emailInputViewModel: .init(type: .profileEmail),
-                        phoneNumberInputViewModel: .init(type: .profliePhoneNumber),
-                        genderInputViewModel: .init(),
-                        areaInputViewModel: .init()
-                    )
-                )
-                vc.hidesBottomBarWhenPushed = true
-                owner.navigationController?.pushViewController(vc, animated: true)
+                let vc = UINavigationController(rootViewController: ProfileViewController(viewModel: .init()))
+                vc.modalPresentationStyle = .fullScreen
+                owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
         
         viewModel.pushToWebViewDriver

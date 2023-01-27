@@ -25,13 +25,10 @@ final class JHBUsinessProfileViewModel {
         isOwner = tattooistId == CatSDKUser.user().id
         self.sections = sections
         
-        
         visibleCellIndexPath = cellDisplayingIndexRowRelay
             .distinctUntilChanged()
             .map { Int($0) }
             .asDriver(onErrorJustReturn: 0)
-        
-        
     }
     
 }
