@@ -42,6 +42,7 @@ class HomeViewModel {
 
         let fetchedGenreList = startFetchItems
             .flatMap { _ in CatSDKNetworkCategory.rx.fetchCategories() }
+            .map { [.init(id: 0, name: "전체보기", count: 0)] + $0 }
 
         let fetchedTattooAlbumItems = nextFetchPage
             .distinct()
@@ -92,4 +93,3 @@ class HomeViewModel {
             .asDriver(onErrorJustReturn: Model.Category(id: 0, name: "", count: 0))
     }
 }
-

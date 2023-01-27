@@ -14,6 +14,13 @@ public class FilterTask: Object {
     public enum TaskType: String, CaseIterable {
         case 작품
         case 도안
+
+        func serverString() -> String {
+            switch self {
+            case .작품: return "WORK"
+            case .도안: return "DESIGN"
+            }
+        }
     }
     
     @Persisted(primaryKey: true) private var typeString: String
