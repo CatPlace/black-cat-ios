@@ -56,8 +56,9 @@ extension TabBarViewController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         if let navigationController = viewController as? UINavigationController, let nextVC = navigationController.viewControllers.first {
             if nextVC is BookmarkViewController && CatSDKUser.userType() == .guest {
-                // TODO: Alert
-                print("게스트여서 안된다 Alert!", print(CatSDKUser.user()))
+                let vc = UINavigationController(rootViewController: LoginAlertViewController())
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
                 return false
             }
         }
