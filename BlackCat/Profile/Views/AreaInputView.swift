@@ -17,58 +17,27 @@ struct AreaCellModel {
 }
 
 class AreaInputViewModel {
-    let areas: [Model.Area]
-    let areaCellInfosRelay = BehaviorRelay<[AreaCellModel]>(
-        value: Model.Area.allCases
-            .map {.init(
-                name: $0.asString(),
-                isSelected: CatSDKUser.userCache().areas.contains($0) )
-            }
-    )
     let selectedAreaIndexRelay = PublishRelay<IndexPath>()
-    let updateAreaCellsDriver: Driver<Set<Model.Area>>
+    let areaInputRelay: BehaviorRelay<Model.Area?>
+    
+    let updateAreaDriver: Driver<Model.Area?>
     let cellViewModelsDriver: Driver<[FilterCellViewModel]>
-    //    let shouldUpdateAreaCells: Driver<Model.Area>
-    init() {
-        CatSDKUser.initUserCache()
-        areas = Model.Area.allCases
-    
-        self.cellViewModelsDriver = areaCellInfosRelay.map {
-            $0.map { .init(typeString: $0.name, isSubscribe: $0.isSelected)}
-        }.asDriver(onErrorJustReturn: [])
-        
-        updateAreaCellsDriver = selectedAreaIndexRelay
-            .map { $0.row }
-            .withLatestFrom(areaCellInfosRelay) { ($0, $1) }
-            .map { selectedRow, areaCellInfos in
-                return updateArea(with: selectedRow)
-            }.asDriver(onErrorJustReturn: Set())
-        
-        func updateArea(with row: Int? = nil) -> Set<Model.Area> {
-            var user = CatSDKUser.userCache()
-            if let row {
-                var newAreas = user.areas
-                if let selectedArea = Model.Area(rawValue: row) {
-                    if newAreas.contains(selectedArea) {
-                        newAreas.remove(selectedArea)
-                    } else {
-                        newAreas.insert(selectedArea)
-                    }
-                }
-                user.areas = newAreas
-                CatSDKUser.updateUserCache(user: user)
-            }
-            return user.areas
-        }
-    }
-    
-    func updateCells(selectedAreas: Set<Model.Area>) {
-        areaCellInfosRelay.accept(
-            areas.map { .init(name: $0.asString(), isSelected: selectedAreas.contains($0)) }
-        )
-    }
 
-    
+    init(area: Model.Area?) {
+        areaInputRelay = .init(value: area)
+        
+        updateAreaDriver = selectedAreaIndexRelay
+            .compactMap { Model.Area(rawValue: $0.row) }
+            .withLatestFrom(areaInputRelay) { selectedArea, prevArea in
+                selectedArea == prevArea ? nil : selectedArea
+            }.asDriver(onErrorJustReturn: nil)
+        
+        cellViewModelsDriver = Observable.combineLatest(Observable.just(Model.Area.allCases),
+                                                             areaInputRelay)
+        .map { areas, selectedArea in
+            areas.map { FilterCellViewModel(typeString: $0.asString(), isSubscribe: $0 == selectedArea) }
+        }.asDriver(onErrorJustReturn: [])
+    }
 }
 
 class AreaInputView: UIView {
@@ -80,8 +49,10 @@ class AreaInputView: UIView {
     
     // MARK: - Binding
     func bind(to viewModel: AreaInputViewModel) {
-
         disposeBag.insert {
+            collectionView.rx.itemSelected
+                .bind(to: viewModel.selectedAreaIndexRelay)
+            
             viewModel.cellViewModelsDriver
                 .drive(collectionView.rx.items) { cv, row, data in
                     let cell = cv.dequeue(Reusable.areaCell.self, for: IndexPath(row: row, section: 0))
@@ -90,14 +61,9 @@ class AreaInputView: UIView {
                     return cell
                 }
             
-            viewModel.updateAreaCellsDriver
-                .drive { viewModel.updateCells(selectedAreas: $0) }
-            
-            collectionView.rx.itemSelected
-                .bind(to: viewModel.selectedAreaIndexRelay)
+            viewModel.updateAreaDriver
+                .drive(viewModel.areaInputRelay)
         }
-        
-
     }
     
     // MARK: - Initializer

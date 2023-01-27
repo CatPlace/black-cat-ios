@@ -5,7 +5,7 @@
 //  Created by 김지훈 on 2023/01/05.
 //
 
-import Foundation
+import UIKit
 import RxSwift
 import RxCocoa
 import RxRelay
@@ -17,54 +17,45 @@ class ProfileViewModel {
     }
     
     // MARK: - SubViewModels
-    let nameInputViewModel: ProfileTextInputViewModel
-    let emailInputViewModel: ProfileTextInputViewModel
-    let phoneNumberInputViewModel: ProfileTextInputViewModel
+    let nameInputViewModel: SimpleInputViewModel
+    let emailInputViewModel: SimpleInputViewModel
+    let phoneNumberInputViewModel: SimpleInputViewModel
     let genderInputViewModel: GenderInputViewModel
     let areaInputViewModel: AreaInputViewModel
     
-    
     // MARK: - Input
+    let imageInputRelay: BehaviorRelay<Any?>
     let completeButtonTapped = PublishRelay<Void>()
     
     // MARK: - Output
     let completeAlertDriver: Driver<Purpose>
     let alertMassageDriver: Driver<String>
+    let profileImageDriver: Driver<UIImage?>
     
-    init(nameInputViewModel: ProfileTextInputViewModel,
-         emailInputViewModel: ProfileTextInputViewModel,
-         phoneNumberInputViewModel: ProfileTextInputViewModel,
-         genderInputViewModel: GenderInputViewModel,
-         areaInputViewModel: AreaInputViewModel,
-         type: Purpose = .edit) {
-        
-        self.nameInputViewModel = nameInputViewModel
-        self.emailInputViewModel = emailInputViewModel
-        self.phoneNumberInputViewModel = phoneNumberInputViewModel
-        self.genderInputViewModel = genderInputViewModel
-        self.areaInputViewModel = areaInputViewModel
+    init(type: Purpose = .edit) {
+        let user = CatSDKUser.user()
+        imageInputRelay = .init(value: user.imageUrl)
+        self.nameInputViewModel = .init(type: .profileName, content: user.name)
+        self.emailInputViewModel = .init(type: .profileEmail, content: user.email)
+        self.phoneNumberInputViewModel = .init(type: .profliePhoneNumber, content: user.phoneNumber)
+        self.genderInputViewModel = .init(gender: user.gender)
+        self.areaInputViewModel = .init(area: user.area)
         
         // TODO: 데이터 -> 캐시데이터 -> 완료버튼 누르면 서버 후 알러트
         let combinedInputs = Observable.combineLatest(
             nameInputViewModel.inputStringRelay,
             emailInputViewModel.inputStringRelay,
             phoneNumberInputViewModel.inputStringRelay,
-            genderInputViewModel.genderCellInfosRelay,
-            areaInputViewModel.areaCellInfosRelay,
+            genderInputViewModel.genderInputRelay,
+            areaInputViewModel.areaInputRelay,
             Observable.just(type)
         ) {
-            ($0, $1, $2, $3, $4, $5)
+            (Model.User(id: -1, jwt: nil, name: $0, imageUrl: nil, email: $1, phoneNumber: $2, gender: $3, area: $4, userType: .guest), $5)
         }
         
         let inputs = completeButtonTapped
-            .withLatestFrom(combinedInputs) {
-                var user = CatSDKUser.userCache()
-                print(user, CatSDKUser.user())
-                user.name = $1.0
-                user.email = $1.1
-                user.phoneNumber = $1.2
-                return (user, $1.5)
-            }
+            .withLatestFrom(combinedInputs)
+            .debug("프로필 데이터들")
             .share()
         
         let alertMessage = inputs
@@ -75,7 +66,8 @@ class ProfileViewModel {
             .filter { $1 == .edit || checkValidInputs(inputs: $0) }
         
         // TODO: - 서버통신
-        let updatedResult = shouldUpdateProfile.map { _ in () }
+        let updatedResult = shouldUpdateProfile
+            .map { _ in () }
         
         // TODO: - 서버통신 분기처리 ? 에러 및 성공
         completeAlertDriver = updatedResult
@@ -85,16 +77,32 @@ class ProfileViewModel {
         alertMassageDriver = alertMessage
             .asDriver(onErrorJustReturn: "일시적인 오류입니다. 문의 해주시면 감사드리곘습니다.")
         
+        profileImageDriver = imageInputRelay
+            .flatMap(convertToUIImage)
+            .asDriver(onErrorJustReturn: nil)
+        
         func checkValidInputs(inputs user: Model.User) -> Bool {
             print(user)
-            guard let name = user.name, let email = user.email, let phoneNumber = user.phoneNumber, let _ = user.gender else {
+            guard let name = user.name, let email = user.email, let phoneNumber = user.phoneNumber, user.gender != nil, user.area != nil else {
                 return false
             }
             
             return !name.isEmpty &&
             !email.isEmpty &&
-            !phoneNumber.isEmpty &&
-            !user.areas.isEmpty
+            !phoneNumber.isEmpty
+        }
+        func convertToUIImage(_ sender: Any?) -> Observable<UIImage?> {
+            if let data = sender as? Data {
+                return .just(UIImage(data: data))
+            } else if let string = sender as? String, let url = URL(string: string) {
+                return URLSession.shared.rx.response(request: URLRequest(url: url)).map { UIImage(data: $1) }
+            } else if let image = sender as? UIImage {
+                return .just(image)
+            }
+            else {
+                return .just(UIImage(systemName: "trash"))
+            }
         }
     }
+    
 }

@@ -11,23 +11,38 @@ import RxRelay
 import RxCocoa
 import BlackCatSDK
 
-enum ProfileTextInputTitle: String {
-    case 이름, 이메일, 전화번호
+enum SimpleInputType: String {
+    case profileName, profileEmail, profliePhoneNumber, tattooTitle
     
-    func info() -> String? {
+    func title() -> String {
+        switch self {
+        case .profileName:
+            return "이름"
+        case .profileEmail:
+            return "이메일"
+        case .profliePhoneNumber:
+            return "전화번호"
+        case .tattooTitle:
+            return "제목"
+        }
+    }
+    
+    func content() -> String? {
         let user = CatSDKUser.user()
         switch self {
-        case .이름:
+        case .profileName:
             return user.name
-        case .이메일:
+        case .profileEmail:
             return user.email
-        case .전화번호:
+        case .profliePhoneNumber:
             return user.phoneNumber
+        case .tattooTitle:
+            return ""
         }
     }
 }
 
-class ProfileTextInputViewModel {
+class SimpleInputViewModel {
     // MARK: - Input
     let inputStringRelay: BehaviorRelay<String>
     let viewWillAppearRelay = PublishRelay<Void>()
@@ -36,24 +51,42 @@ class ProfileTextInputViewModel {
     let titleDriver: Driver<String>
     let placeholderDriver: Driver<String>
     let textCountLimitDriver: Driver<String>
+    let placeholderNSAttributedString: Driver<NSAttributedString>
     
-    init(title: String, placeholder: String = "텍스트를 입력해주세요", textCountLimit: Int = 18) {
-        inputStringRelay =  .init(value: ProfileTextInputTitle(rawValue: title)?.info() ?? "")
-        titleDriver = .just(title)
+    // MARK: - Property
+    let textCountLimit: Int
+    
+    init(type: SimpleInputType, content: String? = nil, placeholder: String = "텍스트를 입력해주세요", textCountLimit: Int = 18) {
+        self.textCountLimit = textCountLimit
+        
+        inputStringRelay =  .init(value: content ?? type.content() ?? "")
+        
+        titleDriver = .just(type.title())
+        
         placeholderDriver = .just(placeholder)
+        
         textCountLimitDriver = inputStringRelay
             .map { "(\($0.count)/\(textCountLimit))" }
             .asDriver(onErrorJustReturn: "")
         
+        placeholderNSAttributedString = placeholderDriver
+            .map {
+                NSAttributedString(string: $0,
+                                      attributes: [
+                                        .foregroundColor: UIColor.init(hex: "#999999FF"),
+                                        .font: UIFont.appleSDGoithcFont(size: 12, style: .regular)
+                                      ])
+            }
     }
 }
 
-class ProfileTextInputView: UIView {
+class SimpleInputView: UIView {
     // MARK: - Properties
     var disposeBag = DisposeBag()
+    var viewModel: SimpleInputViewModel
     
     // MARK: - Binding
-    func bind(to viewModel: ProfileTextInputViewModel) {
+    func bind(to viewModel: SimpleInputViewModel) {
         disposeBag.insert {
             
             profileTextField.rx.text.orEmpty
@@ -67,11 +100,16 @@ class ProfileTextInputView: UIView {
             
             viewModel.textCountLimitDriver
                 .drive(textCountLimitLabel.rx.text)
+            
+            viewModel.placeholderNSAttributedString
+                .drive(profileTextField.rx.attributedPlaceholder)
         }
+        
     }
     
     // MARK: - Initializer
-    init(viewModel: ProfileTextInputViewModel) {
+    init(viewModel: SimpleInputViewModel) {
+        self.viewModel = viewModel
         super.init(frame: .zero)
         profileTextField.delegate = self
         profileTextField.backgroundColor = .white
@@ -79,35 +117,37 @@ class ProfileTextInputView: UIView {
         bind(to: viewModel)
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: Life Cycle
     override func layoutSubviews() {
         layoutIfNeeded()
-        print(frame)
-    }
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
     }
     
     // MARK: - UIComponents
     let titleLabel: UILabel = {
         $0.textColor = .init(hex: "#666666FF")
-        $0.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 16)
+        $0.font = .appleSDGoithcFont(size: 16, style: .bold)
         return $0
     }(UILabel())
-    let profileTextField: UITextField = {
+    lazy var profileTextField: UITextField = {
         $0.setLeftPaddingPoints(10)
-        $0.textColor = .init(hex: "#999999FF")
-        $0.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 12)
+        
+//        $0.textColor = .init(hex: "#999999FF")
+        $0.font = .appleSDGoithcFont(size: 16, style: .regular)
         return $0
     }(UITextField())
     let textCountLimitLabel: UILabel = {
         let l = UILabel()
         $0.textColor = .init(hex: "#999999FF")
-        $0.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 12)
+        $0.font = .appleSDGoithcFont(size: 12, style: .regular)
         return $0
     }(UILabel())
 }
 
-extension ProfileTextInputView {
+extension SimpleInputView {
     func setUI() {
         [titleLabel, profileTextField].forEach { addSubview($0) }
         
@@ -131,9 +171,9 @@ extension ProfileTextInputView {
     }
 }
 
-extension ProfileTextInputView: UITextFieldDelegate {
+extension SimpleInputView: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return false }
-        return text.count < 18 || range.length == 1
+        return text.count < viewModel.textCountLimit || range.length == 1
     }
 }

@@ -28,16 +28,14 @@ class LoginViewModel {
         let loginResult = didTapSocialLoginButton
             .map { types[$0] }
             .flatMap(CatSDKUser.login)
-            .debug("로그인 결과")
             .catch { error in
                 print(error, "로그인 에러발생")
                 return .just(.init(id: -2))
             }.share()
-            .debug("로그인 결과 333")
         
         let loginSuccessResult = loginResult
-            .debug("로그인 결과@22")
             .filter { $0.id != -2 }
+            .debug("로그인 결과@@@")
         // TODO: - 서버통신 후 권한 받아서 집어넣기 (유저디폴트에 의존하면 새로 로그인 시 이사람이 비즈니스 계정인지 명확하지 않음)
             .do {
                 var user = $0
@@ -47,9 +45,8 @@ class LoginViewModel {
             .map { _ in () }
         
         let lookAroundTriggerResult = lookAroundTrigger
-            .do { _ in CatSDKUser.updateUser(user: .init(id: -2))}
+            .do { _ in CatSDKUser.updateUser(user: .init(id: -2))} // TODO: userType 삭제
         
-        // TODO: - do 삭제 !
         showHomeViewControllerDriver = Observable.merge([lookAroundTriggerResult, loginSuccessResult])
             .asDriver(onErrorJustReturn: ())
         

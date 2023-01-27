@@ -42,7 +42,6 @@ class HomeViewModel {
 
         let fetchedGenreList = startFetchItems
             .flatMap { _ in CatSDKNetworkCategory.rx.fetchCategories() }
-            .debug("@@@@")
             .map { [.init(id: 0, name: "전체보기", count: 0)] + $0 }
 
         let fetchedTattooAlbumItems = nextFetchPage
@@ -89,8 +88,7 @@ class HomeViewModel {
 
         pushToGenreViewController = didTapGenreItem
             .withLatestFrom(fetchedGenreList) { index, list in
-                print("index: \(list[index])")
-                return list[index]
+                list[index]
             }
             .asDriver(onErrorJustReturn: Model.Category(id: 0, name: "", count: 0))
     }

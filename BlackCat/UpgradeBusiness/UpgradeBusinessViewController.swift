@@ -17,13 +17,7 @@ class UpgradeBusinessViewController: UIViewController {
     func bind() {
         upgradeButton.rx.tap
             .bind(with: self) { owner, _ in
-                let vc = ProfileViewController(
-                    viewModel: .init(nameInputViewModel: .init(title: "이름"),
-                                     emailInputViewModel: .init(title: "이메일"),
-                                     phoneNumberInputViewModel: .init(title: "전화번호"),
-                                     genderInputViewModel: .init(),
-                                     areaInputViewModel: .init(),
-                                     type: .upgrade))
+                let vc = ProfileViewController(viewModel: .init(type: .upgrade))
                 
                 owner.present(vc, animated: false)
             }.disposed(by: disposeBag)

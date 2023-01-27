@@ -52,12 +52,13 @@ class LoginAlertViewController: UIViewController {
         viewModel.socialLoginTypes.enumerated().forEach { index, type in
             let loginImageView = UIImageView(image: UIImage(named: type.buttonImageName()))
             loginImageView.tag = index
+            loginImageView.contentMode = .scaleAspectFit
             VStackView.addArrangedSubview(loginImageView)
         }
     }
     
     // MARK: - Initializer
-    init(viewModel: LoginViewModel) {
+    init(viewModel: LoginViewModel = LoginViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         setUI()

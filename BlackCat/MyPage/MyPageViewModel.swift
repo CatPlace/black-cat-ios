@@ -5,7 +5,7 @@
 //  Created by 김지훈 on 2022/11/24.
 //
 
-import Foundation
+import UIKit
 
 import RxSwift
 import RxCocoa
@@ -19,6 +19,7 @@ enum MyPageMenuType: Int, CaseIterable {
     case personalInfoAgreement
     case logout
     case withdrawal
+    case login
     case upgrade
     
     func linkString() -> String? {
@@ -50,21 +51,22 @@ enum MyPageMenuType: Int, CaseIterable {
             return "로그아웃"
         case .withdrawal:
             return "회원 탈퇴"
+        case .login:
+            return "로그인 및 회원가입"
         case .upgrade:
-            return "안녕하세요 타투이스트 님!\n 타투를 등록하고싶으세요?"
+            return "타투이스트 계정 업그레이드!"
         }
     }
     
     static func menus() -> [MyPageMenuType] {
         let menus = allCases
-        // 제외할 것들
         switch CatSDKUser.userType() {
         case .guest:
-            return menus.filter { !($0 == .logout || $0 == .withdrawal) }
+            return [.notice, .termOfService, .login]
         case .normal:
-            return menus
+            return menus.filter { $0 != .login }
         case .business:
-            return menus
+            return menus.filter { $0 != .login && $0 != .upgrade }
         }
     }
 }
@@ -74,7 +76,7 @@ final class MyPageViewModel {
     let viewWillAppear = PublishRelay<Void>()
     let selectedItem = PublishRelay<IndexPath>()
     let profileEditButtonTapped = PublishRelay<Void>()
-//    let loginButtonTapped = PublishRelay<Void>()
+    let manageButtonTapped = PublishRelay<Void>()
     
     // MARK: - Output
     let dataSourceDriver: Driver<[MyPageSection]>
@@ -83,17 +85,21 @@ final class MyPageViewModel {
     let pushToWebViewDriver: Driver<String>
     let showLoginAlertVCDrvier: Driver<Void>
     let showUpgradeVCDriver: Driver<Void>
+    let showBusinessProfileDriver: Driver<Int>
     
     init(useCase: MyPageUseCase = MyPageUseCase()) {
         let profileSectionDataObservable = viewWillAppear
             .map { CatSDKUser.user() }
             .map { MyPageProfileCellViewModel(user: $0) }
+            .share()
         
         let recentTattooSectionDataObservable = viewWillAppear
             .map { CatSDKTattoo.recentViewTattoos() }
+            .share()
         
         let menuSectionDataObservable = viewWillAppear
             .map { MyPageMenuType.menus() }
+            .share()
         
         let selectedMenu = selectedItem
             .filter { MyPageSectionType(rawValue: $0.section) == .menu }
@@ -117,7 +123,6 @@ final class MyPageViewModel {
      
         //TODO: - 알러트 추가 후 수정
         logoutDriver = selectedMenu
-            .debug("로그아웃")
             .filter { $0 == .logout }
             .do { _ in CatSDKUser.logout() }
             .map { _ in () }
@@ -126,10 +131,13 @@ final class MyPageViewModel {
         pushToWebViewDriver = selectedMenu.compactMap { $0.linkString() }
             .asDriver(onErrorJustReturn: "")
         
+        let didTapLogin = selectedMenu
+            .filter { $0 == .login }
+        
         let didTapUpgrade = selectedMenu
             .filter { $0 == .upgrade }
         
-        showLoginAlertVCDrvier = didTapUpgrade
+        showLoginAlertVCDrvier = didTapLogin
             .filter { _ in CatSDKUser.userType() == .guest }
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
@@ -138,9 +146,9 @@ final class MyPageViewModel {
             .filter { _ in CatSDKUser.userType() != .guest }
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
-    }
-    
-    func userType() -> Model.UserType {
-        CatSDKUser.userType()
+        
+        showBusinessProfileDriver = manageButtonTapped
+            .map { _ in CatSDKUser.user().id }
+            .asDriver(onErrorJustReturn: -1)
     }
 }

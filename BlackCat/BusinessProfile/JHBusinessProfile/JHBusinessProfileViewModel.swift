@@ -5,26 +5,30 @@
 //  Created by 김지훈 on 2022/12/28.
 //
 import Foundation
+
 import RxSwift
 import RxCocoa
 import RxRelay
 import RxDataSources
+import BlackCatSDK
+
 final class JHBUsinessProfileViewModel {
-    typealias Will = IndexPath
-    typealias Did = IndexPath
+    let isOwner: Bool
     var sections: BehaviorRelay<[JHBusinessProfileCellSection]>
-    var cellDisplayingIndexPathRelay = PublishRelay<(Will, Did)>()
+    var cellDisplayingIndexRowRelay = PublishRelay<CGFloat>()
     
-    var visibleCellIndexPath: Driver<IndexPath>
+    var visibleCellIndexPath: Driver<Int>
     
-    init(sections: BehaviorRelay<[JHBusinessProfileCellSection]> = .init(value: configurationSections())) {
+    init(sections: BehaviorRelay<[JHBusinessProfileCellSection]> = .init(value: configurationSections()),
+         tattooistId: Int) {
+        // TODO: - 유저 구분
+        isOwner = tattooistId == CatSDKUser.user().id
         self.sections = sections
-        let visibleCellIndex = cellDisplayingIndexPathRelay
-            .filter { didEnd, will in return (didEnd != will) && (didEnd.section != 0) }
-            .map { didEnd, will in return will }
-    
-        visibleCellIndexPath = visibleCellIndex
-            .asDriver(onErrorJustReturn: .init(row: 0, section: 1))
+        
+        visibleCellIndexPath = cellDisplayingIndexRowRelay
+            .distinctUntilChanged()
+            .map { Int($0) }
+            .asDriver(onErrorJustReturn: 0)
     }
     
 }

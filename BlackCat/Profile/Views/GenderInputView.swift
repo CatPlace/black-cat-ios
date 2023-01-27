@@ -17,52 +17,28 @@ struct GenderCellModel {
 }
 
 class GenderInputViewModel {
-    let genders: [Model.Gender]
-    
     // MARK: Input
-    let genderCellInfosRelay = BehaviorRelay<[GenderCellModel]>(
-        value: Model.Gender.allCases
-            .map {.init(
-                name: $0.asString(),
-                isSelected: $0 == CatSDKUser.userCache().gender )
-            }
-    )
     let selectedGenderIndexRelay = PublishRelay<IndexPath>()
+    let genderInputRelay: BehaviorRelay<Model.Gender?>
     
     // MARK: Output
     let cellViewModelsDriver: Driver<[FilterCellViewModel]>
-    let shouldUpdateGenderCells: Driver<Model.Gender>
+    let updateGenderDriver: Driver<Model.Gender?>
     
-    
-    init(genders: [Model.Gender] = Model.Gender.allCases) {
-        self.genders = genders
+    init(gender: Model.Gender? = nil) {
+        genderInputRelay = .init(value: gender)
         
-        CatSDKUser.initUserCache()
+        updateGenderDriver = selectedGenderIndexRelay
+            .compactMap { Model.Gender(rawValue: $0.row) }
+            .withLatestFrom(genderInputRelay) { selectedGender, prevGender in
+                selectedGender == prevGender ? nil : selectedGender
+            }.asDriver(onErrorJustReturn: nil)
         
-        self.cellViewModelsDriver = genderCellInfosRelay.map {
-            $0.map { .init(typeString: $0.name, isSubscribe: $0.isSelected)}
+        cellViewModelsDriver = Observable.combineLatest(Observable.just(Model.Gender.allCases),
+                                                             genderInputRelay)
+        .map { genders, selectedGender in
+            genders.map { FilterCellViewModel(typeString: $0.asString(), isSubscribe: $0 == selectedGender) }
         }.asDriver(onErrorJustReturn: [])
-        
-        shouldUpdateGenderCells = selectedGenderIndexRelay
-            .map { $0.row }
-            .withLatestFrom(genderCellInfosRelay) { ($0, $1) }
-            .map { selectedRow, genderCellInfos in
-                return updateGender(with: selectedRow)
-            }.asDriver(onErrorJustReturn: .남자)
-        
-        
-        func updateGender(with row: Int? = nil) -> Model.Gender {
-            var user = CatSDKUser.userCache()
-            if let row {
-                user.gender = Model.Gender(rawValue: row)
-                CatSDKUser.updateUserCache(user: user)
-            }
-            return user.gender ?? .남자
-        }
-    }
-    
-    func updateCelles(selectedGender: Model.Gender) {
-        genderCellInfosRelay.accept(genders.map { .init(name: $0.asString(), isSelected: $0 == selectedGender)})
     }
 }
 
@@ -77,7 +53,6 @@ class GenderInputView: UIView {
     // MARK: - Binding
     func bind(to viewModel: GenderInputViewModel) {
         disposeBag.insert {
-            
             collectionView.rx.itemSelected
                 .bind(to: viewModel.selectedGenderIndexRelay)
             
@@ -89,11 +64,9 @@ class GenderInputView: UIView {
                     return cell
                 }
             
-            viewModel.shouldUpdateGenderCells
-                .drive { viewModel.updateCelles(selectedGender: $0) }
-            
+            viewModel.updateGenderDriver
+                .drive(viewModel.genderInputRelay)
         }
-
     }
     
     // MARK: - Initializer
@@ -103,7 +76,6 @@ class GenderInputView: UIView {
         super.init(frame: .zero)
         bind(to: viewModel)
         setUI()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -136,12 +108,10 @@ class GenderInputView: UIView {
             $0.leading.centerY.equalToSuperview()
         }
         collectionView.snp.makeConstraints {
-//            $0.leading.equalTo(titleLabel.snp.trailing)
             $0.height.equalTo(UIScreen.main.bounds.width * 100/375 * 0.4).priority(.high)
             $0.top.bottom.equalToSuperview()
             $0.width.equalTo(UIScreen.main.bounds.width * 100/375 * 2 + 10)
             $0.centerX.equalToSuperview()
-//            $0.trailing.top.bottom.equalToSuperview()
         }
     }
 }

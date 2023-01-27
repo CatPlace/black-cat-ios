@@ -22,6 +22,8 @@ final class JHBusinessProfileViewController: UIViewController {
     }
     
     var disposeBag: DisposeBag = DisposeBag()
+    let viewModel: JHBUsinessProfileViewModel
+    
     let dataSource: ManageMentDataSource = ManageMentDataSource { _, collectionView, indexPath, items in
         switch items {
         case .thumbnailImageItem(let viewModel):
@@ -49,9 +51,17 @@ final class JHBusinessProfileViewController: UIViewController {
         }
     }
     
+    // MARK: - Bindings
     func bind(viewModel: JHBUsinessProfileViewModel) {
         disposeBag.insert {
-            editButton.rx.tap
+            editLabel.rx.tapGesture()
+                .when(.recognized)
+                .withUnretained(self)
+                .bind { owner, _ in
+                    print("편집 탭 !")
+                }
+            
+            bottomView.askButton.rx.tap
                 .bind(with: self) { owner, _ in
                     owner.pushToEditVC()
                 }
@@ -59,52 +69,51 @@ final class JHBusinessProfileViewController: UIViewController {
             viewModel.sections
                 .bind(to: self.collectionView.rx.items(dataSource: dataSource))
         }
+        
+        viewModel.visibleCellIndexPath
+            .drive { row in
+                guard let type = JHBPContentSectionHeaderView.JHBPContentHeaderButtonType(rawValue: row) else { return }
+                JHBPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
+                    delegate.notifyContentHeader(indexPath: IndexPath(row: row, section: 0), forType: type)
+                }
+            }.disposed(by: disposeBag)
     }
     
     // MARK: function
     func updateEditButtonUI(selectedRow: Int) {
+        
+        guard let type = JHBPContentHeaderButtonType(rawValue: selectedRow), viewModel.isOwner else { return }
+        
         typealias JHBPContentHeaderButtonType = JHBPContentSectionHeaderView.JHBPContentHeaderButtonType
-        
-        editButton.tag = selectedRow
-        let type = JHBPContentHeaderButtonType(rawValue: selectedRow)
-        
-        switch type {
-        case .profile:
-            editButton.setTitle("프로필 수정", for: .normal)
-        case .product:
-            editButton.setTitle("타투 추가", for: .normal)
-        case .info:
-            editButton.setTitle("견적 수정", for: .normal)
-        case .none: break
-        }
-        
+       
+        bottomView.setAskButtonTag(selectedRow)
+        bottomView.setAskingText(type.editButtonText())
+        editLabel.isHidden = selectedRow != 1
+
     }
     
     func pushToEditVC() {
         typealias JHBPContentHeaderButtonType = JHBPContentSectionHeaderView.JHBPContentHeaderButtonType
-        let type = JHBPContentHeaderButtonType(rawValue: editButton.tag)
         // TODO: - 현재 가지고 있는 모델을 그대로 가져가기 ~ (수정)
-        let nextVC: UIViewController
-        switch type {
-        case .profile:
-            nextVC = ProfileEditViewController()
-        case .product:
-            nextVC = ProductEditViewController()
-        case .info:
-            nextVC = PriceInfoEditViewController()
-        case .none:
-            nextVC = UIViewController()
+        
+        if let type = JHBPContentHeaderButtonType(rawValue: bottomView.askButtonTag()) {
+            let nextVCWithNavi = UINavigationController(rootViewController: type.editVC())
+            nextVCWithNavi.modalPresentationStyle = .overFullScreen
+            present(nextVCWithNavi, animated: true)
+        } else { // TODO: - 문의하기
+            print("문의하기 TODO")
         }
-        let nextVCWithNavi = UINavigationController(rootViewController: nextVC)
-        nextVCWithNavi.modalPresentationStyle = .overFullScreen
-        present(nextVCWithNavi, animated: true)
+
     }
     
     // MARK: Initialize
     init(viewModel: JHBUsinessProfileViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         bind(viewModel: viewModel)
-        updateEditButtonUI(selectedRow: 0)
+        if viewModel.isOwner {
+            updateEditButtonUI(selectedRow: 0)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -116,6 +125,10 @@ final class JHBusinessProfileViewController: UIViewController {
         super.viewDidLoad()
         self.setUI()
         JHBPDispatchSystem.dispatch.multicastDelegate.addDelegate(self)
+        setNavigationBackgroundColor(color: .white.withAlphaComponent(0))
+        appendNavigationLeftBackButton(color: .white)
+        appendNavigationLeftLabel(title: "TEST", color: .white)
+        appendNavigationRightLabel(editLabel)
     }
     
     // MARK: - UIComponents
@@ -131,26 +144,29 @@ final class JHBusinessProfileViewController: UIViewController {
         
         return cv
     }()
-    let editButton: UIButton = {
-        $0.setTitleColor(.red, for: .normal)
-        $0.backgroundColor = .black
+    let bottomView = AskBottomView()
+    let editLabel: UILabel = {
+        $0.text = "편집"
+        $0.textColor = .white
+        $0.font = .appleSDGoithcFont(size: 15, style: .regular)
+        $0.isHidden = true
         return $0
-    }(UIButton())
+    }(UILabel())
 }
 
 
 extension JHBusinessProfileViewController {
     func setUI() {
-        self.navigationController?.navigationBar.isHidden = true
-        
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
+            $0.edges.equalToSuperview()
         }
         
-        view.addSubview(editButton)
-        editButton.snp.makeConstraints {
-            $0.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(30)
+        view.addSubview(bottomView)
+        bottomView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(28)
+            $0.height.equalTo(60)
         }
     }
     
@@ -188,6 +204,13 @@ extension JHBusinessProfileViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
         
+        section.visibleItemsInvalidationHandler = { [weak self] (items, offset, _) -> Void in
+            guard let self else { return }
+            let page = round(offset.x / self.view.bounds.width)
+            print(page)
+            self.viewModel.cellDisplayingIndexRowRelay.accept(page)
+        }
+        
         let header = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: .init(widthDimension: .fractionalWidth(1.0),
                               heightDimension: .absolute(UIScreen.main.bounds.width * 40 / 375)),
@@ -209,7 +232,7 @@ extension JHBusinessProfileViewController: JHBPMulticastDelegate {
     func notifyContentCell(indexPath: IndexPath?, forType: type) {
         collectionView.scrollToItem(at: IndexPath(row: forType.rawValue, section: 1),
                                     at: .top,
-                                    animated: true)
+                                    animated: false)
     }
     
     func notifyViewController(offset: CGFloat) {

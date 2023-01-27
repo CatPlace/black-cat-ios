@@ -25,11 +25,6 @@ final class TabBarViewController: UITabBarController {
                                    image: .ic_board,
                                    selectedImage: .ic_board_fill)
     
-    let temp = TabBarFactory.create(viewController: JHBusinessProfileViewController(viewModel: .init()),
-                                   title: "작가프로필(지훈)",
-                                   image: .ic_board,
-                                   selectedImage: .ic_board_fill)
-    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         tabBar.tintColor = .darkGray
@@ -38,7 +33,7 @@ final class TabBarViewController: UITabBarController {
         modalPresentationStyle = .fullScreen
         UITabBar.clearShadow()
         tabBar.layer.applyShadow(color: .gray, alpha: 0.3, x: 0, y: 0, blur: 12)
-        viewControllers = [homeVC, bookmarkVC, myPageVC, temp]
+        viewControllers = [homeVC, bookmarkVC, myPageVC]
         delegate = self
     }
 }
@@ -61,8 +56,9 @@ extension TabBarViewController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         if let navigationController = viewController as? UINavigationController, let nextVC = navigationController.viewControllers.first {
             if nextVC is BookmarkViewController && CatSDKUser.userType() == .guest {
-                // TODO: Alert
-                print("게스트여서 안된다 Alert!", print(CatSDKUser.user()))
+                let vc = UINavigationController(rootViewController: LoginAlertViewController())
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
                 return false
             }
         }

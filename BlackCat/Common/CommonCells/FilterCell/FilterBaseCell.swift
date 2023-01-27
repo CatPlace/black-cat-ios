@@ -18,6 +18,6 @@ class FilterBaseCell: BaseCollectionViewCell {
         
         self.contentView.backgroundColor = isSubscribe
         ? #colorLiteral(red: 0.4449512362, green: 0.1262507141, blue: 0.628126204, alpha: 1)
-        : .systemGray6
+        : .white
     }
 }

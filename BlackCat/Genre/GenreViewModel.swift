@@ -135,7 +135,6 @@ class GenreViewModel {
             .asDriver(onErrorJustReturn: [])
 
         genreItems = fetchedItems
-            .debug("==[==-===-=-=-=-")
             .map { tattoos in
                 return tattoos.map { tattoo -> CommonFullImageCellViewModel in
                     if let imageURLString = tattoo.imageURLStrings.first {
