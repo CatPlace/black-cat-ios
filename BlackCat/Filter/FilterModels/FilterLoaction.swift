@@ -21,6 +21,9 @@ public class FilterLocation: Object {
         case 경남_부산_울산 = "경남/부산/울산"
         case 강원 = "강원"
         case 제주 = "제주"
+        func index() -> Int? {
+            LocationType.allCases.firstIndex(of: self)
+        }
     }
 
     @Persisted(primaryKey: true) private var typeString: String

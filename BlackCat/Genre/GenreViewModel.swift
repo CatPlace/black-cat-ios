@@ -34,8 +34,8 @@ enum GenreType: Int, CaseIterable {
         switch self {
         case .전체보기: return "전체보기"
         case .레터링: return "레터링"
-        case .미니타투: return "미니 타투"
-        case .감성타투: return "감성 타투"
+        case .미니타투: return "미니타투"
+        case .감성타투: return "감성타투"
         case .이레즈미: return "이레즈미"
         case .블랙그레이: return "블랙&그레이"
         case .라인워크: return "라인워크"
@@ -43,7 +43,7 @@ enum GenreType: Int, CaseIterable {
         case .커버업: return "커버업"
         case .뉴스쿨: return "뉴스쿨"
         case .올드스쿨: return "올드스쿨"
-        case .잉크스플래쉬: return "잉크 스플래쉬"
+        case .잉크스플래쉬: return "잉크스플래쉬"
         case .치카노: return "치카노"
         case .컬러: return "컬러"
         case .캐릭터: return "캐릭터"
@@ -62,7 +62,7 @@ class GenreViewModel {
 
     // MARK: - Input
 
-    private let genreList = Observable<[String]>.just(["전체보기", "레터링", "미니 타투", "감성 타투", "이레즈미", "블랙&그레이", "라인워크", "헤나", "커버업", "뉴스쿨", "올드스쿨", "잉크 스플래쉬", "치카노", "컬러", "캐릭터"])
+    private let genreList = Observable<[String]>.just(["전체보기", "레터링", "미니타투", "감성 타투", "이레즈미", "블랙&그레이", "라인워크", "헤나", "커버업", "뉴스쿨", "올드스쿨", "잉크 스플래쉬", "치카노", "컬러", "캐릭터"])
     let viewWillAppear = PublishRelay<Void>()
     let filterViewDidDismiss = PublishRelay<Void>()
     let selectedDropDownItemRow = PublishRelay<Int>()
@@ -84,15 +84,21 @@ class GenreViewModel {
             viewWillAppear.asObservable(),
             filterViewDidDismiss.asObservable()
         ])
-            .flatMap { filterService.taskService.fetch()
-                .map { $0.filter { $0.isSubscribe == true } } }
+            .flatMap {
+                filterService.taskService.fetch().map {
+                    $0.filter { $0.isSubscribe == true }.map { $0.type.serverString() }
+                }
+            }
 
         let filteredLocation = Observable.merge([
             viewWillAppear.asObservable(),
             filterViewDidDismiss.asObservable()
         ])
-            .flatMap { filterService.locationService.fetch()
-                .map { $0.filter { $0.isSubscribe == true } } }
+            .flatMap {
+                filterService.locationService.fetch().map {
+                    $0.filter { $0.isSubscribe == true }.flatMap { $0.type.index() }
+                }
+            }
 
         let filteredInfo = Observable.zip(filteredTask, filteredLocation)
 
@@ -112,11 +118,15 @@ class GenreViewModel {
             filterViewDidDismiss.asObservable(),
             selectedDropDownItemRow.map { _ in () }.asObservable()
         ])
-            .withLatestFrom(currentGenreTitle) { $1 }
-            .flatMap { CatSDKNetworkTattoo.rx.fetchTattosInSpecificCategory(categoryID: GenreType.id($0)) }
-            .withLatestFrom(filteredInfo) { tattoos, filteredInfo in
-                return tattoos.filter { tattoo in
-                    filteredInfo.1.contains { $0.type.rawValue == tattoo.address }
+            .withLatestFrom(filteredInfo)
+            .flatMap { filterInfo in
+                // TODO: - 임시로 fist
+                let tattoType = filterInfo.0.first
+                let addressid = filterInfo.1.first
+                if genre.id == 0 {
+                    return CatSDKNetworkTattoo.rx.fetchTattoos(tattooType: tattoType, addressId: addressid)
+                } else {
+                    return CatSDKNetworkTattoo.rx.fetchTattosInSpecificCategory(categoryID: genre.id, tattooType: tattoType, addressId: addressid)
                 }
             }
 
@@ -125,6 +135,7 @@ class GenreViewModel {
             .asDriver(onErrorJustReturn: [])
 
         genreItems = fetchedItems
+            .debug("==[==-===-=-=-=-")
             .map { tattoos in
                 return tattoos.map { tattoo -> CommonFullImageCellViewModel in
                     if let imageURLString = tattoo.imageURLStrings.first {

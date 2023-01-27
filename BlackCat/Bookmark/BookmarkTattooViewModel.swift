@@ -41,7 +41,18 @@ class BookmarkTattooViewModel {
             .map { BMCellViewModel(imageURLString: $0.imageURLStrings.first ?? "") } )
 
         let bookmarkCellViewModelsWhenFirstLoad = viewDidLoad
-            .withLatestFrom(cellViewModels)
+            .flatMap { _ -> Observable<[Model.UserBookmarkPost]> in
+                let jwtToken = CatSDKUser.user().jwt ?? ""
+                return CatSDKNetworkBookmark.rx.userListInSpecificBookmark(postId: 3, userToken: jwtToken)
+            }
+            .map { users in
+                print("users: \(users)")
+                return users.map { _ in BMCellViewModel(imageURLString: "") }
+            }
+//            .map { tattooBookmarks in
+//                let jwtToken = CatSDKUser.user().jwt ?? ""
+//                tattooBookmarks.map { BMCellViewModel(imageURLString: $0.imageUrl + "AUTHORIZATION=\(jwtToken)") }
+//            }
 
         let editModeWhenItemSelected = didSelectItem
             .withLatestFrom(editMode) { (index: $0, editMode: $1) }
