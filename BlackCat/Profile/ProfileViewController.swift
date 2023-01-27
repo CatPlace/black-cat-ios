@@ -15,10 +15,19 @@ import BlackCatSDK
 class ProfileViewController: UIViewController {
     // MARK: - Properties
     var disposeBag = DisposeBag()
+    var viewModel: ProfileViewModel
     
     // MARK: - Binding
     func bind(to viewModel: ProfileViewModel) {
+        
         disposeBag.insert {
+            profileImageView.rx.tapGesture()
+                .when(.recognized)
+                .withUnretained(self)
+                .bind { owner, _ in
+                    owner.openImageLibrary()
+                }
+            
             completeButtonLabel.rx.tapGesture()
                 .when(.recognized)
                 .map { _ in () }
@@ -42,10 +51,29 @@ class ProfileViewController: UIViewController {
                 // TODO: Alert
                 print(message)
             }.disposed(by: disposeBag)
+        
+        viewModel.profileImageDriver
+            .drive(profileImageView.rx.image)
+            .disposed(by: disposeBag)
+    }
+    
+    // MARK: - Function
+    func openImageLibrary() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        present(imagePicker, animated: true)
+    }
+    
+    func configure() {
+        view.backgroundColor = .init(red: 0.89, green: 0.89, blue: 0.89, alpha: 1)
+        appendNavigationLeftBackButton()
+        appendNavigationLeftLabel(title: "프로필")
     }
     
     // MARK: - Initializer
     init(viewModel: ProfileViewModel) {
+        self.viewModel = viewModel
+        
         nameInputView = SimpleInputView(viewModel: viewModel.nameInputViewModel)
         emailInputView = SimpleInputView(viewModel: viewModel.emailInputViewModel)
         phoneNumberInputView = SimpleInputView(viewModel: viewModel.phoneNumberInputViewModel)
@@ -53,9 +81,6 @@ class ProfileViewController: UIViewController {
         areaInputView = AreaInputView(viewModel: viewModel.areaInputViewModel)
         
         super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = .init(red: 0.89, green: 0.89, blue: 0.89, alpha: 1)
-        setUI()
-        bind(to: viewModel)
     }
     
     required init?(coder: NSCoder) {
@@ -65,7 +90,14 @@ class ProfileViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(contentView.frame)
+        configure()
+        setUI()
+        bind(to: viewModel)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNavigationBackgroundColor(color: .init(hex: "#333333FF"))
     }
     
     // MARK: - UIComponents
@@ -75,6 +107,7 @@ class ProfileViewController: UIViewController {
         let v = UIImageView()
         v.backgroundColor = UIColor(hex: "#D9D9D9FF")
         v.layer.cornerRadius = view.frame.width * 4 / 25
+        v.clipsToBounds = true
         return v
     }()
     let nameInputView: SimpleInputView
@@ -90,6 +123,8 @@ class ProfileViewController: UIViewController {
         $0.text = "완료"
         $0.backgroundColor = .init(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
         $0.textColor = .white
+        $0.font = .appleSDGoithcFont(size: 24, style: .bold)
+        $0.textAlignment = .center
         return $0
     }(UILabel())
 }
@@ -155,5 +190,14 @@ extension ProfileViewController {
             $0.bottom.leading.trailing.equalToSuperview()
             $0.height.equalTo(view.frame.width * 90 / 375)
         }
+    }
+}
+
+extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            // 사진 촬영, 이미지 정보가 넘어옴
+        let selectedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage
+        viewModel.imageInputRelay.accept(selectedImage)
+        picker.dismiss(animated: true, completion: nil)
     }
 }
