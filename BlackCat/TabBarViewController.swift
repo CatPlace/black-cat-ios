@@ -12,18 +12,18 @@ final class TabBarViewController: UITabBarController {
     
     // MARK: - Properties
     let homeVC = TabBarFactory.create(viewController: HomeViewController(),
-                                                title: "홈",
-                                                image: .ic_board,
-                                                selectedImage: .ic_board_fill)
+                                      title: "홈",
+                                      image: .ic_home,
+                                      selectedImage: .ic_home_fill)
     let bookmarkVC = TabBarFactory.create(viewController: BookmarkViewController(),
                                           title: "좋아요",
-                                          image: .ic_board,
-                                          selectedImage: .ic_board_fill)
-
+                                          image: .ic_like,
+                                          selectedImage: .ic_like_fill)
+    
     let myPageVC = TabBarFactory.create(viewController: MyPageViewController(viewModel: .init()),
-                                   title: "마이페이지",
-                                   image: .ic_board,
-                                   selectedImage: .ic_board_fill)
+                                        title: "마이페이지",
+                                        image: .ic_home,
+                                        selectedImage: .ic_home)
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -56,8 +56,7 @@ extension TabBarViewController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         if let navigationController = viewController as? UINavigationController, let nextVC = navigationController.viewControllers.first {
             if nextVC is BookmarkViewController && CatSDKUser.userType() == .guest {
-                let vc = UINavigationController(rootViewController: LoginAlertViewController())
-                vc.modalPresentationStyle = .fullScreen
+                let vc = LoginAlertViewController()
                 present(vc, animated: true)
                 return false
             }
