@@ -78,7 +78,7 @@ class ProfileViewModel {
             .asDriver(onErrorJustReturn: "일시적인 오류입니다. 문의 해주시면 감사드리곘습니다.")
         
         profileImageDriver = imageInputRelay
-            .flatMap(convertToUIImage)
+            .flatMap(UIImage.convertToUIImage)
             .asDriver(onErrorJustReturn: nil)
         
         func checkValidInputs(inputs user: Model.User) -> Bool {
@@ -91,18 +91,5 @@ class ProfileViewModel {
             !email.isEmpty &&
             !phoneNumber.isEmpty
         }
-        func convertToUIImage(_ sender: Any?) -> Observable<UIImage?> {
-            if let data = sender as? Data {
-                return .just(UIImage(data: data))
-            } else if let string = sender as? String, let url = URL(string: string) {
-                return URLSession.shared.rx.response(request: URLRequest(url: url)).map { UIImage(data: $1) }
-            } else if let image = sender as? UIImage {
-                return .just(image)
-            }
-            else {
-                return .just(UIImage(systemName: "trash"))
-            }
-        }
     }
-    
 }

@@ -18,8 +18,7 @@ class TattooImageInputCell: UICollectionViewCell {
     }
     
     func configureCell(with sender: Any?) {
-        print(sender)
-        convertToUIImage(sender)
+        UIImage.convertToUIImage(sender)
             .asDriver(onErrorJustReturn: nil)
             .drive(imageView.rx.image)
             .disposed(by: disposeBag)
@@ -33,18 +32,7 @@ class TattooImageInputCell: UICollectionViewCell {
         }
     }
     
-    func convertToUIImage(_ sender: Any?) -> Observable<UIImage?> {
-        if let data = sender as? Data {
-            return .just(UIImage(data: data))
-        } else if let string = sender as? String, let url = URL(string: string) {
-            return URLSession.shared.rx.response(request: URLRequest(url: url)).map { UIImage(data: $1) }
-        } else if let image = sender as? UIImage {
-            return .just(image)
-        }
-        else {
-            return .just(nil)
-        }
-    }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
