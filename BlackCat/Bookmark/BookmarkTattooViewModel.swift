@@ -67,7 +67,6 @@ class BookmarkTattooViewModel {
             .map { $0.index }
 
         let cellShouldBeEdited = cellIndexForEdit
-            .debug("🥵🥵🥵🥵🥵🥵 CellIndexForEdit 🥵🥵🥵🥵🥵🥵")
             .withLatestFrom(editingCellManagingDict) {
                 selectItemIndex, editingCellManagingDict -> (shouldEdit: Bool, index: Int) in
                 let isDictionaryContainsCellIndex = editingCellManagingDict.contains { $0.key == selectItemIndex }
@@ -132,8 +131,6 @@ class BookmarkTattooViewModel {
         editingCellManagingDict
             .withLatestFrom(cellViewModels) { (dict: $0, cellViewModels: $1) }
             .subscribe { returned in
-                print("🥶🥶🥶🥶🥶🥶 dict.values", returned.dict.keys)
-                print("cellViewModel.count", returned.cellViewModels.count)
                 returned.dict.forEach { returned.cellViewModels[$0.key].selectNumber.accept($0.value) }
             }
             .disposed(by: disposeBag)

@@ -94,7 +94,7 @@ final class MyPageViewModel {
             .share()
         
         let recentTattooSectionDataObservable = viewWillAppear
-            .map { CatSDKTattoo.recentViewTattoos() }
+            .flatMap { CatSDKTattoo.recentViewTattoos() }
             .share()
         
         let menuSectionDataObservable = viewWillAppear

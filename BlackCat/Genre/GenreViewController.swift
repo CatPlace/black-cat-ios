@@ -22,8 +22,6 @@ class GenreViewController: UIViewController {
     // MARK: - Properties
 
     let viewModel: GenreViewModel
-    let filterViewReactor = FilterReactor()
-    lazy var filterViewController = FilterViewController(reactor: filterViewReactor)
 
     // MARK: - Binding
 
@@ -44,20 +42,22 @@ class GenreViewController: UIViewController {
 
         filterButtonItem.rx.tap
             .subscribe(with: self) { owner, _ in
-                owner.filterViewController.preferredSheetSizing = .fit
-                owner.present(owner.filterViewController, animated: true)
+                let filterViewReactor = FilterReactor()
+                let filterViewController = FilterViewController(reactor: filterViewReactor)
+                
+                filterViewReactor.state.map { $0.isDismiss }
+                    .filter { $0 == true }
+                    .map { _ in () }
+                    .bind(to: owner.viewModel.filterViewDidDismiss)
+                    .disposed(by: filterViewController.disposeBag)
+                filterViewController.preferredSheetSizing = .fit
+                owner.present(filterViewController, animated: true)
             }
             .disposed(by: disposeBag)
 
         dropDown.rx.itemSelected
             .map { $0.row }
             .bind(to: viewModel.selectedDropDownItemRow)
-            .disposed(by: disposeBag)
-
-        filterViewReactor.state.map { $0.isDismiss }
-            .filter { $0 == true }
-            .map { _ in () }
-            .bind(to: viewModel.filterViewDidDismiss)
             .disposed(by: disposeBag)
 
         collectionView.rx.itemSelected

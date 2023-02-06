@@ -79,7 +79,8 @@ struct TattooDetailViewModel {
             didTapTattooistNameLabel.asObservable()
         ])
         .asDriver(onErrorJustReturn: ())
-        
-        CatSDKTattoo.updateRecentViewTattoos(tattoo: tattooModel)
+        if tattooModel != .empty {
+            CatSDKTattoo.updateRecentViewTattoos(tattoo: tattooModel)
+        }
     }
 }

@@ -31,6 +31,7 @@
 		78431C9A297B13770002F1E7 /* ProductEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78431C99297B13770002F1E7 /* ProductEditViewModel.swift */; };
 		78431C9C297B18B10002F1E7 /* TattooImageInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78431C9B297B18B10002F1E7 /* TattooImageInputViewModel.swift */; };
 		78431C9F297B190B0002F1E7 /* TattooImageInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78431C9E297B190B0002F1E7 /* TattooImageInputCell.swift */; };
+		784A449529858E1300567450 /* UITabBarAppearance+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784A449429858E1300567450 /* UITabBarAppearance+.swift */; };
 		784B021D29375713004ED20A /* MagazineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B021C29375713004ED20A /* MagazineModel.swift */; };
 		784B021F29375719004ED20A /* MagazineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B021E29375719004ED20A /* MagazineViewModel.swift */; };
 		784B02302937579E004ED20A /* MyPageTestUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B02222937579E004ED20A /* MyPageTestUseCase.swift */; };
@@ -277,6 +278,7 @@
 		78431C99297B13770002F1E7 /* ProductEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductEditViewModel.swift; sourceTree = "<group>"; };
 		78431C9B297B18B10002F1E7 /* TattooImageInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooImageInputViewModel.swift; sourceTree = "<group>"; };
 		78431C9E297B190B0002F1E7 /* TattooImageInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooImageInputCell.swift; sourceTree = "<group>"; };
+		784A449429858E1300567450 /* UITabBarAppearance+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBarAppearance+.swift"; sourceTree = "<group>"; };
 		784B021C29375713004ED20A /* MagazineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineModel.swift; sourceTree = "<group>"; };
 		784B021E29375719004ED20A /* MagazineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagazineViewModel.swift; sourceTree = "<group>"; };
 		784B02222937579E004ED20A /* MyPageTestUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageTestUseCase.swift; sourceTree = "<group>"; };
@@ -1119,6 +1121,7 @@
 				B1D127DE28F09200007E3667 /* UIImage+.swift */,
 				B1D3362428F142A400826636 /* CALayer+.swift */,
 				B1D3362628F1457700826636 /* UITabBar+.swift */,
+				784A449429858E1300567450 /* UITabBarAppearance+.swift */,
 				B1D2D106290AC7B5005B76BD /* UIScrollView+Rx.swift */,
 				B1D2D108290AC8FA005B76BD /* Observable+.swift */,
 				8EFC9FE0291205B400A83D3D /* UIView+.swift */,
@@ -1709,6 +1712,7 @@
 				78B00BBA28F5661000A9915D /* MagazineModel.dummy.swift in Sources */,
 				7867A63729374D0500FC1160 /* FilterBaseCell.swift in Sources */,
 				78B00BBC28F5661000A9915D /* MagazineViewController.Layout.swift in Sources */,
+				784A449529858E1300567450 /* UITabBarAppearance+.swift in Sources */,
 				7828DB65295C9D500053B0A0 /* JHBPContentSectionHeaderView.swift in Sources */,
 				B1D127DF28F09200007E3667 /* UIImage+.swift in Sources */,
 				8E8848802949C3F80039F99A /* CategoryPaperView.UITableView.swift in Sources */,

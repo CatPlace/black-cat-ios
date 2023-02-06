@@ -35,8 +35,7 @@ class LoginViewModel {
         
         let loginSuccessResult = loginResult
             .filter { $0.id != -2 }
-            .debug("로그인 결과@@@")
-        // TODO: - 서버통신 후 권한 받아서 집어넣기 (유저디폴트에 의존하면 새로 로그인 시 이사람이 비즈니스 계정인지 명확하지 않음)
+        // TODO: - 서버통신 후 유저 업데이트 (유저디폴트에 의존하면 새로 로그인 시 이사람이 비즈니스 계정인지 명확하지 않음)
             .do {
                 var user = $0
                 user.userType = .normal

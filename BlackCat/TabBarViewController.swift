@@ -36,6 +36,7 @@ final class TabBarViewController: UITabBarController {
         configure()
         bind()
         updateMyPageButtonImage(UIImage(.ic_mypage)?.resize(newWidth: 13.5))
+        modalPresentationStyle = .fullScreen
     }
     
     func bind() {
@@ -49,14 +50,23 @@ final class TabBarViewController: UITabBarController {
     
     func configure() {
         tabBar.tintColor = .init(hex: "#7210A0FF")
+        let tabBarAppearance = UITabBarAppearance()
+        let tabBarItemAppearance = UITabBarItemAppearance()
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.black,
+            .font: UIFont.appleSDGoithcFont(size: 12, style: .medium),
+        ]
+        tabBarItemAppearance.normal.titleTextAttributes = attributes
+        tabBarItemAppearance.selected.titleTextAttributes = attributes
+        
+        tabBarAppearance.stackedLayoutAppearance = tabBarItemAppearance
+        tabBarAppearance.clearBackground()
+        tabBar.standardAppearance = tabBarAppearance
+                
         tabBar.layer.cornerRadius = tabBar.frame.height * 0.41
         tabBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        modalPresentationStyle = .fullScreen
-        UITabBar.clearShadow()
+
         tabBar.layer.applyShadow(color: .gray, alpha: 0.3, x: 0, y: 0, blur: 12)
-        UITabBarItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor.black,
-                                                          .font: UIFont.appleSDGoithcFont(size: 12, style: .medium)
-        ], for: .normal)
     }
     
     override func viewDidLayoutSubviews() {

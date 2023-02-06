@@ -69,7 +69,7 @@ extension UIViewController {
             dismiss(animated: true)
             return
         } else {
-            navigationController?.popViewController(animated: false)
+            navigationController?.popViewController(animated: true)
         }
     }
 }

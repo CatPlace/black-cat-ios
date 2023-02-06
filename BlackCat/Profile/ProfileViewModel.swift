@@ -54,8 +54,8 @@ class ProfileViewModel {
         }
         
         let inputs = completeButtonTapped
+            .do { _ in print(CatSDKUser.user().jwt)}
             .withLatestFrom(combinedInputs)
-            .debug("프로필 데이터들")
             .share()
         
         let alertMessage = inputs
@@ -67,6 +67,7 @@ class ProfileViewModel {
         
         // TODO: - 서버통신
         let updatedResult = shouldUpdateProfile
+            .flatMap { CatSDKUser.updateUserProfile(user: $0.0) }
             .map { _ in () }
         
         // TODO: - 서버통신 분기처리 ? 에러 및 성공

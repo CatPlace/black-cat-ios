@@ -24,6 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.backgroundColor = .systemBackground
         window?.rootViewController = LoginViewController(viewModel: .init())
+        // TODO: - 통신 후 jwt 없으면 다시 로그인 화면
         window?.makeKeyAndVisible()
     }
 
