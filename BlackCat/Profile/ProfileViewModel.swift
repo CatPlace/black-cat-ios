@@ -54,8 +54,8 @@ class ProfileViewModel {
         }
         
         let inputs = completeButtonTapped
+            .do { _ in print(CatSDKUser.user().jwt)}
             .withLatestFrom(combinedInputs)
-            .debug("프로필 데이터들")
             .share()
         
         let alertMessage = inputs
@@ -67,6 +67,7 @@ class ProfileViewModel {
         
         // TODO: - 서버통신
         let updatedResult = shouldUpdateProfile
+            .flatMap { CatSDKUser.updateUserProfile(user: $0.0) }
             .map { _ in () }
         
         // TODO: - 서버통신 분기처리 ? 에러 및 성공
@@ -78,7 +79,7 @@ class ProfileViewModel {
             .asDriver(onErrorJustReturn: "일시적인 오류입니다. 문의 해주시면 감사드리곘습니다.")
         
         profileImageDriver = imageInputRelay
-            .flatMap(convertToUIImage)
+            .flatMap(UIImage.convertToUIImage)
             .asDriver(onErrorJustReturn: nil)
         
         func checkValidInputs(inputs user: Model.User) -> Bool {
@@ -91,18 +92,5 @@ class ProfileViewModel {
             !email.isEmpty &&
             !phoneNumber.isEmpty
         }
-        func convertToUIImage(_ sender: Any?) -> Observable<UIImage?> {
-            if let data = sender as? Data {
-                return .just(UIImage(data: data))
-            } else if let string = sender as? String, let url = URL(string: string) {
-                return URLSession.shared.rx.response(request: URLRequest(url: url)).map { UIImage(data: $1) }
-            } else if let image = sender as? UIImage {
-                return .just(image)
-            }
-            else {
-                return .just(UIImage(systemName: "trash"))
-            }
-        }
     }
-    
 }

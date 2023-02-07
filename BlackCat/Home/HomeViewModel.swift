@@ -20,6 +20,7 @@ class HomeViewModel {
     // MARK: - Input
 
     let viewDidLoad = PublishRelay<Void>()
+    let viewWillAppear = PublishRelay<Void>()
     let didTapSearchBarButtonItem = PublishRelay<Void>()
     let didTapHeartBarButtonItem = PublishRelay<Void>()
     let didTapCollectionViewItem = PublishRelay<IndexPath>()
@@ -32,9 +33,8 @@ class HomeViewModel {
     let pushToGenreViewController: Driver<Genre>
 
     init() {
-        let fetchedRecommendItems = viewDidLoad
-            .map { _ in Array(repeating: Model.Tattoo(id: 1, ownerName: "김타투", price: 0, description: "제목", liked: false, imageURLStrings: [], address: "주소"), count: 5) }
-            
+        let fetchedRecommendItems = viewWillAppear
+            .flatMap { _ in CatSDKTattoo.recommendTattoos()}
         let startFetchItems = viewDidLoad.share()
         let didTapGenreItem = PublishRelay<Int>()
         let didTapRecommendItem = PublishRelay<Int>()
@@ -49,7 +49,7 @@ class HomeViewModel {
             .flatMap { nextFetchPage in fetchTattoAlbumItems(at: nextFetchPage) }
             .scan([HomeModel.TattooAlbum]()) { previousItems, nextFetchPageItems in
                 previousItems + nextFetchPageItems
-            }
+            }.share()
 
         homeItems = Observable
             .combineLatest(
@@ -57,7 +57,7 @@ class HomeViewModel {
             ) { genreItems, recommendItems, tattooAlbumItems -> [HomeSection] in
                 [HomeSection(header: .empty,
                              items: genreItems.map { .genreCell(HomeGenreCellViewModel(with: $0)) }),
-                 HomeSection(header: .title("추천 타투"),
+                 HomeSection(header: .title(CatSDKUser.userType() == .guest ? "추천 타투" : "\(CatSDKUser.user().name ?? "고객") 님을 위한 추천"),
                              items: recommendItems.map { .recommendCell(CommonTattooInfoCellViewModel(tattoo: $0)) }),
                  HomeSection(header: .empty,
                              items: [.emptyCell(HomeModel.Empty())]),
@@ -72,7 +72,10 @@ class HomeViewModel {
         // Dummy Function입니다.
         // API가 나오는대로 SDK에서 처리할 함수입니다.
         func fetchTattoAlbumItems(at page: Int) -> Observable<[HomeModel.TattooAlbum]> {
-            return .just(Array(repeating: HomeModel.TattooAlbum(imageURLString: ""), count: 15))
+            return CatSDKTattoo.famousTattoos(page: page, size: 9)
+                .map { tattoos in
+                    tattoos.map { tattoo in .init(imageURLString: tattoo.imageURLStrings.first ?? "")}
+                }
         }
 
         didTapCollectionViewItem

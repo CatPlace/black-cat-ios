@@ -42,7 +42,10 @@ class ProfileViewController: UIViewController {
                     var user = CatSDKUser.user()
                     user.userType = .business
                     CatSDKUser.updateUser(user: user)
-                    owner.tabBarController?.viewControllers![2].loadView()
+                    // TODO: 탭바 마이페이지 이미지 업데이트
+                    if let vc = UIApplication.getMostTopViewController() as? MyPageViewController  {
+                        vc.viewModel.viewWillAppear.accept(())
+                    }
                 }
             }.disposed(by: disposeBag)
         

@@ -73,27 +73,17 @@ class HomeViewController: UIViewController {
     private func bind() {
         
         // MARK: - Action
-
         rx.viewDidLoad
             .bind(to: viewModel.viewDidLoad)
             .disposed(by: disposeBag)
         
-        viewModel.viewDidLoad
-            .debug("유저")
-            .bind {
-            print(CatSDKUser.user())
-        }.disposed(by: disposeBag)
+        rx.viewWillAppear
+            .map { _ in () }
+            .bind(to: viewModel.viewWillAppear)
+            .disposed(by: disposeBag)
         
         collectionView.rx.nextFetchPage
             .bind(to: viewModel.nextFetchPage)
-            .disposed(by: disposeBag)
-
-        searchBarButtonItem.rx.tap
-            .bind(to: viewModel.didTapSearchBarButtonItem)
-            .disposed(by: disposeBag)
-
-        heartBarButtonItem.rx.tap
-            .bind(to: viewModel.didTapHeartBarButtonItem)
             .disposed(by: disposeBag)
 
         collectionView.rx.itemSelected
@@ -107,7 +97,6 @@ class HomeViewController: UIViewController {
             .disposed(by: disposeBag)
 
         viewModel.pushToGenreViewController
-            .debug()
             .drive(with: self) { owner, genre in
                 let genreViewController = GenreViewController(viewModel: .init(genre: genre))
                 genreViewController.hidesBottomBarWhenPushed = true
@@ -146,17 +135,7 @@ class HomeViewController: UIViewController {
         label.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 32)
         return UIBarButtonItem(customView: label)
     }()
-
-    let searchBarButtonItem: UIBarButtonItem = {
-        let image = UIImage(systemName: "magnifyingglass")?.withTintColor(.black, renderingMode: .alwaysOriginal)
-        return UIBarButtonItem(image: image, style: .plain, target: self, action: nil)
-    }()
-
-    let heartBarButtonItem: UIBarButtonItem = {
-        let image = UIImage(systemName: "heart")?.withTintColor(.black, renderingMode: .alwaysOriginal)
-        return UIBarButtonItem(image: image, style: .plain, target: self, action: nil)
-    }()
-
+    
     lazy var collectionView: UICollectionView = {
         let  cv = UICollectionView(frame: .zero,
                                    collectionViewLayout: compositionalLayout)
@@ -187,9 +166,11 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController {
     private func setNavigationBar() {
-        navigationItem.leftBarButtonItem = leftTitleBarButtonItem
-        navigationItem.rightBarButtonItems = [heartBarButtonItem,
-                                              searchBarButtonItem]
+        let label = UILabel()
+        label.text = "Black Cat"
+        label.font = .didotFont(size: 32, style: .bold)
+        label.textColor = .init(hex: "#333333FF")
+        appendNavigationLeftLabel(label)
     }
 
     private func setUI() {
