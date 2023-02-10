@@ -103,7 +103,7 @@ class LoginAlertViewController: UIViewController {
     }()
     var lookAroundLabel: UILabel = {
         let l = UILabel()
-        l.attributedText = NSAttributedString(string: "닫기 ?",
+        l.attributedText = NSAttributedString(string: "나중에 로그인할래요",
                                               attributes: [
                                                 NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue
                                               ])
@@ -134,7 +134,8 @@ extension LoginAlertViewController {
         }
         
         lookAroundLabel.snp.makeConstraints {
-            $0.top.leading.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(VStackView.snp.bottom).offset(20)
+            $0.centerX.equalToSuperview()
         }
     }
 }
