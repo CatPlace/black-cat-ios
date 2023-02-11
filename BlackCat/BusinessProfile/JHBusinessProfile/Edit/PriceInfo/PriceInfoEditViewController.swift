@@ -27,13 +27,12 @@ class PriceInfoEditViewController: VerticalScrollableViewController {
     // MARK: - Initializer
     init(viewModel: PriceInfoEditViewModel = PriceInfoEditViewModel()) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        super.init()
         appendNavigationLeftBackButton()
         appendNavigationLeftLabel(title: "견적서 편집")
         setUI()
         bind(to: viewModel)
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

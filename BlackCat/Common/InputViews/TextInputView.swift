@@ -57,7 +57,6 @@ class BaseTextView: UITextView {
     func bind(to viewModel: BaseTextViewModel) {
         rx.text.orEmpty
             .distinctUntilChanged()
-
             .bind(to: viewModel.inputStringRelay)
             .disposed(by: disposeBag)
 
@@ -148,8 +147,8 @@ class TextInputView: UIView {
         textView = BaseTextView(viewModel: viewModel.baseTextViewModel)
         super.init(frame: .zero)
         textView.delegate = self
-        bind(to: viewModel)
         setUI()
+        bind(to: viewModel)
     }
     
     required init?(coder: NSCoder) {
@@ -176,8 +175,8 @@ class TextInputView: UIView {
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().inset(4)
-            $0.height.equalTo(16).priority(.high)
+            $0.leading.trailing.equalToSuperview().inset(4)
+            $0.height.equalTo(16)
         }
         
         textView.snp.makeConstraints {

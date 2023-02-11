@@ -28,6 +28,7 @@ class ProfileEditViewController: VerticalScrollableViewController {
             }.disposed(by: disposeBag)
         
         RxKeyboard.instance.visibleHeight
+            .skip(1)
             .drive(with: self) { owner, keyboardVisibleHeight in
                 owner.updateView(with: keyboardVisibleHeight)
             }.disposed(by: disposeBag)
@@ -69,7 +70,8 @@ class ProfileEditViewController: VerticalScrollableViewController {
     // MARK: - Initializer
     init(viewModel: ProfileEditViewModel = ProfileEditViewModel()) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        super.init()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -79,15 +81,15 @@ class ProfileEditViewController: VerticalScrollableViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setUI()
         bind(to: viewModel)
-        
+        configure()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         setNavigationBackgroundColor(color: .init(hex: "#333333FF"))
     }
-    
     
     // MARK: - UIComponents
     let coverImageView: UIImageView = {
@@ -137,7 +139,6 @@ extension ProfileEditViewController {
         }
         
         view.addSubview(completeButton)
-        
         completeButton.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(30)
             $0.width.equalTo(Constant.width * 251)
@@ -149,7 +150,6 @@ extension ProfileEditViewController {
 
 extension ProfileEditViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            // 사진 촬영, 이미지 정보가 넘어옴
         let selectedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage
         viewModel.imageRelay.accept(selectedImage)
         picker.dismiss(animated: true, completion: nil)

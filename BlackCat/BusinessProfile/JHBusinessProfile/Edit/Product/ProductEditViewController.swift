@@ -32,6 +32,7 @@ class ProductEditViewController: VerticalScrollableViewController {
             }.disposed(by: disposeBag)
         
         RxKeyboard.instance.visibleHeight
+            .skip(1)
             .drive(with: self) { owner, keyboardVisibleHeight in
                 owner.updateView(with: keyboardVisibleHeight)
             }.disposed(by: disposeBag)
@@ -57,6 +58,7 @@ class ProductEditViewController: VerticalScrollableViewController {
             }.disposed(by: disposeBag)
     }
     
+    //MARK: - Function
     func showImagePickerView() {
         let imagePickerManager = ImagePickerManager()
         
@@ -68,8 +70,6 @@ class ProductEditViewController: VerticalScrollableViewController {
             self.viewModel.imageListInputRelay.accept(imagePickerManager.convertAssetToImage(assets))
         }
     }
-    
-    
     
     func updateView(with height: CGFloat) {
         scrollView.snp.updateConstraints {
@@ -87,6 +87,13 @@ class ProductEditViewController: VerticalScrollableViewController {
             self.view.layoutIfNeeded()
         }
     }
+    
+    func configure() {
+        view.backgroundColor = .init(hex: "#F4F4F4FF")
+        appendNavigationLeftBackButton()
+        appendNavigationLeftLabel(title: viewModel.type.title())
+    }
+    
     // MARK: - Initializer
     init(viewModel: ProductEditViewModel = ProductEditViewModel()) {
         self.viewModel = viewModel
@@ -96,14 +103,7 @@ class ProductEditViewController: VerticalScrollableViewController {
         descriptionInputView = .init(viewModel: viewModel.descriptionInputViewModel)
         genreInputView = .init(viewModel: viewModel.genreInputViewModel)
     
-        super.init(nibName: nil, bundle: nil)
-    
-        setUI()
-        bind(to: viewModel)
-        appendNavigationLeftBackButton()
-        appendNavigationLeftLabel(title: viewModel.type.title())
-        view.layoutIfNeeded()
-        print(tattooImageInputView.collectionView.contentSize)
+        super.init()
     }
     
     required init?(coder: NSCoder) {
@@ -113,7 +113,9 @@ class ProductEditViewController: VerticalScrollableViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .init(hex: "#F4F4F4FF")
+        setUI()
+        bind(to: viewModel)
+        configure()
     }
     
     override func viewWillAppear(_ animated: Bool) {

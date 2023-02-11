@@ -114,6 +114,7 @@ final class JHBusinessProfileViewController: UIViewController {
         if viewModel.isOwner {
             updateEditButtonUI(selectedRow: 0)
         }
+        hidesBottomBarWhenPushed = true
     }
     
     required init?(coder: NSCoder) {
@@ -165,7 +166,7 @@ extension JHBusinessProfileViewController {
         view.addSubview(bottomView)
         bottomView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(28)
+            $0.bottom.equalToSuperview().inset(28)
             $0.height.equalTo(60)
         }
     }
