@@ -28,6 +28,8 @@ final class TattooDetailViewController: UIViewController {
 
     private func bind(to viewModel: TattooDetailViewModel) {
         pageControl.numberOfPages = viewModel.imageURLStrings.count
+        tattooistNameLabel.text = viewModel.ownerName
+        descriptionLabel.text = viewModel.description
 
         disposeBag.insert {
             tattooProfileImageView.rx.tapGesture()
@@ -35,7 +37,9 @@ final class TattooDetailViewController: UIViewController {
                 .map { _ in () }
                 .bind(to: viewModel.didTapProfileImageView)
 
-            askBottomView.heartButton.rx.tap
+            askBottomView.bookmarkView.rx.tapGesture()
+                .when(.recognized)
+                .map { _ in () }
                 .bind(to: viewModel.didTapBookmarkButton)
 
             tattooistNameLabel.rx.tapGesture()
@@ -46,13 +50,6 @@ final class TattooDetailViewController: UIViewController {
             viewModel.shouldFillHeartButton
                 .drive(with: self) { owner, shouldFill in
                     owner.switchHeartButton(shouldFill: shouldFill)
-
-                    //            askButton.rx.tap
-                    //                .bind(to: viewModel.didTapAskButton)
-                    //
-                    //            heartButton.rx.tap
-                    //                .bind(to: viewModel.didTapBookmarkButton)
-
                 }
 
             viewModel.pushToTattooistDetailVC
@@ -89,7 +86,6 @@ final class TattooDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setNavigationBar()
         setUI()
         bind(to: viewModel)
     }
@@ -128,12 +124,6 @@ final class TattooDetailViewController: UIViewController {
         return $0
     }(CHIPageControlJaloro())
 
-    private let shareRightBarButtonItem: UIBarButtonItem = {
-        let image = UIImage(systemName: "square.and.arrow.up")?.withTintColor(.white)
-        $0.image = image
-        return $0
-    }(UIBarButtonItem())
-
     private let tattooTitle: UILabel = {
         $0.text = "타투 제목"
         return $0
@@ -152,6 +142,11 @@ final class TattooDetailViewController: UIViewController {
         $0.text = "김타투"
         return $0
     }(UILabel())
+
+    private let dividerView: UIView = {
+        $0.backgroundColor = .black
+        return $0
+    }(UIView())
 
     private let dateLabel: UILabel = {
         $0.font = .systemFont(ofSize: 14)
@@ -174,10 +169,6 @@ final class TattooDetailViewController: UIViewController {
 extension TattooDetailViewController {
     private var cellHeight: CGFloat { (500 * UIScreen.main.bounds.width) / 375 }
 
-    private func setNavigationBar() {
-        self.navigationItem.rightBarButtonItem = shareRightBarButtonItem
-    }
-
     private func setUI() {
         view.addSubview(scrollView)
 
@@ -192,7 +183,7 @@ extension TattooDetailViewController {
             $0.width.equalToSuperview()
         }
 
-        [collectionView, pageControl, tattooTitle, tattooProfileImageView, tattooistNameLabel, dateLabel, descriptionLabel].forEach { contentView.addSubview($0) }
+        [collectionView, pageControl, tattooTitle, tattooProfileImageView, tattooistNameLabel, dividerView, descriptionLabel, dateLabel].forEach { contentView.addSubview($0) }
 
         collectionView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
@@ -221,14 +212,20 @@ extension TattooDetailViewController {
             $0.centerY.equalTo(tattooProfileImageView)
         }
 
-        dateLabel.snp.makeConstraints {
-            $0.top.equalTo(tattooProfileImageView.snp.bottom).offset(20)
-            $0.leading.equalToSuperview().inset(30)
+        dividerView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(1)
+            $0.top.equalTo(tattooistNameLabel.snp.bottom).offset(20)
         }
 
         descriptionLabel.snp.makeConstraints {
-            $0.top.equalTo(dateLabel.snp.bottom).offset(20)
+            $0.top.equalTo(dividerView.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(30)
+        }
+
+        dateLabel.snp.makeConstraints {
+            $0.top.equalTo(descriptionLabel.snp.bottom).offset(20)
+            $0.leading.equalToSuperview().inset(30)
             $0.bottom.equalToSuperview().inset(60)
         }
 
