@@ -38,6 +38,14 @@ class HomeTattooAlbumCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Functions
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        thumbnailImageView.image = nil
+    }
+
     // MARK: - UIComponents
 
     let thumbnailImageView = UIImageView()
