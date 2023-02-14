@@ -18,8 +18,8 @@ class GenreInputViewModel {
     
     let updateIndexSetDriver: Driver<Set<Int>>
     let cellViewModelsDriver: Driver<[GenreInputCellViewModel]>
-    init(genres: Observable<[Model.Category]>, selectedGenres: [Model.Category] = []) {
-        selectedGenresRelay = .init(value: Set(selectedGenres.map { $0.id }))
+    init(genres: Observable<[Model.Category]>, selectedGenres: [Int] = []) {
+        selectedGenresRelay = .init(value: Set(selectedGenres.map { $0 }))
             
         let newSelectedGenres = selectedIndexRelay
             .withLatestFrom(selectedGenresRelay) { indexPath, preSelectedIndex in

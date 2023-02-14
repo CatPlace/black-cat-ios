@@ -11,6 +11,17 @@ import RxRelay
 import RxCocoa
 import BlackCatSDK
 
+extension TattooType {
+    public func title() -> String {
+        switch self {
+        case .work:
+            return "사진"
+        case .design:
+            return "도안"
+        }
+    }
+}
+
 class TattooImageInputView: UIView {
     
     enum Reusable {

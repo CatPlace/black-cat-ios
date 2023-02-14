@@ -11,27 +11,17 @@ import RxCocoa
 import RxRelay
 import BlackCatSDK
 
-enum TattooType: String, CaseIterable {
-    case work = "WORK"
-    case design = "DESIGN"
-
-    func title() -> String {
-        switch self {
-        case .work:
-            return "사진"
-        case .design:
-            return "도안"
-        }
-    }
-}
+//enum TattooType: String, CaseIterable {
+//
+//}
 
 class TattooTypeInputViewModel {
     let tattooTypeRelay: BehaviorRelay<TattooType?>
     
     let cellViewModelsDriver: Driver<[FilterCellViewModel]>
     
-    init(tattooType: String?) {
-        tattooTypeRelay = .init(value: .init(rawValue: tattooType ?? ""))
+    init(tattooType: TattooType?) {
+        tattooTypeRelay = .init(value: tattooType)
         
         cellViewModelsDriver = tattooTypeRelay.map { type in
             TattooType.allCases.map { FilterCellViewModel(typeString: $0.title(), isSubscribe: type == $0) }
