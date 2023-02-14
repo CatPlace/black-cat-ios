@@ -6,7 +6,6 @@
 //
 
 import UIKit
-
 import RxSwift
 import RxCocoa
 import RxDataSources
@@ -14,7 +13,6 @@ import BlackCatSDK
 
 final class JHBusinessProfileViewController: UIViewController {
     typealias ManageMentDataSource = RxCollectionViewSectionedAnimatedDataSource<JHBusinessProfileCellSection>
-
     enum Reusable {
         static let thumbnailCell = ReusableCell<JHBPThumbnailImageCell>()
         static let contentCell = ReusableCell<JHBPContentCell>()
@@ -208,7 +206,6 @@ extension JHBusinessProfileViewController {
         collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-
         view.addSubview(bottomView)
         bottomView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
@@ -216,6 +213,4 @@ extension JHBusinessProfileViewController {
             $0.height.equalTo(60)
         }
     }
-    
-    
 }

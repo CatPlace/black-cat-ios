@@ -544,6 +544,11 @@
 		7828DB5B295C8D0F0053B0A0 /* JHBusinessProfile */ = {
 			isa = PBXGroup;
 			children = (
+				B1E3F7C5290EC98600005F17 /* BPBaseCollectionReusableView.swift */,
+				B1D89C97290E879B00C8B7F1 /* BPBaseCollectionViewCell.swift */,
+				B1E3F7C1290EC1F700005F17 /* BPContentModel.swift */,
+				B1CDE8E129160C4600ACB9AC /* BPProfileCells */,
+				B1CEF7302913A07300814113 /* BPProductsCells */,
 				7828DB5C295C8D2B0053B0A0 /* JHBusinessProfileViewController.swift */,
 				78D9EB5429A09EE300A9B452 /* JHBusinessProfileViewController.Layout.swift */,
 				78D9EB5629A09F1300A9B452 /* JHBusinessProfileViewController.Delegate.swift */,
