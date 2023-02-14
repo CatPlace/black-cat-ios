@@ -128,6 +128,9 @@ class MyPageProfileCell: MyPageBaseCell {
         disposeBag = DisposeBag()
     }
 
+    override func layoutSubviews() {
+        contentView.frame.size = frame.size
+    }
     // MARK: - UIComponents
     let profileView = UIView()
     let manageView = UIView()
@@ -153,7 +156,7 @@ class MyPageProfileCell: MyPageBaseCell {
     }(UILabel())
     let userImageView: UIImageView = {
         let v = UIImageView()
-        v.image = UIImage(systemName: "trash")
+        v.image = UIImage(named: "guest")
         v.contentMode = .scaleAspectFill
         v.layer.cornerRadius = 30 * UIScreen.main.bounds.width / 375
         v.clipsToBounds = true
@@ -178,6 +181,7 @@ class MyPageProfileCell: MyPageBaseCell {
         b.semanticContentAttribute = .forceRightToLeft
         return b
     }()
+    
    
 }
 
@@ -228,13 +232,15 @@ extension MyPageProfileCell {
             $0.height.equalTo(1)
         }
     }
-    
+
     func setupManageView() {
+        contentView.frame.size = frame.size
         contentView.addSubview(manageView)
         
         manageView.snp.makeConstraints {
             $0.top.equalTo(HLine.snp.bottom)
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
         }
         
         [manageLabel, chevronRightImageView].forEach { manageView.addSubview($0) }
@@ -250,5 +256,6 @@ extension MyPageProfileCell {
             $0.height.equalTo(14)
             $0.centerY.equalToSuperview()
         }
+        
     }
 }

@@ -33,6 +33,7 @@ final class MyPageViewController: UIViewController {
                 let cell = collectionView.dequeue(Reusable.profileCell, for: indexPath)
                 
                 cell.bind(to: viewModel, with: self.viewModel)
+                print("프로필셀 업데이트")
                 
                 return cell
             case .recentTattooSection(let viewModel):
@@ -67,6 +68,7 @@ final class MyPageViewController: UIViewController {
     // MARK: - Binding
     func bind(to viewModel: MyPageViewModel) {
         rx.viewWillAppear
+            .do { _ in self.myPageCollectionView.collectionViewLayout.invalidateLayout() }
             .map { _ in () }
             .bind(to: viewModel.viewWillAppear)
             .disposed(by: disposeBag)
@@ -76,6 +78,7 @@ final class MyPageViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.dataSourceDriver
+            
             .drive(myPageCollectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
@@ -104,18 +107,23 @@ final class MyPageViewController: UIViewController {
                 owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
         
-        // TODO: 업그레이드 로직
         viewModel.showUpgradeVCDriver
             .drive(with: self) { owner, _ in
-                let vc = UpgradeBusinessViewController()
+                let vc = UINavigationController(rootViewController: UpgradeBusinessViewController())
+                vc.modalPresentationStyle = .fullScreen
                 owner.present(vc, animated: true)
-                print("업그레이드 클릭 !")
             }.disposed(by: disposeBag)
         
         viewModel.showBusinessProfileDriver
             .map { JHBusinessProfileViewController(viewModel: .init(tattooistId: $0)) }
             .drive(with: self) { owner, nextVC in
                 owner.navigationController?.pushViewController(nextVC, animated: true)
+            }.disposed(by: disposeBag)
+        
+        viewModel.showWithdrawalAlerVCDrvier
+            .drive(with: self) { owner, alertMessage in
+                print(alertMessage)
+                owner.dismiss(animated: false)
             }.disposed(by: disposeBag)
     }
     

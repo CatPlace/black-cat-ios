@@ -86,6 +86,7 @@ final class MyPageViewModel {
     let showLoginAlertVCDrvier: Driver<Void>
     let showUpgradeVCDriver: Driver<Void>
     let showBusinessProfileDriver: Driver<Int>
+    let showWithdrawalAlerVCDrvier: Driver<String>
     
     init(useCase: MyPageUseCase = MyPageUseCase()) {
         let profileSectionDataObservable = viewWillAppear
@@ -128,27 +129,40 @@ final class MyPageViewModel {
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
         
-        pushToWebViewDriver = selectedMenu.compactMap { $0.linkString() }
+        pushToWebViewDriver = selectedMenu
+            .compactMap { $0.linkString() }
             .asDriver(onErrorJustReturn: "")
         
         let didTapLogin = selectedMenu
             .filter { $0 == .login }
+            .map { _ in () }
         
         let didTapUpgrade = selectedMenu
             .filter { $0 == .upgrade }
+            .map { _ in () }
+        
+        let didTapWithdrawal = selectedMenu
+            .filter { $0 == .withdrawal }
+            .map { _ in () }
+        
+        showWithdrawalAlerVCDrvier = didTapWithdrawal
+            .flatMap { CatSDKUser.withdrawal() }
+            .debug("서버 통신")
+            .map { _ in "회원 탈퇴 완료 추후에 알러트 삽입🌈"}
+            .asDriver(onErrorJustReturn: "")
+            
         
         showLoginAlertVCDrvier = didTapLogin
             .filter { _ in CatSDKUser.userType() == .guest }
-            .map { _ in () }
             .asDriver(onErrorJustReturn: ())
 
         showUpgradeVCDriver = didTapUpgrade
             .filter { _ in CatSDKUser.userType() != .guest }
-            .map { _ in () }
             .asDriver(onErrorJustReturn: ())
         
         showBusinessProfileDriver = manageButtonTapped
             .map { _ in CatSDKUser.user().id }
+            .debug("타투이스트 비지니스 페이지로 이동 tattooistId:)")
             .asDriver(onErrorJustReturn: -1)
     }
 }
