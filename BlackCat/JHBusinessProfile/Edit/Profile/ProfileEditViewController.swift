@@ -23,9 +23,8 @@ class ProfileEditViewController: VerticalScrollableViewController {
             }.disposed(by: disposeBag)
         
         completeButton.rx.tap
-            .bind { _ in
-                print("수정 완료 tap")
-            }.disposed(by: disposeBag)
+            .bind(to: viewModel.didTapCompleteButton)
+            .disposed(by: disposeBag)
         
         RxKeyboard.instance.visibleHeight
             .skip(1)
@@ -35,6 +34,21 @@ class ProfileEditViewController: VerticalScrollableViewController {
         
         viewModel.imageDriver
             .drive(coverImageView.rx.image)
+            .disposed(by: disposeBag)
+        
+        viewModel.updateSuccessDriver
+            .drive(with: self) { owner, _ in
+                owner.dismiss(animated: true)
+            }.disposed(by: disposeBag)
+        
+        viewModel.updateFailDriver
+            .drive(with: self) { owner, message in
+                // TODO: 알러트
+                print(message)
+            }.disposed(by: disposeBag)
+        
+        viewModel.introduceDriver
+            .drive(introduceEditView.textView.rx.text)
             .disposed(by: disposeBag)
     }
     
@@ -69,6 +83,7 @@ class ProfileEditViewController: VerticalScrollableViewController {
     
     // MARK: - Initializer
     init(viewModel: ProfileEditViewModel = ProfileEditViewModel()) {
+        introduceEditView = .init(viewModel: viewModel.introduceEditViewModel)
         self.viewModel = viewModel
         super.init()
         
@@ -105,7 +120,7 @@ class ProfileEditViewController: VerticalScrollableViewController {
         $0.backgroundColor = .white.withAlphaComponent(0.4)
         return $0
     }(UIButton())
-    let introduceEditView = TextInputView(viewModel: .init(title: "자기소개"))
+    let introduceEditView: TextInputView
     let completeButton: UIButton = {
         $0.setTitle("수정 완료", for: .normal)
         $0.titleLabel?.font = .appleSDGoithcFont(size: 24, style: .bold)
