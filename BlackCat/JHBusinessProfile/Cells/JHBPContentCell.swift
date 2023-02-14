@@ -13,16 +13,39 @@ import SnapKit
 import BlackCatSDK
 final class JHBPContentCellViewModel {
     var contentModel: BehaviorRelay<BPContentModel> // 🐻‍❄️ NOTE: - 이거 enum으로 개선가능
-    var profiles: BehaviorRelay<[BPProfileModel]>
-    var products: BehaviorRelay<[BPProductModel]>
-    var priceInfos: BehaviorRelay<[BPPriceInfoModel]>
-    var provider: BPContentCellServiceProtocol = BPContentCellService()
     
-    init(contentModel: BPContentModel) {
+    typealias Introduce = String
+    typealias ProductImageUrlString = String
+    typealias PriceInfo = String
+    var profiles: Driver<[Introduce]>
+    var products: Driver<[ProductImageUrlString]>
+    var priceInfos: Driver<[PriceInfo]>
+    
+    init(contentModel: BPContentModel, profile: Introduce, products: [ProductImageUrlString], priceInfo: PriceInfo) {
         self.contentModel = .init(value: contentModel)
-        profiles = .init(value: provider.fetchProfiles())
-        products = .init(value: provider.fetchProducts())
-        priceInfos = .init(value: provider.fetchPriceInfos())
+        let contentModela = Observable.just(contentModel)
+        
+        
+        
+        let sectionData = Observable.just(JHBPContentHeaderButtonType.allCases
+            .enumerated())
+            .withLatestFrom(self.contentModel) { ($0, $1) }
+
+        self.profiles = self.contentModel
+            .filter { $0.order == 0 }
+            .map { _ in [profile] }
+            .asDriver(onErrorJustReturn: [])
+        
+        self.products = self.contentModel
+            .filter { $0.order == 1 }
+            .map { _ in products }
+            .asDriver(onErrorJustReturn: [])
+        
+        self.priceInfos = self.contentModel
+            .filter { $0.order == 2 }
+            .map { _ in [priceInfo] }
+            .debug("💡💡💡")
+            .asDriver(onErrorJustReturn: [])
     }
 }
 
@@ -42,10 +65,7 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
             .forEach { $0.rx.setDelegate(self).disposed(by: disposeBag) }
         
         viewModel.profiles
-            .withLatestFrom(viewModel.contentModel) { ($0, $1) }
-            .filter { $0.1.order == 0 }
-            .map { $0.0 }
-            .bind(to: profileCollectionView.rx.items(Reusable.profileCell)) { [weak self] index, item, cell in
+            .drive(profileCollectionView.rx.items(Reusable.profileCell)) { [weak self] index, item, cell in
                 guard let self = self else { return }
                 
                 self.setCollectionViewHidden(forType: .profile)
@@ -54,10 +74,7 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
             }.disposed(by: self.disposeBag)
         
         viewModel.products
-            .withLatestFrom(viewModel.contentModel) { ($0, $1) }
-            .filter { $0.1.order == 1 }
-            .map { $0.0 }
-            .bind(to: productCollectionView.rx.items(Reusable.productCell)) { [weak self] index, item, cell in
+            .drive(productCollectionView.rx.items(Reusable.productCell)) { [weak self] index, item, cell in
                 guard let self = self else { return }
                 self.setCollectionViewHidden(forType: .product)
                 
@@ -65,10 +82,9 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
             }.disposed(by: self.disposeBag)
         
         viewModel.priceInfos
-            .withLatestFrom(viewModel.contentModel) { ($0, $1) }
-            .filter { $0.1.order == 2 }
-            .map { $0.0 }
-            .bind(to: priceInfoCollectionView.rx.items(Reusable.priceInfoCell)) { [weak self] index, item, cell in
+            .debug("셀 그려")
+            .drive(priceInfoCollectionView.rx.items(Reusable.priceInfoCell)) { [weak self] index, item, cell in
+                print("item~.map { ($0.0, $0.1) }")
                 guard let self = self else { return }
                 self.setCollectionViewHidden(forType: .priceInfo)
 
@@ -158,7 +174,7 @@ extension JHBPContentCell {
         }
         
         contentView.addSubview(priceInfoCollectionView)
-        productCollectionView.snp.makeConstraints {
+        priceInfoCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }

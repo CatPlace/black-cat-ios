@@ -12,56 +12,54 @@ import RxRelay
 import RxDataSources
 import BlackCatSDK
 
-final class JHBUsinessProfileViewModel {
+final class JHBusinessProfileViewModel {
     let isOwner: Bool
-    var sections: BehaviorRelay<[JHBusinessProfileCellSection]>
+   
     var cellDisplayingIndexRowRelay = PublishRelay<CGFloat>()
     
     var visibleCellIndexPath: Driver<Int>
-    
-    init(sections: BehaviorRelay<[JHBusinessProfileCellSection]> = .init(value: configurationSections()),
-         tattooistId: Int) {
+    var sections: Driver<[JHBusinessProfileCellSection]>
+    init(tattooistId: Int) {
         // TODO: - 유저 구분
         isOwner = tattooistId == CatSDKUser.user().id
-        self.sections = sections
+        
+        self.sections = .just(configurationSections())
         
         visibleCellIndexPath = cellDisplayingIndexRowRelay
             .distinctUntilChanged()
             .map { Int($0) }
             .asDriver(onErrorJustReturn: 0)
+        
+        func configurationSections() -> [JHBusinessProfileCellSection] {
+            
+            let thumbnailCell: JHBusinessProfileItem = .thumbnailImageItem(.init())
+            
+            let thumbnailSection = JHBusinessProfileCellSection.thumbnailImageCell([thumbnailCell])
+            
+            let contentProfile: JHBusinessProfileItem = .contentItem(.init(contentModel: .init(order: 0), profile: "a", products: ["ba"], priceInfo: "c"))
+            let contentProduct: JHBusinessProfileItem = .contentItem(.init(contentModel: .init(order: 1), profile: "1", products: ["22", "2"], priceInfo: "3"))
+            let contentPriceInfo: JHBusinessProfileItem = .contentItem(.init(contentModel: .init(order: 2), profile: "x", products: ["yy", "y", "Y"], priceInfo: "z"))
+            
+            let contentSection = JHBusinessProfileCellSection.contentCell([contentProfile, contentProduct, contentPriceInfo])
+            
+            return [thumbnailSection, contentSection]
+        }
     }
     
-}
-extension JHBUsinessProfileViewModel {
-    static func configurationSections() -> [JHBusinessProfileCellSection] {
-        
-        let thumbnailCell = JHBPSectionFactory.makeThumbnailCell()
-        let thumbnailSection = JHBusinessProfileCellSection.thumbnailImageCell([thumbnailCell])
-        
-        let contentProfile = JHBPSectionFactory.makeContentCell(order: 0)
-        let contentProduct = JHBPSectionFactory.makeContentCell(order: 1)
-        let contentPriceInfo = JHBPSectionFactory.makeContentCell(order: 2)
-        
-        let contentSection = JHBusinessProfileCellSection.contentCell([contentProfile, contentProduct, contentPriceInfo])
-        
-        return [thumbnailSection, contentSection]
-    }
 }
 
-struct JHBPSectionFactory {
-    
-    static func makeThumbnailCell() -> JHBusinessProfileItem {
-        let item = BPThumbnailModel(urlString: String.createRandomString(length: 5))
-        
-        return JHBusinessProfileItem.thumbnailImageItem(.init())
-    }
-    
-    static func makeContentCell(order: Int) -> JHBusinessProfileItem {
-        let item = BPContentModel(order: order)
-        
-        return JHBusinessProfileItem.contentItem(.init(contentModel: item))
-    }
-}
+//struct JHBPSectionFactory {
+//
+//    static func makeThumbnailCell() -> JHBusinessProfileItem {
+//        return JHBusinessProfileItem.thumbnailImageItem(.init())
+//    }
+//
+//    static func makeContentCell(order: Int) -> JHBusinessProfileItem {
+//        let item = BPContentModel(order: order)
+//
+//        return JHBusinessProfileItem.contentItem(.init(contentModel: item))
+//    }
+//}
 
 enum JHBusinessProfileItem: Equatable, IdentifiableType {
     var identity: some Hashable { UUID().uuidString }

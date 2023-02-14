@@ -10,16 +10,21 @@ import SnapKit
 
 final class JHBPPriceInfoCell: BPBaseCollectionViewCell {
     
-    func configureCell(with item: BPPriceInfoModel) {
-        
-        
+    func configureCell(with description: String) {
+        textView.text = description
     }
     
     func setUI() {
+        print("setUI~~~~🌈🌈🌈🌈")
         contentView.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
+        
+        contentView.addSubview(textView)
+        
         textView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+            $0.height.equalTo(400)
         }
+        backgroundColor = .orange
     }
     
     override func initialize() {

@@ -22,7 +22,7 @@ final class JHBusinessProfileViewController: UIViewController {
     }
     
     var disposeBag: DisposeBag = DisposeBag()
-    let viewModel: JHBUsinessProfileViewModel
+    let viewModel: JHBusinessProfileViewModel
     
     let dataSource: ManageMentDataSource = ManageMentDataSource { _, collectionView, indexPath, items in
         switch items {
@@ -52,7 +52,7 @@ final class JHBusinessProfileViewController: UIViewController {
     }
     
     // MARK: - Bindings
-    func bind(viewModel: JHBUsinessProfileViewModel) {
+    func bind(viewModel: JHBusinessProfileViewModel) {
         disposeBag.insert {
             editLabel.rx.tapGesture()
                 .when(.recognized)
@@ -67,12 +67,12 @@ final class JHBusinessProfileViewController: UIViewController {
                 }
             
             viewModel.sections
-                .bind(to: self.collectionView.rx.items(dataSource: dataSource))
+                .drive(self.collectionView.rx.items(dataSource: dataSource))
         }
         
         viewModel.visibleCellIndexPath
             .drive { row in
-                guard let type = JHBPContentSectionHeaderView.JHBPContentHeaderButtonType(rawValue: row) else { return }
+                guard let type = JHBPContentHeaderButtonType(rawValue: row) else { return }
                 JHBPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
                     delegate.notifyContentHeader(indexPath: IndexPath(row: row, section: 0), forType: type)
                 }
@@ -83,8 +83,6 @@ final class JHBusinessProfileViewController: UIViewController {
     func updateEditButtonUI(selectedRow: Int) {
         
         guard let type = JHBPContentHeaderButtonType(rawValue: selectedRow), viewModel.isOwner else { return }
-        
-        typealias JHBPContentHeaderButtonType = JHBPContentSectionHeaderView.JHBPContentHeaderButtonType
        
         bottomView.setAskButtonTag(selectedRow)
         bottomView.setAskingText(type.editButtonText())
@@ -93,7 +91,6 @@ final class JHBusinessProfileViewController: UIViewController {
     }
     
     func pushToEditVC() {
-        typealias JHBPContentHeaderButtonType = JHBPContentSectionHeaderView.JHBPContentHeaderButtonType
         // TODO: - 현재 가지고 있는 모델을 그대로 가져가기 ~ (수정)
         
         if let type = JHBPContentHeaderButtonType(rawValue: bottomView.askButtonTag()) {
@@ -107,7 +104,7 @@ final class JHBusinessProfileViewController: UIViewController {
     }
     
     // MARK: Initialize
-    init(viewModel: JHBUsinessProfileViewModel) {
+    init(viewModel: JHBusinessProfileViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         bind(viewModel: viewModel)

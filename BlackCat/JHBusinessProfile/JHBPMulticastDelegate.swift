@@ -10,7 +10,7 @@ import Foundation
 // 🐻‍❄️ NOTE: - Rx Extension으로 처리할 수 있습니다.
 
 protocol JHBPMulticastDelegate {
-    typealias type = JHBPContentSectionHeaderView.JHBPContentHeaderButtonType
+    typealias type = JHBPContentHeaderButtonType
     
     /*
      🐻‍❄️ NOTE: - 아래 함수들의 네이밍 고민
