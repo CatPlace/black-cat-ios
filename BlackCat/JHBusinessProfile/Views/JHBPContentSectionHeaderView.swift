@@ -40,21 +40,6 @@ enum JHBPContentHeaderButtonType: Int, CaseIterable {
     }
     
 }
-class JHBPBaseCollectionReusableView: UICollectionReusableView {
-    var disposeBag: DisposeBag = DisposeBag()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        initalize()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func initalize() { /* overrider point */ }
-}
 
 final class JHBPContentSectionHeaderViewModel {
     var selectedButton: BehaviorRelay<JHBPContentHeaderButtonType>
@@ -75,7 +60,6 @@ class JHBPContentSectionHeaderView: JHBPBaseCollectionReusableView{
             
         }
         
-        
         viewModel.selectedButton
             .bind(with: self) { owner, type in
                 owner.updateButtonUI(type: type)
@@ -88,7 +72,6 @@ class JHBPContentSectionHeaderView: JHBPBaseCollectionReusableView{
     }
     
     private func updateButtonUI(type: JHBPContentHeaderButtonType) {
-        
         headerButtons.enumerated().forEach { index, button in
             let isSelected = index == type.rawValue
             button.isSelected = isSelected
@@ -107,7 +90,7 @@ class JHBPContentSectionHeaderView: JHBPBaseCollectionReusableView{
     // MARK: - Initalize
     override func initalize() {
         super.initalize()
-        
+        backgroundColor = .white
         let HStackView = UIStackView()
         HStackView.axis = .horizontal
         HStackView.distribution = .fillEqually

@@ -23,13 +23,6 @@ final class JHBPContentCellViewModel {
     
     init(contentModel: BPContentModel, profile: Introduce, products: [ProductImageUrlString], priceInfo: PriceInfo) {
         self.contentModel = .init(value: contentModel)
-        let contentModela = Observable.just(contentModel)
-        
-        
-        
-        let sectionData = Observable.just(JHBPContentHeaderButtonType.allCases
-            .enumerated())
-            .withLatestFrom(self.contentModel) { ($0, $1) }
 
         self.profiles = self.contentModel
             .filter { $0.order == 0 }
@@ -92,7 +85,6 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
             }.disposed(by: self.disposeBag)
     }
     
-    
     func setCollectionViewHidden(forType type: JHBPContentType) {
         [profileCollectionView,
          productCollectionView,
@@ -117,7 +109,6 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
     lazy var profileCollectionView: UICollectionView = {
         let layout = createLayout(forType: .profile)
         var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
         cv.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
         cv.register(Reusable.profileCell)
         
@@ -127,7 +118,6 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
     lazy var productCollectionView: UICollectionView = {
         let layout = createLayout(forType: .product)
         var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
         cv.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
         cv.register(Reusable.productCell)
         
@@ -137,7 +127,6 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
     lazy var priceInfoCollectionView: UICollectionView = {
         let layout = createLayout(forType: .priceInfo)
         var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
         cv.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
         cv.register(Reusable.priceInfoCell)
         
@@ -151,7 +140,6 @@ extension JHBPContentCell: UIScrollViewDelegate {
         // NOTE: - delegateProxy를 사용하는 방법도 있겠습니다.
         
         scrollView.bounces = scrollView.contentOffset.y >= 0
-        
         JHBPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
             delegate.notifyViewController(offset: scrollView.contentOffset.y)
         }
@@ -193,10 +181,10 @@ extension JHBPContentCell {
     
     private func profileLayoutSection() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1.0),
-                                                            heightDimension: .estimated(100)))
+                                                            heightDimension: .estimated(600)))
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                                         heightDimension: .estimated(100)),
+                                                                         heightDimension: .estimated(600)),
                                                        subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         
@@ -218,10 +206,10 @@ extension JHBPContentCell {
     
     private func priceInfoLayoutSection() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1.0),
-                                                            heightDimension: .estimated(100)))
+                                                            heightDimension: .estimated(600)))
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                                         heightDimension: .estimated(100)),
+                                                                         heightDimension: .estimated(600)),
                                                        subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         

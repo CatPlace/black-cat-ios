@@ -54,6 +54,9 @@ final class JHBusinessProfileViewController: UIViewController {
     // MARK: - Bindings
     func bind(viewModel: JHBusinessProfileViewModel) {
         disposeBag.insert {
+            rx.viewWillAppear
+                .bind(to: viewModel.viewWillAppear)
+            
             editLabel.rx.tapGesture()
                 .when(.recognized)
                 .withUnretained(self)
@@ -95,7 +98,7 @@ final class JHBusinessProfileViewController: UIViewController {
         
         if let type = JHBPContentHeaderButtonType(rawValue: bottomView.askButtonTag()) {
             let nextVCWithNavi = UINavigationController(rootViewController: type.editVC())
-            nextVCWithNavi.modalPresentationStyle = .overFullScreen
+            nextVCWithNavi.modalPresentationStyle = .fullScreen
             present(nextVCWithNavi, animated: true)
         } else { // TODO: - 문의하기
             print("문의하기 TODO")
@@ -112,6 +115,8 @@ final class JHBusinessProfileViewController: UIViewController {
             updateEditButtonUI(selectedRow: 0)
         }
         hidesBottomBarWhenPushed = true
+        
+        collectionView.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
     }
     
     required init?(coder: NSCoder) {
@@ -127,6 +132,9 @@ final class JHBusinessProfileViewController: UIViewController {
         appendNavigationLeftBackButton(color: .white)
         appendNavigationLeftLabel(title: "TEST", color: .white)
         appendNavigationRightLabel(editLabel)
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        print("뷰 디사피어")
     }
     
     // MARK: - UIComponents
@@ -234,7 +242,6 @@ extension JHBusinessProfileViewController: JHBPMulticastDelegate {
     }
     
     func notifyViewController(offset: CGFloat) {
-        
         // 🐻‍❄️ NOTE: - 'offset <= ?' ?를 정해 볼까요?
         //        if offset <= UIScreen.main.bounds.height / 3 {
         if offset <= 1 {
@@ -244,7 +251,7 @@ extension JHBusinessProfileViewController: JHBPMulticastDelegate {
         } else {
             UIView.animate(withDuration: 0.3) {
                 // 위쪽으로 y만큼 당긴다고 생각하기
-                self.collectionView.contentOffset = CGPoint(x: 0, y: 200)
+                self.collectionView.contentOffset = CGPoint(x: 0, y: 250)
             }
         }
     }

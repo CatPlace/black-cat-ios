@@ -14,31 +14,55 @@ import BlackCatSDK
 
 final class JHBusinessProfileViewModel {
     let isOwner: Bool
-   
-    var cellDisplayingIndexRowRelay = PublishRelay<CGFloat>()
     
+    // MARK: - Inputs
+    var cellDisplayingIndexRowRelay = PublishRelay<CGFloat>()
+    var viewWillAppear = PublishRelay<Bool>()
+    // MARK: - Outputs
     var visibleCellIndexPath: Driver<Int>
     var sections: Driver<[JHBusinessProfileCellSection]>
     init(tattooistId: Int) {
+        
         // TODO: - 유저 구분
         isOwner = tattooistId == CatSDKUser.user().id
+
+        let localTattooistInfo = viewWillAppear
+            .map { _ in CatSDKTattooist.localTattooistInfo() }
         
-        self.sections = .just(configurationSections())
+        let fetchedTattooistInfo = localTattooistInfo
+            .filter { $0 == .empty }
+            .flatMap { _ in
+                let fetchedProfileData = CatSDKTattooist.profile(tattooistId: tattooistId).share()
+                let fetchedProductsData = CatSDKTattooist.products(tattooistId: tattooistId).share()
+                let fetchedPriceInfoData = CatSDKTattooist.priceInfo(tattooistId: tattooistId).share()
+                return Observable.combineLatest(fetchedProfileData, fetchedProductsData, fetchedPriceInfoData) {
+                    Model.TattooistInfo(introduce: $0, tattoos: $1, estimate: $2)
+                }.do { CatSDKTattooist.updateLocalTattooistInfo(tattooistInfo: $0) }
+            }.share()
+        
+        sections = Observable.merge([localTattooistInfo.filter { $0 != .empty }, fetchedTattooistInfo])
+            .map { configurationSections(
+                imageUrlString: $0.introduce.imageUrlString ?? "",
+                profileDescription: $0.introduce.introduce,
+                productImageUrlStrings: $0.tattoos.map { $0.imageUrlString },
+                priceInformation: $0.estimate.description
+            ) }
+            .asDriver(onErrorJustReturn: [])
         
         visibleCellIndexPath = cellDisplayingIndexRowRelay
             .distinctUntilChanged()
             .map { Int($0) }
             .asDriver(onErrorJustReturn: 0)
         
-        func configurationSections() -> [JHBusinessProfileCellSection] {
+        func configurationSections(imageUrlString: String, profileDescription: String, productImageUrlStrings: [String], priceInformation: String) -> [JHBusinessProfileCellSection] {
             
-            let thumbnailCell: JHBusinessProfileItem = .thumbnailImageItem(.init())
+            let thumbnailCell: JHBusinessProfileItem = .thumbnailImageItem(.init(imageUrlString: imageUrlString))
             
             let thumbnailSection = JHBusinessProfileCellSection.thumbnailImageCell([thumbnailCell])
             
-            let contentProfile: JHBusinessProfileItem = .contentItem(.init(contentModel: .init(order: 0), profile: "a", products: ["ba"], priceInfo: "c"))
-            let contentProduct: JHBusinessProfileItem = .contentItem(.init(contentModel: .init(order: 1), profile: "1", products: ["22", "2"], priceInfo: "3"))
-            let contentPriceInfo: JHBusinessProfileItem = .contentItem(.init(contentModel: .init(order: 2), profile: "x", products: ["yy", "y", "Y"], priceInfo: "z"))
+            let contentProfile: JHBusinessProfileItem = .contentItem(.init(contentModel: .init(order: 0), profile: profileDescription, products: productImageUrlStrings, priceInfo: ""))
+            let contentProduct: JHBusinessProfileItem = .contentItem(.init(contentModel: .init(order: 1), profile: "", products: productImageUrlStrings, priceInfo: ""))
+            let contentPriceInfo: JHBusinessProfileItem = .contentItem(.init(contentModel: .init(order: 2), profile: "", products: [], priceInfo: priceInformation))
             
             let contentSection = JHBusinessProfileCellSection.contentCell([contentProfile, contentProduct, contentPriceInfo])
             
@@ -47,19 +71,6 @@ final class JHBusinessProfileViewModel {
     }
     
 }
-
-//struct JHBPSectionFactory {
-//
-//    static func makeThumbnailCell() -> JHBusinessProfileItem {
-//        return JHBusinessProfileItem.thumbnailImageItem(.init())
-//    }
-//
-//    static func makeContentCell(order: Int) -> JHBusinessProfileItem {
-//        let item = BPContentModel(order: order)
-//
-//        return JHBusinessProfileItem.contentItem(.init(contentModel: item))
-//    }
-//}
 
 enum JHBusinessProfileItem: Equatable, IdentifiableType {
     var identity: some Hashable { UUID().uuidString }

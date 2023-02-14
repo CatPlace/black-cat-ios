@@ -11,28 +11,29 @@ import SnapKit
 final class JHBPPriceInfoCell: BPBaseCollectionViewCell {
     
     func configureCell(with description: String) {
-        textView.text = description
+        priceInfoDescriptionLabel.backgroundColor = .white
+        priceInfoDescriptionLabel.text = description
     }
     
     func setUI() {
-        print("setUI~~~~🌈🌈🌈🌈")
-        contentView.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
+        contentView.addSubview(priceInfoDescriptionLabel)
         
-        contentView.addSubview(textView)
-        
-        textView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-            $0.height.equalTo(400)
+        priceInfoDescriptionLabel.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(30)
+            $0.height.greaterThanOrEqualTo(600)
         }
-        backgroundColor = .orange
     }
     
     override func initialize() {
         self.setUI()
     }
     
-    let textView: UITextView = {
+    lazy var priceInfoDescriptionLabel: VerticalAlignLabel = {
+        $0.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        $0.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 16)
+        $0.numberOfLines = 0
+        $0.lineBreakMode = .byWordWrapping
         return $0
-    }(UITextView())
+    }(VerticalAlignLabel())
 }
 

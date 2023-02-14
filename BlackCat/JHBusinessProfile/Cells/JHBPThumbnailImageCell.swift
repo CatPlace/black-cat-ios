@@ -12,11 +12,20 @@ import RxRelay
 import Nuke
 
 final class JHBPThumbnailImageCellViewModel {
+    let imageUrlStringDriver: Driver<String>
+    
+    init(imageUrlString: String) {
+        self.imageUrlStringDriver = .just(imageUrlString)
+    }
     
 }
 final class JHBPThumbnailImageCell: BPBaseCollectionViewCell {
     func bind(viewModel: JHBPThumbnailImageCellViewModel) {
-
+        viewModel.imageUrlStringDriver
+            .compactMap { URL(string: $0) }
+            .drive(with: self) { owner, url in
+                Nuke.loadImage(with: url, into: owner.thumnailImageView)
+            }.disposed(by: disposeBag)
     }
     
     // MARK: - initialize

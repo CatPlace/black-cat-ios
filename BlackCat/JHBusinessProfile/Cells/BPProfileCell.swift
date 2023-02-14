@@ -13,7 +13,7 @@ final class BPProfileCell: BPBaseCollectionViewCell {
     func configureCell(with description: String) {
         profileTitleLabel.text = "자기소개"
         profileDescriptionLabel.backgroundColor = .white
-        profileDescriptionLabel.text = description + "AASDASKLDGJSLKGJLSJGLJDSKJLJSDJFLSDKFJSDKFJLSDJFKSDFLSDJKFJLSDJFLKDSJKFJSDLFKSDFJLSDJFKLDSJFLJSDFJSLDJFL\nSDJFKLSJLFJSDKLFJLSKDJFLSDKJFLDJSFKJSDLFJDKSJFKLSDJFLKJDSLKFJSDKFJSLDJFLDSJKFJSDKLJFKSKDLFJJDSFJSDKJFLSDJFKSJLFKJDLFJKDJSLFJDSKJFLKSDJFLJSDKFJSDLKFJLSDKJF"
+        profileDescriptionLabel.text = description
     }
 
     func setUI() {
