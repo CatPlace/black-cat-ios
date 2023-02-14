@@ -138,8 +138,6 @@ class ProductEditViewModel {
         let updateResult = didTapCompleteButton
             .withLatestFrom(inputs)
             .map { input -> (Model.UpdateTattoo.Request, [Data]) in
-                print(input.images)
-                print(input.images, "😡😡😡", initialImageUrlStrings)
                 return (.init(tattooType: input.type, categoryId: input.categoryIdList.sorted(), title: input.title, price: 0, description: input.description, deleteImageUrls: shouldDeleteImages(inputImages: input.images)), shouldUpdateImages(inputImages: input.images))
             }.flatMap { tattooInfo, imageDataList in
                 CatSDKTattooist.updateProduct(tattooistId: tattooId, tattooImageDatas: imageDataList, tattooInfo: tattooInfo)

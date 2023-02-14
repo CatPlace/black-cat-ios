@@ -33,7 +33,6 @@ final class MyPageViewController: UIViewController {
                 let cell = collectionView.dequeue(Reusable.profileCell, for: indexPath)
                 
                 cell.bind(to: viewModel, with: self.viewModel)
-                print("프로필셀 업데이트")
                 
                 return cell
             case .recentTattooSection(let viewModel):
@@ -122,6 +121,7 @@ final class MyPageViewController: UIViewController {
         
         viewModel.showWithdrawalAlerVCDrvier
             .drive(with: self) { owner, alertMessage in
+                // TODO: 알러트
                 print(alertMessage)
                 owner.dismiss(animated: false)
             }.disposed(by: disposeBag)

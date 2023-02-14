@@ -127,7 +127,6 @@ class ProfileViewModel {
             .asDriver(onErrorJustReturn: nil)
         
         func checkValidInputs(inputs user: Model.User) -> Bool {
-            print(user)
             guard let name = user.name, let email = user.email, let phoneNumber = user.phoneNumber, user.gender != nil, user.area != nil else {
                 return false
             }

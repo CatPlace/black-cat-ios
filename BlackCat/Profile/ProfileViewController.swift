@@ -207,8 +207,6 @@ extension ProfileViewController {
 
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        print(info[.imageURL], "🌈🌈🌈🌈")
-        dump(info)
         let selectedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage
         viewModel.imageInputRelay.accept(selectedImage)
         picker.dismiss(animated: true, completion: nil)

@@ -27,8 +27,9 @@ class ProductEditViewController: VerticalScrollableViewController {
             .disposed(by: disposeBag)
         
         viewModel.showCompleteAlertViewDriver
-            .drive { _ in
+            .drive(with: self) { owner, _ in
                 print("TODO: 업데이트 됐다고 Alert~")
+                owner.dismiss(animated: true)
             }.disposed(by: disposeBag)
         
         RxKeyboard.instance.visibleHeight
@@ -39,6 +40,7 @@ class ProductEditViewController: VerticalScrollableViewController {
         
         viewModel.limitExcessDriver
             .drive { _ in
+                // TODO: - 알러트
                 print("개수 초과 !")
             }.disposed(by: disposeBag)
         

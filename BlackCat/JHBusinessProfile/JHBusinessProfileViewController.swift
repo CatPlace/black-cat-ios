@@ -133,10 +133,7 @@ final class JHBusinessProfileViewController: UIViewController {
         appendNavigationLeftLabel(title: "TEST", color: .white)
         appendNavigationRightLabel(editLabel)
     }
-    override func viewWillDisappear(_ animated: Bool) {
-        print("뷰 디사피어")
-    }
-    
+
     // MARK: - UIComponents
     lazy var collectionView: UICollectionView = {
         let layout = createLayout()
@@ -213,7 +210,7 @@ extension JHBusinessProfileViewController {
         section.visibleItemsInvalidationHandler = { [weak self] (items, offset, _) -> Void in
             guard let self else { return }
             let page = round(offset.x / self.view.bounds.width)
-            print(page)
+
             self.viewModel.cellDisplayingIndexRowRelay.accept(page)
         }
         

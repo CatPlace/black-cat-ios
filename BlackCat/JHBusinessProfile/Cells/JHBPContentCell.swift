@@ -37,7 +37,6 @@ final class JHBPContentCellViewModel {
         self.priceInfos = self.contentModel
             .filter { $0.order == 2 }
             .map { _ in [priceInfo] }
-            .debug("💡💡💡")
             .asDriver(onErrorJustReturn: [])
     }
 }
@@ -75,9 +74,7 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
             }.disposed(by: self.disposeBag)
         
         viewModel.priceInfos
-            .debug("셀 그려")
             .drive(priceInfoCollectionView.rx.items(Reusable.priceInfoCell)) { [weak self] index, item, cell in
-                print("item~.map { ($0.0, $0.1) }")
                 guard let self = self else { return }
                 self.setCollectionViewHidden(forType: .priceInfo)
 
@@ -180,6 +177,7 @@ extension JHBPContentCell {
     }
     
     private func profileLayoutSection() -> NSCollectionLayoutSection {
+        print("프로필 섹션😡")
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1.0),
                                                             heightDimension: .estimated(600)))
         
@@ -192,6 +190,7 @@ extension JHBPContentCell {
     }
     
     private func productLayoutSection() -> NSCollectionLayoutSection {
+        print("작품 섹션😡")
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1/3),
                                                             heightDimension: .fractionalWidth(1/3)))
         item.contentInsets = .init(top: 2, leading: 1, bottom: 2, trailing: 1)
@@ -205,6 +204,7 @@ extension JHBPContentCell {
     }
     
     private func priceInfoLayoutSection() -> NSCollectionLayoutSection {
+        print("견적 섹션😡")
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1.0),
                                                             heightDimension: .estimated(600)))
         
