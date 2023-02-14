@@ -527,13 +527,9 @@
 		7828DB5B295C8D0F0053B0A0 /* JHBusinessProfile */ = {
 			isa = PBXGroup;
 			children = (
-				B1E3F7C5290EC98600005F17 /* BPBaseCollectionReusableView.swift */,
-				B1D89C97290E879B00C8B7F1 /* BPBaseCollectionViewCell.swift */,
-				B1E3F7C1290EC1F700005F17 /* BPContentModel.swift */,
-				B1CDE8E129160C4600ACB9AC /* BPProfileCells */,
-				B1CEF7302913A07300814113 /* BPProductsCells */,
 				7828DB5C295C8D2B0053B0A0 /* JHBusinessProfileViewController.swift */,
 				7828DB5E295C912F0053B0A0 /* JHBusinessProfileViewModel.swift */,
+				B1E3F7C1290EC1F700005F17 /* BPContentModel.swift */,
 				7828DB68295CB7110053B0A0 /* JHBPMulticastDelegate.swift */,
 				78277E8929673599004CFDF4 /* Edit */,
 				7828DB6B295CD54C0053B0A0 /* Cells */,
@@ -545,6 +541,7 @@
 		7828DB6A295CD5400053B0A0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B1E3F7C5290EC98600005F17 /* BPBaseCollectionReusableView.swift */,
 				7828DB64295C9D500053B0A0 /* JHBPContentSectionHeaderView.swift */,
 			);
 			path = Views;
@@ -553,6 +550,9 @@
 		7828DB6B295CD54C0053B0A0 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				B1D89C97290E879B00C8B7F1 /* BPBaseCollectionViewCell.swift */,
+				B1CEF7322913A0EC00814113 /* BPProfileCell.swift */,
+				B1E3F7B9290EBAB100005F17 /* BPProductCell.swift */,
 				7828DB60295C951A0053B0A0 /* JHBPContentCell.swift */,
 				7828DB62295C99410053B0A0 /* JHBPThumbnailImageCell.swift */,
 				78277E872966DC6F004CFDF4 /* JHPBPriceInfoCell.swift */,
@@ -1081,22 +1081,6 @@
 				B1D0FAEB29039B3F00DFF336 /* FilterTests */,
 			);
 			path = BlackCatTests;
-			sourceTree = "<group>";
-		};
-		B1CDE8E129160C4600ACB9AC /* BPProfileCells */ = {
-			isa = PBXGroup;
-			children = (
-				B1CEF7322913A0EC00814113 /* BPProfileCell.swift */,
-			);
-			path = BPProfileCells;
-			sourceTree = "<group>";
-		};
-		B1CEF7302913A07300814113 /* BPProductsCells */ = {
-			isa = PBXGroup;
-			children = (
-				B1E3F7B9290EBAB100005F17 /* BPProductCell.swift */,
-			);
-			path = BPProductsCells;
 			sourceTree = "<group>";
 		};
 		B1D0FAEB29039B3F00DFF336 /* FilterTests */ = {

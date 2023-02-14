@@ -8,7 +8,7 @@
 import UIKit
 import RxSwift
 
-class BPBaseCollectionReusableView: UICollectionReusableView {
+class JHBPBaseCollectionReusableView: UICollectionReusableView {
     var disposeBag: DisposeBag = DisposeBag()
     
     override init(frame: CGRect) {
@@ -23,3 +23,4 @@ class BPBaseCollectionReusableView: UICollectionReusableView {
     
     func initalize() { /* overrider point */ }
 }
+
