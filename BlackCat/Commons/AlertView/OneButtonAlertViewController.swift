@@ -97,8 +97,7 @@ extension OneButtonAlertViewController {
             $0.edges.equalToSuperview()
         }
         
-        blurEffectView.addSubview(contentView)
-        
+        view.addSubview(contentView)
         contentView.snp.makeConstraints {
             $0.center.equalToSuperview()
             $0.width.equalToSuperview().multipliedBy(343 / 375.0)

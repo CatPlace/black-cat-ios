@@ -12,6 +12,7 @@ import RxRelay
 import VisualEffectView
 
 enum TwoButtonAlertType: String {
+    case alertError = "일시적인 오류입니다.\n 잠시후 다시 시도 해주세요"
     case userReportwarning = "해당 타투이스트를 신고하시겠습니까?"
     case warningCancelWriting = "정말로 나가시겠습니까?\n변경사항은 저장되지 않습니다."
     case warningLogoutWriting = "로그아웃하시겠습니까?"
@@ -122,7 +123,6 @@ class TwoButtonAlertViewController: UIViewController {
     }
     
     func configure() {
-        view.backgroundColor = .black.withAlphaComponent(0.7)
         contentView.backgroundColor = .white
         contentView.layer.cornerRadius = 16
     }
@@ -171,7 +171,7 @@ extension TwoButtonAlertViewController {
             $0.edges.equalToSuperview()
         }
             
-        blurEffectView.addSubview(contentView)
+        view.addSubview(contentView)
         
         contentView.snp.makeConstraints {
             $0.center.equalToSuperview()
