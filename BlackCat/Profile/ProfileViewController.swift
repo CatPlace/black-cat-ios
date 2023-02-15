@@ -37,15 +37,13 @@ class ProfileViewController: UIViewController {
         viewModel.completeAlertDriver
             .drive(with: self) { owner, _ in
                 // TODO: Alert
-                
                 owner.dismiss(animated: true)
-                
             }.disposed(by: disposeBag)
         
         viewModel.alertMassageDriver
-            .drive { message in
-                // TODO: Alert
-                print(message)
+            .drive(with: self) { owner, message in
+                let vc = OneButtonAlertViewController(viewModel: .init(content: message, buttonText: "확인"))
+                owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
         
         viewModel.profileImageDriver

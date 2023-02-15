@@ -52,7 +52,6 @@ class OneButtonAlertViewController: UIViewController {
     }
     
     func configure() {
-        view.backgroundColor = .black.withAlphaComponent(0.7)
         contentView.backgroundColor = .white
         contentView.layer.cornerRadius = 16
     }

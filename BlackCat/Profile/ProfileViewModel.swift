@@ -67,7 +67,7 @@ class ProfileViewModel {
         
         let alertMessage = inputs
             .filter { !isRequiredInputs(inputs: $0, mode: $1) }
-            .map { _ in "모든 항목 필수값입니다."}
+            .map { _ in "업그레이드 계정은 모든 항목 필수 값입니다!" }
         
         let shouldUpdateProfile = inputs
             .filter { isRequiredInputs(inputs: $0, mode: $1) }
