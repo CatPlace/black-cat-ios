@@ -81,12 +81,6 @@ final class MyPageViewController: UIViewController {
             .drive(myPageCollectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
-        viewModel.logoutDriver
-            .drive(with: self) { owner, _ in
-                //TODO: Alert 추가
-                owner.dismiss(animated: false)
-            }.disposed(by: disposeBag)
-        
         viewModel.pushToProfileEditViewDriver
             .drive(with: self) { owner, _ in
                 let vc = UINavigationController(rootViewController: ProfileViewController(viewModel: .init()))
@@ -119,11 +113,16 @@ final class MyPageViewController: UIViewController {
                 owner.navigationController?.pushViewController(nextVC, animated: true)
             }.disposed(by: disposeBag)
         
-        viewModel.showWithdrawalAlerVCDrvier
-            .drive(with: self) { owner, alertMessage in
-                // TODO: 알러트
-                print(alertMessage)
-                owner.dismiss(animated: false)
+        viewModel.showTwoButtonAlertVCDrvier
+            .drive(with: self) { owner, type in
+                let vc = TwoButtonAlertViewController(viewModel: .init(type: type))
+                vc.delegate = self
+                owner.present(vc, animated: true)
+            }.disposed(by: disposeBag)
+        
+        viewModel.popToLoginVCDriver
+            .drive(with: self) { owner, _ in
+                owner.dismiss(animated: true)
             }.disposed(by: disposeBag)
     }
     
@@ -159,5 +158,22 @@ extension MyPageViewController {
         myPageCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+    }
+}
+
+extension MyPageViewController: TwoButtonAlertViewDelegate {
+    func didTapRightButton(type: TwoButtonAlertType) {
+        switch type {
+        case .warningLogoutWriting:
+            viewModel.logoutTrigger.accept(())
+        case .warningSecession:
+            viewModel.withdrawalTriggier.accept(())
+        default: return
+        }
+        dismiss(animated: true)
+    }
+    
+    func didTapLeftButton(type: TwoButtonAlertType) {
+        dismiss(animated: true)
     }
 }
