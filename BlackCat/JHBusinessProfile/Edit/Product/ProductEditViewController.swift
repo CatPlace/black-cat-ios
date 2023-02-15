@@ -54,9 +54,10 @@ class ProductEditViewController: VerticalScrollableViewController {
             }.disposed(by: disposeBag)
         
         viewModel.showWarningRemoveViewDrvier
-            .drive { index in
-                // TODO: - Alert 후 확인버튼 바인딩
-                viewModel.didTapWariningRemoveViewConfirmButton.accept(index)
+            .drive(with: self) { owner, index in
+                let vc = TwoButtonAlertViewController(viewModel: .init(type: .warningDelete(index)))
+                vc.delegate = self
+                owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
     }
     
@@ -210,5 +211,20 @@ extension ProductEditViewController {
     }
 }
 
-
-
+extension ProductEditViewController: TwoButtonAlertViewDelegate {
+    func didTapRightButton(type: TwoButtonAlertType) {
+        switch type {
+        case .warningDelete(let index):
+            // TODO: - Alert 후 확인버튼 바인딩
+            viewModel.didTapWariningRemoveViewConfirmButton.accept(index)
+        default: return
+        }
+        dismiss(animated: true)
+    }
+    
+    func didTapLeftButton(type: TwoButtonAlertType) {
+        dismiss(animated: true)
+    }
+    
+    
+}

@@ -11,17 +11,35 @@ import RxCocoa
 import RxRelay
 import VisualEffectView
 
-enum TwoButtonAlertType: String {
-    case alertError = "일시적인 오류입니다.\n 잠시후 다시 시도 해주세요"
-    case userReportwarning = "해당 타투이스트를 신고하시겠습니까?"
-    case warningCancelWriting = "정말로 나가시겠습니까?\n변경사항은 저장되지 않습니다."
-    case warningLogoutWriting = "로그아웃하시겠습니까?"
-    case warningSecession = "탈퇴 하시겠습니까?"
+enum TwoButtonAlertType {
+    case alertError
+    case userReportwarning
+    case warningCancelWriting
+    case warningLogoutWriting
+    case warningSecession
+    case warningDelete(Int)
     
     func getLeftButtonString() -> String {
         switch self {
         default:
             return "취소"
+        }
+    }
+    
+    func alertMessage() -> String {
+        switch self {
+        case .alertError:
+            return "일시적인 오류입니다.\n 잠시후 다시 시도해주세요"
+        case .userReportwarning:
+            return "해당 타투이스트를 신고하시겠습니까?"
+        case .warningCancelWriting:
+            return "정말로 나가시겠습니까?\n변경사항은 저장되지 않습니다."
+        case .warningLogoutWriting:
+            return "로그아웃하시겠습니까?"
+        case .warningSecession:
+            return "탈퇴 하시겠습니까?"
+        case .warningDelete(_):
+            return "정말로 삭제하시겠습니까?"
         }
     }
     
@@ -42,6 +60,8 @@ enum TwoButtonAlertType: String {
             return "로그아웃"
         case .warningSecession:
             return "탈퇴"
+        case .warningDelete:
+            return "삭제"
         default:
             return "확인"
         }
@@ -70,7 +90,7 @@ struct TwoButtonAlertViewModel {
     let rightTextColorDriver: Driver<UIColor>
     
     init(type: TwoButtonAlertType) {
-        contentStringDriver = .just(type.rawValue)
+        contentStringDriver = .just(type.alertMessage())
         leftButtonTextDriver = .just(type.getLeftButtonString())
         leftTextColorDriver = .just(type.getLeftButtonColor())
         rightButtonTextDriver = .just(type.getRightButtonString())
