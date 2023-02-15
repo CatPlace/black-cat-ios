@@ -14,9 +14,8 @@ final class BPProfileCell: BPBaseCollectionViewCell {
         profileTitleLabel.text = "자기소개"
         profileDescriptionLabel.text = description
     }
-
+    
     func setUI() {
-        
         contentView.addSubview(profileTitleLabel)
         profileTitleLabel.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview().inset(30)
@@ -25,10 +24,10 @@ final class BPProfileCell: BPBaseCollectionViewCell {
         contentView.addSubview(profileDescriptionLabel)
         profileDescriptionLabel.snp.makeConstraints {
             $0.top.equalTo(profileTitleLabel.snp.bottom).offset(10)
-            $0.height.greaterThanOrEqualTo(500)
             $0.leading.trailing.equalTo(profileTitleLabel)
             $0.bottom.equalToSuperview().inset(20)
         }
+        
     }
     
     override func initialize() {
@@ -39,7 +38,7 @@ final class BPProfileCell: BPBaseCollectionViewCell {
         $0.textColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
         $0.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)
         $0.numberOfLines = 1
-        
+        $0.sizeToFit()
         return $0
     }(UILabel())
     

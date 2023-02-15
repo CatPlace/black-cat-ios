@@ -9,8 +9,8 @@ import UIKit
 import SnapKit
 
 final class JHBPPriceInfoCell: BPBaseCollectionViewCell {
-    
     func configureCell(with description: String) {
+        print(description)
         priceInfoDescriptionLabel.backgroundColor = .white
         priceInfoDescriptionLabel.text = description
     }
@@ -20,7 +20,6 @@ final class JHBPPriceInfoCell: BPBaseCollectionViewCell {
         
         priceInfoDescriptionLabel.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(30)
-            $0.height.greaterThanOrEqualTo(600)
         }
     }
     

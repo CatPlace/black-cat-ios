@@ -139,8 +139,8 @@ final class JHBusinessProfileViewController: UIViewController {
         let layout = createLayout()
         var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.contentInsetAdjustmentBehavior = .never
-        cv.isScrollEnabled = false
-        
+        cv.delegate = self
+        cv.showsVerticalScrollIndicator = false
         cv.register(Reusable.thumbnailCell)
         cv.register(Reusable.contentCell)
         cv.register(Reusable.contentHeaderView, kind: .header)
@@ -156,7 +156,6 @@ final class JHBusinessProfileViewController: UIViewController {
         return $0
     }(UILabel())
 }
-
 
 extension JHBusinessProfileViewController {
     func setUI() {
@@ -201,7 +200,7 @@ extension JHBusinessProfileViewController {
                                                             heightDimension: .fractionalHeight(1.0)))
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                                         heightDimension: .fractionalHeight(0.7)),
+                                                                         heightDimension: .fractionalHeight(0.8)),
                                                        subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
@@ -233,23 +232,42 @@ extension JHBusinessProfileViewController: JHBPMulticastDelegate {
         updateEditButtonUI(selectedRow: indexPath.row)
     }
     func notifyContentCell(indexPath: IndexPath?, forType: type) {
+
         collectionView.scrollToItem(at: IndexPath(row: forType.rawValue, section: 1),
                                     at: .top,
                                     animated: false)
+
+        notifyViewController(offset: 0, didChangeSection: true)
     }
     
-    func notifyViewController(offset: CGFloat) {
-        // 🐻‍❄️ NOTE: - 'offset <= ?' ?를 정해 볼까요?
-        //        if offset <= UIScreen.main.bounds.height / 3 {
-        if offset <= 1 {
+    func notifyViewController(offset: CGFloat, didChangeSection: Bool) {
+
+        if didChangeSection {
+            self.collectionView.isScrollEnabled = true
             UIView.animate(withDuration: 0.3) {
-                self.collectionView.contentOffset = CGPoint(x: 0, y: 0)
+                self.collectionView.contentOffset = CGPoint(x: 0, y: 250)
             }
-        } else {
+        } else if offset > UIScreen.main.bounds.height / 1000 {
+            self.collectionView.isScrollEnabled = false
             UIView.animate(withDuration: 0.3) {
                 // 위쪽으로 y만큼 당긴다고 생각하기
                 self.collectionView.contentOffset = CGPoint(x: 0, y: 250)
             }
+        } else {
+            collectionView.isScrollEnabled = true
+            UIView.animate(withDuration: 0.3) {
+                self.collectionView.contentOffset = CGPoint(x: 0, y: 0)
+            }
+        }
+    }
+}
+
+extension JHBusinessProfileViewController: UICollectionViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        scrollView.bounces = scrollView.contentOffset.y > 250
+        
+        if scrollView.contentOffset.y > 250 {
+            notifyViewController(offset: 1, didChangeSection: true)
         }
     }
 }

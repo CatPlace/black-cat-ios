@@ -77,7 +77,7 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
             .drive(priceInfoCollectionView.rx.items(Reusable.priceInfoCell)) { [weak self] index, item, cell in
                 guard let self = self else { return }
                 self.setCollectionViewHidden(forType: .priceInfo)
-
+                print(item, "😎😎")
                 cell.configureCell(with: item)
             }.disposed(by: self.disposeBag)
     }
@@ -107,6 +107,7 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
         let layout = createLayout(forType: .profile)
         var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
+        cv.contentInset = .init(top: 0, left: 0, bottom: 50, right: 0)
         cv.register(Reusable.profileCell)
         
         return cv
@@ -117,7 +118,7 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
         var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
         cv.register(Reusable.productCell)
-        
+        cv.contentInset = .init(top: 0, left: 0, bottom: 100, right: 0)
         return cv
     }()
     
@@ -125,6 +126,7 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
         let layout = createLayout(forType: .priceInfo)
         var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1)
+        cv.contentInset = .init(top: 0, left: 0, bottom: 50, right: 0)
         cv.register(Reusable.priceInfoCell)
         
         return cv
@@ -135,12 +137,17 @@ extension JHBPContentCell: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // 🐻‍❄️ NOTE: - 막지말고, 차라리 당겨서 해당 셀을 refresh하는건 어떨까요?
         // NOTE: - delegateProxy를 사용하는 방법도 있겠습니다.
-        
-        scrollView.bounces = scrollView.contentOffset.y >= 0
+        scrollView.bounces = scrollView.contentOffset.y > 0
         JHBPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
-            delegate.notifyViewController(offset: scrollView.contentOffset.y)
+            delegate.notifyViewController(offset: scrollView.contentOffset.y, didChangeSection: false)
         }
-        
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+
+        JHBPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
+            delegate.notifyViewController(offset: scrollView.contentOffset.y, didChangeSection: false)
+        }
     }
 }
 
@@ -150,17 +157,20 @@ extension JHBPContentCell {
         
         contentView.addSubview(profileCollectionView)
         profileCollectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
         
         contentView.addSubview(productCollectionView)
         productCollectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
         
         contentView.addSubview(priceInfoCollectionView)
         priceInfoCollectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
     }
     
@@ -177,7 +187,7 @@ extension JHBPContentCell {
     }
     
     private func profileLayoutSection() -> NSCollectionLayoutSection {
-        print("프로필 섹션😡")
+        print(profileCollectionView.contentSize, "asd!!")
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1.0),
                                                             heightDimension: .estimated(600)))
         
@@ -190,7 +200,6 @@ extension JHBPContentCell {
     }
     
     private func productLayoutSection() -> NSCollectionLayoutSection {
-        print("작품 섹션😡")
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1/3),
                                                             heightDimension: .fractionalWidth(1/3)))
         item.contentInsets = .init(top: 2, leading: 1, bottom: 2, trailing: 1)
@@ -204,7 +213,7 @@ extension JHBPContentCell {
     }
     
     private func priceInfoLayoutSection() -> NSCollectionLayoutSection {
-        print("견적 섹션😡")
+
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1.0),
                                                             heightDimension: .estimated(600)))
         

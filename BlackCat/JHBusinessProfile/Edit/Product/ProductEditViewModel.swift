@@ -154,7 +154,7 @@ class ProductEditViewModel {
         showCompleteAlertViewDriver = updateSuccess
             .do { tattooThumbnail in
                 var localTattooist = CatSDKTattooist.localTattooistInfo()
-                localTattooist.tattoos.append(tattooThumbnail)
+                localTattooist.tattoos = [tattooThumbnail] + localTattooist.tattoos
                 CatSDKTattooist.updateLocalTattooistInfo(tattooistInfo: localTattooist)
             }.map { _ in () }
             .asDriver(onErrorJustReturn: ())
