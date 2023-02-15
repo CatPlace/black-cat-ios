@@ -7,9 +7,42 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
+import RxRelay
 import RxKeyboard
+import BlackCatSDK
+
 class PriceInfoEditViewModel {
+    let priceInfoInputViewModel: TextInputViewModel = .init(title: "견적서", textCountLimit: 700)
     
+    var didTapCompleteButton = PublishRelay<Void>()
+    
+    let priceInfoDriver: Driver<String>
+    let dismissDriver: Driver<Void>
+    init() {
+        var localTattooistInfo = CatSDKTattooist.localTattooistInfo()
+        priceInfoDriver = .just(localTattooistInfo.estimate.description)
+        
+        let updatedResult = didTapCompleteButton
+            .withLatestFrom(priceInfoInputViewModel.baseTextViewModel.inputStringRelay)
+            .flatMap { CatSDKTattooist.updatePriceInfo(estimate: .init(description: $0)) }
+            .share()
+        
+        let updateSuccess = updatedResult
+            .filter { $0.description != "error" }
+            .map { estimate in
+                localTattooistInfo.estimate = estimate
+                CatSDKTattooist.updateLocalTattooistInfo(tattooistInfo: localTattooistInfo)
+            }
+        
+        // TODO: - 에러처리
+        let updateFail = updatedResult
+            .filter { $0.description == "error"}
+        
+        dismissDriver = updateSuccess
+            .asDriver(onErrorJustReturn: ())
+        
+    }
 }
 class PriceInfoEditViewController: VerticalScrollableViewController {
     // MARK: - Properties
@@ -22,10 +55,24 @@ class PriceInfoEditViewController: VerticalScrollableViewController {
             .drive(with: self) { owner, keyboardVisibleHeight in
                 owner.updateView(with: keyboardVisibleHeight)
             }.disposed(by: disposeBag)
+        
+        completeButton.rx.tap
+            .bind(to: viewModel.didTapCompleteButton)
+            .disposed(by: disposeBag)
+        
+        viewModel.priceInfoDriver
+            .drive(priceInfoInputView.textView.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.dismissDriver
+            .drive(with: self) { owner, _ in
+                owner.dismiss(animated: true)
+            }.disposed(by: disposeBag)
     }
     
     // MARK: - Initializer
     init(viewModel: PriceInfoEditViewModel = PriceInfoEditViewModel()) {
+        priceInfoInputView = .init(viewModel: viewModel.priceInfoInputViewModel)
         self.viewModel = viewModel
         super.init()
         appendNavigationLeftBackButton()
@@ -64,8 +111,7 @@ class PriceInfoEditViewController: VerticalScrollableViewController {
     }
     
     // MARK: - UIComponents
-    // TODO: - 편집 뷰 어떤식으로 ?
-    let tempView = UIView()
+    let priceInfoInputView: TextInputView
     let completeButton: UIButton = {
         $0.setTitle("수정 완료", for: .normal)
         $0.titleLabel?.font = .appleSDGoithcFont(size: 24, style: .bold)
@@ -76,11 +122,13 @@ class PriceInfoEditViewController: VerticalScrollableViewController {
     
     func setUI() {
         
-        contentView.addSubview(tempView)
+        contentView.addSubview(priceInfoInputView)
         
-        tempView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-            $0.height.equalTo(700)
+        priceInfoInputView.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(30)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.greaterThanOrEqualTo(Constant.height * 700)
+            $0.bottom.equalToSuperview().inset(30)
         }
         
         view.addSubview(completeButton)

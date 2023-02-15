@@ -11,7 +11,6 @@ import SnapKit
 final class JHBPPriceInfoCell: BPBaseCollectionViewCell {
     func configureCell(with description: String) {
         print(description)
-        priceInfoDescriptionLabel.backgroundColor = .white
         priceInfoDescriptionLabel.text = description
     }
     

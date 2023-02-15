@@ -25,7 +25,7 @@ class ProfileEditViewModel {
     var introduceDriver: Driver<String>
     
     init() {
-        let localTattooistInfo = CatSDKTattooist.localTattooistInfo()
+        var localTattooistInfo = CatSDKTattooist.localTattooistInfo()
         let initialImageUrlString = localTattooistInfo.introduce.imageUrlString
         imageRelay = .init(value: initialImageUrlString)
         introduceDriver = .just(localTattooistInfo.introduce.introduce)
@@ -55,9 +55,8 @@ class ProfileEditViewModel {
         updateSuccessDriver = updatedResult
             .filter { $0.introduce != "error" }
             .map { updatedTattooistIntroduce in
-                var tattooist = CatSDKTattooist.localTattooistInfo()
-                tattooist.introduce = updatedTattooistIntroduce
-                CatSDKTattooist.updateLocalTattooistInfo(tattooistInfo: tattooist)
+                localTattooistInfo.introduce = updatedTattooistIntroduce
+                CatSDKTattooist.updateLocalTattooistInfo(tattooistInfo: localTattooistInfo)
                 return ()
             }.asDriver(onErrorJustReturn: ())
         
