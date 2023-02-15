@@ -16,6 +16,8 @@
 		78277E8F296735D6004CFDF4 /* PriceInfoEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78277E8E296735D6004CFDF4 /* PriceInfoEditViewController.swift */; };
 		78277E92296740E4004CFDF4 /* LoginAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78277E91296740E3004CFDF4 /* LoginAlertViewController.swift */; };
 		78277E9529675982004CFDF4 /* VisualEffectView in Frameworks */ = {isa = PBXBuildFile; productRef = 78277E9429675982004CFDF4 /* VisualEffectView */; };
+		78280146299CBC0B00DC1509 /* TwoButtonAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78280145299CBC0B00DC1509 /* TwoButtonAlertViewController.swift */; };
+		78280148299CBDF000DC1509 /* OneButtonAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78280147299CBDF000DC1509 /* OneButtonAlertViewController.swift */; };
 		7828DB54295B5D620053B0A0 /* AreaInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB53295B5D620053B0A0 /* AreaInputView.swift */; };
 		7828DB56295B5D7E0053B0A0 /* GenderInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB55295B5D7E0053B0A0 /* GenderInputView.swift */; };
 		7828DB58295B5DE20053B0A0 /* SimpleInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB57295B5DE20053B0A0 /* SimpleInputView.swift */; };
@@ -240,6 +242,8 @@
 		78277E8C296735CB004CFDF4 /* ProductEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductEditViewController.swift; sourceTree = "<group>"; };
 		78277E8E296735D6004CFDF4 /* PriceInfoEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceInfoEditViewController.swift; sourceTree = "<group>"; };
 		78277E91296740E3004CFDF4 /* LoginAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAlertViewController.swift; sourceTree = "<group>"; };
+		78280145299CBC0B00DC1509 /* TwoButtonAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoButtonAlertViewController.swift; sourceTree = "<group>"; };
+		78280147299CBDF000DC1509 /* OneButtonAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneButtonAlertViewController.swift; sourceTree = "<group>"; };
 		7828DB53295B5D620053B0A0 /* AreaInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaInputView.swift; sourceTree = "<group>"; };
 		7828DB55295B5D7E0053B0A0 /* GenderInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderInputView.swift; sourceTree = "<group>"; };
 		7828DB57295B5DE20053B0A0 /* SimpleInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleInputView.swift; sourceTree = "<group>"; };
@@ -513,6 +517,15 @@
 				78277E91296740E3004CFDF4 /* LoginAlertViewController.swift */,
 			);
 			path = LoginAlert;
+			sourceTree = "<group>";
+		};
+		78280144299CBBF300DC1509 /* AlertView */ = {
+			isa = PBXGroup;
+			children = (
+				78280145299CBC0B00DC1509 /* TwoButtonAlertViewController.swift */,
+				78280147299CBDF000DC1509 /* OneButtonAlertViewController.swift */,
+			);
+			path = AlertView;
 			sourceTree = "<group>";
 		};
 		7828DB52295B5D470053B0A0 /* Views */ = {
@@ -943,6 +956,7 @@
 		8E8848702949C3F80039F99A /* Commons */ = {
 			isa = PBXGroup;
 			children = (
+				78280144299CBBF300DC1509 /* AlertView */,
 				78277E842966C314004CFDF4 /* WebView */,
 				8E8848712949C3F80039F99A /* Cells */,
 				8E8848742949C3F80039F99A /* CategoryPaper */,
@@ -1473,9 +1487,11 @@
 				784B02312937579E004ED20A /* MyPageViewController.Layout.swift in Sources */,
 				B1E4986528EE957E00B469AC /* MagazineDetailModel.swift in Sources */,
 				78277E92296740E4004CFDF4 /* LoginAlertViewController.swift in Sources */,
+				78280148299CBDF000DC1509 /* OneButtonAlertViewController.swift in Sources */,
 				B1E4986728EE9BE800B469AC /* MagazineDetailBaseCell.swift in Sources */,
 				8E2D8C5928F2EE69004B514D /* HomeEmptyCell.swift in Sources */,
 				784B02372937579F004ED20A /* MyPageViewController.swift in Sources */,
+				78280146299CBC0B00DC1509 /* TwoButtonAlertViewController.swift in Sources */,
 				7867A63829374D0500FC1160 /* AlertService.swift in Sources */,
 				B1E986AB28FE888800962F5B /* FilterTaskService.swift in Sources */,
 				8E2D8C4F28F2ED53004B514D /* HomeHeaderView.swift in Sources */,
