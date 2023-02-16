@@ -47,13 +47,13 @@ class ProductEditViewModel {
     // MARK: - Input
     let imageListInputRelay = PublishRelay<[UIImage]>()
     let selectedIndexRelay = PublishRelay<IndexPath>()
-    let didTapWariningRemoveViewConfirmButton = PublishRelay<Int>()
+    let didTapWariningRemoveViewConfirmButton = PublishRelay<Int?>()
     let didTapCompleteButton = PublishRelay<Void>()
     
     // MARK: - Output
     let imageListDrvier: Driver<[Any]>
     let limitExcessDriver: Driver<Void>
-    let showWarningRemoveViewDrvier: Driver<Int>
+    let showWarningRemoveViewDrvier: Driver<Int?>
     let showImagePickerViewDriver: Driver<Void>
     let showCompleteAlertViewDriver: Driver<Void>
     let showFailUpdateAlertViewDriver: Driver<String>
@@ -90,8 +90,8 @@ class ProductEditViewModel {
         
         let removedResultImages = didTapWariningRemoveViewConfirmButton
             .withLatestFrom(tattooImageInputViewModel.imageDataListRelay) { index, prevImages in
-                print(index, prevImages)
                 var newImages = prevImages
+                guard let index else { return newImages }
                 newImages.remove(at: index)
                 return newImages
             }

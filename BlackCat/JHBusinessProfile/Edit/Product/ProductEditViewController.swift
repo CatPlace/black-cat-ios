@@ -55,7 +55,9 @@ class ProductEditViewController: VerticalScrollableViewController {
         
         viewModel.showWarningRemoveViewDrvier
             .drive(with: self) { owner, index in
-                let vc = TwoButtonAlertViewController(viewModel: .init(type: .warningDelete(index)))
+                var indexList: [Int]
+                if let index { indexList = [index] } else { indexList = [] }
+                let vc = TwoButtonAlertViewController(viewModel: .init(type: .warningDelete(indexList)))
                 vc.delegate = self
                 owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
@@ -216,7 +218,7 @@ extension ProductEditViewController: TwoButtonAlertViewDelegate {
         switch type {
         case .warningDelete(let index):
             // TODO: - Alert 후 확인버튼 바인딩
-            viewModel.didTapWariningRemoveViewConfirmButton.accept(index)
+            viewModel.didTapWariningRemoveViewConfirmButton.accept(index.first)
         default: return
         }
         dismiss(animated: true)

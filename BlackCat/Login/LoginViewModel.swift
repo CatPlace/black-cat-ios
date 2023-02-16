@@ -32,7 +32,6 @@ class LoginViewModel {
         
         let loginSuccessResult = loginResult
             .filter { $0.id != -2 }
-            .debug("로그인한 유저정보 🌈🌈🌈🌈")
             .do { CatSDKUser.updateUser(user: $0) }
             .map { _ in () }
         

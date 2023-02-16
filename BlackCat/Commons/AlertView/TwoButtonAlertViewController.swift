@@ -17,7 +17,7 @@ enum TwoButtonAlertType {
     case warningCancelWriting
     case warningLogoutWriting
     case warningSecession
-    case warningDelete(Int)
+    case warningDelete([Int])
     
     func getLeftButtonString() -> String {
         switch self {

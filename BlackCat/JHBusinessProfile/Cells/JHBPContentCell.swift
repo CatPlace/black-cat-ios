@@ -11,19 +11,36 @@ import RxCocoa
 import RxRelay
 import SnapKit
 import BlackCatSDK
+
 final class JHBPContentCellViewModel {
-    var contentModel: BehaviorRelay<BPContentModel> // 🐻‍❄️ NOTE: - 이거 enum으로 개선가능
-    
     typealias Introduce = String
     typealias ProductImageUrlString = String
     typealias PriceInfo = String
+    
+    var deleteTattoIndexListRelay = BehaviorRelay<[Int]>(value: [])
+    
+    var contentModel: BehaviorRelay<BPContentModel> // 🐻‍❄️ NOTE: - 이거 enum으로 개선가능
+    var editMode: BehaviorRelay<EditMode>
+    var productSelectIndexPath = PublishRelay<IndexPath>()
+    
     var profiles: Driver<[Introduce]>
-    var products: Driver<[ProductImageUrlString]>
+    var products: Driver<[BPProductCellViewModel]>
     var priceInfos: Driver<[PriceInfo]>
     
-    init(contentModel: BPContentModel, profile: Introduce, products: [ProductImageUrlString], priceInfo: PriceInfo) {
+    var notifyToViewController: Driver<IndexPath>
+    var editModeDriver: Driver<EditMode>
+    
+    typealias UpdatedDeleteTattoIndexList = [Int]
+    typealias ShouldCountDownIndexPathList = [Int]
+    typealias ShouldToggleIndexPath = IndexPath
+    
+    var countDownDriver: Driver<(UpdatedDeleteTattoIndexList, ShouldCountDownIndexPathList, ShouldToggleIndexPath)>
+    var setCountDriver: Driver<(UpdatedDeleteTattoIndexList, ShouldToggleIndexPath)>
+    
+    init(contentModel: BPContentModel, profile: Introduce, products: [Model.TattooThumbnail], priceInfo: PriceInfo, editMode: BehaviorRelay<EditMode> = .init(value: .normal)) {
+        self.editMode = editMode
         self.contentModel = .init(value: contentModel)
-
+        
         self.profiles = self.contentModel
             .filter { $0.order == 0 }
             .map { _ in [profile] }
@@ -31,17 +48,57 @@ final class JHBPContentCellViewModel {
         
         self.products = self.contentModel
             .filter { $0.order == 1 }
-            .map { _ in products }
+            .map { _ in products.map { .init(editMode: editMode, product: $0) } }
             .asDriver(onErrorJustReturn: [])
         
         self.priceInfos = self.contentModel
             .filter { $0.order == 2 }
             .map { _ in [priceInfo] }
             .asDriver(onErrorJustReturn: [])
+        
+        notifyToViewController = productSelectIndexPath
+            .withLatestFrom(editMode) { ($0, $1) }
+            .filter { $0.1 == .normal }
+            .map { $0.0 }
+            .asDriver(onErrorJustReturn: .init(row: 0, section: 0))
+        
+        let didTapProductInEditMode = productSelectIndexPath
+            .withLatestFrom(editMode) { ($0, $1) }
+            .filter { $0.1 == .edit }
+            .map { $0.0 }
+        
+        let tattooIndex = didTapProductInEditMode
+            .withLatestFrom(deleteTattoIndexListRelay) { ($0, $1) }
+            .map { (findedTattooIndex: $0.1.firstIndex(of: $0.0.row), tattooIndexPath: $0.0, deleteTattooIndexList: $0.1) }
+            .share()
+        
+        
+        setCountDriver = tattooIndex
+            .filter { $0.findedTattooIndex == nil }
+            .map { _, tattooIndexPath, deleteTattooIndexList in
+                var temp = deleteTattooIndexList
+                temp.append(tattooIndexPath.row)
+                return (temp, tattooIndexPath)
+            }.asDriver(onErrorJustReturn: ([], .init(row: 0, section: 0)))
+            .debug("왜")
+        
+        countDownDriver = tattooIndex
+            .filter { $0.findedTattooIndex != nil }
+            .map { index, tattooIndexPath, deleteTattooIndexList in
+                guard let index else { return ([], [], []) } // 위에 필터링 했기 때문에 강제 언래핑 해도 상관 업습니다.
+                var temp = deleteTattooIndexList
+                temp.remove(at: index)
+                return (temp, temp.enumerated().filter { i, value in i >= index }.map { $1 }, tattooIndexPath )
+            }.asDriver(onErrorJustReturn: ([], [], []))
+        
+        editModeDriver = editMode
+            .asDriver(onErrorJustReturn: .normal)
     }
 }
 
 final class JHBPContentCell: BPBaseCollectionViewCell {
+    var viewModel: JHBPContentCellViewModel?
+    
     enum Reusable {
         static let profileCell = ReusableCell<BPProfileCell>()
         static let productCell = ReusableCell<BPProductCell>()
@@ -53,6 +110,7 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
     }
     
     func bind(viewModel: JHBPContentCellViewModel) {
+        self.viewModel = viewModel
         [productCollectionView, profileCollectionView, priceInfoCollectionView]
             .forEach { $0.rx.setDelegate(self).disposed(by: disposeBag) }
         
@@ -61,7 +119,7 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
                 guard let self = self else { return }
                 
                 self.setCollectionViewHidden(forType: .profile)
-
+                
                 cell.configureCell(with: item)
             }.disposed(by: self.disposeBag)
         
@@ -70,16 +128,88 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
                 guard let self = self else { return }
                 self.setCollectionViewHidden(forType: .product)
                 
-                cell.configureCell(with: item)
+                cell.bind(to: item)
             }.disposed(by: self.disposeBag)
         
         viewModel.priceInfos
             .drive(priceInfoCollectionView.rx.items(Reusable.priceInfoCell)) { [weak self] index, item, cell in
                 guard let self = self else { return }
                 self.setCollectionViewHidden(forType: .priceInfo)
-                print(item, "😎😎")
+                
                 cell.configureCell(with: item)
             }.disposed(by: self.disposeBag)
+        
+        productCollectionView.rx.itemSelected
+            .withLatestFrom(viewModel.contentModel) { ($0, $1) }
+            .filter { $0.1.order == 1 }
+            .map { $0.0 }
+            .bind(to: viewModel.productSelectIndexPath)
+            .disposed(by: disposeBag)
+        
+        viewModel.notifyToViewController
+            .drive { indexPath in
+                JHBPDispatchSystem.dispatch.multicastDelegate
+                    .invokeDelegates { delegate in
+                        delegate.notifyViewController(selectedIndex: indexPath, forType: .product)
+                    }
+            }.disposed(by: disposeBag)
+        
+        viewModel.setCountDriver
+            .debug("??")
+            .drive(with: self) { owner, info in
+                let shouldUpdateDeleteIndexList = info.0
+                let indexPath = info.1
+                guard let cell = owner.productCollectionView.cellForItem(at: indexPath) as? BPProductCell else { return }
+                viewModel.deleteTattoIndexListRelay.accept(shouldUpdateDeleteIndexList)
+                cell.viewModel?.isSelectEditViewRelay.accept(true)
+                cell.viewModel?.editCountRelay.accept(shouldUpdateDeleteIndexList.count)
+            }.disposed(by: disposeBag)
+        
+        viewModel.countDownDriver
+            .drive(with: self) { owner, info in
+                let shouldUpdateDeleteIndexList = info.0
+                let countDownIndexList = info.1
+                let cancelTattooIndexPath = info.2
+                
+                viewModel.deleteTattoIndexListRelay.accept(shouldUpdateDeleteIndexList)
+                
+                owner.updateTattooUI(countDownIndexList: countDownIndexList, cancelTattooIndexPath: cancelTattooIndexPath)
+            }.disposed(by: disposeBag)
+        
+        viewModel.editModeDriver
+            .drive(with: self) { owner, editMode in
+                
+                if editMode == .normal {
+                    owner.initEditor()
+                }
+                JHBPDispatchSystem.dispatch.multicastDelegate
+                    .invokeDelegates { delegate in
+                        delegate.notifyViewController(editMode: editMode)
+                    }
+            }.disposed(by: disposeBag)
+    }
+    
+    func updateTattooUI(countDownIndexList: [Int], cancelTattooIndexPath: IndexPath ) {
+        guard let cell = productCollectionView.cellForItem(at: cancelTattooIndexPath) as? BPProductCell else { return }
+        
+        countDownIndexList
+            .map { IndexPath(row: $0, section: 0) }
+            .compactMap { productCollectionView.cellForItem(at: $0) as? BPProductCell}
+            .forEach {
+                guard let preValue = $0.viewModel?.editCountRelay.value else { return }
+                $0.viewModel?.editCountRelay.accept(preValue - 1)
+            }
+        cell.viewModel?.isSelectEditViewRelay.accept(false)
+    }
+    
+    func initEditor() {
+        viewModel?.deleteTattoIndexListRelay.value
+            .compactMap { productCollectionView.cellForItem(at: .init(row: $0, section: 0)) as? BPProductCell }
+            .forEach {
+                $0.viewModel?.isSelectEditViewRelay.accept(false)
+            }
+        viewModel?.deleteTattoIndexListRelay.accept([])
+        
     }
     
     func setCollectionViewHidden(forType type: JHBPContentType) {
@@ -94,6 +224,7 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
     // MARK: - Initialize
     override func initialize() {
         self.setUI()
+        JHBPDispatchSystem.dispatch.multicastDelegate.addDelegate(self)
     }
     
     // MARK: - LifeCycle
@@ -102,7 +233,6 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
     }
     
     // MARK: - UIComponents
-    
     lazy var profileCollectionView: UICollectionView = {
         let layout = createLayout(forType: .profile)
         var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -144,7 +274,7 @@ extension JHBPContentCell: UIScrollViewDelegate {
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-
+        
         JHBPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
             delegate.notifyViewController(offset: scrollView.contentOffset.y, didChangeSection: false)
         }
@@ -157,20 +287,17 @@ extension JHBPContentCell {
         
         contentView.addSubview(profileCollectionView)
         profileCollectionView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
         
         contentView.addSubview(productCollectionView)
         productCollectionView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
         
         contentView.addSubview(priceInfoCollectionView)
         priceInfoCollectionView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
     }
     
@@ -213,7 +340,7 @@ extension JHBPContentCell {
     }
     
     private func priceInfoLayoutSection() -> NSCollectionLayoutSection {
-
+        
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1.0),
                                                             heightDimension: .estimated(600)))
         
@@ -226,3 +353,12 @@ extension JHBPContentCell {
     }
 }
 
+
+extension JHBPContentCell: JHBPMulticastDelegate {
+    func notifyCellCollectionView(value: Bool) {
+        guard let viewModel, viewModel.contentModel.value.order == 1 else { return }
+        
+        let nextEditMode = viewModel.editMode.value.toggle()
+        viewModel.editMode.accept(nextEditMode)
+    }
+}

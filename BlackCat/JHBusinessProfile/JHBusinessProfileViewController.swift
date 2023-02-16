@@ -57,11 +57,16 @@ final class JHBusinessProfileViewController: UIViewController {
             rx.viewWillAppear
                 .bind(to: viewModel.viewWillAppear)
             
+            rx.viewDidAppear
+                .bind(to: viewModel.viewDidAppear)
+            
             editLabel.rx.tapGesture()
                 .when(.recognized)
                 .withUnretained(self)
                 .bind { owner, _ in
-                    print("편집 탭 !")
+                    JHBPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
+                        delegate.notifyCellCollectionView(value: false)
+                    }
                 }
             
             bottomView.askButton.rx.tap
@@ -80,30 +85,45 @@ final class JHBusinessProfileViewController: UIViewController {
                     delegate.notifyContentHeader(indexPath: IndexPath(row: row, section: 0), forType: type)
                 }
             }.disposed(by: disposeBag)
+        
+        viewModel.showTattooDetail
+            .drive(with: self) { owner, tattooId in
+                // TODO: - 화면 전환
+                print(tattooId, "디테일 ㄱ ㄱ !")
+                //                owner.navigationController?.pushViewController(TattooDetailViewController(viewModel: .init(tattooModel: .ini)), animated: <#T##Bool#>)
+            }.disposed(by: disposeBag)
+        
+        viewModel.scrollToTypeDriver
+            .drive(with: self) { owner, type in
+                JHBPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
+                    delegate.notifyContentCell(indexPath: nil, forType: type)
+                }
+            }.disposed(by: disposeBag)
     }
     
     // MARK: function
     func updateEditButtonUI(selectedRow: Int) {
-        
         guard let type = JHBPContentHeaderButtonType(rawValue: selectedRow), viewModel.isOwner else { return }
-       
+        
         bottomView.setAskButtonTag(selectedRow)
         bottomView.setAskingText(type.editButtonText())
         editLabel.isHidden = selectedRow != 1
-
     }
     
     func pushToEditVC() {
-        // TODO: - 현재 가지고 있는 모델을 그대로 가져가기 ~ (수정)
-        
-        if let type = JHBPContentHeaderButtonType(rawValue: bottomView.askButtonTag()) {
+        // tag = [0: 소개, 1: 작품, 2: 견적, 3: 타투 삭제]
+        if bottomView.askButtonTag() == 3 {
+            let vc = TwoButtonAlertViewController(viewModel: .init(type: .warningDelete([])))
+            vc.delegate = self
+            present(vc, animated: true)
+        } else if let type = JHBPContentHeaderButtonType(rawValue: bottomView.askButtonTag()) {
             let nextVCWithNavi = UINavigationController(rootViewController: type.editVC())
             nextVCWithNavi.modalPresentationStyle = .fullScreen
             present(nextVCWithNavi, animated: true)
         } else { // TODO: - 문의하기
             print("문의하기 TODO")
         }
-
+        
     }
     
     // MARK: Initialize
@@ -133,7 +153,7 @@ final class JHBusinessProfileViewController: UIViewController {
         appendNavigationLeftLabel(title: "TEST", color: .white)
         appendNavigationRightLabel(editLabel)
     }
-
+    
     // MARK: - UIComponents
     lazy var collectionView: UICollectionView = {
         let layout = createLayout()
@@ -209,7 +229,7 @@ extension JHBusinessProfileViewController {
         section.visibleItemsInvalidationHandler = { [weak self] (items, offset, _) -> Void in
             guard let self else { return }
             let page = round(offset.x / self.view.bounds.width)
-
+            
             self.viewModel.cellDisplayingIndexRowRelay.accept(page)
         }
         
@@ -228,20 +248,58 @@ extension JHBusinessProfileViewController {
 }
 
 extension JHBusinessProfileViewController: JHBPMulticastDelegate {
+    func notifyViewController(editMode: EditMode) {
+        editLabel.text = editMode.asStringInTattooEdit()
+        bottomView.bookmarkView.isHidden = editMode == .edit
+        if editMode == .edit {
+            bottomView.setAskingText("삭제")
+            bottomView.setAskButtonTag(3)
+            bottomView.layoutIfNeeded()
+            bottomView.askButton.snp.remakeConstraints {
+                $0.top.bottom.equalToSuperview()
+                $0.width.equalTo(Constant.width * 100)
+                $0.centerX.equalToSuperview()
+            }
+        } else {
+            bottomView.setAskingText("타투 업로드")
+            bottomView.setAskButtonTag(1)
+            bottomView.layoutIfNeeded()
+            bottomView.askButton.snp.remakeConstraints {
+                $0.top.leading.bottom.equalToSuperview()
+                $0.width.equalTo(Constant.width * 251)
+            }
+        }
+        
+        UIView.animate(withDuration: 0.2) {
+            self.bottomView.layoutIfNeeded()
+        }
+    }
+    
+    func notifyViewController(selectedIndex: IndexPath, forType: type) {
+        viewModel.selectedTattooIndex.accept(selectedIndex.row)
+    }
+    
     func notifyContentHeader(indexPath: IndexPath, forType: type) {
+        if forType != .product {
+            if let cell = collectionView.cellForItem(at: IndexPath(row: 1, section: 1)) as? JHBPContentCell {
+                cell.viewModel?.editMode.accept(.normal)
+            }
+        }
+        
         updateEditButtonUI(selectedRow: indexPath.row)
     }
+    
     func notifyContentCell(indexPath: IndexPath?, forType: type) {
-
+        
         collectionView.scrollToItem(at: IndexPath(row: forType.rawValue, section: 1),
                                     at: .top,
                                     animated: false)
-
+        
         notifyViewController(offset: 0, didChangeSection: true)
     }
     
     func notifyViewController(offset: CGFloat, didChangeSection: Bool) {
-
+        
         if didChangeSection {
             self.collectionView.isScrollEnabled = true
             UIView.animate(withDuration: 0.3) {
@@ -269,5 +327,21 @@ extension JHBusinessProfileViewController: UICollectionViewDelegate {
         if scrollView.contentOffset.y > 250 {
             notifyViewController(offset: 1, didChangeSection: true)
         }
+    }
+}
+
+extension JHBusinessProfileViewController: TwoButtonAlertViewDelegate {
+    func didTapRightButton(type: TwoButtonAlertType) {
+        switch type {
+        case .warningDelete(_):
+            print("타투삭제 트리거 발동 고민 중 !")
+            break
+        default: break
+        }
+        dismiss(animated: true)
+    }
+    
+    func didTapLeftButton(type: TwoButtonAlertType) {
+        dismiss(animated: true)
     }
 }

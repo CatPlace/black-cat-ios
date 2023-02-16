@@ -106,14 +106,16 @@ extension AskBottomView {
 
         [askButton, bookmarkView].forEach { addSubview($0) }
 
-        bookmarkView.snp.makeConstraints {
-            $0.width.equalTo(72)
-            $0.top.trailing.bottom.equalToSuperview()
-        }
+
 
         askButton.snp.makeConstraints {
             $0.top.leading.bottom.equalToSuperview()
-            $0.trailing.equalTo(bookmarkView.snp.leading).offset(-12)
+            $0.width.equalTo(Constant.width * 251)
+        }
+        
+        bookmarkView.snp.makeConstraints {
+            $0.top.trailing.bottom.equalToSuperview()
+            $0.leading.equalTo(askButton.snp.trailing).offset(12)
         }
 
         [heartButton, bookmarkCountLabel].forEach { bookmarkView.addSubview($0) }

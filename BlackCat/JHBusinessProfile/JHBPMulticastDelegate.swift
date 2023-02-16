@@ -21,6 +21,8 @@ protocol JHBPMulticastDelegate {
     /** to notifyToContentCell*/ func notifyContentCell(indexPath: IndexPath?, forType: type)
     /** to notifyToViewController*/ func notifyViewController(offset: CGFloat, didChangeSection: Bool)
     /** to notifyToCellCollectionViewOffset*/ func notifyCellCollectionView(value: Bool)
+    func notifyViewController(selectedIndex: IndexPath, forType: type)
+    func notifyViewController(editMode: EditMode)
 }
 
 extension JHBPMulticastDelegate {
@@ -28,6 +30,8 @@ extension JHBPMulticastDelegate {
     func notifyContentCell(indexPath: IndexPath?, forType: type) { }
     func notifyViewController(offset: CGFloat, didChangeSection: Bool) { }
     func notifyCellCollectionView(value: Bool) { }
+    func notifyViewController(selectedIndex: IndexPath, forType: type) { }
+    func notifyViewController(editMode: EditMode) { }
 }
 
 // MARK: - Delegating Object
