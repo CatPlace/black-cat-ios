@@ -19,24 +19,28 @@ final class JHBusinessProfileViewModel {
     typealias TattooId = Int
     
     // MARK: - Inputs
-    var cellWillAppear = PublishRelay<CGFloat>()
-    var cellDidAppear = PublishRelay<CGFloat>()
-    var viewWillAppear = PublishRelay<Bool>()
-    var viewDidAppear = PublishRelay<Bool>()
-    var selectedTattooIndex = PublishRelay<Int>()
+    let cellWillAppear = PublishRelay<CGFloat>()
+    let cellDidAppear = PublishRelay<CGFloat>()
+    let viewWillAppear = PublishRelay<Void>()
+    let viewDidAppear = PublishRelay<Void>()
+    let selectedTattooIndex = PublishRelay<Int>()
+    let deleteProductTrigger = PublishRelay<[Int]>()
+    let deleteCompleteRelay = PublishRelay<Void>()
     
     // MARK: - Outputs
-    var visibleCellIndexPath: Driver<Int>
-    var sections: Driver<[JHBusinessProfileCellSection]>
-    var showTattooDetail: Driver<TattooId>
-    var scrollToTypeDriver: Driver<JHBPContentHeaderButtonType>
-    var initEditModeDriver: Driver<Void>
+    let visibleCellIndexPath: Driver<Int>
+    let sections: Driver<[JHBusinessProfileCellSection]>
+    let showTattooDetail: Driver<TattooId>
+    let scrollToTypeDriver: Driver<JHBPContentHeaderButtonType>
+    let initEditModeDriver: Driver<Void>
+    let deleteSuccessDriver: Driver<Void>
+    let deleteFailDriver: Driver<Void>
     
     init(tattooistId: Int) {
         // TODO: - 유저 구분
         isOwner = tattooistId == CatSDKUser.user().id
 
-        let localTattooistInfo = viewWillAppear
+        let localTattooistInfo = Observable.merge([viewWillAppear.asObservable(), deleteCompleteRelay.asObservable()])
             .map { _ in CatSDKTattooist.localTattooistInfo() }
         
         let fetchedTattooistInfo = localTattooistInfo
@@ -50,7 +54,9 @@ final class JHBusinessProfileViewModel {
                 }.do { CatSDKTattooist.updateLocalTattooistInfo(tattooistInfo: $0) }
             }.share()
         
-        sections = Observable.merge([localTattooistInfo.filter { $0 != .empty }, fetchedTattooistInfo])
+        let currentTattooistInfo = Observable.merge([localTattooistInfo.filter { $0 != .empty }, fetchedTattooistInfo]).share()
+        
+        sections = currentTattooistInfo
             .map { configurationSections(
                 imageUrlString: $0.introduce.imageUrlString ?? "",
                 profileDescription: $0.introduce.introduce,
@@ -73,6 +79,27 @@ final class JHBusinessProfileViewModel {
             .compactMap { .init(rawValue: $0) }
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: .product)
+        
+        let deleteReuslt = deleteProductTrigger.withLatestFrom(currentTattooistInfo) { (index: $0, tattooist: $1) }
+            .map { indexList, tattooist in
+                indexList.map { tattooist.tattoos[$0].tattooId }
+            }.flatMap { CatSDKTattooist.deleteTattoo(tattooIds: $0) }
+            .share()
+            
+        let deleteSuccess = deleteReuslt.filter { $0.0 == $0.1 }
+        // TODO: - 에러 처리
+        let deleteFail = deleteReuslt.filter { $0.0 != $0.1 }
+        
+        deleteSuccessDriver = deleteSuccess
+            .withLatestFrom(deleteProductTrigger)
+            .map { ids in
+                var userInfo = CatSDKTattooist.localTattooistInfo()
+                userInfo.tattoos.remove(atOffsets: IndexSet(ids))
+                return CatSDKTattooist.updateLocalTattooistInfo(tattooistInfo: userInfo)
+            }.asDriver(onErrorJustReturn: ())
+        
+        deleteFailDriver = deleteFail.map { _ in () }
+            .asDriver(onErrorJustReturn: ())
         
         func configurationSections(imageUrlString: String, profileDescription: String, products: [Model.TattooThumbnail], priceInformation: String) -> [JHBusinessProfileCellSection] {
             

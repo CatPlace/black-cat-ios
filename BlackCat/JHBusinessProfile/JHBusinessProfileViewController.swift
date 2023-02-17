@@ -55,9 +55,11 @@ final class JHBusinessProfileViewController: UIViewController {
     func bind(viewModel: JHBusinessProfileViewModel) {
         disposeBag.insert {
             rx.viewWillAppear
+                .map { _ in () }
                 .bind(to: viewModel.viewWillAppear)
-            
+                
             rx.viewDidAppear
+                .map { _ in () }
                 .bind(to: viewModel.viewDidAppear)
             
             editLabel.rx.tapGesture()
@@ -109,6 +111,19 @@ final class JHBusinessProfileViewController: UIViewController {
             .compactMap { self.collectionView.cellForItem(at: IndexPath(row: 1, section: 1)) as? JHBPContentCell }
             .drive {
                 $0.viewModel?.editMode.accept(.normal)
+            }.disposed(by: disposeBag)
+        
+        viewModel.deleteSuccessDriver
+            .drive(with: self) { owner, _ in
+                viewModel.deleteCompleteRelay.accept(())
+                let vc = OneButtonAlertViewController(viewModel: .init(content: "삭제되었습니다.", buttonText: "확인"))
+                owner.present(vc, animated: true)
+            }.disposed(by: disposeBag)
+        
+        viewModel.deleteFailDriver
+            .drive(with: self) { owner, _ in
+                let vc = OneButtonAlertViewController(viewModel: .init(content: "삭제에 실패했습니다.", buttonText: "확인"))
+                owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
     }
     
@@ -347,7 +362,7 @@ extension JHBusinessProfileViewController: TwoButtonAlertViewDelegate {
     func didTapRightButton(type: TwoButtonAlertType) {
         switch type {
         case .warningDelete(let indexList):
-            print(indexList)
+            viewModel.deleteProductTrigger.accept(indexList)
             break
         default: break
         }
@@ -358,3 +373,4 @@ extension JHBusinessProfileViewController: TwoButtonAlertViewDelegate {
         dismiss(animated: true)
     }
 }
+
