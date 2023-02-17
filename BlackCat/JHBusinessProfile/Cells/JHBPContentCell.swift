@@ -80,7 +80,6 @@ final class JHBPContentCellViewModel {
                 temp.append(tattooIndexPath.row)
                 return (temp, tattooIndexPath)
             }.asDriver(onErrorJustReturn: ([], .init(row: 0, section: 0)))
-            .debug("왜")
         
         countDownDriver = tattooIndex
             .filter { $0.findedTattooIndex != nil }
@@ -92,6 +91,7 @@ final class JHBPContentCellViewModel {
             }.asDriver(onErrorJustReturn: ([], [], []))
         
         editModeDriver = editMode
+            .filter { _ in contentModel.order == 1 }
             .asDriver(onErrorJustReturn: .normal)
     }
 }
@@ -155,7 +155,6 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
             }.disposed(by: disposeBag)
         
         viewModel.setCountDriver
-            .debug("??")
             .drive(with: self) { owner, info in
                 let shouldUpdateDeleteIndexList = info.0
                 let indexPath = info.1
@@ -178,13 +177,20 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
         
         viewModel.editModeDriver
             .drive(with: self) { owner, editMode in
-                
                 if editMode == .normal {
                     owner.initEditor()
                 }
                 JHBPDispatchSystem.dispatch.multicastDelegate
                     .invokeDelegates { delegate in
                         delegate.notifyViewController(editMode: editMode)
+                    }
+            }.disposed(by: disposeBag)
+        
+        viewModel.deleteTattoIndexListRelay
+            .bind { indexList in
+                JHBPDispatchSystem.dispatch.multicastDelegate
+                    .invokeDelegates { delegate in
+                        delegate.notifyViewController(currentDeleteProductIndexList: indexList)
                     }
             }.disposed(by: disposeBag)
     }
@@ -204,12 +210,12 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
     
     func initEditor() {
         viewModel?.deleteTattoIndexListRelay.value
-            .compactMap { productCollectionView.cellForItem(at: .init(row: $0, section: 0)) as? BPProductCell }
-            .forEach {
+            .compactMap {
+                productCollectionView.cellForItem(at: .init(row: $0, section: 0)) as? BPProductCell
+            }.forEach {
                 $0.viewModel?.isSelectEditViewRelay.accept(false)
             }
         viewModel?.deleteTattoIndexListRelay.accept([])
-        
     }
     
     func setCollectionViewHidden(forType type: JHBPContentType) {
@@ -355,10 +361,11 @@ extension JHBPContentCell {
 
 
 extension JHBPContentCell: JHBPMulticastDelegate {
-    func notifyCellCollectionView(value: Bool) {
-        guard let viewModel, viewModel.contentModel.value.order == 1 else { return }
+    func notifyCellCollectionView() -> EditMode? {
+        guard let viewModel, viewModel.contentModel.value.order == 1 else { return nil }
         
         let nextEditMode = viewModel.editMode.value.toggle()
         viewModel.editMode.accept(nextEditMode)
+        return nextEditMode
     }
 }

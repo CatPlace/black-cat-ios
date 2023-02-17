@@ -14,11 +14,13 @@ import BlackCatSDK
 
 final class JHBusinessProfileViewModel {
     let isOwner: Bool
+    var currentDeleteProductIndexList: [Int] = []
     
     typealias TattooId = Int
     
     // MARK: - Inputs
-    var cellDisplayingIndexRowRelay = PublishRelay<CGFloat>()
+    var cellWillAppear = PublishRelay<CGFloat>()
+    var cellDidAppear = PublishRelay<CGFloat>()
     var viewWillAppear = PublishRelay<Bool>()
     var viewDidAppear = PublishRelay<Bool>()
     var selectedTattooIndex = PublishRelay<Int>()
@@ -28,6 +30,7 @@ final class JHBusinessProfileViewModel {
     var sections: Driver<[JHBusinessProfileCellSection]>
     var showTattooDetail: Driver<TattooId>
     var scrollToTypeDriver: Driver<JHBPContentHeaderButtonType>
+    var initEditModeDriver: Driver<Void>
     
     init(tattooistId: Int) {
         // TODO: - 유저 구분
@@ -56,7 +59,7 @@ final class JHBusinessProfileViewModel {
             ) }
             .asDriver(onErrorJustReturn: [])
         
-        visibleCellIndexPath = cellDisplayingIndexRowRelay
+        visibleCellIndexPath = cellWillAppear
             .distinctUntilChanged()
             .map { Int($0) }
             .asDriver(onErrorJustReturn: 0)
@@ -76,11 +79,12 @@ final class JHBusinessProfileViewModel {
             let thumbnailSection = JHBusinessProfileCellSection.thumbnailImageCell([thumbnailCell])
             
             let contentProfile: JHBusinessProfileItem = .contentItem(.init(contentModel: .init(order: 0), profile: profileDescription, products: [], priceInfo: ""))
-            let contentProduct: JHBusinessProfileItem = .contentItem(.init(contentModel: .init(order: 1),
-                                                                           profile: "",
-                                                                           products: products,
-                                                                           priceInfo: ""))
-                                                                     
+            let contentProductCellViewModel: JHBPContentCellViewModel = .init(contentModel: .init(order: 1),
+                                                    profile: "",
+                                                    products: products,
+                                                    priceInfo: "")
+            
+            let contentProduct: JHBusinessProfileItem = .contentItem(contentProductCellViewModel)
                                                                      
             let contentPriceInfo: JHBusinessProfileItem = .contentItem(.init(contentModel: .init(order: 2), profile: "", products: [], priceInfo: priceInformation))
             
@@ -88,8 +92,13 @@ final class JHBusinessProfileViewModel {
             
             return [thumbnailSection, contentSection]
         }
+        
+        initEditModeDriver = cellWillAppear
+            .distinctUntilChanged()
+            .filter { $0 != 1 }
+            .map { _ in () }
+            .asDriver(onErrorJustReturn: ())
     }
-    
 }
 
 enum JHBusinessProfileItem: Equatable, IdentifiableType {

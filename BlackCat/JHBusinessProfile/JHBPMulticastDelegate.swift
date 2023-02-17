@@ -20,18 +20,20 @@ protocol JHBPMulticastDelegate {
     /** to BPContentSectionHeaderView*/ func notifyContentHeader(indexPath: IndexPath, forType: type)
     /** to notifyToContentCell*/ func notifyContentCell(indexPath: IndexPath?, forType: type)
     /** to notifyToViewController*/ func notifyViewController(offset: CGFloat, didChangeSection: Bool)
-    /** to notifyToCellCollectionViewOffset*/ func notifyCellCollectionView(value: Bool)
+    /** to notifyToCellCollectionViewOffset*/ func notifyCellCollectionView() -> EditMode?
     func notifyViewController(selectedIndex: IndexPath, forType: type)
     func notifyViewController(editMode: EditMode)
+    func notifyViewController(currentDeleteProductIndexList: [Int])
 }
 
 extension JHBPMulticastDelegate {
     func notifyContentHeader(indexPath: IndexPath, forType: type) { }
     func notifyContentCell(indexPath: IndexPath?, forType: type) { }
     func notifyViewController(offset: CGFloat, didChangeSection: Bool) { }
-    func notifyCellCollectionView(value: Bool) { }
+    func notifyCellCollectionView() -> EditMode? { return nil }
     func notifyViewController(selectedIndex: IndexPath, forType: type) { }
     func notifyViewController(editMode: EditMode) { }
+    func notifyViewController(currentDeleteProductIndexList: [Int]) { }
 }
 
 // MARK: - Delegating Object

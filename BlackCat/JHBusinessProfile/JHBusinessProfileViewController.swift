@@ -64,8 +64,13 @@ final class JHBusinessProfileViewController: UIViewController {
                 .when(.recognized)
                 .withUnretained(self)
                 .bind { owner, _ in
+                    if owner.editLabel.text == "완료" {
+                        owner.bottomView.setAskingText("타투 업로드")
+                        owner.bottomView.setAskButtonTag(2)
+                    }
+
                     JHBPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
-                        delegate.notifyCellCollectionView(value: false)
+                        delegate.notifyCellCollectionView()
                     }
                 }
             
@@ -99,6 +104,13 @@ final class JHBusinessProfileViewController: UIViewController {
                     delegate.notifyContentCell(indexPath: nil, forType: type)
                 }
             }.disposed(by: disposeBag)
+        
+        viewModel.initEditModeDriver
+            .compactMap { self.collectionView.cellForItem(at: IndexPath(row: 1, section: 1)) as? JHBPContentCell }
+            .drive {
+                print($0)
+                $0.viewModel?.editMode.accept(.normal)
+            }.disposed(by: disposeBag)
     }
     
     // MARK: function
@@ -113,7 +125,7 @@ final class JHBusinessProfileViewController: UIViewController {
     func pushToEditVC() {
         // tag = [0: 소개, 1: 작품, 2: 견적, 3: 타투 삭제]
         if bottomView.askButtonTag() == 3 {
-            let vc = TwoButtonAlertViewController(viewModel: .init(type: .warningDelete([])))
+            let vc = TwoButtonAlertViewController(viewModel: .init(type: .warningDelete(viewModel.currentDeleteProductIndexList)))
             vc.delegate = self
             present(vc, animated: true)
         } else if let type = JHBPContentHeaderButtonType(rawValue: bottomView.askButtonTag()) {
@@ -228,9 +240,14 @@ extension JHBusinessProfileViewController {
         
         section.visibleItemsInvalidationHandler = { [weak self] (items, offset, _) -> Void in
             guard let self else { return }
-            let page = round(offset.x / self.view.bounds.width)
+            let adjustedOffsetX = offset.x / self.view.bounds.width
+            if adjustedOffsetX == floor(adjustedOffsetX) {
+                self.viewModel.cellDidAppear.accept(adjustedOffsetX)
+            }
             
-            self.viewModel.cellDisplayingIndexRowRelay.accept(page)
+            let page = round(adjustedOffsetX)
+        
+            self.viewModel.cellWillAppear.accept(page)
         }
         
         let header = NSCollectionLayoutBoundarySupplementaryItem(
@@ -261,9 +278,7 @@ extension JHBusinessProfileViewController: JHBPMulticastDelegate {
                 $0.centerX.equalToSuperview()
             }
         } else {
-            bottomView.setAskingText("타투 업로드")
-            bottomView.setAskButtonTag(1)
-            bottomView.layoutIfNeeded()
+
             bottomView.askButton.snp.remakeConstraints {
                 $0.top.leading.bottom.equalToSuperview()
                 $0.width.equalTo(Constant.width * 251)
@@ -280,12 +295,6 @@ extension JHBusinessProfileViewController: JHBPMulticastDelegate {
     }
     
     func notifyContentHeader(indexPath: IndexPath, forType: type) {
-        if forType != .product {
-            if let cell = collectionView.cellForItem(at: IndexPath(row: 1, section: 1)) as? JHBPContentCell {
-                cell.viewModel?.editMode.accept(.normal)
-            }
-        }
-        
         updateEditButtonUI(selectedRow: indexPath.row)
     }
     
@@ -318,6 +327,10 @@ extension JHBusinessProfileViewController: JHBPMulticastDelegate {
             }
         }
     }
+    
+    func notifyViewController(currentDeleteProductIndexList: [Int]) {
+        viewModel.currentDeleteProductIndexList = currentDeleteProductIndexList
+    }
 }
 
 extension JHBusinessProfileViewController: UICollectionViewDelegate {
@@ -333,8 +346,8 @@ extension JHBusinessProfileViewController: UICollectionViewDelegate {
 extension JHBusinessProfileViewController: TwoButtonAlertViewDelegate {
     func didTapRightButton(type: TwoButtonAlertType) {
         switch type {
-        case .warningDelete(_):
-            print("타투삭제 트리거 발동 고민 중 !")
+        case .warningDelete(let indexList):
+            print(indexList)
             break
         default: break
         }
