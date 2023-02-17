@@ -10,7 +10,6 @@ import SnapKit
 
 final class JHBPPriceInfoCell: BPBaseCollectionViewCell {
     func configureCell(with description: String) {
-        print(description)
         priceInfoDescriptionLabel.text = description
     }
     

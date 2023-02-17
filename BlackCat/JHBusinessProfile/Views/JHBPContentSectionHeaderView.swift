@@ -63,7 +63,9 @@ class JHBPContentSectionHeaderView: JHBPBaseCollectionReusableView{
         viewModel.selectedButton
             .bind(with: self) { owner, type in
                 owner.updateButtonUI(type: type)
-                owner.notifyCollectionView(type: type)
+                JHBPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
+                    delegate.notifyContentCell(indexPath: nil, forType: type)
+                }
                 JHBPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
                     delegate.notifyContentHeader(indexPath: IndexPath(row: type.rawValue, section: 1), forType: type)
                 }
@@ -78,12 +80,6 @@ class JHBPContentSectionHeaderView: JHBPBaseCollectionReusableView{
             button.subviews.last?.isHidden = !isSelected
             button.titleLabel?.font = .appleSDGoithcFont(size: 16,
                                                          style: isSelected ? .bold : .medium)
-        }
-    }
-    
-    private func notifyCollectionView(type: JHBPContentHeaderButtonType) {
-        JHBPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
-            delegate.notifyContentCell(indexPath: nil, forType: type)
         }
     }
     

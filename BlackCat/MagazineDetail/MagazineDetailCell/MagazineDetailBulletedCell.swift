@@ -50,7 +50,6 @@ extension MagazineDetailBulletedCell {
             $0.leading.equalToSuperview().inset(item.layoutLeadingInset)
             $0.bottom.lessThanOrEqualToSuperview().inset(10)
         }
-//        print("contentImageView \(contentImageView.fra)")
         
         contentTextLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         contentTextLabel.snp.makeConstraints {

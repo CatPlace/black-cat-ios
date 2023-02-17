@@ -15,7 +15,7 @@ import BlackCatSDK
 final class JHBusinessProfileViewModel {
     let isOwner: Bool
     var currentDeleteProductIndexList: [Int] = []
-    
+    let headerViewModel: JHBPContentSectionHeaderViewModel = .init()
     typealias TattooId = Int
     
     // MARK: - Inputs
@@ -60,16 +60,18 @@ final class JHBusinessProfileViewModel {
             .asDriver(onErrorJustReturn: [])
         
         visibleCellIndexPath = cellWillAppear
-            .distinctUntilChanged()
             .map { Int($0) }
+            .distinctUntilChanged()
             .asDriver(onErrorJustReturn: 0)
         
         showTattooDetail = selectedTattooIndex
             .map { UserDefaultManager.getTattooistInfo().tattoos[$0].tattooId }
             .asDriver(onErrorJustReturn: 0)
         
-        scrollToTypeDriver = viewDidAppear
-            .map { _ in .product }
+        scrollToTypeDriver = viewWillAppear
+            .withLatestFrom(visibleCellIndexPath)
+            .compactMap { .init(rawValue: $0) }
+            .distinctUntilChanged()
             .asDriver(onErrorJustReturn: .product)
         
         func configurationSections(imageUrlString: String, profileDescription: String, products: [Model.TattooThumbnail], priceInformation: String) -> [JHBusinessProfileCellSection] {

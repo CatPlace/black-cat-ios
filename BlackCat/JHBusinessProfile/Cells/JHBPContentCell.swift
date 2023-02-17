@@ -320,7 +320,6 @@ extension JHBPContentCell {
     }
     
     private func profileLayoutSection() -> NSCollectionLayoutSection {
-        print(profileCollectionView.contentSize, "asd!!")
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1.0),
                                                             heightDimension: .estimated(600)))
         

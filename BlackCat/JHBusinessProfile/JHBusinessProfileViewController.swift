@@ -24,7 +24,7 @@ final class JHBusinessProfileViewController: UIViewController {
     var disposeBag: DisposeBag = DisposeBag()
     let viewModel: JHBusinessProfileViewModel
     
-    let dataSource: ManageMentDataSource = ManageMentDataSource { _, collectionView, indexPath, items in
+    lazy var dataSource: ManageMentDataSource = ManageMentDataSource { _, collectionView, indexPath, items in
         switch items {
         case .thumbnailImageItem(let viewModel):
             let cell = collectionView.dequeue(Reusable.thumbnailCell, for: indexPath)
@@ -39,13 +39,13 @@ final class JHBusinessProfileViewController: UIViewController {
             
             return cell
         }
-    } configureSupplementaryView: { _, collectionView, kind, indexPath -> UICollectionReusableView in
-        
+    } configureSupplementaryView: { [weak self] _, collectionView, kind, indexPath -> UICollectionReusableView in
+        guard let self else { return UICollectionReusableView() }
         switch indexPath.section {
         case 0: return UICollectionReusableView()
         case 1:
             var contentHeaderView = collectionView.dequeue(Reusable.contentHeaderView, kind: .header, for: indexPath)
-            contentHeaderView.bind(viewModel: .init())
+            contentHeaderView.bind(viewModel: self.viewModel.headerViewModel)
             return contentHeaderView
         default: return UICollectionReusableView()
         }
@@ -84,7 +84,7 @@ final class JHBusinessProfileViewController: UIViewController {
         }
         
         viewModel.visibleCellIndexPath
-            .drive { row in
+            .drive(with: self) { owner, row in
                 guard let type = JHBPContentHeaderButtonType(rawValue: row) else { return }
                 JHBPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
                     delegate.notifyContentHeader(indexPath: IndexPath(row: row, section: 0), forType: type)
@@ -100,15 +100,14 @@ final class JHBusinessProfileViewController: UIViewController {
         
         viewModel.scrollToTypeDriver
             .drive(with: self) { owner, type in
-                JHBPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
-                    delegate.notifyContentCell(indexPath: nil, forType: type)
-                }
+                viewModel.headerViewModel.selectedButton.accept(type)
             }.disposed(by: disposeBag)
+//
+        
         
         viewModel.initEditModeDriver
             .compactMap { self.collectionView.cellForItem(at: IndexPath(row: 1, section: 1)) as? JHBPContentCell }
             .drive {
-                print($0)
                 $0.viewModel?.editMode.accept(.normal)
             }.disposed(by: disposeBag)
     }
@@ -143,8 +142,9 @@ final class JHBusinessProfileViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         bind(viewModel: viewModel)
-        if viewModel.isOwner {
-            updateEditButtonUI(selectedRow: 0)
+        if !viewModel.isOwner {
+            bottomView.isHidden = true
+            editLabel.isHidden = true
         }
         hidesBottomBarWhenPushed = true
         
@@ -228,6 +228,7 @@ extension JHBusinessProfileViewController {
     }
     
     private func contentLayoutSection() -> NSCollectionLayoutSection {
+
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1.0),
                                                             heightDimension: .fractionalHeight(1.0)))
         
@@ -299,7 +300,6 @@ extension JHBusinessProfileViewController: JHBPMulticastDelegate {
     }
     
     func notifyContentCell(indexPath: IndexPath?, forType: type) {
-        
         collectionView.scrollToItem(at: IndexPath(row: forType.rawValue, section: 1),
                                     at: .top,
                                     animated: false)
