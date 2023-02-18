@@ -38,8 +38,8 @@ enum TwoButtonAlertType {
             return "로그아웃하시겠습니까?"
         case .warningSecession:
             return "탈퇴 하시겠습니까?"
-        case .warningDelete(_):
-            return "정말로 삭제하시겠습니까?"
+        case .warningDelete(let indexList):
+            return "\(indexList.count) 개를 삭제하시겠습니까?"
         }
     }
     
