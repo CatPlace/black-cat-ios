@@ -72,7 +72,7 @@ final class JHBusinessProfileViewController: UIViewController {
                     }
 
                     JHBPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
-                        delegate.notifyCellCollectionView()
+                        _ = delegate.notifyCellCollectionView()
                     }
                 }
 
@@ -155,10 +155,8 @@ final class JHBusinessProfileViewController: UIViewController {
         
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        print("비즈니스 프로필 이닛")
         bind(viewModel: viewModel)
         if !viewModel.isOwner {
-            bottomView.isHidden = true
             editLabel.isHidden = true
         }
         hidesBottomBarWhenPushed = true
@@ -219,159 +217,5 @@ extension JHBusinessProfileViewController {
         }
     }
     
-    func createLayout() -> UICollectionViewCompositionalLayout {
-        return UICollectionViewCompositionalLayout { [weak self] section, env -> NSCollectionLayoutSection? in
-
-            // 🐻‍❄️ NOTE: - section을 Int값이 아니라 BPSection타입으로 변경하기
-            switch section {
-            case 0: return self?.thumbnailLayoutSection()
-            case 1: return self?.contentLayoutSection()
-            default: return self?.contentLayoutSection()
-            }
-        }
-    }
-
-    private func thumbnailLayoutSection() -> NSCollectionLayoutSection {
-        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1.0),
-                                                            heightDimension: .fractionalWidth(1.0)))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                                         heightDimension: .fractionalWidth(1)),
-                                                       subitems: [item])
-
-        let section = NSCollectionLayoutSection(group: group)
-        return section
-    }
-
-    private func contentLayoutSection() -> NSCollectionLayoutSection {
-
-        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1.0),
-                                                            heightDimension: .fractionalHeight(1.0)))
-
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                                         heightDimension: .fractionalHeight(0.8)),
-                                                       subitems: [item])
-
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
-
-        section.visibleItemsInvalidationHandler = { [weak self] (items, offset, _) -> Void in
-            guard let self else { return }
-            let adjustedOffsetX = offset.x / self.view.bounds.width
-            if adjustedOffsetX == floor(adjustedOffsetX) {
-                self.viewModel.cellDidAppear.accept(adjustedOffsetX)
-            }
-
-            let page = round(adjustedOffsetX)
-
-            self.viewModel.cellWillAppear.accept(page)
-        }
-
-        let header = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: .init(widthDimension: .fractionalWidth(1.0),
-                              heightDimension: .absolute(UIScreen.main.bounds.width * 40 / 375)),
-            elementKind: UICollectionView.elementKindSectionHeader,
-            alignment: .top
-        )
-
-        header.pinToVisibleBounds = true
-        section.boundarySupplementaryItems = [header]
-
-        return section
-    }
+    
 }
-
-extension JHBusinessProfileViewController: JHBPMulticastDelegate {
-    func notifyViewController(editMode: EditMode) {
-        editLabel.text = editMode.asStringInTattooEdit()
-        bottomView.bookmarkView.isHidden = editMode == .edit
-        if editMode == .edit {
-            bottomView.setAskingText("삭제")
-            bottomView.setAskButtonTag(3)
-            bottomView.layoutIfNeeded()
-            bottomView.askButton.snp.remakeConstraints {
-                $0.top.bottom.equalToSuperview()
-                $0.width.equalTo(Constant.width * 100)
-                $0.centerX.equalToSuperview()
-            }
-        } else {
-
-            bottomView.askButton.snp.remakeConstraints {
-                $0.top.leading.bottom.equalToSuperview()
-                $0.width.equalTo(Constant.width * 251)
-            }
-        }
-
-        UIView.animate(withDuration: 0.2) { [weak self] in
-            guard let self else { return }
-            self.bottomView.layoutIfNeeded()
-        }
-    }
-
-    func notifyViewController(selectedIndex: IndexPath, forType: type) {
-        viewModel.selectedTattooIndex.accept(selectedIndex.row)
-    }
-
-    func notifyContentHeader(indexPath: IndexPath, forType: type) {
-        updateEditButtonUI(selectedRow: indexPath.row)
-    }
-
-    func notifyContentCell(indexPath: IndexPath?, forType: type) {
-        collectionView.scrollToItem(at: IndexPath(row: forType.rawValue, section: 1),
-                                    at: .top,
-                                    animated: false)
-
-        notifyViewController(offset: 0, didChangeSection: true)
-    }
-
-    func notifyViewController(offset: CGFloat, didChangeSection: Bool) {
-
-        if didChangeSection {
-            collectionView.isScrollEnabled = true
-            UIView.animate(withDuration: 0.3) { [weak self] in
-                self?.collectionView.contentOffset = CGPoint(x: 0, y: 250)
-            }
-        } else if offset > UIScreen.main.bounds.height / 1000 {
-            collectionView.isScrollEnabled = false
-            UIView.animate(withDuration: 0.3) { [weak self] in
-                // 위쪽으로 y만큼 당긴다고 생각하기
-                self?.collectionView.contentOffset = CGPoint(x: 0, y: 250)
-            }
-        } else {
-            collectionView.isScrollEnabled = true
-            UIView.animate(withDuration: 0.3) { [weak self] in
-                self?.collectionView.contentOffset = CGPoint(x: 0, y: 0)
-            }
-        }
-    }
-
-    func notifyViewController(currentDeleteProductIndexList: [Int]) {
-        viewModel.currentDeleteProductIndexList = currentDeleteProductIndexList
-    }
-}
-
-extension JHBusinessProfileViewController: UICollectionViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        scrollView.bounces = scrollView.contentOffset.y > 250
-
-        if scrollView.contentOffset.y > 250 {
-            notifyViewController(offset: 1, didChangeSection: true)
-        }
-    }
-}
-
-extension JHBusinessProfileViewController: TwoButtonAlertViewDelegate {
-    func didTapRightButton(type: TwoButtonAlertType) {
-        switch type {
-        case .warningDelete(let indexList):
-            viewModel.deleteProductTrigger.accept(indexList)
-            break
-        default: break
-        }
-        dismiss(animated: true)
-    }
-
-    func didTapLeftButton(type: TwoButtonAlertType) {
-        dismiss(animated: true)
-    }
-}
-

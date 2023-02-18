@@ -89,6 +89,8 @@
 		78C8D470293BAD59006A4DF5 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8D46F293BAD59006A4DF5 /* LoginViewModel.swift */; };
 		78D3E93B2977C04B0015BA75 /* TextInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D3E93A2977C04B0015BA75 /* TextInputView.swift */; };
 		78D3E93D2977C84A0015BA75 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D3E93C2977C84A0015BA75 /* Constant.swift */; };
+		78D9EB5529A09EE300A9B452 /* JHBusinessProfileViewController.Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D9EB5429A09EE300A9B452 /* JHBusinessProfileViewController.Layout.swift */; };
+		78D9EB5729A09F1300A9B452 /* JHBusinessProfileViewController.Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D9EB5629A09F1300A9B452 /* JHBusinessProfileViewController.Delegate.swift */; };
 		8E0D37E8292F5B58000AF41D /* BMMagazineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0D37E7292F5B58000AF41D /* BMMagazineCell.swift */; };
 		8E2D8C4828F2EC27004B514D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4728F2EC27004B514D /* HomeViewController.swift */; };
 		8E2D8C4A28F2ECD2004B514D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4928F2ECD2004B514D /* HomeViewModel.swift */; };
@@ -332,6 +334,8 @@
 		78C8D46F293BAD59006A4DF5 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		78D3E93A2977C04B0015BA75 /* TextInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputView.swift; sourceTree = "<group>"; };
 		78D3E93C2977C84A0015BA75 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		78D9EB5429A09EE300A9B452 /* JHBusinessProfileViewController.Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBusinessProfileViewController.Layout.swift; sourceTree = "<group>"; };
+		78D9EB5629A09F1300A9B452 /* JHBusinessProfileViewController.Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBusinessProfileViewController.Delegate.swift; sourceTree = "<group>"; };
 		8E0D37E7292F5B58000AF41D /* BMMagazineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMMagazineCell.swift; sourceTree = "<group>"; };
 		8E2D8C4728F2EC27004B514D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8E2D8C4928F2ECD2004B514D /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -541,6 +545,8 @@
 			isa = PBXGroup;
 			children = (
 				7828DB5C295C8D2B0053B0A0 /* JHBusinessProfileViewController.swift */,
+				78D9EB5429A09EE300A9B452 /* JHBusinessProfileViewController.Layout.swift */,
+				78D9EB5629A09F1300A9B452 /* JHBusinessProfileViewController.Delegate.swift */,
 				7828DB5E295C912F0053B0A0 /* JHBusinessProfileViewModel.swift */,
 				B1E3F7C1290EC1F700005F17 /* BPContentModel.swift */,
 				7828DB68295CB7110053B0A0 /* JHBPMulticastDelegate.swift */,
@@ -564,10 +570,10 @@
 			isa = PBXGroup;
 			children = (
 				B1D89C97290E879B00C8B7F1 /* BPBaseCollectionViewCell.swift */,
+				7828DB62295C99410053B0A0 /* JHBPThumbnailImageCell.swift */,
+				7828DB60295C951A0053B0A0 /* JHBPContentCell.swift */,
 				B1CEF7322913A0EC00814113 /* BPProfileCell.swift */,
 				B1E3F7B9290EBAB100005F17 /* BPProductCell.swift */,
-				7828DB60295C951A0053B0A0 /* JHBPContentCell.swift */,
-				7828DB62295C99410053B0A0 /* JHBPThumbnailImageCell.swift */,
 				78277E872966DC6F004CFDF4 /* JHPBPriceInfoCell.swift */,
 			);
 			path = Cells;
@@ -1542,6 +1548,7 @@
 				8E8848802949C3F80039F99A /* CategoryPaperView.UITableView.swift in Sources */,
 				8EBB61422927389600F640F5 /* BMTattooCell.swift in Sources */,
 				8E7E9CE2291C927200D09157 /* BookmarkTattooViewController.swift in Sources */,
+				78D9EB5729A09F1300A9B452 /* JHBusinessProfileViewController.Delegate.swift in Sources */,
 				8E88487E2949C3F80039F99A /* GenrePaperView.swift in Sources */,
 				B1D3364328F1CD1B00826636 /* UITableView+.swift in Sources */,
 				78277E8F296735D6004CFDF4 /* PriceInfoEditViewController.swift in Sources */,
@@ -1581,6 +1588,7 @@
 				7867A63229374D0500FC1160 /* MulticastDelegate.swift in Sources */,
 				7867A63529374D0500FC1160 /* FilterCell.swift in Sources */,
 				8E8848832949C3F80039F99A /* PresentationView.swift in Sources */,
+				78D9EB5529A09EE300A9B452 /* JHBusinessProfileViewController.Layout.swift in Sources */,
 				B1D3362728F1457700826636 /* UITabBar+.swift in Sources */,
 				B1CEF7332913A0EC00814113 /* BPProfileCell.swift in Sources */,
 				8EBB614629273CE300F640F5 /* BMEditFilterView.swift in Sources */,
