@@ -68,7 +68,7 @@ final class JHBusinessProfileViewController: UIViewController {
                 .bind { owner, _ in
                     if owner.editLabel.text == "완료" {
                         owner.bottomView.setAskingText("타투 업로드")
-                        owner.bottomView.setAskButtonTag(2)
+                        owner.bottomView.setAskButtonTag(1)
                     }
 
                     JHBPDispatchSystem.dispatch.multicastDelegate.invokeDelegates { delegate in
