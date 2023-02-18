@@ -308,8 +308,8 @@ extension JHBPContentCell {
     }
     
     func createLayout(forType type: JHBPContentType) -> UICollectionViewCompositionalLayout {
-        return UICollectionViewCompositionalLayout { section, env -> NSCollectionLayoutSection in
-            
+        return UICollectionViewCompositionalLayout { [weak self] section, env -> NSCollectionLayoutSection? in
+            guard let self else { return nil }
             // 🐻‍❄️ NOTE: - Int값으로 Section 반환하도록 나중에 리팩토링하기
             switch type {
             case .profile: return self.profileLayoutSection()

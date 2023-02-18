@@ -108,9 +108,9 @@ final class MyPageViewController: UIViewController {
             }.disposed(by: disposeBag)
         
         viewModel.showBusinessProfileDriver
-            .map { JHBusinessProfileViewController(viewModel: .init(tattooistId: $0)) }
-            .drive(with: self) { owner, nextVC in
-                owner.navigationController?.pushViewController(nextVC, animated: true)
+            .drive(with: self) { owner, tattooistId in
+                let vc = JHBusinessProfileViewController(viewModel: .init(tattooistId: tattooistId))
+                owner.navigationController?.pushViewController(vc, animated: true)
             }.disposed(by: disposeBag)
         
         viewModel.showTwoButtonAlertVCDrvier

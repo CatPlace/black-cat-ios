@@ -38,21 +38,31 @@ final class JHBusinessProfileViewModel {
     
     init(tattooistId: Int) {
         // TODO: - 유저 구분
-        isOwner = tattooistId == CatSDKUser.user().id
-
-        let localTattooistInfo = Observable.merge([viewWillAppear.asObservable(), deleteCompleteRelay.asObservable()])
+        let isOwner = tattooistId == CatSDKUser.user().id
+        self.isOwner = isOwner
+        let fetchTrigger = Observable.merge([viewWillAppear.asObservable(), deleteCompleteRelay.asObservable()])
+        
+        let localTattooistInfo = fetchTrigger
+            .filter { isOwner }
             .map { _ in CatSDKTattooist.localTattooistInfo() }
         
-        let fetchedTattooistInfo = localTattooistInfo
-            .filter { $0 == .empty }
+        let fetchedTattooistInfo = fetchTrigger
+            .filter { CatSDKTattooist.localTattooistInfo() == .empty || !isOwner}
             .flatMap { _ in
+                
                 let fetchedProfileData = CatSDKTattooist.profile(tattooistId: tattooistId).share()
                 let fetchedProductsData = CatSDKTattooist.products(tattooistId: tattooistId).share()
                 let fetchedPriceInfoData = CatSDKTattooist.priceInfo(tattooistId: tattooistId).share()
                 return Observable.combineLatest(fetchedProfileData, fetchedProductsData, fetchedPriceInfoData) {
                     Model.TattooistInfo(introduce: $0, tattoos: $1, estimate: $2)
-                }.do { CatSDKTattooist.updateLocalTattooistInfo(tattooistInfo: $0) }
-            }.share()
+                }
+                    .do {
+                        if $0.introduce.introduce != "error" {
+                            CatSDKTattooist.updateLocalTattooistInfo(tattooistInfo: $0)
+                        }
+                    }
+            }
+            .share()
         
         let currentTattooistInfo = Observable.merge([localTattooistInfo.filter { $0 != .empty }, fetchedTattooistInfo]).share()
         
