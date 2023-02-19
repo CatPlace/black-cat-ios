@@ -1,5 +1,5 @@
 //
-//  BPProductCell.swift
+//  SelectableImageCell.swift
 //  BlackCat
 //
 //  Created by Hamlit Jason on 2022/10/30.
@@ -13,7 +13,7 @@ import Nuke
 import BlackCatSDK
 
 // 🐻‍❄️ NOTE: - 다른 개발자님이 feature 이어 받으시도록 스타일로 맞춤.
-class BPProductCellViewModel {
+class SelectableImageCellViewModel {
     
     var imageUrlString: String
     
@@ -42,11 +42,11 @@ class BPProductCellViewModel {
     }
 }
 
-final class BPProductCell: BPBaseCollectionViewCell {
+final class SelectableImageCell: BPBaseCollectionViewCell {
     // MARK: - Function
-    var viewModel: BPProductCellViewModel?
+    var viewModel: SelectableImageCellViewModel?
     // MARK: - Binding
-    func bind(to viewModel: BPProductCellViewModel) {
+    func bind(to viewModel: SelectableImageCellViewModel) {
         self.viewModel = viewModel
         loadImageUsingNuke(sender: productImageView, urlString: viewModel.imageUrlString)
         

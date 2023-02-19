@@ -14,3 +14,4 @@ enum Asset: String {
     case ic_like_fill = "ic_like.fill"
     case ic_mypage
 }
+

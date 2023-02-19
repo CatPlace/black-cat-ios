@@ -24,7 +24,7 @@ final class JHBPContentCellViewModel {
     var productSelectIndexPath = PublishRelay<IndexPath>()
     
     var profiles: Driver<[Introduce]>
-    var products: Driver<[BPProductCellViewModel]>
+    var products: Driver<[SelectableImageCellViewModel]>
     var priceInfos: Driver<[PriceInfo]>
     
     var notifyToViewController: Driver<IndexPath>
@@ -101,7 +101,7 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
     
     enum Reusable {
         static let profileCell = ReusableCell<BPProfileCell>()
-        static let productCell = ReusableCell<BPProductCell>()
+        static let productCell = ReusableCell<SelectableImageCell>()
         static let priceInfoCell = ReusableCell<JHBPPriceInfoCell>()
     }
     
@@ -158,7 +158,7 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
             .drive(with: self) { owner, info in
                 let shouldUpdateDeleteIndexList = info.0
                 let indexPath = info.1
-                guard let cell = owner.productCollectionView.cellForItem(at: indexPath) as? BPProductCell else { return }
+                guard let cell = owner.productCollectionView.cellForItem(at: indexPath) as? SelectableImageCell else { return }
                 viewModel.deleteTattoIndexListRelay.accept(shouldUpdateDeleteIndexList)
                 cell.viewModel?.isSelectEditViewRelay.accept(true)
                 cell.viewModel?.editCountRelay.accept(shouldUpdateDeleteIndexList.count)
@@ -196,11 +196,11 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
     }
     
     func updateTattooUI(countDownIndexList: [Int], cancelTattooIndexPath: IndexPath ) {
-        guard let cell = productCollectionView.cellForItem(at: cancelTattooIndexPath) as? BPProductCell else { return }
+        guard let cell = productCollectionView.cellForItem(at: cancelTattooIndexPath) as? SelectableImageCell else { return }
         
         countDownIndexList
             .map { IndexPath(row: $0, section: 0) }
-            .compactMap { productCollectionView.cellForItem(at: $0) as? BPProductCell}
+            .compactMap { productCollectionView.cellForItem(at: $0) as? SelectableImageCell}
             .forEach {
                 guard let preValue = $0.viewModel?.editCountRelay.value else { return }
                 $0.viewModel?.editCountRelay.accept(preValue - 1)
@@ -211,7 +211,7 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
     func initEditor() {
         viewModel?.deleteTattoIndexListRelay.value
             .compactMap {
-                productCollectionView.cellForItem(at: .init(row: $0, section: 0)) as? BPProductCell
+                productCollectionView.cellForItem(at: .init(row: $0, section: 0)) as? SelectableImageCell
             }.forEach {
                 $0.viewModel?.isSelectEditViewRelay.accept(false)
             }
