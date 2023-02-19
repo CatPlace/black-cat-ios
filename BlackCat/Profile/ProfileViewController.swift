@@ -21,7 +21,7 @@ class ProfileViewController: UIViewController {
     func bind(to viewModel: ProfileViewModel) {
         
         disposeBag.insert {
-            profileImageView.rx.tapGesture()
+            uploadCoverView.rx.tapGesture()
                 .when(.recognized)
                 .withUnretained(self)
                 .bind { owner, _ in
@@ -35,27 +35,19 @@ class ProfileViewController: UIViewController {
         }
         
         viewModel.completeAlertDriver
-            .drive(with: self) { owner, type in
+            .drive(with: self) { owner, _ in
                 // TODO: Alert
-                print("저장 성공!", type)
-                if type == .upgrade {
-                    var user = CatSDKUser.user()
-                    user.userType = .business
-                    CatSDKUser.updateUser(user: user)
-                    // TODO: 탭바 마이페이지 이미지 업데이트
-                    if let vc = UIApplication.getMostTopViewController() as? MyPageViewController  {
-                        vc.viewModel.viewWillAppear.accept(())
-                    }
-                }
+                owner.dismiss(animated: true)
             }.disposed(by: disposeBag)
         
         viewModel.alertMassageDriver
-            .drive { message in
-                // TODO: Alert
-                print(message)
+            .drive(with: self) { owner, message in
+                let vc = OneButtonAlertViewController(viewModel: .init(content: message, buttonText: "확인"))
+                owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
         
         viewModel.profileImageDriver
+            .debug("프로필 이미지 업데이트 ~~")
             .drive(profileImageView.rx.image)
             .disposed(by: disposeBag)
     }
@@ -108,11 +100,21 @@ class ProfileViewController: UIViewController {
     let contentView = UIView()
     lazy var profileImageView: UIImageView = {
         let v = UIImageView()
-        v.backgroundColor = UIColor(hex: "#D9D9D9FF")
+        v.contentMode = .scaleAspectFill
         v.layer.cornerRadius = view.frame.width * 4 / 25
         v.clipsToBounds = true
         return v
     }()
+    lazy var uploadCoverView: UIView = {
+        $0.backgroundColor = .init(hex: "#333333FF")?.withAlphaComponent(0.6)
+        $0.layer.cornerRadius = view.frame.width * 4 / 25
+        $0.clipsToBounds = true
+        return $0
+    }(UIView())
+    let uploadImageView: UIImageView = {
+        $0.image = UIImage(named: "upload")
+        return $0
+    }(UIImageView())
     let nameInputView: SimpleInputView
     let emailInputView: SimpleInputView
     let phoneNumberInputView: SimpleInputView
@@ -147,14 +149,19 @@ extension ProfileViewController {
             $0.width.equalToSuperview()
         }
         
-        [profileImageView, nameInputView, emailInputView, phoneNumberInputView, HLineView, genderInputView, areaInputView].forEach { contentView.addSubview($0) }
+        [profileImageView, uploadCoverView, uploadImageView, nameInputView, emailInputView, phoneNumberInputView, HLineView, genderInputView, areaInputView].forEach { contentView.addSubview($0) }
         
         profileImageView.snp.makeConstraints {
             $0.width.height.equalTo(view.frame.width * 8 / 25)
             $0.top.equalToSuperview().inset(30)
             $0.centerX.equalToSuperview()
         }
-        
+        uploadCoverView.snp.makeConstraints {
+            $0.edges.equalTo(profileImageView)
+        }
+        uploadImageView.snp.makeConstraints {
+            $0.center.equalTo(uploadCoverView)
+        }
         nameInputView.snp.makeConstraints {
             $0.top.equalTo(profileImageView.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview().inset(20)
@@ -198,7 +205,6 @@ extension ProfileViewController {
 
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            // 사진 촬영, 이미지 정보가 넘어옴
         let selectedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage
         viewModel.imageInputRelay.accept(selectedImage)
         picker.dismiss(animated: true, completion: nil)

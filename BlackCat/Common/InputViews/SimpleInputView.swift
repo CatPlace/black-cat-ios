@@ -49,6 +49,7 @@ class SimpleInputViewModel {
     
     // MARK: - Output
     let titleDriver: Driver<String>
+    let contentDriver: Driver<String>
     let placeholderDriver: Driver<String>
     let textCountLimitDriver: Driver<String>
     let placeholderNSAttributedString: Driver<NSAttributedString>
@@ -57,11 +58,14 @@ class SimpleInputViewModel {
     let textCountLimit: Int
     
     init(type: SimpleInputType, content: String? = nil, placeholder: String = "텍스트를 입력해주세요", textCountLimit: Int = 18) {
+        
+        inputStringRelay = .init(value: content ?? "")
+        
         self.textCountLimit = textCountLimit
         
-        inputStringRelay =  .init(value: content ?? type.content() ?? "")
-        
         titleDriver = .just(type.title())
+        
+        contentDriver = .just(content ?? "")
         
         placeholderDriver = .just(placeholder)
         
@@ -90,10 +94,14 @@ class SimpleInputView: UIView {
         disposeBag.insert {
             
             profileTextField.rx.text.orEmpty
+                .skip(1)
                 .bind(to: viewModel.inputStringRelay)
             
             viewModel.titleDriver
                 .drive(titleLabel.rx.text)
+            
+            viewModel.contentDriver
+                .drive(profileTextField.rx.text)
             
             viewModel.placeholderDriver
                 .drive(profileTextField.rx.placeholder)

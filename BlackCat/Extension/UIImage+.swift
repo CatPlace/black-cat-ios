@@ -29,20 +29,32 @@ extension UIImage {
         return renderImage
     }
     
-    func roundedTabBarImageWithBorder(imageSize: CGSize = CGSize(width: 26, height: 26), width: CGFloat, color: UIColor?) -> UIImage? {
+    func roundedTabBarImageWithBorder(imageSize: CGSize = CGSize(width: 26, height: 26), width: CGFloat, color: UIColor?, defaultImage: Bool) -> UIImage? {
         let imageView = UIImageView(frame: CGRect(origin: .zero, size: imageSize))
-        imageView.contentMode = .center
+        
         imageView.image = self
         imageView.layer.cornerRadius = imageSize.width / 2
-        imageView.layer.masksToBounds = true
+        imageView.clipsToBounds = true
         imageView.layer.borderWidth = width
         imageView.layer.borderColor = color?.cgColor
-        let render = UIGraphicsImageRenderer(size: imageSize)
-        let renderImage = render.image { _ in
-            guard let context = UIGraphicsGetCurrentContext() else { return }
+        if defaultImage {
+            imageView.contentMode = .center
+            let render = UIGraphicsImageRenderer(size: imageSize)
+            let renderImage = render.image { _ in
+                guard let context = UIGraphicsGetCurrentContext() else { return }
+                imageView.layer.render(in: context)
+            }
+            return renderImage
+        } else {
+            imageView.contentMode = .scaleAspectFill
+            UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, 3)
+            guard let context = UIGraphicsGetCurrentContext() else { return nil }
             imageView.layer.render(in: context)
+            var result = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            result = result?.withRenderingMode(.alwaysOriginal)
+            return result
         }
-        return renderImage
     }
     
     static func convertToUIImage(_ sender: Any?) -> Observable<UIImage?> {

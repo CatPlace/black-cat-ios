@@ -27,6 +27,13 @@ enum EditMode: String {
         ? .edit
         : .normal
     }
+    
+    func asStringInTattooEdit() -> String {
+        switch self {
+        case .normal: return "편집"
+        case .edit: return "완료"
+        }
+    }
 }
 
 class BookmarkViewController: UIViewController {

@@ -36,8 +36,8 @@ class LoginAlertViewController: UIViewController {
             }.disposed(by: disposeBag)
         
         viewModel.loginFailureDriver
-            .drive { _ in
-                print("로그인 실패 alert")
+            .drive(with: self) { owner, _ in
+                owner.present(OneButtonAlertViewController(viewModel: .init(content: "로그인에 실패했습니다.\n잠시후 다시 시도해주세요", buttonText: "확인")), animated: true)
             }.disposed(by: disposeBag)
         
         lookAroundLabel.rx.tapGesture()
@@ -103,7 +103,7 @@ class LoginAlertViewController: UIViewController {
     }()
     var lookAroundLabel: UILabel = {
         let l = UILabel()
-        l.attributedText = NSAttributedString(string: "닫기 ?",
+        l.attributedText = NSAttributedString(string: "나중에 로그인할래요",
                                               attributes: [
                                                 NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue
                                               ])
@@ -134,7 +134,8 @@ extension LoginAlertViewController {
         }
         
         lookAroundLabel.snp.makeConstraints {
-            $0.top.leading.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(VStackView.snp.bottom).offset(20)
+            $0.centerX.equalToSuperview()
         }
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 class CompleteButton: UIButton {
     init() {
         super.init(frame: .zero)
-        titleLabel?.font = .appleSDGoithcFont(size: 24, style: .bold)
+        titleLabel?.font = .appleSDGoithcFont(size: 24, style: .semiBold)
         backgroundColor = .init(hex: "#333333FF")
         layer.cornerRadius = 20
     }

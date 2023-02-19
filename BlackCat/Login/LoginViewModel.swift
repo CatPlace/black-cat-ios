@@ -28,25 +28,18 @@ class LoginViewModel {
         let loginResult = didTapSocialLoginButton
             .map { types[$0] }
             .flatMap(CatSDKUser.login)
-            .catch { error in
-                print(error, "로그인 에러발생")
-                return .just(.init(id: -2))
-            }.share()
+            .share()
         
         let loginSuccessResult = loginResult
             .filter { $0.id != -2 }
-        // TODO: - 서버통신 후 유저 업데이트 (유저디폴트에 의존하면 새로 로그인 시 이사람이 비즈니스 계정인지 명확하지 않음)
-            .do {
-                var user = $0
-                user.userType = .normal
-                CatSDKUser.updateUser(user: user)
-            }
+            .do { CatSDKUser.updateUser(user: $0) }
             .map { _ in () }
         
         let lookAroundTriggerResult = lookAroundTrigger
             .do { _ in CatSDKUser.updateUser(user: .init(id: -2))} // TODO: userType 삭제
         
         showHomeViewControllerDriver = Observable.merge([lookAroundTriggerResult, loginSuccessResult])
+            .do { _ in CatSDKTattooist.updateLocalTattooistInfo(tattooistInfo: .init()) }
             .asDriver(onErrorJustReturn: ())
         
         loginFailureDriver = loginResult
@@ -54,8 +47,8 @@ class LoginViewModel {
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
     }
+    
     func isLogin() -> Bool {
-        print("로그인 왜", CatSDKUser.userType() != .guest)
         return CatSDKUser.userType() != .guest
     }
 }

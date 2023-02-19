@@ -67,6 +67,7 @@ final class MyPageViewController: UIViewController {
     // MARK: - Binding
     func bind(to viewModel: MyPageViewModel) {
         rx.viewWillAppear
+            .do { _ in self.myPageCollectionView.collectionViewLayout.invalidateLayout() }
             .map { _ in () }
             .bind(to: viewModel.viewWillAppear)
             .disposed(by: disposeBag)
@@ -76,14 +77,9 @@ final class MyPageViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.dataSourceDriver
+            
             .drive(myPageCollectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
-        
-        viewModel.logoutDriver
-            .drive(with: self) { owner, _ in
-                //TODO: Alert 추가
-                owner.dismiss(animated: false)
-            }.disposed(by: disposeBag)
         
         viewModel.pushToProfileEditViewDriver
             .drive(with: self) { owner, _ in
@@ -104,18 +100,29 @@ final class MyPageViewController: UIViewController {
                 owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
         
-        // TODO: 업그레이드 로직
         viewModel.showUpgradeVCDriver
             .drive(with: self) { owner, _ in
-                let vc = UpgradeBusinessViewController()
+                let vc = UINavigationController(rootViewController: UpgradeBusinessViewController())
+                vc.modalPresentationStyle = .fullScreen
                 owner.present(vc, animated: true)
-                print("업그레이드 클릭 !")
             }.disposed(by: disposeBag)
         
         viewModel.showBusinessProfileDriver
-            .map { JHBusinessProfileViewController(viewModel: .init(tattooistId: $0)) }
-            .drive(with: self) { owner, nextVC in
-                owner.navigationController?.pushViewController(nextVC, animated: true)
+            .drive(with: self) { owner, tattooistId in
+                let vc = JHBusinessProfileViewController(viewModel: .init(tattooistId: tattooistId))
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }.disposed(by: disposeBag)
+        
+        viewModel.showTwoButtonAlertVCDrvier
+            .drive(with: self) { owner, type in
+                let vc = TwoButtonAlertViewController(viewModel: .init(type: type))
+                vc.delegate = self
+                owner.present(vc, animated: true)
+            }.disposed(by: disposeBag)
+        
+        viewModel.popToLoginVCDriver
+            .drive(with: self) { owner, _ in
+                owner.dismiss(animated: true)
             }.disposed(by: disposeBag)
     }
     
@@ -151,5 +158,22 @@ extension MyPageViewController {
         myPageCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+    }
+}
+
+extension MyPageViewController: TwoButtonAlertViewDelegate {
+    func didTapRightButton(type: TwoButtonAlertType) {
+        switch type {
+        case .warningLogoutWriting:
+            viewModel.logoutTrigger.accept(())
+        case .warningSecession:
+            viewModel.withdrawalTriggier.accept(())
+        default: return
+        }
+        dismiss(animated: true)
+    }
+    
+    func didTapLeftButton(type: TwoButtonAlertType) {
+        dismiss(animated: true)
     }
 }

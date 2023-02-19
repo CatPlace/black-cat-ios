@@ -77,15 +77,18 @@ final class MyPageViewModel {
     let selectedItem = PublishRelay<IndexPath>()
     let profileEditButtonTapped = PublishRelay<Void>()
     let manageButtonTapped = PublishRelay<Void>()
+    let logoutTrigger = PublishRelay<Void>()
+    let withdrawalTriggier = PublishRelay<Void>()
     
     // MARK: - Output
     let dataSourceDriver: Driver<[MyPageSection]>
-    let logoutDriver: Driver<Void>
     let pushToProfileEditViewDriver: Driver<Void>
     let pushToWebViewDriver: Driver<String>
     let showLoginAlertVCDrvier: Driver<Void>
     let showUpgradeVCDriver: Driver<Void>
     let showBusinessProfileDriver: Driver<Int>
+    let showTwoButtonAlertVCDrvier: Driver<TwoButtonAlertType>
+    let popToLoginVCDriver: Driver<Void>
     
     init(useCase: MyPageUseCase = MyPageUseCase()) {
         let profileSectionDataObservable = viewWillAppear
@@ -122,33 +125,61 @@ final class MyPageViewModel {
         }.asDriver(onErrorJustReturn: [])
      
         //TODO: - 알러트 추가 후 수정
-        logoutDriver = selectedMenu
+        let didTapLogout = selectedMenu
             .filter { $0 == .logout }
-            .do { _ in CatSDKUser.logout() }
             .map { _ in () }
-            .asDriver(onErrorJustReturn: ())
-        
-        pushToWebViewDriver = selectedMenu.compactMap { $0.linkString() }
-            .asDriver(onErrorJustReturn: "")
         
         let didTapLogin = selectedMenu
             .filter { $0 == .login }
+            .map { _ in () }
         
         let didTapUpgrade = selectedMenu
             .filter { $0 == .upgrade }
+            .map { _ in () }
+        
+        let didTapWithdrawal = selectedMenu
+            .filter { $0 == .withdrawal }
+            .map { _ in () }
+        pushToWebViewDriver = selectedMenu
+            .compactMap { $0.linkString() }
+            .asDriver(onErrorJustReturn: "")
+        
+        
+        let logoutResult = logoutTrigger
+            .map { _ in CatSDKUser.logout() }
+        
+        let withdrawalResult = withdrawalTriggier
+            .flatMap { CatSDKUser.withdrawal() }
+        
+        let withdrawlAlertType = didTapWithdrawal.map { _ in TwoButtonAlertType.warningSecession }
+        
+        let logoutAlertType = didTapLogout.map { _ in TwoButtonAlertType.warningLogoutWriting }
+        
+        let successWithdrawal = withdrawalResult
+            .filter { $0 }
+            .map { _ in () }
+        
+        let failWithdrawal = withdrawalResult
+            .filter { !$0 }
+            .map { _ in () }
+        
+        popToLoginVCDriver = Observable.merge([logoutResult, successWithdrawal])
+            .asDriver(onErrorJustReturn: ())
+        
+        showTwoButtonAlertVCDrvier = Observable.merge([logoutAlertType, withdrawlAlertType])
+            .asDriver(onErrorJustReturn: .warningLogoutWriting)
         
         showLoginAlertVCDrvier = didTapLogin
             .filter { _ in CatSDKUser.userType() == .guest }
-            .map { _ in () }
             .asDriver(onErrorJustReturn: ())
 
         showUpgradeVCDriver = didTapUpgrade
             .filter { _ in CatSDKUser.userType() != .guest }
-            .map { _ in () }
             .asDriver(onErrorJustReturn: ())
         
         showBusinessProfileDriver = manageButtonTapped
             .map { _ in CatSDKUser.user().id }
+            .debug("타투이스트 비지니스 페이지로 이동 tattooistId:)")
             .asDriver(onErrorJustReturn: -1)
     }
 }

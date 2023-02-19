@@ -35,13 +35,14 @@ final class TabBarViewController: UITabBarController {
         delegate = self
         configure()
         bind()
-        updateMyPageButtonImage(UIImage(.ic_mypage)?.resize(newWidth: 13.5))
         modalPresentationStyle = .fullScreen
     }
     
     func bind() {
-        CatSDKUser.imageUrlString()
+        Observable.merge([.just(CatSDKUser.user().imageUrl), CatSDKUser.imageUrlString()])
+            .debug("유저 이미지 유알엘 스트링")
             .flatMap(UIImage.convertToUIImage)
+            .debug("탭바 이미지 변경")
             .asDriver(onErrorJustReturn: nil)
             .drive(with: self) { owner, image in
                 owner.updateMyPageButtonImage(image)
@@ -76,9 +77,15 @@ final class TabBarViewController: UITabBarController {
     }
     
     func updateMyPageButtonImage(_ sender: UIImage? = nil) {
-        guard let sender else { return }
-        myPageVC.tabBarItem.image = sender.roundedTabBarImageWithBorder(width: 2, color: .init(hex: "#C4C4C4FF"))
-        myPageVC.tabBarItem.selectedImage = sender.roundedTabBarImageWithBorder(width: 2, color: .init(hex: "#7210A0FF"))
+        let image: UIImage?
+        let isDefaultImage = sender == nil
+        if let sender {
+            image = sender
+        } else {
+            image = UIImage(.ic_mypage)?.resize(newWidth: 13.5)
+        }
+        myPageVC.tabBarItem.image = image?.roundedTabBarImageWithBorder(width: 2, color: .init(hex: "#C4C4C4FF"), defaultImage: isDefaultImage)
+        myPageVC.tabBarItem.selectedImage = image?.roundedTabBarImageWithBorder(width: 2, color: .init(hex: "#7210A0FF"), defaultImage: isDefaultImage)
     }
 }
 
