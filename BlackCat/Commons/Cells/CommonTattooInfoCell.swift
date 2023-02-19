@@ -52,6 +52,12 @@ class CommonTattooInfoCell: MyPageBaseCell {
     }
     
     // MARK: - Life Cycle
+    override func prepareForReuse() {
+        tattooImageView.image = nil
+        userNameLabel.text = nil
+        titleLabel.text = nil
+        disposeBag = DisposeBag()
+    }
     
     // MARK: - UIComponents
     let VStackView: UIStackView = {

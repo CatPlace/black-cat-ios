@@ -83,6 +83,7 @@ final class BPProductCell: BPBaseCollectionViewCell {
     
     // MARK: - Life Cycle
     override func prepareForReuse() {
+        productImageView.image = nil
         disposeBag = DisposeBag()
     }
     
