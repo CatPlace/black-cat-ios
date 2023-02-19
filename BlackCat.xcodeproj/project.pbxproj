@@ -134,6 +134,7 @@
 		8ECAF0AD295C3AC70038DC4D /* AskBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECAF0AC295C3AC70038DC4D /* AskBottomView.swift */; };
 		8EE9A0C128F3CB0D003D7761 /* HomeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9A0C028F3CB0D003D7761 /* HomeSection.swift */; };
 		8EE9A0C328F3CD25003D7761 /* HomeCompositionalLayoutSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9A0C228F3CD25003D7761 /* HomeCompositionalLayoutSection.swift */; };
+		8EEDE7FC299BCC3600668DA3 /* GenreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEDE7FB299BCC3500668DA3 /* GenreCell.swift */; };
 		8EFC9FE1291205B400A83D3D /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFC9FE0291205B400A83D3D /* UIView+.swift */; };
 		B12C1DC728ED219C0089964E /* UIVIewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12C1DC628ED219C0089964E /* UIVIewController+Rx.swift */; };
 		B160DBF928FF3CBD00C0D682 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B160DBF828FF3CBD00C0D682 /* BaseCollectionViewCell.swift */; };
@@ -396,6 +397,7 @@
 		8EE9A0C228F3CD25003D7761 /* HomeCompositionalLayoutSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCompositionalLayoutSection.swift; sourceTree = "<group>"; };
 		8EED4EDA29027E5700DA3887 /* GenreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreViewController.swift; sourceTree = "<group>"; };
 		8EED4EDC2902817500DA3887 /* GenreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreViewModel.swift; sourceTree = "<group>"; };
+		8EEDE7FB299BCC3500668DA3 /* GenreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreCell.swift; sourceTree = "<group>"; };
 		8EFC9FE0291205B400A83D3D /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		8EFC9FE4291229CC00A83D3D /* CategoryPaperConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPaperConfiguration.swift; sourceTree = "<group>"; };
 		8EFC9FE629122F9E00A83D3D /* PresentationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationView.swift; sourceTree = "<group>"; };
@@ -1061,6 +1063,7 @@
 			isa = PBXGroup;
 			children = (
 				8E99DFF6295A99B300B8CF6A /* TattooDetailCell.swift */,
+				8EEDE7FB299BCC3500668DA3 /* GenreCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1647,6 +1650,7 @@
 				8E88487C2949C3F80039F99A /* CommonFullImageCell.swift in Sources */,
 				78B00BB928F5661000A9915D /* MagazineTestUseCase.swift in Sources */,
 				78431C98297A918D0002F1E7 /* ImagePickerManager.swift in Sources */,
+				8EEDE7FC299BCC3600668DA3 /* GenreCell.swift in Sources */,
 				B1D39E6E2923594C0058BE37 /* BPPriceInfoEditReactor.swift in Sources */,
 				B1E3F7BE290EBE3900005F17 /* BPContentCell.Layout.swift in Sources */,
 				78B194E2298135570092244B /* TattooTypeInputViewModel.swift in Sources */,

@@ -17,11 +17,16 @@ struct TattooDetailViewModel {
     private let tattooModel: Model.Tattoo
 
     let id: Int
+    let ownerName: String
     let price: Int
     let description: String
     let liked: Bool
-    let imageURLStrings: [String?]
+    let imageURLStrings: [String]
     let address: String
+    let ownerId: Int
+    let tattooType: String
+    let categoryId: [Int]
+    let likeCount: Int?
 
     // MARK: - Input
     let didTapAskButton = PublishRelay<Void>()
@@ -38,11 +43,16 @@ struct TattooDetailViewModel {
         self.tattooModel = tattooModel
 
         self.id = tattooModel.id
+        self.ownerName = tattooModel.ownerName
         self.price = tattooModel.price
         self.description = tattooModel.description
         self.liked = tattooModel.liked
         self.imageURLStrings = tattooModel.imageURLStrings
         self.address = tattooModel.address
+        self.ownerId = tattooModel.ownerId
+        self.tattooType = tattooModel.tattooType
+        self.categoryId = tattooModel.categoryId
+        self.likeCount = tattooModel.likeCount
 
         let isBookmarkedTattooWhenFirstLoad = BehaviorRelay<Bool>(value: UserDefaultManager.bookmarkedTattoo.contains { $0.id == tattooModel.id } )
 

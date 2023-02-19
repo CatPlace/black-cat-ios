@@ -133,11 +133,6 @@ class GenreViewController: UIViewController {
         return UIBarButtonItem(image: image, style: .plain, target: self, action: nil)
     }()
 
-    private let heartBarButtonItem: UIBarButtonItem = {
-        let image = UIImage(systemName: "heart")?.withTintColor(.black, renderingMode: .alwaysOriginal)
-        return UIBarButtonItem(image: image, style: .plain, target: self, action: nil)
-    }()
-
     private lazy var collectionView: UICollectionView = {
         let cv = UICollectionView(frame: .zero,
                                   collectionViewLayout: flowLayout)
@@ -168,7 +163,7 @@ extension GenreViewController {
     private func setNavigationBar() {
         navigationController?.navigationBar.tintColor = .black
         navigationItem.leftBarButtonItems = [backButtonItem, dropDownItem]
-        navigationItem.rightBarButtonItems = [heartBarButtonItem, filterButtonItem]
+        navigationItem.rightBarButtonItems = [filterButtonItem]
     }
 
     private func setUI() {
