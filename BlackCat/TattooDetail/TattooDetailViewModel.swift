@@ -15,7 +15,8 @@ struct TattooDetailViewModel {
     // MARK: - Properties
     private let disposeBag = DisposeBag()
     private let tattooModel: Model.Tattoo
-
+    
+    let isOwner: Bool
     let id: Int
     let ownerName: String
     let price: Int
@@ -29,19 +30,22 @@ struct TattooDetailViewModel {
     let likeCount: Int?
 
     // MARK: - Input
-    let didTapAskButton = PublishRelay<Void>()
+    typealias ButtonTag = Int
+    
+    let didTapAskButton = PublishRelay<ButtonTag>()
     let didTapBookmarkButton = PublishRelay<Void>()
     let didTapProfileImageView = PublishRelay<Void>()
     let didTapTattooistNameLabel = PublishRelay<Void>()
-
+    
     // MARK: - Output
 
     let shouldFillHeartButton: Driver<Bool>
     let pushToTattooistDetailVC: Driver<Void>
-
+    let 문의하기Driver: Driver<Void>
+    let 수정하기Driver: Driver<Model.Tattoo>
     init(tattooModel: Model.Tattoo) {
         self.tattooModel = tattooModel
-
+        self.isOwner = CatSDKUser.user().id == tattooModel.ownerId
         self.id = tattooModel.id
         self.ownerName = tattooModel.ownerName
         self.price = tattooModel.price
@@ -89,8 +93,19 @@ struct TattooDetailViewModel {
             didTapTattooistNameLabel.asObservable()
         ])
         .asDriver(onErrorJustReturn: ())
+        
         if tattooModel != .empty {
             CatSDKTattoo.updateRecentViewTattoos(tattoo: tattooModel)
         }
+        
+        문의하기Driver = didTapAskButton
+            .filter { $0 == 1}
+            .map { _ in () }
+            .asDriver(onErrorJustReturn: ())
+        
+        수정하기Driver = didTapAskButton
+            .filter { $0 == 0}
+            .map { _ in tattooModel }
+            .asDriver(onErrorJustReturn: .empty)
     }
 }

@@ -16,7 +16,6 @@ final class JHBusinessProfileViewModel {
     let isOwner: Bool
     var currentDeleteProductIndexList: [Int] = []
     let headerViewModel: JHBPContentSectionHeaderViewModel = .init()
-    typealias TattooId = Int
     
     // MARK: - Inputs
     let cellWillAppear = PublishRelay<CGFloat>()
@@ -30,7 +29,7 @@ final class JHBusinessProfileViewModel {
     // MARK: - Outputs
     let visibleCellIndexPath: Driver<Int>
     let sections: Driver<[JHBusinessProfileCellSection]>
-    let showTattooDetail: Driver<TattooId>
+    let showTattooDetail: Driver<Model.Tattoo>
     let scrollToTypeDriver: Driver<JHBPContentHeaderButtonType>
     let initEditModeDriver: Driver<Void>
     let deleteSuccessDriver: Driver<Void>
@@ -80,9 +79,17 @@ final class JHBusinessProfileViewModel {
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: 0)
         
-        showTattooDetail = selectedTattooIndex
-            .map { UserDefaultManager.getTattooistInfo().tattoos[$0].tattooId }
-            .asDriver(onErrorJustReturn: 0)
+        let  fetchTattooDetail =  selectedTattooIndex
+            .map { CatSDKTattooist.localTattooistInfo().tattoos[$0].tattooId }
+            .flatMap { CatSDKTattoo.tattooDetail(tattooId: $0) }
+            .share()
+        
+        // TODO: - 에러 처리
+        let fetchTattooDetailSuccess = fetchTattooDetail.filter { _ in true }
+        let fetchTattooDetailFail = fetchTattooDetail.filter { _ in false }
+        
+        showTattooDetail = fetchTattooDetailSuccess
+            .asDriver(onErrorJustReturn: .empty)
         
         scrollToTypeDriver = viewWillAppear
             .withLatestFrom(visibleCellIndexPath)

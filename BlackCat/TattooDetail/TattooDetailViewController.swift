@@ -31,7 +31,9 @@ final class TattooDetailViewController: UIViewController {
         pageControl.numberOfPages = viewModel.imageURLStrings.count
         tattooistNameLabel.text = viewModel.ownerName
         descriptionLabel.text = viewModel.description
-
+        askBottomView.setAskingText(viewModel.isOwner ? "수정하기" : "문의하기")
+        askBottomView.setAskButtonTag(viewModel.isOwner ? 0 : 1)
+        
         disposeBag.insert {
             tattooProfileImageView.rx.tapGesture()
                 .when(.recognized)
@@ -42,7 +44,12 @@ final class TattooDetailViewController: UIViewController {
                 .when(.recognized)
                 .map { _ in () }
                 .bind(to: viewModel.didTapBookmarkButton)
-
+            
+            askBottomView.askButton.rx.tap
+                .withUnretained(self)
+                .map { owner, _ in owner.askBottomView.askButtonTag()}
+                .bind(to: viewModel.didTapAskButton)
+            
             tattooistNameLabel.rx.tapGesture()
                 .when(.recognized)
                 .map { _ in () }
@@ -59,6 +66,16 @@ final class TattooDetailViewController: UIViewController {
                     owner.navigationController?.pushViewController(tattooistDetailVC, animated: true)
                 }
         }
+        
+        viewModel.문의하기Driver
+            .drive { _ in
+                print("문의하기 탭")
+            }.disposed(by: disposeBag)
+        
+        viewModel.수정하기Driver
+            .drive(with: self) { owner, tattooModel in
+                owner.navigationController?.pushViewController(ProductEditViewController(viewModel: .init(tattoo: tattooModel)), animated: true)
+            }.disposed(by: disposeBag)
     }
 
     // function

@@ -162,8 +162,8 @@ class GenreViewController: UIViewController {
 extension GenreViewController {
     private func setNavigationBar() {
         navigationController?.navigationBar.tintColor = .black
-        navigationItem.leftBarButtonItems = [backButtonItem, dropDownItem]
-        navigationItem.rightBarButtonItems = [filterButtonItem]
+        appendNavigationLeftBackButton(color: .black)
+        appendNavigationLeftCustomView(dropDown)
     }
 
     private func setUI() {

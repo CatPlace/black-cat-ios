@@ -32,7 +32,7 @@ extension UIViewController {
         [backButtonSpacer, backButton].forEach { navigationItem.leftBarButtonItems?.append($0) }
     }
     
-    func appendNavigationLeftLabel(_ sender: UILabel) {
+    func appendNavigationLeftCustomView(_ sender: UIView) {
         let titleLabel = UIBarButtonItem(customView: sender)
         
         if navigationItem.leftBarButtonItems == nil {

@@ -170,7 +170,7 @@ extension HomeViewController {
         label.text = "Black Cat"
         label.font = .didotFont(size: 32, style: .bold)
         label.textColor = .init(hex: "#333333FF")
-        appendNavigationLeftLabel(label)
+        appendNavigationLeftCustomView(label)
     }
 
     private func setUI() {
