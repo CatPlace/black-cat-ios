@@ -25,7 +25,7 @@ struct TattooDetailViewModel {
     let address: String
     let ownerId: Int
     let tattooType: String
-    let categoryId: Int
+    let categoryId: [Int]
     let likeCount: Int?
 
     // MARK: - Input
