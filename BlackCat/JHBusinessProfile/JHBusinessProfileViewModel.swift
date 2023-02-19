@@ -29,7 +29,7 @@ final class JHBusinessProfileViewModel {
     // MARK: - Outputs
     let visibleCellIndexPath: Driver<Int>
     let sections: Driver<[JHBusinessProfileCellSection]>
-    let showTattooDetail: Driver<Model.Tattoo>
+    let showTattooDetail: Driver<Int>
     let scrollToTypeDriver: Driver<JHBPContentHeaderButtonType>
     let initEditModeDriver: Driver<Void>
     let deleteSuccessDriver: Driver<Void>
@@ -78,18 +78,12 @@ final class JHBusinessProfileViewModel {
             .map { Int($0) }
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: 0)
-        
-        let  fetchTattooDetail =  selectedTattooIndex
-            .map { CatSDKTattooist.localTattooistInfo().tattoos[$0].tattooId }
-            .flatMap { CatSDKTattoo.tattooDetail(tattooId: $0) }
-            .share()
-        
+
         // TODO: - 에러 처리
-        let fetchTattooDetailSuccess = fetchTattooDetail.filter { _ in true }
-        let fetchTattooDetailFail = fetchTattooDetail.filter { _ in false }
-        
-        showTattooDetail = fetchTattooDetailSuccess
-            .asDriver(onErrorJustReturn: .empty)
+
+        showTattooDetail = selectedTattooIndex
+            .map { CatSDKTattooist.localTattooistInfo().tattoos[$0].tattooId }
+            .asDriver(onErrorJustReturn: -1)
         
         scrollToTypeDriver = viewWillAppear
             .withLatestFrom(visibleCellIndexPath)

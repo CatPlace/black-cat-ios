@@ -12,100 +12,133 @@ import RxCocoa
 import RxSwift
 
 struct TattooDetailViewModel {
+
     // MARK: - Properties
     private let disposeBag = DisposeBag()
-    private let tattooModel: Model.Tattoo
-    
-    let isOwner: Bool
-    let id: Int
-    let ownerName: String
-    let price: Int
-    let description: String
-    let liked: Bool
-    let imageURLStrings: [String]
-    let address: String
-    let ownerId: Int
-    let tattooType: String
-    let categoryId: [Int]
-    let likeCount: Int?
 
     // MARK: - Input
     typealias ButtonTag = Int
     
     let didTapAskButton = PublishRelay<ButtonTag>()
-    let didTapBookmarkButton = PublishRelay<Void>()
+    let didTapBookmarkButton = PublishRelay<Int>()
     let didTapProfileImageView = PublishRelay<Void>()
     let didTapTattooistNameLabel = PublishRelay<Void>()
-    
+    let bookmarkTrigger = PublishRelay<Void>()
+
     // MARK: - Output
 
     let shouldFillHeartButton: Driver<Bool>
     let pushToTattooistDetailVC: Driver<Void>
+
     let 문의하기Driver: Driver<Void>
     let 수정하기Driver: Driver<Model.Tattoo>
-    init(tattooModel: Model.Tattoo) {
-        self.tattooModel = tattooModel
-        self.isOwner = CatSDKUser.user().id == tattooModel.ownerId
-        self.id = tattooModel.id
-        self.ownerName = tattooModel.ownerName
-        self.price = tattooModel.price
-        self.description = tattooModel.description
-        self.liked = tattooModel.liked
-        self.imageURLStrings = tattooModel.imageURLStrings
-        self.address = tattooModel.address
-        self.ownerId = tattooModel.ownerId
-        self.tattooType = tattooModel.tattooType.rawValue
-        self.categoryId = tattooModel.categoryId
-        self.likeCount = tattooModel.likeCount
+    let isGuestDriver: Driver<Bool>
+    let tattooimageUrls: Driver<[String]>
+    let tattooCategories: Driver<[String]>
+    let imageCountDriver: Driver<Int>
+    let isOwnerDriver: Driver<Bool>
+    let tattooistNameLabelText: Driver<String>
+    let descriptionLabelText: Driver<String>
+    let createDateString: Driver<String>
+    let tattooistProfileImageUrlString: Driver<String>
 
-        let isBookmarkedTattooWhenFirstLoad = BehaviorRelay<Bool>(value: UserDefaultManager.bookmarkedTattoo.contains { $0.id == tattooModel.id } )
-
+    init(tattooId: Int) {
         didTapAskButton
             .subscribe { _ in print("Did Tap Ask Button") }
             .disposed(by: disposeBag)
 
-        let isBookmarkedTattooAfterTapBookmarkButton = didTapBookmarkButton
-            .map { _ in UserDefaultManager.bookmarkedTattoo.contains { $0.id == tattooModel.id } }
-            .do { isBookmarked in
-                if isBookmarked {
-                    let index = UserDefaultManager.bookmarkedTattoo.firstIndex { $0.id == tattooModel.id }!
-                    UserDefaultManager.bookmarkedTattoo.remove(at: index)
-                } else {
-                    UserDefaultManager.bookmarkedTattoo.append(tattooModel)
-                }
-            }
-            .map { !$0 }
+        let tattooModel = CatSDKTattoo.tattooDetail(tattooId: tattooId).share()
+
+        isGuestDriver = tattooModel
+            .map { $0.ownerId == CatSDKUser.user().id }
+            .asDriver(onErrorJustReturn: false)
+        let a = tattooModel.flatMap { tattoo in
+            BehaviorRelay<Bool>(value: tattoo.liked!)
+        }
+        let isBookmarkedTattooWhenFirstLoad = tattooModel.compactMap { $0.liked }
+
+        let isBookmarkedTattooAfterTapBookmarkButton =
+        didTapBookmarkButton
+            .map { $0 == 1 ? false : true }
+            .debug("좋이요👍👍👍")
 
         let isBookmarkedTattoo = Observable.merge([
-            isBookmarkedTattooWhenFirstLoad.asObservable(),
+            isBookmarkedTattooWhenFirstLoad,
             isBookmarkedTattooAfterTapBookmarkButton
         ])
 
         shouldFillHeartButton = isBookmarkedTattoo
             .map { $0 }
             .asDriver(onErrorJustReturn: false)
-        didTapBookmarkButton
-            .subscribe { _ in print("Did Tap Bookmark Button") }
-            .disposed(by: disposeBag)
 
         pushToTattooistDetailVC = Observable.merge([
             didTapProfileImageView.asObservable(),
             didTapTattooistNameLabel.asObservable()
-        ])
-        .asDriver(onErrorJustReturn: ())
-        
-        if tattooModel != .empty {
-            CatSDKTattoo.updateRecentViewTattoos(tattoo: tattooModel)
-        }
-        
+        ]).asDriver(onErrorJustReturn: ())
+
+        let changedBookmark = bookmarkTrigger
+            .withLatestFrom(Observable.combineLatest(isBookmarkedTattooWhenFirstLoad, isBookmarkedTattooAfterTapBookmarkButton))
+            .filter { $0.0 != $0.1 }
+            .map { $0.1 }
+
+        let bookmarkOnTrigger = changedBookmark
+            .filter { $0 }
+            .map { _ in () }
+
+        let bookmarkOffTrigger = changedBookmark
+            .filter { !$0 }
+            .map { _ in () }
+
+        bookmarkOnTrigger
+            .flatMap { CatSDKNetworkBookmark.rx.bookmarkPost(postId: tattooId) }
+            .debug("서버통신 on")
+            .subscribe()
+            .disposed(by: disposeBag)
+
+        bookmarkOffTrigger
+            .flatMap {
+                CatSDKNetworkBookmark.rx.deleteBookmarkedPost(postId: tattooId)
+            }
+            .debug("서버통신 off")
+            .subscribe()
+            .disposed(by: disposeBag)
+
         문의하기Driver = didTapAskButton
             .filter { $0 == 1}
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
         
         수정하기Driver = didTapAskButton
-            .filter { $0 == 0}
-            .map { _ in tattooModel }
+            .filter { $0 == 0 }
+            .withLatestFrom(tattooModel)
             .asDriver(onErrorJustReturn: .empty)
+
+        tattooimageUrls = tattooModel.map { $0.imageURLStrings }
+            .asDriver(onErrorJustReturn: [])
+
+        tattooCategories = tattooModel.map { $0.categoryId.map { GenreType(rawValue: $0)?.title ?? ""}}
+            .asDriver(onErrorJustReturn: [])
+
+        tattooistNameLabelText = tattooModel
+            .map { $0.ownerName }
+            .asDriver(onErrorJustReturn: "")
+
+        descriptionLabelText = tattooModel
+            .map { $0.description }
+            .asDriver(onErrorJustReturn: "")
+
+        createDateString = tattooModel
+            .compactMap { $0.createDate }
+            .asDriver(onErrorJustReturn: "")
+
+        tattooistProfileImageUrlString = tattooModel
+            .compactMap { $0.profileImageUrls }
+            .asDriver(onErrorJustReturn: "")
+
+        isOwnerDriver = tattooModel
+            .map { $0.ownerId == CatSDKUser.user().id }
+            .asDriver(onErrorJustReturn: false)
+
+        imageCountDriver = tattooimageUrls.map { $0.count }
     }
 }

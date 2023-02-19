@@ -12,7 +12,7 @@ import RxCocoa
 import RxSwift
 import RxGesture
 import SnapKit
-
+import Nuke
 final class TattooDetailViewController: UIViewController {
 
     let disposeBag = DisposeBag()
@@ -28,13 +28,11 @@ final class TattooDetailViewController: UIViewController {
     // MARK: - Binding
 
     private func bind(to viewModel: TattooDetailViewModel) {
-        pageControl.numberOfPages = viewModel.imageURLStrings.count
-        tattooistNameLabel.text = viewModel.ownerName
-        descriptionLabel.text = viewModel.description
-        askBottomView.setAskingText(viewModel.isOwner ? "수정하기" : "문의하기")
-        askBottomView.setAskButtonTag(viewModel.isOwner ? 0 : 1)
-        
         disposeBag.insert {
+            rx.viewWillDisappear
+                .map { _ in () }
+                .bind(to: viewModel.bookmarkTrigger)
+
             tattooProfileImageView.rx.tapGesture()
                 .when(.recognized)
                 .map { _ in () }
@@ -42,7 +40,7 @@ final class TattooDetailViewController: UIViewController {
 
             askBottomView.bookmarkView.rx.tapGesture()
                 .when(.recognized)
-                .map { _ in () }
+                .map { _ in  self.askBottomView.heartButton.tag }
                 .bind(to: viewModel.didTapBookmarkButton)
             
             askBottomView.askButton.rx.tap
@@ -65,8 +63,35 @@ final class TattooDetailViewController: UIViewController {
                     let tattooistDetailVC = JHBusinessProfileViewController(viewModel: .init(tattooistId: -1)) // TODO: - 타투이스트 id 내려주기
                     owner.navigationController?.pushViewController(tattooistDetailVC, animated: true)
                 }
+
+            viewModel.isOwnerDriver
+                .drive(with: self) { owner, isOwner in
+                    owner.updateAskBottomview(with: isOwner)
+                }
+
+            viewModel.isGuestDriver
+                .drive(with: self) { owner, isGuest in
+                    owner.askBottomView.bookmarkView.isHidden = isGuest
+                }
+
+            viewModel.tattooistNameLabelText
+                .drive(tattooistNameLabel.rx.text)
+
+            viewModel.descriptionLabelText
+                .drive(descriptionLabel.rx.text)
+
+            viewModel.createDateString
+                .drive(dateLabel.rx.text)
+
+            viewModel.tattooistProfileImageUrlString
+                .compactMap { URL(string: $0) }
+                .drive(with: self) { owner, url in
+                    Nuke.loadImage(with: url, into: owner.tattooProfileImageView)
+                }
+
+            viewModel.imageCountDriver
+                .drive(pageControl.rx.numberOfPages)
         }
-        
         viewModel.문의하기Driver
             .drive { _ in
                 print("문의하기 탭")
@@ -76,15 +101,38 @@ final class TattooDetailViewController: UIViewController {
             .drive(with: self) { owner, tattooModel in
                 owner.navigationController?.pushViewController(ProductEditViewController(viewModel: .init(tattoo: tattooModel)), animated: true)
             }.disposed(by: disposeBag)
+
+        viewModel.tattooimageUrls
+            .drive(imageCollectionView.rx.items) { cv, row, data in
+                let cell = cv.dequeue(Reusable.tattooDetailCell, for: IndexPath(row: row, section: 0))
+
+                cell.configure(with: data)
+
+                return cell
+            }.disposed(by: disposeBag)
+
+        viewModel.tattooCategories
+            .drive(genreCollectionView.rx.items) { cv, row, data in
+                let cell = cv.dequeue(Reusable.generCell, for: IndexPath(row: row, section: 0))
+                cell.configure(with: data)
+                return cell
+            }.disposed(by: disposeBag)
     }
 
     // function
+    func updateAskBottomview(with isOwner: Bool) {
+        askBottomView.setAskingText(isOwner ? "수정하기" : "문의하기")
+        askBottomView.setAskButtonTag(isOwner ? 0 : 1)
+
+    }
 
     private func switchHeartButton(shouldFill: Bool) {
         let heartImage = shouldFill ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
         heartImage?.withRenderingMode(.alwaysOriginal).withTintColor(.white)
 
         askBottomView.heartButton.setImage(heartImage, for: .normal)
+
+        askBottomView.heartButton.tag = shouldFill ? 1 : 0
     }
 
     func edgeInset(cellWidth: CGFloat, numberOfCells: Int) -> UIEdgeInsets {
@@ -132,11 +180,9 @@ final class TattooDetailViewController: UIViewController {
         return $0
     }(UICollectionViewFlowLayout())
 
-    private lazy var collectionView: UICollectionView = {
+    private lazy var imageCollectionView: UICollectionView = {
         $0.register(Reusable.tattooDetailCell)
-        $0.tag = 0
         $0.isPagingEnabled = true
-        $0.dataSource = self
         $0.delegate = self
         $0.showsHorizontalScrollIndicator = false
         return $0
@@ -148,15 +194,11 @@ final class TattooDetailViewController: UIViewController {
         let width: CGFloat = 60
         let height: CGFloat = 28
         $0.itemSize = .init(width: width, height: height)
-        $0.sectionInset = edgeInset(cellWidth: width, numberOfCells: viewModel.categoryId.count)
         return $0
     }(UICollectionViewFlowLayout())
 
     private lazy var genreCollectionView: UICollectionView = {
         $0.register(Reusable.generCell)
-        $0.tag = 1
-        $0.dataSource = self
-        $0.delegate = self
         $0.backgroundColor = .clear
         return $0
     }(UICollectionView(frame: .zero, collectionViewLayout: genreFlowLayout))
@@ -244,9 +286,9 @@ extension TattooDetailViewController {
             $0.width.equalToSuperview()
         }
 
-        [collectionView, navigationBarDividerView, genreCollectionView, pageControl, tattooTitle, tattooProfileImageView, tattooistNameLabel, dividerView, descriptionLabel, dateLabel].forEach { contentView.addSubview($0) }
+        [imageCollectionView, navigationBarDividerView, genreCollectionView, pageControl, tattooTitle, tattooProfileImageView, tattooistNameLabel, dividerView, descriptionLabel, dateLabel].forEach { contentView.addSubview($0) }
 
-        collectionView.snp.makeConstraints {
+        imageCollectionView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(cellHeight)
         }
@@ -268,11 +310,11 @@ extension TattooDetailViewController {
         pageControl.snp.makeConstraints {
             $0.height.equalTo(6)
             $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(collectionView.snp.bottom).offset(-10)
+            $0.bottom.equalTo(imageCollectionView.snp.bottom).offset(-10)
         }
 
         tattooTitle.snp.makeConstraints {
-            $0.top.equalTo(collectionView.snp.bottom).offset(30)
+            $0.top.equalTo(imageCollectionView.snp.bottom).offset(30)
             $0.leading.equalToSuperview().inset(30)
         }
 
@@ -314,37 +356,7 @@ extension TattooDetailViewController {
     }
 }
 
-extension TattooDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch collectionView.tag {
-        case 0: return viewModel.imageURLStrings.count
-        case 1: return viewModel.categoryId.count
-        default: return 0
-        }
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch collectionView.tag {
-        case 0:
-            let cell = collectionView.dequeue(Reusable.tattooDetailCell, for: indexPath)
-            cell.configure(with: viewModel.imageURLStrings[indexPath.row])
-
-            return cell
-        case 1:
-            let cell = collectionView.dequeue(Reusable.generCell, for: indexPath)
-            let categoryId = viewModel.categoryId[indexPath.row]
-            if let genreTitle = GenreType(rawValue: categoryId)?.title {
-                cell.configure(with: genreTitle)
-            } else {
-                cell.configure(with: "알 수 없는 장르")
-            }
-
-            return cell
-        default:
-            return UICollectionViewCell()
-        }
-    }
-
+extension TattooDetailViewController: UICollectionViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let offset = scrollView.contentOffset.x
         let width = UIScreen.main.bounds.width

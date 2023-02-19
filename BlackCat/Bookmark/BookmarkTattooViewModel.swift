@@ -38,20 +38,20 @@ class BookmarkTattooViewModel {
         let editingCellManagingDict = BehaviorRelay<EditingCellIndexToSelectNumberDict>(value: [:])
 
         let cellViewModels = BehaviorSubject<[BMCellViewModel]>(value: UserDefaultManager.bookmarkedTattoo
-            .map { BMCellViewModel(imageURLString: $0.imageURLStrings.first ?? "") } )
+            .map { _ in BMCellViewModel(imageURLString: "") } )
 
         let bookmarkCellViewModelsWhenFirstLoad = viewDidLoad
-            .flatMap { _ -> Observable<[Model.UserBookmarkPost]> in
+            .flatMap { _ -> Observable<[Model.TattooBookmark]> in
                 let jwtToken = CatSDKUser.user().jwt ?? ""
-                return CatSDKNetworkBookmark.rx.userListInSpecificBookmark(postId: 3, userToken: jwtToken)
+                print("JWTTOKEN: \(jwtToken)")
+                return CatSDKNetworkBookmark.rx.tattooBookmarkListInSpecificUser(userToken: jwtToken)
             }
-            .map { users in
-                print("users: \(users)")
-                return users.map { _ in BMCellViewModel(imageURLString: "") }
+            .map { bookmarks in
+                bookmarks.map { BMCellViewModel(imageURLString: $0.imageUrl) }
             }
-//            .map { tattooBookmarks in
-//                let jwtToken = CatSDKUser.user().jwt ?? ""
-//                tattooBookmarks.map { BMCellViewModel(imageURLString: $0.imageUrl + "AUTHORIZATION=\(jwtToken)") }
+//            .map { users in
+//                print("users: \(users)")
+//                return users.map { _ in BMCellViewModel(imageURLString: "") }
 //            }
 
         let editModeWhenItemSelected = didSelectItem
@@ -69,7 +69,7 @@ class BookmarkTattooViewModel {
         let cellShouldBeEdited = cellIndexForEdit
             .withLatestFrom(editingCellManagingDict) {
                 selectItemIndex, editingCellManagingDict -> (shouldEdit: Bool, index: Int) in
-                let isDictionaryContainsCellIndex = editingCellManagingDict.contains { $0.key == selectItemIndex }
+                let isDictionaryContainsCellIndex = editingCellManagingDict[selectItemIndex] != nil
 
                 return (shouldEdit: !isDictionaryContainsCellIndex, index: selectItemIndex)
             }
@@ -92,10 +92,11 @@ class BookmarkTattooViewModel {
         let bookmarkCellViewModelsAfterSelecedItemRemove = removeSelectedItem
             .do { editingCellDict in
                 var dict = editingCellDict
-                dict.sorted { $0.key > $1.key }.forEach { cellIndex, _ in
+                let a = dict.keys.sorted().forEach { cellIndex in
                     UserDefaultManager.bookmarkedTattoo.remove(at: cellIndex)
                     dict[cellIndex] = nil
                 }
+
                 editingCellManagingDict.accept(dict)
             }
             .do { _ in
@@ -158,7 +159,7 @@ class BookmarkTattooViewModel {
             bookmarkCellViewModelsAfterSelecedItemRemove
         ])
         .debug("🥵🥵🥵🥵🥵🥵 CellIndexForEdit 🥵🥵🥵🥵🥵🥵")
-            .asDriver(onErrorJustReturn: [])
+        .asDriver(onErrorJustReturn: [])
 
         func removeSelectNumber(from viewModel: BMCellViewModel) {
             print(viewModel)

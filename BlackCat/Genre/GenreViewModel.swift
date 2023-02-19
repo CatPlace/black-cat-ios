@@ -148,7 +148,7 @@ class GenreViewModel {
 
         pushToTattooDetailVC = didTapTattooItem
             .withLatestFrom(fetchedItems) { row, items in items[row] }
-            .map { model in TattooDetailViewModel(tattooModel: model) }
-            .asDriver(onErrorJustReturn: .init(tattooModel: .empty))
+            .map { model in TattooDetailViewModel(tattooId: model.id) }
+            .asDriver(onErrorJustReturn: .init(tattooId: -1))
     }
 }

@@ -92,9 +92,9 @@ final class JHBusinessProfileViewController: UIViewController {
             }.disposed(by: disposeBag)
 
         viewModel.showTattooDetail
-            .drive(with: self) { owner, tattooModel in
+            .drive(with: self) { owner, tattooId in
                 // TODO: - 화면 전환
-                owner.navigationController?.pushViewController(TattooDetailViewController(viewModel: .init(tattooModel: tattooModel)), animated: true)
+                owner.navigationController?.pushViewController(TattooDetailViewController(viewModel: .init(tattooId: tattooId)), animated: true)
             }.disposed(by: disposeBag)
 
         viewModel.scrollToTypeDriver
