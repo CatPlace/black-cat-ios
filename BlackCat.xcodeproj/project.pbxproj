@@ -68,6 +68,7 @@
 		786B58102949C8B100E2C4A5 /* HeirofLightOTFRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 786B58022949C8B100E2C4A5 /* HeirofLightOTFRegular.otf */; };
 		787D5843293CD6BC00A3E610 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787D5842293CD6BC00A3E610 /* UIFont+.swift */; };
 		787D5845293CD8CB00A3E610 /* FontExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787D5844293CD8CB00A3E610 /* FontExampleViewController.swift */; };
+		78840F3929A1C56200593AEA /* GenreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEDE7FB299BCC3500668DA3 /* GenreCell.swift */; };
 		78858BEC28F6F4E400EC7BF7 /* MagazineSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78858BEB28F6F4E300EC7BF7 /* MagazineSection.swift */; };
 		789D65BA2978043000156FBD /* VerticalScrollableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D65B92978043000156FBD /* VerticalScrollableViewController.swift */; };
 		789D65BC2978219400156FBD /* TattooImageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D65BB2978219300156FBD /* TattooImageInputView.swift */; };
@@ -137,7 +138,6 @@
 		8ECAF0AD295C3AC70038DC4D /* AskBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECAF0AC295C3AC70038DC4D /* AskBottomView.swift */; };
 		8EE9A0C128F3CB0D003D7761 /* HomeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9A0C028F3CB0D003D7761 /* HomeSection.swift */; };
 		8EE9A0C328F3CD25003D7761 /* HomeCompositionalLayoutSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9A0C228F3CD25003D7761 /* HomeCompositionalLayoutSection.swift */; };
-		8EEDE7FC299BCC3600668DA3 /* GenreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEDE7FB299BCC3500668DA3 /* GenreCell.swift */; };
 		8EFC9FE1291205B400A83D3D /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFC9FE0291205B400A83D3D /* UIView+.swift */; };
 		B12C1DC728ED219C0089964E /* UIVIewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12C1DC628ED219C0089964E /* UIVIewController+Rx.swift */; };
 		B160DBF928FF3CBD00C0D682 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B160DBF828FF3CBD00C0D682 /* BaseCollectionViewCell.swift */; };
@@ -546,9 +546,6 @@
 			children = (
 				B1E3F7C5290EC98600005F17 /* BPBaseCollectionReusableView.swift */,
 				B1D89C97290E879B00C8B7F1 /* BPBaseCollectionViewCell.swift */,
-				B1E3F7C1290EC1F700005F17 /* BPContentModel.swift */,
-				B1CDE8E129160C4600ACB9AC /* BPProfileCells */,
-				B1CEF7302913A07300814113 /* BPProductsCells */,
 				7828DB5C295C8D2B0053B0A0 /* JHBusinessProfileViewController.swift */,
 				78D9EB5429A09EE300A9B452 /* JHBusinessProfileViewController.Layout.swift */,
 				78D9EB5629A09F1300A9B452 /* JHBusinessProfileViewController.Delegate.swift */,
@@ -565,7 +562,6 @@
 		7828DB6A295CD5400053B0A0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B1E3F7C5290EC98600005F17 /* BPBaseCollectionReusableView.swift */,
 				7828DB64295C9D500053B0A0 /* JHBPContentSectionHeaderView.swift */,
 			);
 			path = Views;
@@ -574,7 +570,6 @@
 		7828DB6B295CD54C0053B0A0 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				B1D89C97290E879B00C8B7F1 /* BPBaseCollectionViewCell.swift */,
 				7828DB62295C99410053B0A0 /* JHBPThumbnailImageCell.swift */,
 				7828DB60295C951A0053B0A0 /* JHBPContentCell.swift */,
 				B1CEF7322913A0EC00814113 /* BPProfileCell.swift */,
@@ -1598,6 +1593,7 @@
 				B1CEF7332913A0EC00814113 /* BPProfileCell.swift in Sources */,
 				8EBB614629273CE300F640F5 /* BMEditFilterView.swift in Sources */,
 				78B194D5298058480092244B /* CGPoint+.swift in Sources */,
+				78840F3929A1C56200593AEA /* GenreCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
