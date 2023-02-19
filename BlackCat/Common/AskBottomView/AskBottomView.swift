@@ -88,6 +88,7 @@ final class AskBottomView: UIView {
         let heartImage = UIImage(systemName: "heart")?.withTintColor(.white).withRenderingMode(.alwaysOriginal)
         $0.setImage(heartImage, for: .normal)
         $0.contentMode = .scaleAspectFit
+        $0.isUserInteractionEnabled = false
         return $0
     }(UIButton())
 

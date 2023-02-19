@@ -85,18 +85,21 @@ final class TattooDetailViewController: UIViewController {
 
             viewModel.tattooistProfileImageUrlString
                 .compactMap { URL(string: $0) }
-                .drive(with: self) { owner, url in
-                    Nuke.loadImage(with: url, into: owner.tattooProfileImageView)
+                .drive { url in
+                    Nuke.loadImage(with: url, into: self.tattooProfileImageView)
                 }
 
             viewModel.imageCountDriver
                 .drive(pageControl.rx.numberOfPages)
+
+
         }
+
         viewModel.문의하기Driver
             .drive { _ in
                 print("문의하기 탭")
             }.disposed(by: disposeBag)
-        
+
         viewModel.수정하기Driver
             .drive(with: self) { owner, tattooModel in
                 owner.navigationController?.pushViewController(ProductEditViewController(viewModel: .init(tattoo: tattooModel)), animated: true)
@@ -123,7 +126,6 @@ final class TattooDetailViewController: UIViewController {
     func updateAskBottomview(with isOwner: Bool) {
         askBottomView.setAskingText(isOwner ? "수정하기" : "문의하기")
         askBottomView.setAskButtonTag(isOwner ? 0 : 1)
-
     }
 
     private func switchHeartButton(shouldFill: Bool) {
