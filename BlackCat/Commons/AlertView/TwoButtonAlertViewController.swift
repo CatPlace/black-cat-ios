@@ -103,6 +103,7 @@ class TwoButtonAlertViewController: UIViewController {
     // MARK: - Properties
     var disposeBag = DisposeBag()
     weak var delegate: TwoButtonAlertViewDelegate?
+    
     // MARK: - Binding
     func bind(to viewModel: TwoButtonAlertViewModel) {
         viewModel.contentStringDriver

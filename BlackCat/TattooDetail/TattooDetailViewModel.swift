@@ -50,7 +50,7 @@ struct TattooDetailViewModel {
         self.imageURLStrings = tattooModel.imageURLStrings
         self.address = tattooModel.address
         self.ownerId = tattooModel.ownerId
-        self.tattooType = tattooModel.tattooType
+        self.tattooType = tattooModel.tattooType.rawValue
         self.categoryId = tattooModel.categoryId
         self.likeCount = tattooModel.likeCount
 
