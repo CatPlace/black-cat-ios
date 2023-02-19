@@ -28,7 +28,7 @@ struct TattooDetailViewModel {
     // MARK: - Output
 
     let shouldFillHeartButton: Driver<Bool>
-    let pushToTattooistDetailVC: Driver<Void>
+    let pushToTattooistDetailVC: Driver<Int>
 
     let 문의하기Driver: Driver<Void>
     let 수정하기Driver: Driver<Model.Tattoo>
@@ -41,6 +41,7 @@ struct TattooDetailViewModel {
     let descriptionLabelText: Driver<String>
     let createDateString: Driver<String>
     let tattooistProfileImageUrlString: Driver<String>
+    let bookmarkCountStringDriver: Driver<String>
 
     init(tattooId: Int) {
         didTapAskButton
@@ -52,9 +53,11 @@ struct TattooDetailViewModel {
         isGuestDriver = tattooModel
             .map { $0.ownerId == CatSDKUser.user().id }
             .asDriver(onErrorJustReturn: false)
+
         let a = tattooModel.flatMap { tattoo in
             BehaviorRelay<Bool>(value: tattoo.liked!)
         }
+
         let isBookmarkedTattooWhenFirstLoad = tattooModel.compactMap { $0.liked }
 
         let isBookmarkedTattooAfterTapBookmarkButton =
@@ -65,7 +68,7 @@ struct TattooDetailViewModel {
         let isBookmarkedTattoo = Observable.merge([
             isBookmarkedTattooWhenFirstLoad,
             isBookmarkedTattooAfterTapBookmarkButton
-        ])
+        ]).share()
 
         shouldFillHeartButton = isBookmarkedTattoo
             .map { $0 }
@@ -74,7 +77,28 @@ struct TattooDetailViewModel {
         pushToTattooistDetailVC = Observable.merge([
             didTapProfileImageView.asObservable(),
             didTapTattooistNameLabel.asObservable()
-        ]).asDriver(onErrorJustReturn: ())
+        ]).withLatestFrom(tattooModel) { $1.ownerId }
+        .asDriver(onErrorJustReturn: -1)
+
+        let bookmarkCountWhenFirstLoad = tattooModel.map { $0.likeCount ?? 0 }
+
+        let changeBookmarkCount = isBookmarkedTattoo // 북마크 탭
+            .withLatestFrom(isBookmarkedTattooWhenFirstLoad) { ($0, $1) }
+            .withLatestFrom(bookmarkCountWhenFirstLoad) { ($0.0, $0.1, $1) }
+            .map { changedIsBookmarked, firstIsBookmarked, count in
+                if firstIsBookmarked {
+                    return count + (changedIsBookmarked ? 0 : -1)
+                } else {
+                    return count + (changedIsBookmarked ? 1 : 0)
+                }
+            }
+
+        bookmarkCountStringDriver = Observable.merge([
+            bookmarkCountWhenFirstLoad,
+            changeBookmarkCount
+        ])
+        .map { String($0) }
+        .asDriver(onErrorJustReturn: "")
 
         let changedBookmark = bookmarkTrigger
             .withLatestFrom(Observable.combineLatest(isBookmarkedTattooWhenFirstLoad, isBookmarkedTattooAfterTapBookmarkButton))

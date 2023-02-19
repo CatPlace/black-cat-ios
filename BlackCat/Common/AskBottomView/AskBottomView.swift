@@ -85,18 +85,17 @@ final class AskBottomView: UIView {
     }(UIView())
 
     let heartButton: UIButton = {
-        let heartImage = UIImage(systemName: "heart")?.withTintColor(.white).withRenderingMode(.alwaysOriginal)
+        let heartImage = UIImage(named: "like")
         $0.setImage(heartImage, for: .normal)
         $0.contentMode = .scaleAspectFit
         $0.isUserInteractionEnabled = false
         return $0
     }(UIButton())
 
-    private let bookmarkCountLabel: UILabel = {
+    let bookmarkCountLabel: UILabel = {
         $0.font = .systemFont(ofSize: 18)
         $0.adjustsFontSizeToFitWidth = true
         $0.textColor = .white
-        $0.text = "25"
         return $0
     }(UILabel())
 }
@@ -106,8 +105,6 @@ extension AskBottomView {
         self.backgroundColor = .clear
 
         [askButton, bookmarkView].forEach { addSubview($0) }
-
-
 
         askButton.snp.makeConstraints {
             $0.top.leading.bottom.equalToSuperview()

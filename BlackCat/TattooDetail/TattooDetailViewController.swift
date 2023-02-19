@@ -13,6 +13,7 @@ import RxSwift
 import RxGesture
 import SnapKit
 import Nuke
+
 final class TattooDetailViewController: UIViewController {
 
     let disposeBag = DisposeBag()
@@ -59,8 +60,8 @@ final class TattooDetailViewController: UIViewController {
                 }
 
             viewModel.pushToTattooistDetailVC
-                .drive(with: self) { owner, _ in
-                    let tattooistDetailVC = JHBusinessProfileViewController(viewModel: .init(tattooistId: -1)) // TODO: - 타투이스트 id 내려주기
+                .drive(with: self) { owner, tattooistId in
+                    let tattooistDetailVC = JHBusinessProfileViewController(viewModel: .init(tattooistId: tattooistId)) // TODO: - 타투이스트 id 내려주기
                     owner.navigationController?.pushViewController(tattooistDetailVC, animated: true)
                 }
 
@@ -92,7 +93,8 @@ final class TattooDetailViewController: UIViewController {
             viewModel.imageCountDriver
                 .drive(pageControl.rx.numberOfPages)
 
-
+            viewModel.bookmarkCountStringDriver
+                .drive(askBottomView.bookmarkCountLabel.rx.text)
         }
 
         viewModel.문의하기Driver
@@ -129,11 +131,10 @@ final class TattooDetailViewController: UIViewController {
     }
 
     private func switchHeartButton(shouldFill: Bool) {
-        let heartImage = shouldFill ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+        let heartImage = shouldFill ? UIImage(systemName: "heart.fill") : UIImage(named: "like")
         heartImage?.withRenderingMode(.alwaysOriginal).withTintColor(.white)
 
         askBottomView.heartButton.setImage(heartImage, for: .normal)
-
         askBottomView.heartButton.tag = shouldFill ? 1 : 0
     }
 
