@@ -62,7 +62,9 @@ class MyPageProfileCell: MyPageBaseCell {
     var disposeBag = DisposeBag()
     
     // MARK: - Binding
-    func bind(to viewModel: MyPageProfileCellViewModel, with superViewModel: MyPageViewModel) {
+    func bind(to viewModel: MyPageProfileCellViewModel, with superViewModel: MyPageViewModel?) {
+        guard let superViewModel else { return }
+        
         profileEditButton.rx.tapGesture()
             .when(.recognized)
             .map { _ in () }
