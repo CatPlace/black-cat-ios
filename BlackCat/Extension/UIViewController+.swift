@@ -36,7 +36,9 @@ extension UIViewController {
         let titleLabel = UIBarButtonItem(customView: sender)
         
         if navigationItem.leftBarButtonItems == nil {
-            navigationItem.leftBarButtonItems = []
+            let backButtonSpacer = UIBarButtonItem()
+            backButtonSpacer.width = 10
+            navigationItem.leftBarButtonItems = [backButtonSpacer]
         }
         navigationItem.leftBarButtonItems?.append(titleLabel)
     }
@@ -50,12 +52,14 @@ extension UIViewController {
         label.largeContentImageInsets = .init(top: 10, left: 0, bottom: 0, right: 0)
         titleLabel.imageInsets = .init(top: 10, left: 10, bottom: 10, right: 10)
         if navigationItem.leftBarButtonItems == nil {
-            navigationItem.leftBarButtonItems = []
+            let backButtonSpacer = UIBarButtonItem()
+            backButtonSpacer.width = 10
+            navigationItem.leftBarButtonItems = [backButtonSpacer]
         }
         navigationItem.leftBarButtonItems?.append(titleLabel)
     }
     
-    func appendNavigationRightLabel(_ sender: UILabel) {
+    func appendNavigationRightLabel(_ sender: UIView) {
         let titleLabel = UIBarButtonItem(customView: sender)
         if navigationItem.rightBarButtonItems == nil {
             navigationItem.rightBarButtonItems = []
