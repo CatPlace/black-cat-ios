@@ -149,8 +149,9 @@ final class TattooDetailViewController: UIViewController {
 
     init(viewModel: TattooDetailViewModel) {
         self.viewModel = viewModel
-
+        
         super.init(nibName: nil, bundle: nil)
+        view.backgroundColor = .white
     }
 
     required init?(coder: NSCoder) {
