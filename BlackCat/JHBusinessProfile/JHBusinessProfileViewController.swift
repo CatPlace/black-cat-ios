@@ -60,6 +60,17 @@ final class JHBusinessProfileViewController: UIViewController {
                 .map { _ in () }
                 .bind(to: viewModel.viewDidAppear)
 
+            rx.viewWillDisappear
+                .map { _ in () }
+                .bind(to: viewModel.viewWillDisappear)
+            
+            bottomView.bookmarkView.rx.tapGesture()
+                .when(.recognized)
+                .withUnretained(self)
+                .map { owner, _ in
+                    owner.bottomView.heartButton.tag
+                }.bind(to: viewModel.didTapBookmarkButton)
+            
             editLabel.rx.tapGesture()
                 .when(.recognized)
                 .withUnretained(self)
@@ -81,8 +92,33 @@ final class JHBusinessProfileViewController: UIViewController {
 
             viewModel.sections
                 .drive(self.collectionView.rx.items(dataSource: dataSource))
+            
+            viewModel.shouldFillHeartButton
+                .drive(with: self) { owner, shouldFill in
+                    owner.switchHeartButton(shouldFill: shouldFill)
+                }
+            
+            viewModel.bookmarkCountStringDriver
+                .drive(bottomView.bookmarkCountLabel.rx.text)
+            
+            viewModel.serverErrorDriver
+                .drive(with: self) { owner, _ in
+                    let vc = OneButtonAlertViewController(viewModel: .init(content: "존재하지 않는 사용자거나 오류가 발생했습니다.", buttonText: "확인"))
+                    owner.present(vc, animated: true)
+                    owner.navigationController?.popViewController(animated: true)
+                }
+        
+        // TODO: - postType별 id로 상세페이지 들어가기
+//            viewModel.showDetailVCDriver
+//                .drive(with: self) { owner, nextVCInfo in
+//                    let postType = nextVCInfo.0
+//                    let id = nextVCInfo.1
+//                    let vc = OneButtonAlertViewController(viewModel: .init(content: "존재하지 않는 사용자거나 오류가 발생했습니다.", buttonText: "확인"))
+//                    owner.present(vc, animated: true)
+//                    owner.navigationController?.popViewController(animated: true)
+//                }
         }
-
+        
         viewModel.visibleCellIndexPath
             .drive(with: self) { owner, row in
                 guard let type = JHBPContentHeaderButtonType(rawValue: row) else { return }
@@ -123,6 +159,14 @@ final class JHBusinessProfileViewController: UIViewController {
     }
 
     // MARK: function
+    private func switchHeartButton(shouldFill: Bool) {
+        let heartImage = shouldFill ? UIImage(systemName: "heart.fill") : UIImage(named: "like")
+        heartImage?.withRenderingMode(.alwaysOriginal).withTintColor(.white)
+
+        bottomView.heartButton.setImage(heartImage, for: .normal)
+        bottomView.heartButton.tag = shouldFill ? 1 : 0
+    }
+
     func updateEditButtonUI(selectedRow: Int) {
         guard let type = JHBPContentHeaderButtonType(rawValue: selectedRow), viewModel.isOwner else { return }
 
@@ -197,6 +241,7 @@ final class JHBusinessProfileViewController: UIViewController {
         $0.isHidden = true
         return $0
     }(UILabel())
+
 }
 
 extension JHBusinessProfileViewController {

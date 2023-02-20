@@ -13,6 +13,7 @@ import RxDataSources
 import BlackCatSDK
 
 final class JHBusinessProfileViewModel {
+    let disposeBag = DisposeBag()
     let isOwner: Bool
     var currentDeleteProductIndexList: [Int] = []
     let headerViewModel: JHBPContentSectionHeaderViewModel = .init()
@@ -25,6 +26,8 @@ final class JHBusinessProfileViewModel {
     let selectedTattooIndex = PublishRelay<Int>()
     let deleteProductTrigger = PublishRelay<[Int]>()
     let deleteCompleteRelay = PublishRelay<Void>()
+    let viewWillDisappear = PublishRelay<Void>()
+    let didTapBookmarkButton = PublishRelay<Int>()
     
     // MARK: - Outputs
     let visibleCellIndexPath: Driver<Int>
@@ -34,6 +37,9 @@ final class JHBusinessProfileViewModel {
     let initEditModeDriver: Driver<Void>
     let deleteSuccessDriver: Driver<Void>
     let deleteFailDriver: Driver<Void>
+    let shouldFillHeartButton: Driver<Bool>
+    let bookmarkCountStringDriver: Driver<String>
+    let serverErrorDriver: Driver<Void>
     
     init(tattooistId: Int) {
         // TODO: - 유저 구분
@@ -55,15 +61,23 @@ final class JHBusinessProfileViewModel {
                 return Observable.combineLatest(fetchedProfileData, fetchedProductsData, fetchedPriceInfoData) {
                     Model.TattooistInfo(introduce: $0, tattoos: $1, estimate: $2)
                 }
-                    .do {
-                        if $0.introduce.introduce != "error" {
-                            CatSDKTattooist.updateLocalTattooistInfo(tattooistInfo: $0)
-                        }
-                    }
             }
             .share()
         
-        let currentTattooistInfo = Observable.merge([localTattooistInfo.filter { $0 != .empty }, fetchedTattooistInfo]).share()
+        let fetchedTattooistInfoSuccess = fetchedTattooistInfo
+            .filter { $0.introduce.introduce != "error" }
+            .do {
+                CatSDKTattooist.updateLocalTattooistInfo(tattooistInfo: $0)
+            }
+        
+        let fetchedTattooistInfoFail = fetchedTattooistInfo
+            .filter { $0.introduce.introduce == "error" }
+            .map { _ in () }
+        
+        serverErrorDriver = fetchedTattooistInfoFail
+            .asDriver(onErrorJustReturn: ())
+        
+        let currentTattooistInfo = Observable.merge([localTattooistInfo.filter { $0 != .empty }, fetchedTattooistInfoSuccess]).share()
         
         sections = currentTattooistInfo
             .map { configurationSections(
@@ -112,6 +126,72 @@ final class JHBusinessProfileViewModel {
         deleteFailDriver = deleteFail.map { _ in () }
             .asDriver(onErrorJustReturn: ())
         
+        let isBookmarkedTattooWhenFirstLoad = CatSDKBookmark.isBookmarked(postId: tattooistId)
+        
+        let isBookmarkedTattooAfterTapBookmarkButton =
+        didTapBookmarkButton
+            .map { $0 == 1 ? false : true }
+            .debug("좋이요👍👍👍")
+
+        let isBookmarkedTattoo = Observable.merge([
+            isBookmarkedTattooWhenFirstLoad,
+            isBookmarkedTattooAfterTapBookmarkButton
+        ]).share()
+
+        shouldFillHeartButton = isBookmarkedTattoo
+            .map { $0 }
+            .asDriver(onErrorJustReturn: false)
+        
+        initEditModeDriver = cellWillAppear
+            .distinctUntilChanged()
+            .filter { $0 != 1 }
+            .map { _ in () }
+            .asDriver(onErrorJustReturn: ())
+        
+        let bookmarkCountWhenFirstLoad = CatSDKNetworkBookmark.rx.countOfBookmark(postId: tattooistId).map { $0.counts }
+
+        let changeBookmarkCount = isBookmarkedTattoo // 북마크 탭
+            .withLatestFrom(isBookmarkedTattooWhenFirstLoad) { ($0, $1) }
+            .withLatestFrom(bookmarkCountWhenFirstLoad) { ($0.0, $0.1, $1) }
+            .map { changedIsBookmarked, firstIsBookmarked, count in
+                if firstIsBookmarked {
+                    return count + (changedIsBookmarked ? 0 : -1)
+                } else {
+                    return count + (changedIsBookmarked ? 1 : 0)
+                }
+            }
+
+        bookmarkCountStringDriver = Observable.merge([
+            bookmarkCountWhenFirstLoad,
+            changeBookmarkCount
+        ])
+        .map { String($0) }
+        .asDriver(onErrorJustReturn: "")
+        
+        let changedBookmark = viewWillDisappear
+            .withLatestFrom(Observable.combineLatest(isBookmarkedTattooWhenFirstLoad, isBookmarkedTattooAfterTapBookmarkButton))
+            .filter { $0.0 != $0.1 }
+            .map { $0.1 }
+
+        let bookmarkOnTrigger = changedBookmark
+            .filter { $0 }
+            .map { _ in () }
+
+        let bookmarkOffTrigger = changedBookmark
+            .filter { !$0 }
+            .map { _ in () }
+
+        bookmarkOnTrigger
+            .flatMap { CatSDKNetworkBookmark.rx.bookmarkPost(postId: tattooistId) }
+            .subscribe()
+            .disposed(by: disposeBag)
+
+        bookmarkOffTrigger
+            .flatMap {
+                CatSDKNetworkBookmark.rx.deleteBookmarkedPost(postId: tattooistId)
+            }.subscribe()
+            .disposed(by: disposeBag)
+        
         func configurationSections(imageUrlString: String, profileDescription: String, products: [Model.TattooThumbnail], priceInformation: String) -> [JHBusinessProfileCellSection] {
             
             let thumbnailCell: JHBusinessProfileItem = .thumbnailImageItem(.init(imageUrlString: imageUrlString))
@@ -133,11 +213,6 @@ final class JHBusinessProfileViewModel {
             return [thumbnailSection, contentSection]
         }
         
-        initEditModeDriver = cellWillAppear
-            .distinctUntilChanged()
-            .filter { $0 != 1 }
-            .map { _ in () }
-            .asDriver(onErrorJustReturn: ())
     }
 }
 
