@@ -208,9 +208,18 @@ final class TattooDetailViewController: UIViewController {
     private lazy var genreCollectionView: UICollectionView = {
         $0.register(Reusable.generCell)
         $0.backgroundColor = .clear
+        
         return $0
     }(UICollectionView(frame: .zero, collectionViewLayout: genreFlowLayout))
 
+    func centerItemsInCollectionView(cellWidth: Double, numberOfItems: Double, spaceBetweenCell: Double, collectionView: UICollectionView) -> UIEdgeInsets {
+        let totalWidth = cellWidth * numberOfItems
+        let totalSpacingWidth = spaceBetweenCell * (numberOfItems - 1)
+        let leftInset = (collectionView.frame.width - CGFloat(totalWidth + totalSpacingWidth)) / 2
+        let rightInset = leftInset
+        return UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
+    }
+    
     private let pageControl: CHIPageControlJaloro = {
         $0.currentPageTintColor = .init(hex: "#333333FF")
         $0.tintColor = .init(hex: "#FFFFFFFF")?.withAlphaComponent(0.7)
