@@ -140,10 +140,10 @@ final class MyPageViewModel {
         let didTapWithdrawal = selectedMenu
             .filter { $0 == .withdrawal }
             .map { _ in () }
+        
         pushToWebViewDriver = selectedMenu
             .compactMap { $0.linkString() }
             .asDriver(onErrorJustReturn: "")
-        
         
         let logoutResult = logoutTrigger
             .map { _ in CatSDKUser.logout() }
@@ -155,15 +155,15 @@ final class MyPageViewModel {
         
         let logoutAlertType = didTapLogout.map { _ in TwoButtonAlertType.warningLogoutWriting }
         
-        let successWithdrawal = withdrawalResult
+        let withdrawalSuccess = withdrawalResult
             .filter { $0 }
             .map { _ in () }
         
-        let failWithdrawal = withdrawalResult
+        let withdrawalFail = withdrawalResult
             .filter { !$0 }
             .map { _ in () }
         
-        popToLoginVCDriver = Observable.merge([logoutResult, successWithdrawal])
+        popToLoginVCDriver = Observable.merge([logoutResult, withdrawalSuccess])
             .asDriver(onErrorJustReturn: ())
         
         showTwoButtonAlertVCDrvier = Observable.merge([logoutAlertType, withdrawlAlertType])
@@ -179,9 +179,9 @@ final class MyPageViewModel {
         
         showBusinessProfileDriver = manageButtonTapped
             .map { _ in CatSDKUser.user().id }
-            .debug("타투이스트 비지니스 페이지로 이동 tattooistId:)")
             .asDriver(onErrorJustReturn: -1)
     }
+    
     deinit {
         print("메모리 해제 잘되나 TEST, 마이페이지")
     }
