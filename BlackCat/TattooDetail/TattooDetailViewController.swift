@@ -95,6 +95,9 @@ final class TattooDetailViewController: UIViewController {
 
             viewModel.bookmarkCountStringDriver
                 .drive(askBottomView.bookmarkCountLabel.rx.text)
+            
+            viewModel.tattooTitleStringDriver
+                .drive(tattooTitle.rx.text)
         }
 
         viewModel.문의하기Driver
@@ -152,6 +155,7 @@ final class TattooDetailViewController: UIViewController {
         
         super.init(nibName: nil, bundle: nil)
         view.backgroundColor = .white
+        hidesBottomBarWhenPushed = true
     }
 
     required init?(coder: NSCoder) {

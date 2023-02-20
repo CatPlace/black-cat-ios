@@ -31,7 +31,8 @@ class HomeViewModel {
     let homeItems: Driver<[HomeSection]>
     let pushToBookmarkViewController: Driver<Void>
     let pushToGenreViewController: Driver<Genre>
-
+    let pushToTattooDetailViewController: Driver<Int>
+    
     init() {
         let fetchedRecommendItems = viewWillAppear
             .flatMap { _ in CatSDKTattoo.recommendTattoos()}
@@ -72,15 +73,6 @@ class HomeViewModel {
         pushToBookmarkViewController = didTapHeartBarButtonItem
             .asDriver(onErrorJustReturn: ())
 
-        // Dummy Function입니다.
-        // API가 나오는대로 SDK에서 처리할 함수입니다.
-        func fetchTattoAlbumItems(at page: Int) -> Observable<[HomeModel.TattooAlbum]> {
-            return CatSDKTattoo.famousTattoos(page: page, size: 9)
-                .map { tattoos in
-                    tattoos.map { tattoo in .init(imageURLString: tattoo.imageURLStrings.first ?? "")}
-                }
-        }
-
         didTapCollectionViewItem
             .bind { indexPath in
                 switch indexPath.section {
@@ -97,6 +89,29 @@ class HomeViewModel {
                 list[index]
             }
             .asDriver(onErrorJustReturn: Model.Category(id: 0, name: "", count: 0))
+        
+        let selectedRecommendTattooId = didTapCollectionViewItem
+            .filter { $0.section == 1 }
+            .withLatestFrom(fetchedRecommendItems) { ($0, $1) }
+            .map { $1[$0.row].id }
+        
+        let selectedFamousTattooId = didTapCollectionViewItem
+            .debug("뭐가 눌렸나 ~")
+            .filter { $0.section == 3 }
+            .withLatestFrom(fetchedTattooAlbumItems) { ($0, $1) }
+            .map { $1[$0.row].tattooId }
+        
+        pushToTattooDetailViewController = Observable.merge([selectedRecommendTattooId,
+                                                             selectedFamousTattooId])
+            .asDriver(onErrorJustReturn: -1)
+            
+        
+        func fetchTattoAlbumItems(at page: Int) -> Observable<[HomeModel.TattooAlbum]> {
+            return CatSDKTattoo.famousTattoos(page: page, size: 9)
+                .map { tattoos in
+                    tattoos.map { tattoo in .init(tattooId: tattoo.id, imageURLString: tattoo.imageURLStrings.first ?? "")}
+                }
+        }
     }
     deinit {
         print("메모리 해제 잘되나 TEST, 홈")

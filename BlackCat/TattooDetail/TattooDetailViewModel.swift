@@ -42,7 +42,8 @@ struct TattooDetailViewModel {
     let createDateString: Driver<String>
     let tattooistProfileImageUrlString: Driver<String>
     let bookmarkCountStringDriver: Driver<String>
-
+    let tattooTitleStringDriver: Driver<String>
+    
     init(tattooId: Int) {
         didTapAskButton
             .subscribe { _ in print("Did Tap Ask Button") }
@@ -163,5 +164,9 @@ struct TattooDetailViewModel {
             .asDriver(onErrorJustReturn: false)
 
         imageCountDriver = tattooimageUrls.map { $0.count }
+        
+        tattooTitleStringDriver = tattooModelSuccess
+            .map { $0.title }
+            .asDriver(onErrorJustReturn: "error")
     }
 }

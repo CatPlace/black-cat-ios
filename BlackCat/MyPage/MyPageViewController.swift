@@ -110,7 +110,7 @@ final class MyPageViewController: UIViewController {
                 let vc = JHBusinessProfileViewController(viewModel: .init(tattooistId: tattooistId))
                 owner.navigationController?.pushViewController(vc, animated: true)
             }.disposed(by: disposeBag)
-//
+
         viewModel.showTwoButtonAlertVCDrvier
             .drive(with: self) { owner, type in
                 let vc = TwoButtonAlertViewController(viewModel: .init(type: type))
@@ -122,6 +122,12 @@ final class MyPageViewController: UIViewController {
             .drive(with: self) { owner, _ in
                 owner.disposeBag = DisposeBag()
                 owner.dismiss(animated: true)
+            }.disposed(by: disposeBag)
+        
+        viewModel.showTattooDetailDriver
+            .drive(with: self) { owner, tattooId in
+                let vc = TattooDetailViewController(viewModel: .init(tattooId: tattooId))
+                owner.navigationController?.pushViewController(vc, animated: true)
             }.disposed(by: disposeBag)
     }
 

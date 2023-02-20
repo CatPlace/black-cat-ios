@@ -89,6 +89,7 @@ final class MyPageViewModel {
     let showBusinessProfileDriver: Driver<Int>
     let showTwoButtonAlertVCDrvier: Driver<TwoButtonAlertType>
     let popToLoginVCDriver: Driver<Void>
+    let showTattooDetailDriver: Driver<Int>
     
     init(useCase: MyPageUseCase = MyPageUseCase()) {
         let profileSectionDataObservable = viewWillAppear
@@ -162,6 +163,15 @@ final class MyPageViewModel {
         let withdrawalFail = withdrawalResult
             .filter { !$0 }
             .map { _ in () }
+        
+        let selectedTattoo = selectedItem
+            .filter { $0.section == 1 }
+            .withLatestFrom(recentTattooSectionDataObservable) { ($0, $1) }
+            .map { $1[$0.row].id }
+            .share()
+        
+        showTattooDetailDriver = selectedTattoo
+            .asDriver(onErrorJustReturn: -1)
         
         popToLoginVCDriver = Observable.merge([logoutResult, withdrawalSuccess])
             .asDriver(onErrorJustReturn: ())
