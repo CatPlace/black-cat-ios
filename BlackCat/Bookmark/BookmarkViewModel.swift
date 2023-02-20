@@ -22,8 +22,6 @@ class BookmarkViewModel {
     let bookmarkPageViewModels: [BookmarkPostViewModel]
     
     // MARK: - Input
-    
-    let viewWillAppear = PublishRelay<Bool>()
     let didTapEditBarButtonItem = PublishRelay<String>()
     let didTapCancelBarButtonItem = PublishRelay<Void>()
     let currentShowingPageIndex = BehaviorRelay<Int>(value: 0)
@@ -34,11 +32,11 @@ class BookmarkViewModel {
     init() {
         let bookmarkTypes = PostType.allCases
         
-        let editModes: [BehaviorRelay<EditMode>] = bookmarkTypes
-            .map { _ in .init(value: .normal) }
+        let editMode = BehaviorRelay<EditMode>(value: .normal)
         
-        bookmarkPageViewModels = editModes.enumerated()
-            .map { .init(bookmarkModel: .init(postType: bookmarkTypes[$0], editMode: $1)) }
+        bookmarkPageViewModels = PostType.allCases
+            .map { .init(bookmarkModel: .init(postType: bookmarkTypes[$0.rawValue],
+                                              editMode: editMode)) }
         
         let didTapEditButton = didTapEditBarButtonItem
             .filter { EditMode(rawValue: $0) == .normal }
@@ -53,32 +51,29 @@ class BookmarkViewModel {
             didTapCancelBarButtonItem.asObservable()
         ])
         
+        let currentShowingPageIndex = currentShowingPageIndex
+            .distinctUntilChanged()
+        
         let currentPage = currentShowingPageIndex
             .compactMap { BookmarkType(rawValue: $0) }
         
-        let toggledEditMode = bookmarkTypes.enumerated().map { index, _ in
-            return toggleEvent
-                .withLatestFrom(currentPage)
-                .filter { $0.rawValue == index }
-                .withLatestFrom(editModes[index])
+        let toggledEditMode = toggleEvent
+                .withLatestFrom(editMode)
                 .map { $0.toggle()}
                 .share()
-        }
-        
-        let disposeBag = disposeBag
-        
-        bookmarkTypes.enumerated().forEach { index, _ in
-            toggledEditMode[index]
-                .bind(to: editModes[index])
-                .disposed(by: disposeBag)
-        }
         
         let currentPageEditMode = currentShowingPageIndex
-            .flatMap { editModes[$0] }
+            .flatMap { _ in editMode }
+            .share()
         
         updateModeDriver = Observable
-            .merge(toggledEditMode + [currentPageEditMode])
+            .merge([toggledEditMode, currentPageEditMode])
+            .distinctUntilChanged()
             .asDriver(onErrorJustReturn: .normal)
+        
+        toggledEditMode
+                .bind(to: editMode)
+                .disposed(by: disposeBag)
         
         didTapDeleteButton
             .withLatestFrom(currentPage)

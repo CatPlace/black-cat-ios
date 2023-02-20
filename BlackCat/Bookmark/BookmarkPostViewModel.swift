@@ -41,18 +41,22 @@ class BookmarkPostViewModel {
     let showWariningDeleteAlertDriver: Driver<[Int]>
     let showDeleteSuccessAlertDriver: Driver<Void>
     let showDeleteFailAlertDriver: Driver<Void>
-    
     let postItems: Driver<[SelectableImageCellViewModel]>
+    let showDetailVCDriver: Driver<PostType>
     
     init(bookmarkModel: BookmarkPostModel) {
-        let disPoseBag = disposeBag
+        
         let postAtViewWillAppear = viewWillAppear
             .flatMap { _ in CatSDKBookmark.bookmarkListInSpecificUser(postType: bookmarkModel.postType) }
             .share()
         
         let postItemsObservable = Observable.merge([postAtViewWillAppear, bookmarkModel.posts.asObservable()])
+            .share()
+            
         
-        let cellViewModels = postItemsObservable.map {
+        let cellViewModels = postItemsObservable
+            .do { _ in bookmarkModel.editMode.accept(.normal) }
+            .map {
             $0.map { SelectableImageCellViewModel(
                 editMode: bookmarkModel.editMode,
                 product: .init(tattooId: $0.postId,
@@ -100,9 +104,6 @@ class BookmarkPostViewModel {
         showDeleteFailAlertDriver = deleteFail
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
-        // 삭제 후 모드 변경
-        
-        
         
         let didSelectItemWithEditMode = didSelectItem
             .withLatestFrom(bookmarkModel.editMode) { ($0, $1) }
@@ -114,6 +115,10 @@ class BookmarkPostViewModel {
         let selectedItemInNormalMode = didSelectItemWithEditMode
             .filter { $0.1 == .normal }
             .map { $0.0 }
+        
+        showDetailVCDriver = selectedItemInNormalMode
+            .map { _ in bookmarkModel.postType }
+            .asDriver(onErrorJustReturn: .tattoo)
         
         let postIndexInfo = selectedItemInEditMode
             .withLatestFrom(bookmarkModel.deleteIndexList) { ($0, $1) }
@@ -162,6 +167,7 @@ class BookmarkPostViewModel {
                 cellViewModels[deletedIndex].isSelectEditViewRelay.accept(false)
             }.subscribe()
             .disposed(by: disposeBag)
+        
         _ = bookmarkModel.editMode
             .withLatestFrom(postItems) { ($0, $1) }
             .bind { editMode, cellViewModels in

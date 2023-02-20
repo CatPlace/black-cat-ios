@@ -17,7 +17,7 @@ class BMTabBarIndicator: UIView {
         }
     }
 
-    var cornerStyle: CornerStyle = .eliptical {
+    var cornerStyle: CornerStyle = .square {
         didSet {
             setNeedsLayout()
         }

@@ -113,7 +113,7 @@ class BookmarkPostViewController: UIViewController {
         view.addSubview(collectionView)
 
         collectionView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(5)
+            $0.top.equalToSuperview()
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
