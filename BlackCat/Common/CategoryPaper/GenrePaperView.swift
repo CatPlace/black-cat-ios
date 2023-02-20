@@ -163,6 +163,7 @@ class GenrePaperView: UIView {
     private let arrowImageView: UIImageView = {
         let imageView = UIImageView()
         let arrowImage = UIImage(systemName: "arrowtriangle.down.fill")
+        imageView.tintColor = .black
         arrowImage?.withRenderingMode(.alwaysOriginal)
         imageView.image = arrowImage
         return imageView
