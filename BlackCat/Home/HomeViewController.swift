@@ -120,7 +120,6 @@ class HomeViewController: UIViewController {
         bind()
         setNavigationBar()
         setUI()
-
     }
 
     required init?(coder: NSCoder) {

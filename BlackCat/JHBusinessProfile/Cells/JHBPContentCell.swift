@@ -84,7 +84,7 @@ final class JHBPContentCellViewModel {
         countDownDriver = tattooIndex
             .filter { $0.findedTattooIndex != nil }
             .map { index, tattooIndexPath, deleteTattooIndexList in
-                guard let index else { return ([], [], []) } // 위에 필터링 했기 때문에 강제 언래핑 해도 상관 업습니다.
+                guard let index else { return ([], [], []) } // 위에 필터링 했기 때문에 강제 언래핑 해도 상관 없습니다.
                 var temp = deleteTattooIndexList
                 temp.remove(at: index)
                 return (temp, temp.enumerated().filter { i, value in i >= index }.map { $1 }, tattooIndexPath )

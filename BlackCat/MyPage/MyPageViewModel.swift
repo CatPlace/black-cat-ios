@@ -182,4 +182,7 @@ final class MyPageViewModel {
             .debug("타투이스트 비지니스 페이지로 이동 tattooistId:)")
             .asDriver(onErrorJustReturn: -1)
     }
+    deinit {
+        print("메모리 해제 잘되나 TEST, 마이페이지")
+    }
 }

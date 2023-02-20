@@ -50,9 +50,7 @@ struct TattooDetailViewModel {
 
         let tattooModel = CatSDKTattoo.tattooDetail(tattooId: tattooId).share()
 
-        isGuestDriver = tattooModel
-            .map { $0.ownerId == CatSDKUser.user().id }
-            .asDriver(onErrorJustReturn: false)
+        isGuestDriver = .just(CatSDKUser.userType() == .guest)
 
         let a = tattooModel.flatMap { tattoo in
             BehaviorRelay<Bool>(value: tattoo.liked!)

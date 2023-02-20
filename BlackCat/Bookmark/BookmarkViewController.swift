@@ -43,30 +43,31 @@ class BookmarkViewController: UIViewController {
     // MARK: - Properties
 
     let pages: [UIViewController]
-    let viewModel = BookmarkViewModel(bookmarkPageViewModels: [BookmarkTattooViewModel(), BookmarkTattooViewModel()])
-    var editMode: EditMode = .normal {
-        didSet {
-            updateEditButton(editMode: editMode)
-            updateCancelButton(editMode: editMode)
-        }
-    }
+    var viewModel: BookmarkViewModel
 
     // MARK: - Binding
 
     private func bind(to viewModel: BookmarkViewModel) {
+        rx.viewWillAppear
+            .bind(to: viewModel.viewWillAppear)
+            .disposed(by: disposeBag)
+        
         cancelRightBarButtonItem.rx.tap
             .bind(to: viewModel.didTapCancelBarButtonItem)
             .disposed(by: disposeBag)
 
         editRightBarButtonItem.rx.tap
-            .bind(to: viewModel.didTapEditBarButtonItem)
+            .withUnretained(self)
+            .compactMap { owner, _ in
+                owner.editRightBarButtonItem.title
+            }.bind(to: viewModel.didTapEditBarButtonItem)
             .disposed(by: disposeBag)
 
         viewModel.updateModeDriver
             .drive(with: self) { owner, editMode in
-                owner.editMode = editMode
-            }
-            .disposed(by: disposeBag)
+                owner.updateEditButton(editMode: editMode)
+                owner.updateCancelButton(editMode: editMode)
+            }.disposed(by: disposeBag)
     }
 
     // MARK: - Functions
@@ -88,11 +89,9 @@ class BookmarkViewController: UIViewController {
 
     // MARK: - Initialize
 
-    init() {
-        self.pages = [
-            BookmarkTattooViewController(viewModel: viewModel.bookmarkPageViewModels[0]),
-            BookmarkMagazineViewController(viewModel: viewModel.bookmarkPageViewModels[1])
-        ]
+    init(viewModel: BookmarkViewModel = .init()) {
+        self.viewModel = viewModel
+        self.pages = viewModel.bookmarkPageViewModels.map { BookmarkPostViewController(viewModel: $0) }
 
         super.init(nibName: nil, bundle: nil)
         bind(to: viewModel)
@@ -124,7 +123,7 @@ class BookmarkViewController: UIViewController {
 
     private let magazineTabMenuButton: BMTabButton = {
         let button = BMTabButton()
-        button.title = "매거진"
+        button.title = "타투이스트"
         return button
     }()
 

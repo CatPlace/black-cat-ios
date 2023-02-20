@@ -16,45 +16,37 @@ class BookmarkMagazineViewController: UIViewController {
 
     let disposeBag = DisposeBag()
     enum Reusable {
-        static let magazineCell = ReusableCell<BMMagazineCell>()
+        static let magazineCell = ReusableCell<SelectableImageCell>()
     }
 
     // MARK: - Properties
 
-    let viewModel: BookmarkTattooViewModel
+    let viewModel: BookmarkPostViewModel
 
     // MARK: - Binding
 
-    private func bind(to viewModel: BookmarkTattooViewModel) {
-        rx.viewDidLoad
-            .bind(to: viewModel.viewDidLoad)
-            .disposed(by: disposeBag)
-
-        rx.viewWillDisappear
-            .map { _ in () }
-            .bind(to: viewModel.viewWillDisappear)
-            .disposed(by: disposeBag)
-
+    private func bind(to viewModel: BookmarkPostViewModel) {
         collectionView.rx.itemSelected
             .map { $0.row }
             .bind(to: viewModel.didSelectItem)
             .disposed(by: disposeBag)
 
-        viewModel.tattooItems
+        viewModel.postItems
             .drive(collectionView.rx.items(Reusable.magazineCell)) { [weak self] _, viewModel, cell in
-                self?.viewModel.editMode
-                    .map { $0 == .normal }
-                    .bind(to: viewModel.editModeIsNormal)
-                    .disposed(by: cell.disposeBag)
-
-                cell.bind(to: viewModel)
+//                self?.viewModel.editMode
+//                    .map { $0 == .normal }
+//                    .bind(to: viewModel.editModeIsNormal)
+//                    .disposed(by: cell.disposeBag)
+//
+//                cell.bind(to: viewModel)
+                let a = 1
             }
             .disposed(by: disposeBag)
     }
 
     // MARK: - Initialize
 
-    init(viewModel: BookmarkTattooViewModel) {
+    init(viewModel: BookmarkPostViewModel) {
         self.viewModel = viewModel
 
         super.init(nibName: nil, bundle: nil)

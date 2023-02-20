@@ -35,6 +35,8 @@ class HomeViewModel {
     init() {
         let fetchedRecommendItems = viewWillAppear
             .flatMap { _ in CatSDKTattoo.recommendTattoos()}
+            .share()
+        
         let startFetchItems = viewDidLoad.share()
         let didTapGenreItem = PublishRelay<Int>()
         let didTapRecommendItem = PublishRelay<Int>()
@@ -43,7 +45,8 @@ class HomeViewModel {
         let fetchedGenreList = startFetchItems
             .flatMap { _ in CatSDKNetworkCategory.rx.fetchCategories() }
             .map { [.init(id: 0, name: "전체보기", count: 0)] + $0 }
-
+            .share()
+        
         let fetchedTattooAlbumItems = nextFetchPage
             .distinct()
             .flatMap { nextFetchPage in fetchTattoAlbumItems(at: nextFetchPage) }
@@ -94,5 +97,8 @@ class HomeViewModel {
                 list[index]
             }
             .asDriver(onErrorJustReturn: Model.Category(id: 0, name: "", count: 0))
+    }
+    deinit {
+        print("메모리 해제 잘되나 TEST, 홈")
     }
 }

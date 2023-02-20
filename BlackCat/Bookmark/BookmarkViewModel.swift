@@ -11,69 +11,79 @@ import BlackCatSDK
 import RxCocoa
 import RxSwift
 
+enum BookmarkType: Int, CaseIterable {
+    case tattoo
+    case tattooist
+}
+
 class BookmarkViewModel {
-
+    
     let disposeBag = DisposeBag()
-    let bookmarkPageViewModels: [BookmarkTattooViewModel]
-
+    let bookmarkPageViewModels: [BookmarkPostViewModel]
+    
     // MARK: - Input
-
-    let viewDidLoad = PublishRelay<Void>()
-    let didTapEditBarButtonItem = PublishRelay<Void>()
+    
+    let viewWillAppear = PublishRelay<Bool>()
+    let didTapEditBarButtonItem = PublishRelay<String>()
     let didTapCancelBarButtonItem = PublishRelay<Void>()
     let currentShowingPageIndex = BehaviorRelay<Int>(value: 0)
-
+    
     // MARK: - Output
-
     let updateModeDriver: Driver<EditMode>
-
-    init(bookmarkPageViewModels: [BookmarkTattooViewModel]) {
-        self.bookmarkPageViewModels = bookmarkPageViewModels
-
-        let currentEditMode = BehaviorRelay<EditMode>(value: .normal)
-
-        let currentShowingPageViewModel = currentShowingPageIndex
-            .distinctUntilChanged()
-            .map { bookmarkPageViewModels[$0] }
-
-        let editModeWhenDidTapEditButton = didTapEditBarButtonItem
-            .withLatestFrom(currentEditMode) { $1 == .normal ? EditMode.edit : EditMode.normal }
-            .withLatestFrom(currentShowingPageViewModel) { editMode, viewModel in
-                viewModel.didTapEditButton.accept(editMode)
-                return editMode
-            }
-            .share()
-
-        let editModeWhenDidTapCancelButton = didTapCancelBarButtonItem
-            .withLatestFrom(currentEditMode) { $1 == .normal ? EditMode.edit : EditMode.normal }
-            .withLatestFrom(currentShowingPageViewModel) { editMode, viewModel -> (editMode: EditMode, viewModel: BookmarkTattooViewModel) in
-                return (editMode, viewModel)
-            }
-            .do { $0.viewModel.refreshSelectedCells.accept(()) }
-            .map { $0.editMode }
-
-        let updateEditMode = Observable.merge([
-            editModeWhenDidTapEditButton,
-            editModeWhenDidTapCancelButton
+    
+    init() {
+        let bookmarkTypes = PostType.allCases
+        
+        let editModes: [BehaviorRelay<EditMode>] = bookmarkTypes
+            .map { _ in .init(value: .normal) }
+        
+        bookmarkPageViewModels = editModes.enumerated()
+            .map { .init(bookmarkModel: .init(postType: bookmarkTypes[$0], editMode: $1)) }
+        
+        let didTapEditButton = didTapEditBarButtonItem
+            .filter { EditMode(rawValue: $0) == .normal }
+            .map { _ in () }
+        
+        let didTapDeleteButton = didTapEditBarButtonItem
+            .filter { EditMode(rawValue: $0) == .edit }
+            .map { _ in () }
+        
+        let toggleEvent = Observable.merge([
+            didTapEditButton,
+            didTapCancelBarButtonItem.asObservable()
         ])
-            .do { currentEditMode.accept($0) }
-            .withLatestFrom(currentShowingPageViewModel) { ($0, $1) }
-            .do { editMode, viewModel in viewModel.editMode.accept(editMode) }
-            .map { editMode, _ in editMode }
-
-        let childViewWillDisappearObservables = bookmarkPageViewModels
-            .map { $0.viewWillDisappear.asObservable() }
-
-        let viewWillDisappear = Observable.merge(childViewWillDisappearObservables)
-            .withLatestFrom(currentShowingPageViewModel) { _, showingPageViewModel in
-                showingPageViewModel.didTapEditButton.accept(.edit)
-            }
-
-        updateModeDriver = Observable.merge([
-            viewWillDisappear.map { _ in EditMode.normal },
-            updateEditMode
-        ])
-        .do { print("EditMode DRiver: \($0)") }
-        .asDriver(onErrorJustReturn: .normal)
+        
+        let currentPage = currentShowingPageIndex
+            .compactMap { BookmarkType(rawValue: $0) }
+        
+        let toggledEditMode = bookmarkTypes.enumerated().map { index, _ in
+            return toggleEvent
+                .withLatestFrom(currentPage)
+                .filter { $0.rawValue == index }
+                .withLatestFrom(editModes[index])
+                .map { $0.toggle()}
+                .share()
+        }
+        
+        let disposeBag = disposeBag
+        
+        bookmarkTypes.enumerated().forEach { index, _ in
+            toggledEditMode[index]
+                .bind(to: editModes[index])
+                .disposed(by: disposeBag)
+        }
+        
+        let currentPageEditMode = currentShowingPageIndex
+            .flatMap { editModes[$0] }
+        
+        updateModeDriver = Observable
+            .merge(toggledEditMode + [currentPageEditMode])
+            .asDriver(onErrorJustReturn: .normal)
+        
+        didTapDeleteButton
+            .withLatestFrom(currentPage)
+            .bind(with: self) {
+                $0.bookmarkPageViewModels[$1.rawValue].showWariningDeleteAlertTrigger.accept(())
+            }.disposed(by: disposeBag)
     }
 }

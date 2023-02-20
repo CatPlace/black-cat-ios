@@ -12,52 +12,62 @@ import RxCocoa
 import RxSwift
 import SnapKit
 
-class BookmarkTattooViewController: UIViewController {
+class BookmarkPostViewController: UIViewController {
 
     let disposeBag = DisposeBag()
     enum Reusable {
-        static let tattooCell = ReusableCell<BMTattooCell>()
+        static let postCell = ReusableCell<SelectableImageCell>()
     }
 
     // MARK: - Properties
 
-    let viewModel: BookmarkTattooViewModel
+    let viewModel: BookmarkPostViewModel
 
     // MARK: - Binding
 
-    private func bind(to viewModel: BookmarkTattooViewModel) {
-        rx.viewDidLoad
-            .bind(to: viewModel.viewDidLoad)
+    private func bind(to viewModel: BookmarkPostViewModel) {
+        rx.viewWillAppear
+            .bind(to: viewModel.viewWillAppear)
             .disposed(by: disposeBag)
-
-        rx.viewWillDisappear
-            .map { _ in () }
-            .bind(to: viewModel.viewWillDisappear)
-            .disposed(by: disposeBag)
-
+        
         collectionView.rx.itemSelected
             .map { $0.row }
             .bind(to: viewModel.didSelectItem)
             .disposed(by: disposeBag)
-
-        viewModel.tattooItems
-            .drive(collectionView.rx.items(Reusable.tattooCell)) { [weak self] _, viewModel, cell in
+        
+        viewModel.postItems
+            .drive(collectionView.rx.items(Reusable.postCell)) {  _, viewModel, cell in
                 print("=========Tattoo Items==========")
-                self?.viewModel.editMode
-                    .map { $0 == .normal }
-                    .bind(to: viewModel.editModeIsNormal)
-                    .disposed(by: self!.disposeBag)
 
                 cell.bind(to: viewModel)
             }
             .disposed(by: disposeBag)
+        
+        viewModel.showWariningDeleteAlertDriver
+            .drive(with: self) { owner, deletedIndexList in
+                let vc = TwoButtonAlertViewController(viewModel: .init(type: .warningDelete(deletedIndexList)))
+                vc.delegate = self
+                owner.present(vc, animated: true)
+            }.disposed(by: disposeBag)
+        
+        viewModel.showDeleteSuccessAlertDriver
+            .drive(with: self) { owner, deletedIndexList in
+                let vc = OneButtonAlertViewController(viewModel: .init(content: "삭제되었습니다.", buttonText: "확인"))
+                owner.present(vc, animated: true)
+            }.disposed(by: disposeBag)
+        
+        viewModel.showDeleteFailAlertDriver
+            .drive(with: self) { owner, deletedIndexList in
+                let vc = OneButtonAlertViewController(viewModel: .init(content: "삭제에 실패했습니다\n잠시후 다시 시도해주세요.", buttonText: "확인"))
+                owner.present(vc, animated: true)
+            }.disposed(by: disposeBag)
     }
 
     // MARK: - Function
 
     // MARK: - Initialize
 
-    init(viewModel: BookmarkTattooViewModel) {
+    init(viewModel: BookmarkPostViewModel) {
         self.viewModel = viewModel
 
         super.init(nibName: nil, bundle: nil)
@@ -81,7 +91,7 @@ class BookmarkTattooViewController: UIViewController {
     private lazy var collectionView: UICollectionView = {
         let cv = UICollectionView(frame: .zero,
                                   collectionViewLayout: collectionViewLayout)
-        cv.register(Reusable.tattooCell)
+        cv.register(Reusable.postCell)
         cv.showsVerticalScrollIndicator = false
         return cv
     }()
@@ -98,9 +108,7 @@ class BookmarkTattooViewController: UIViewController {
         layout.sectionInset = .init(top: 0, left: 0.5, bottom: 0, right: 0.5)
         return layout
     }()
-}
-
-extension BookmarkTattooViewController {
+    
     private func setUI() {
         view.addSubview(collectionView)
 
@@ -110,3 +118,22 @@ extension BookmarkTattooViewController {
         }
     }
 }
+
+extension BookmarkPostViewController: TwoButtonAlertViewDelegate {
+    func didTapRightButton(type: TwoButtonAlertType) {
+        switch type {
+        case .warningDelete(let shouldDeleteIndexList):
+            viewModel.deleteTrigger.accept(shouldDeleteIndexList)
+        default: break
+        }
+        
+        dismiss(animated: true)
+    }
+    
+    func didTapLeftButton(type: TwoButtonAlertType) {
+        dismiss(animated: true)
+    }
+    
+
+}
+
