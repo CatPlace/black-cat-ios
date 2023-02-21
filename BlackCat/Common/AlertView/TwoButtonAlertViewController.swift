@@ -39,7 +39,9 @@ enum TwoButtonAlertType {
         case .warningSecession:
             return "탈퇴 하시겠습니까?"
         case .warningDelete(let indexList):
-            return "\(indexList.count) 개를 삭제하시겠습니까?"
+            return indexList.count == 0
+            ? "삭제하시겠습니까?"
+            : "\(indexList.count) 개를 삭제하시겠습니까?"
         }
     }
     

@@ -25,9 +25,14 @@ struct OneButtonAlertViewModel {
     }
 }
 
+protocol OneButtonAlertDelegate: AnyObject {
+    func didTapButton()
+}
+
 class OneButtonAlertViewController: UIViewController {
     // MARK: - Properties
     var disposeBag = DisposeBag()
+    weak var delegate: OneButtonAlertDelegate?
     
     // MARK: - Binding
     func bind(to viewModel: OneButtonAlertViewModel) {
@@ -47,7 +52,8 @@ class OneButtonAlertViewController: UIViewController {
             .when(.recognized)
             .withUnretained(self)
             .bind { owner, _ in
-                owner.dismiss(animated: true)
+                    owner.dismiss(animated: true)
+                    owner.delegate?.didTapButton()
             }.disposed(by: disposeBag)
     }
     
