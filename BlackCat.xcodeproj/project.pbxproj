@@ -87,6 +87,9 @@
 		78B194DE2981215A0092244B /* GenreInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B194DD2981215A0092244B /* GenreInputCell.swift */; };
 		78B194E029812D590092244B /* TattooTypeInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B194DF29812D590092244B /* TattooTypeInputView.swift */; };
 		78B194E2298135570092244B /* TattooTypeInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B194E1298135570092244B /* TattooTypeInputViewModel.swift */; };
+		78B9D5F929A49CAD00ACD735 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9D5F829A49CAD00ACD735 /* String+.swift */; };
+		78B9D5FB29A49D8E00ACD735 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9D5FA29A49D8E00ACD735 /* Date+.swift */; };
+		78B9D5FE29A4A0E300ACD735 /* TattooistProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9D5FD29A4A0E300ACD735 /* TattooistProfileView.swift */; };
 		78C8D470293BAD59006A4DF5 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8D46F293BAD59006A4DF5 /* LoginViewModel.swift */; };
 		78D3E93B2977C04B0015BA75 /* TextInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D3E93A2977C04B0015BA75 /* TextInputView.swift */; };
 		78D3E93D2977C84A0015BA75 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D3E93C2977C84A0015BA75 /* Constant.swift */; };
@@ -327,6 +330,9 @@
 		78B194DD2981215A0092244B /* GenreInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreInputCell.swift; sourceTree = "<group>"; };
 		78B194DF29812D590092244B /* TattooTypeInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooTypeInputView.swift; sourceTree = "<group>"; };
 		78B194E1298135570092244B /* TattooTypeInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooTypeInputViewModel.swift; sourceTree = "<group>"; };
+		78B9D5F829A49CAD00ACD735 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		78B9D5FA29A49D8E00ACD735 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		78B9D5FD29A4A0E300ACD735 /* TattooistProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooistProfileView.swift; sourceTree = "<group>"; };
 		78C8D46F293BAD59006A4DF5 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		78D3E93A2977C04B0015BA75 /* TextInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputView.swift; sourceTree = "<group>"; };
 		78D3E93C2977C84A0015BA75 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
@@ -696,6 +702,7 @@
 		7867A62629374D0500FC1160 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				78B9D5FC29A4A0D300ACD735 /* ProfileView */,
 				7847DA6E29A2281100944F4B /* Constant */,
 				78280144299CBBF300DC1509 /* AlertView */,
 				78277E842966C314004CFDF4 /* WebView */,
@@ -849,6 +856,14 @@
 				78B00BB528F5661000A9915D /* RecentMagazineFooterView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		78B9D5FC29A4A0D300ACD735 /* ProfileView */ = {
+			isa = PBXGroup;
+			children = (
+				78B9D5FD29A4A0E300ACD735 /* TattooistProfileView.swift */,
+			);
+			path = ProfileView;
 			sourceTree = "<group>";
 		};
 		78D3E9332977BDC90015BA75 /* Profile */ = {
@@ -1062,6 +1077,8 @@
 				787D5842293CD6BC00A3E610 /* UIFont+.swift */,
 				7828DB59295C40240053B0A0 /* UITextField+.swift */,
 				78B194D4298058480092244B /* CGPoint+.swift */,
+				78B9D5F829A49CAD00ACD735 /* String+.swift */,
+				78B9D5FA29A49D8E00ACD735 /* Date+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1408,6 +1425,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E2D8C5E28F2EE69004B514D /* HomeTattooAlbumCellViewModel.swift in Sources */,
+				78B9D5FE29A4A0E300ACD735 /* TattooistProfileView.swift in Sources */,
 				784B021D29375713004ED20A /* MagazineModel.swift in Sources */,
 				7828DB63295C99410053B0A0 /* JHBPThumbnailImageCell.swift in Sources */,
 				784B02302937579E004ED20A /* MyPageTestUseCase.swift in Sources */,
@@ -1484,11 +1502,13 @@
 				8E88488D2949C4A90039F99A /* RecentTattooHeaderView.swift in Sources */,
 				7828DB5F295C912F0053B0A0 /* JHBusinessProfileViewModel.swift in Sources */,
 				8E7E9CDD291C8EA700D09157 /* BMTabMenuAnimation.swift in Sources */,
+				78B9D5FB29A49D8E00ACD735 /* Date+.swift in Sources */,
 				78431C9A297B13770002F1E7 /* ProductEditViewModel.swift in Sources */,
 				B1EE64F828FA4ABE0055A4F1 /* FilterExampleViewController.swift in Sources */,
 				78277E8D296735CB004CFDF4 /* ProductEditViewController.swift in Sources */,
 				8E8848892949C4170039F99A /* FilterCellViewModel.swift in Sources */,
 				B160DBF928FF3CBD00C0D682 /* BaseCollectionViewCell.swift in Sources */,
+				78B9D5F929A49CAD00ACD735 /* String+.swift in Sources */,
 				8E8848872949C3FE0039F99A /* GenreViewController.swift in Sources */,
 				78858BEC28F6F4E400EC7BF7 /* MagazineSection.swift in Sources */,
 				B1D3362928F1AC1200826636 /* MagazineDetailEmptyCell.swift in Sources */,
