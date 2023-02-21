@@ -40,9 +40,7 @@ final class TabBarViewController: UITabBarController {
     
     func bind() {
         Observable.merge([.just(CatSDKUser.user().imageUrl), CatSDKUser.imageUrlString()])
-            .debug("유저 이미지 유알엘 스트링")
             .flatMap(UIImage.convertToUIImage)
-            .debug("탭바 이미지 변경")
             .asDriver(onErrorJustReturn: nil)
             .drive(with: self) { owner, image in
                 owner.updateMyPageButtonImage(image)

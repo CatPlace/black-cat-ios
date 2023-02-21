@@ -52,6 +52,9 @@ final class JHBusinessProfileViewController: UIViewController {
     // MARK: - Bindings
     func bind(viewModel: JHBusinessProfileViewModel) {
         disposeBag.insert {
+            rx.viewDidLoad
+                .bind(to: viewModel.viewDidLoad)
+            
             rx.viewWillAppear
                 .map { _ in () }
                 .bind(to: viewModel.viewWillAppear)
@@ -107,7 +110,7 @@ final class JHBusinessProfileViewController: UIViewController {
                     owner.present(vc, animated: true)
                     owner.navigationController?.popViewController(animated: true)
                 }
-        
+
         // TODO: - postType별 id로 상세페이지 들어가기
 //            viewModel.showDetailVCDriver
 //                .drive(with: self) { owner, nextVCInfo in
@@ -193,7 +196,6 @@ final class JHBusinessProfileViewController: UIViewController {
     
     // MARK: Initialize
     init(viewModel: JHBusinessProfileViewModel) {
-        
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         bind(viewModel: viewModel)

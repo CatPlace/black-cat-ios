@@ -15,7 +15,7 @@ class BookmarkPostModel {
     let postType: PostType
     let editMode: BehaviorRelay<EditMode>
     let deleteIndexList = BehaviorRelay<[Int]>(value: [])
-    let posts = BehaviorRelay<[Model.Bookmark]>(value: [])
+    let posts = PublishRelay<[Model.Bookmark]>()
     
     init(postType: PostType, editMode: BehaviorRelay<EditMode>) {
         self.postType = postType

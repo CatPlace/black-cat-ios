@@ -96,7 +96,6 @@ class HomeViewModel {
             .map { $1[$0.row].id }
         
         let selectedFamousTattooId = didTapCollectionViewItem
-            .debug("뭐가 눌렸나 ~")
             .filter { $0.section == 3 }
             .withLatestFrom(fetchedTattooAlbumItems) { ($0, $1) }
             .map { $1[$0.row].tattooId }

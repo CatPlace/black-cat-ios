@@ -19,6 +19,7 @@ final class JHBusinessProfileViewModel {
     let headerViewModel: JHBPContentSectionHeaderViewModel = .init()
     
     // MARK: - Inputs
+    let viewDidLoad = PublishRelay<Void>()
     let cellWillAppear = PublishRelay<CGFloat>()
     let cellDidAppear = PublishRelay<CGFloat>()
     let viewWillAppear = PublishRelay<Void>()
@@ -51,8 +52,8 @@ final class JHBusinessProfileViewModel {
             .filter { isOwner }
             .map { _ in CatSDKTattooist.localTattooistInfo() }
         
-        let fetchedTattooistInfo = fetchTrigger
-            .filter { CatSDKTattooist.localTattooistInfo() == .empty || !isOwner}
+        let fetchedTattooistInfo = viewDidLoad
+//            .filter { CatSDKTattooist.localTattooistInfo() == .empty || !isOwner}
             .flatMap { _ in
                 
                 let fetchedProfileData = CatSDKTattooist.profile(tattooistId: tattooistId).share()
@@ -77,7 +78,10 @@ final class JHBusinessProfileViewModel {
         serverErrorDriver = fetchedTattooistInfoFail
             .asDriver(onErrorJustReturn: ())
         
-        let currentTattooistInfo = Observable.merge([localTattooistInfo.filter { $0 != .empty }, fetchedTattooistInfoSuccess]).share()
+        let currentTattooistInfo = Observable.merge([
+            localTattooistInfo.filter { $0 != .empty },
+            fetchedTattooistInfoSuccess
+        ]).share()
         
         sections = currentTattooistInfo
             .map { configurationSections(
@@ -92,9 +96,9 @@ final class JHBusinessProfileViewModel {
             .map { Int($0) }
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: 0)
-
+        
         // TODO: - 에러 처리
-
+        
         showTattooDetail = selectedTattooIndex
             .map { CatSDKTattooist.localTattooistInfo().tattoos[$0].tattooId }
             .asDriver(onErrorJustReturn: -1)
@@ -105,25 +109,31 @@ final class JHBusinessProfileViewModel {
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: .product)
         
-        let deleteReuslt = deleteProductTrigger.withLatestFrom(currentTattooistInfo) { (index: $0, tattooist: $1) }
+        let deleteReuslt = deleteProductTrigger
+            .withLatestFrom(currentTattooistInfo) { (index: $0, tattooist: $1) }
             .map { indexList, tattooist in
                 indexList.map { tattooist.tattoos[$0].tattooId }
             }.flatMap { CatSDKTattooist.deleteTattoo(tattooIds: $0) }
             .share()
-            
+        
         let deleteSuccess = deleteReuslt.filter { $0.0 == $0.1 }
+        
         // TODO: - 에러 처리
         let deleteFail = deleteReuslt.filter { $0.0 != $0.1 }
         
         deleteSuccessDriver = deleteSuccess
-            .withLatestFrom(deleteProductTrigger)
+            .withLatestFrom(deleteReuslt)
+            .map { $0.1 }
             .map { ids in
-                var userInfo = CatSDKTattooist.localTattooistInfo()
-                userInfo.tattoos.remove(atOffsets: IndexSet(ids))
-                return CatSDKTattooist.updateLocalTattooistInfo(tattooistInfo: userInfo)
+                ids.forEach {
+                    CatSDKTattoo.updateRecentViewTattoos(deletedTattooId: $0)
+                    CatSDKTattooist.updateTattooist(deletedTattooId: $0)
+                }
+                return ()
             }.asDriver(onErrorJustReturn: ())
         
-        deleteFailDriver = deleteFail.map { _ in () }
+        deleteFailDriver = deleteFail
+            .map { _ in () }
             .asDriver(onErrorJustReturn: ())
         
         let isBookmarkedTattooWhenFirstLoad = CatSDKBookmark.isBookmarked(postId: tattooistId)
@@ -131,13 +141,12 @@ final class JHBusinessProfileViewModel {
         let isBookmarkedTattooAfterTapBookmarkButton =
         didTapBookmarkButton
             .map { $0 == 1 ? false : true }
-            .debug("좋이요👍👍👍")
-
+        
         let isBookmarkedTattoo = Observable.merge([
             isBookmarkedTattooWhenFirstLoad,
             isBookmarkedTattooAfterTapBookmarkButton
         ]).share()
-
+        
         shouldFillHeartButton = isBookmarkedTattoo
             .map { $0 }
             .asDriver(onErrorJustReturn: false)
@@ -149,7 +158,7 @@ final class JHBusinessProfileViewModel {
             .asDriver(onErrorJustReturn: ())
         
         let bookmarkCountWhenFirstLoad = CatSDKNetworkBookmark.rx.countOfBookmark(postId: tattooistId).map { $0.counts }
-
+        
         let changeBookmarkCount = isBookmarkedTattoo // 북마크 탭
             .withLatestFrom(isBookmarkedTattooWhenFirstLoad) { ($0, $1) }
             .withLatestFrom(bookmarkCountWhenFirstLoad) { ($0.0, $0.1, $1) }
@@ -160,7 +169,7 @@ final class JHBusinessProfileViewModel {
                     return count + (changedIsBookmarked ? 1 : 0)
                 }
             }
-
+        
         bookmarkCountStringDriver = Observable.merge([
             bookmarkCountWhenFirstLoad,
             changeBookmarkCount
@@ -172,20 +181,20 @@ final class JHBusinessProfileViewModel {
             .withLatestFrom(Observable.combineLatest(isBookmarkedTattooWhenFirstLoad, isBookmarkedTattooAfterTapBookmarkButton))
             .filter { $0.0 != $0.1 }
             .map { $0.1 }
-
+        
         let bookmarkOnTrigger = changedBookmark
             .filter { $0 }
             .map { _ in () }
-
+        
         let bookmarkOffTrigger = changedBookmark
             .filter { !$0 }
             .map { _ in () }
-
+        
         bookmarkOnTrigger
             .flatMap { CatSDKNetworkBookmark.rx.bookmarkPost(postId: tattooistId) }
             .subscribe()
             .disposed(by: disposeBag)
-
+        
         bookmarkOffTrigger
             .flatMap {
                 CatSDKNetworkBookmark.rx.deleteBookmarkedPost(postId: tattooistId)
@@ -200,12 +209,12 @@ final class JHBusinessProfileViewModel {
             
             let contentProfile: JHBusinessProfileItem = .contentItem(.init(contentModel: .init(order: 0), profile: profileDescription, products: [], priceInfo: ""))
             let contentProductCellViewModel: JHBPContentCellViewModel = .init(contentModel: .init(order: 1),
-                                                    profile: "",
-                                                    products: products,
-                                                    priceInfo: "")
+                                                                              profile: "",
+                                                                              products: products,
+                                                                              priceInfo: "")
             
             let contentProduct: JHBusinessProfileItem = .contentItem(contentProductCellViewModel)
-                                                                     
+            
             let contentPriceInfo: JHBusinessProfileItem = .contentItem(.init(contentModel: .init(order: 2), profile: "", products: [], priceInfo: priceInformation))
             
             let contentSection = JHBusinessProfileCellSection.contentCell([contentProfile, contentProduct, contentPriceInfo])
