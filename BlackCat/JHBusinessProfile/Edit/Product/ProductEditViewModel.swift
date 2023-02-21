@@ -58,9 +58,7 @@ class ProductEditViewModel {
     init(tattoo: Model.Tattoo? = nil) {
         let tattooId = tattoo?.id
         let fetcedGenreList = CatSDKNetworkCategory.rx.fetchCategories()
-            .debug("장르 ~")
             .share()
-        
         let initialImageUrlStrings = tattoo?.imageURLStrings ?? []
         let type: ProductInputType = tattoo == nil ? .add : .modify
         pageTitleDriver = .just(type.title())
@@ -68,7 +66,7 @@ class ProductEditViewModel {
         titleInputViewModel = .init(type: .tattooTitle, content: tattoo?.title)
         tattooImageInputViewModel = .init()
         descriptionInputViewModel = .init(title: "내용", content: tattoo?.description ?? "")
-        genreInputViewModel = .init(genres: fetcedGenreList, selectedGenres: tattoo?.categoryId ?? [])
+        genreInputViewModel = .init(genres: fetcedGenreList, selectedGenres: tattoo?.categoryIds ?? [])
         
         let addedResultImages = imageListInputRelay
             .withLatestFrom(tattooImageInputViewModel.imageDataListRelay) { inputImages, prevImages in
@@ -102,7 +100,6 @@ class ProductEditViewModel {
             titleInputViewModel.inputStringRelay,
             images,
             descriptionInputViewModel.inputStringRelay,
-            
             //TODO: - 가격 삽입
             Observable.just("0"),
             genreInputViewModel.selectedGenresRelay
@@ -130,9 +127,7 @@ class ProductEditViewModel {
         // UIImage타입이면 addedImages
         let inputsWhenDidTapCompleteButton = didTapCompleteButton
             .withLatestFrom(inputs)
-            .debug("눌렀을 때 데이터")
             .map { validCheckedInputs(type: $0.type, title: $0.title, images: $0.images, description: $0.description, price: $0.price, categoryIdList: $0.categoryIdList) }
-            .debug("전환후데이터")
             .share()
         
         let updateResult = inputsWhenDidTapCompleteButton
@@ -141,7 +136,7 @@ class ProductEditViewModel {
                 guard let request else { return Observable.just(Model.TattooThumbnail(tattooId: -1, imageUrlString: "")) }
                 let tattooInfo = request.0
                 let imageDataList = request.1
-                return CatSDKTattooist.updateProduct(tattooistId: tattooId, tattooImageDatas: imageDataList, tattooInfo: tattooInfo)
+                return CatSDKTattooist.updateProduct(tattooId: tattooId, tattooImageDatas: imageDataList, tattooInfo: tattooInfo)
             }.share()
         
         let validCheckFail = inputsWhenDidTapCompleteButton
@@ -175,7 +170,7 @@ class ProductEditViewModel {
         
         func shouldDeleteImages(inputImages: [Any]) -> [String] {
             initialImageUrlStrings.filter { initialImageUrlString in
-                inputImages.contains(where: { inputImage in
+                !inputImages.contains(where: { inputImage in
                     guard let imageUrlString = inputImage as? String else { return false }
                     return imageUrlString == initialImageUrlString
                 })
@@ -185,7 +180,7 @@ class ProductEditViewModel {
         func shouldUpdateImages(inputImages: [Any]) -> [Data] {
             inputImages
                 .compactMap { $0 as? UIImage }
-                .compactMap { $0.resize(newWidth: 20).jpegData(compressionQuality: 0.1) }
+                .compactMap { $0.resize(newWidth: 5).jpegData(compressionQuality: 0.1) }
         }
         
         func validCheckedInputs(

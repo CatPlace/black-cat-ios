@@ -42,7 +42,7 @@ final class JHBusinessProfileViewModel {
     let bookmarkCountStringDriver: Driver<String>
     let serverErrorDriver: Driver<Void>
     
-    init(tattooistId: Int) {
+    init(tattooistId: Int, profileId: Int) {
         // TODO: - 유저 구분
         let isOwner = tattooistId == CatSDKUser.user().id
         self.isOwner = isOwner
@@ -56,7 +56,7 @@ final class JHBusinessProfileViewModel {
 //            .filter { CatSDKTattooist.localTattooistInfo() == .empty || !isOwner}
             .flatMap { _ in
                 
-                let fetchedProfileData = CatSDKTattooist.profile(tattooistId: tattooistId).share()
+                let fetchedProfileData = CatSDKTattooist.profile(profileId: profileId).share()
                 let fetchedProductsData = CatSDKTattooist.products(tattooistId: tattooistId).share()
                 let fetchedPriceInfoData = CatSDKTattooist.priceInfo(tattooistId: tattooistId).share()
                 return Observable.combineLatest(fetchedProfileData, fetchedProductsData, fetchedPriceInfoData) {
@@ -136,7 +136,7 @@ final class JHBusinessProfileViewModel {
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
         
-        let isBookmarkedTattooWhenFirstLoad = CatSDKBookmark.isBookmarked(postId: tattooistId)
+        let isBookmarkedTattooWhenFirstLoad = CatSDKBookmark.isBookmarked(postId: profileId)
         
         let isBookmarkedTattooAfterTapBookmarkButton =
         didTapBookmarkButton
@@ -157,7 +157,7 @@ final class JHBusinessProfileViewModel {
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
         
-        let bookmarkCountWhenFirstLoad = CatSDKNetworkBookmark.rx.countOfBookmark(postId: tattooistId).map { $0.counts }
+        let bookmarkCountWhenFirstLoad = CatSDKNetworkBookmark.rx.countOfBookmark(postId: profileId).map { $0.counts }
         
         let changeBookmarkCount = isBookmarkedTattoo // 북마크 탭
             .withLatestFrom(isBookmarkedTattooWhenFirstLoad) { ($0, $1) }
@@ -191,13 +191,13 @@ final class JHBusinessProfileViewModel {
             .map { _ in () }
         
         bookmarkOnTrigger
-            .flatMap { CatSDKNetworkBookmark.rx.bookmarkPost(postId: tattooistId) }
+            .flatMap { CatSDKNetworkBookmark.rx.bookmarkPost(postId: profileId) }
             .subscribe()
             .disposed(by: disposeBag)
         
         bookmarkOffTrigger
             .flatMap {
-                CatSDKNetworkBookmark.rx.deleteBookmarkedPost(postId: tattooistId)
+                CatSDKNetworkBookmark.rx.deleteBookmarkedPost(postId: profileId)
             }.subscribe()
             .disposed(by: disposeBag)
         
