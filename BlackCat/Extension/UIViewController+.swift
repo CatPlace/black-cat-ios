@@ -62,7 +62,9 @@ extension UIViewController {
     func appendNavigationRightLabel(_ sender: UIView) {
         let titleLabel = UIBarButtonItem(customView: sender)
         if navigationItem.rightBarButtonItems == nil {
-            navigationItem.rightBarButtonItems = []
+            let backButtonSpacer = UIBarButtonItem()
+            backButtonSpacer.width = 3
+            navigationItem.rightBarButtonItems = [backButtonSpacer]
         }
         navigationItem.rightBarButtonItems?.append(titleLabel)
     }
