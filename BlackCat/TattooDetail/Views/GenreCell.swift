@@ -8,7 +8,7 @@
 import UIKit
 
 import SnapKit
-
+import VisualEffectView
 final class GenreCell: UICollectionViewCell {
 
     func configure(with title: String) {
@@ -31,9 +31,17 @@ final class GenreCell: UICollectionViewCell {
 
     private let genreLabel: UILabel = {
         $0.textColor = .white
-        $0.font = .systemFont(ofSize: 14, weight: .bold)
+        $0.font = .appleSDGoithcFont(size: 14, style: .bold)
         return $0
     }(UILabel())
+    
+    let blurEffectView: VisualEffectView = {
+        let v = VisualEffectView()
+        v.colorTintAlpha = 1
+        v.backgroundColor = .white.withAlphaComponent(0.4)
+        v.blurRadius = 5
+        return v
+    }()
 }
 
 extension GenreCell {
@@ -41,10 +49,15 @@ extension GenreCell {
         layer.cornerRadius = 14
 
         contentView.layer.cornerRadius = 14
-        contentView.backgroundColor = .lightGray.withAlphaComponent(0.3)
-
+        contentView.clipsToBounds = true
+        
+        contentView.addSubview(blurEffectView)
         contentView.addSubview(genreLabel)
 
+        blurEffectView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
         genreLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
