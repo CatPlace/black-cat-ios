@@ -26,10 +26,17 @@ class ProductEditViewController: VerticalScrollableViewController {
             .bind(to: viewModel.didTapCompleteButton)
             .disposed(by: disposeBag)
         
-        viewModel.showCompleteAlertViewDriver
-            .drive(with: self) { owner, _ in
-                print("TODO: 업데이트 됐다고 Alert~")
-                owner.dismiss(animated: true)
+        viewModel.dismissDriver
+            .drive(with: self) { owner, message in
+                let vc = OneButtonAlertViewController(viewModel: .init(content: message, buttonText: "확인"))
+                owner.present(vc, animated: true)
+                vc.delegate = self
+            }.disposed(by: disposeBag)
+        
+        viewModel.OneButtonAlertDriver
+            .drive(with: self) { owner, message in
+                let vc = OneButtonAlertViewController(viewModel: .init(content: message, buttonText: "확인"))
+                owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
         
         RxKeyboard.instance.visibleHeight
@@ -38,11 +45,7 @@ class ProductEditViewController: VerticalScrollableViewController {
                 owner.updateView(with: keyboardVisibleHeight)
             }.disposed(by: disposeBag)
         
-        viewModel.limitExcessDriver
-            .drive { _ in
-                // TODO: - 알러트
-                print("개수 초과 !")
-            }.disposed(by: disposeBag)
+
         
         viewModel.imageListDrvier
             .drive(viewModel.tattooImageInputViewModel.imageDataListRelay)
@@ -60,6 +63,11 @@ class ProductEditViewController: VerticalScrollableViewController {
                 let vc = TwoButtonAlertViewController(viewModel: .init(type: .warningDelete(indexList)))
                 vc.delegate = self
                 owner.present(vc, animated: true)
+            }.disposed(by: disposeBag)
+        
+        viewModel.pageTitleDriver
+            .drive(with: self) { owner, title in
+                owner.configure(title: title)
             }.disposed(by: disposeBag)
     }
     
@@ -93,10 +101,10 @@ class ProductEditViewController: VerticalScrollableViewController {
         }
     }
     
-    func configure() {
+    func configure(title: String) {
         view.backgroundColor = .init(hex: "#F4F4F4FF")
         appendNavigationLeftBackButton()
-        appendNavigationLeftLabel(title: viewModel.type.title())
+        appendNavigationLeftLabel(title: title)
     }
     
     // MARK: - Initializer
@@ -120,7 +128,6 @@ class ProductEditViewController: VerticalScrollableViewController {
         super.viewDidLoad()
         setUI()
         bind(to: viewModel)
-        configure()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -227,6 +234,10 @@ extension ProductEditViewController: TwoButtonAlertViewDelegate {
     func didTapLeftButton(type: TwoButtonAlertType) {
         dismiss(animated: true)
     }
-    
-    
+}
+
+extension ProductEditViewController: OneButtonAlertDelegate {
+    func didTapButton() {
+        didTapBackButton()
+    }
 }
