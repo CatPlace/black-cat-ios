@@ -61,12 +61,23 @@ class MyPageMenuCell: MyPageBaseCell {
         $0.font = .appleSDGoithcFont(size: 16, style: .bold)
         return $0
     }(UILabel())
+    let chevronRightImageView: UIImageView = {
+        $0.image = .init(named: "chevronRightWhite")
+        return $0
+    }(UIImageView())
     
     func setUI() {
         addSubview(titleLabel)
         
         titleLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
+            $0.centerY.equalToSuperview()
+        }
+        
+        addSubview(chevronRightImageView)
+        
+        chevronRightImageView.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(18)
             $0.centerY.equalToSuperview()
         }
     }

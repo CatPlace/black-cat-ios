@@ -147,7 +147,7 @@ class MyPageProfileCell: MyPageBaseCell {
         return $0
     }(UILabel())
     let chevronRightImageView: UIImageView = {
-        $0.image = UIImage(systemName: "chevron.right")
+        $0.image = UIImage(named: "chevronRightPurple")
         $0.tintColor = .init(hex: "#7210A0FF")
         return $0
     }(UIImageView())
@@ -256,7 +256,7 @@ extension MyPageProfileCell {
             $0.leading.equalTo(manageLabel.snp.trailing).offset(10)
             $0.width.equalTo(7)
             $0.height.equalTo(14)
-            $0.centerY.equalToSuperview()
+            $0.centerY.equalTo(manageLabel).offset(-1)
         }
         
     }
