@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import RxRelay
 import RxGesture
+import RxKeyboard
 import BlackCatSDK
 
 class ProfileViewController: UIViewController {
@@ -34,6 +35,12 @@ class ProfileViewController: UIViewController {
                 .bind(to: viewModel.completeButtonTapped)
         }
         
+        RxKeyboard.instance.visibleHeight
+            .skip(1)
+            .drive(with: self) { owner, keyboardVisibleHeight in
+                owner.updateView(with: keyboardVisibleHeight)
+            }.disposed(by: disposeBag)
+        
         viewModel.completeAlertDriver
             .drive(with: self) { owner, _ in
                 // TODO: Alert
@@ -53,6 +60,23 @@ class ProfileViewController: UIViewController {
     }
     
     // MARK: - Function
+    func updateView(with height: CGFloat) {
+         scrollView.snp.updateConstraints {
+             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(height)
+         }
+         
+         completeButtonLabel.snp.updateConstraints {
+             $0.bottom.equalToSuperview().inset(
+                 height == 0
+                 ? 0
+                 : height
+             )
+         }
+         UIView.animate(withDuration: 0.4) {
+             self.view.layoutIfNeeded()
+         }
+     }
+    
     func openImageLibrary() {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
