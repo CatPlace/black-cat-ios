@@ -49,20 +49,40 @@ enum GenreType: Int, CaseIterable {
         case .캐릭터: return "캐릭터"
         }
     }
+    
+//    static func id(_ title: String) -> Int {
+//        allGenre.firstIndex { $0.title == title } ?? 0
+//    }
 
-    static func id(_ title: String) -> Int {
-        allGenre.firstIndex { $0.title == title } ?? 0
+    var imageName: String {
+        switch self {
+        case .전체보기: return "all"
+        case .레터링: return "lettering"
+        case .미니타투: return "mini"
+        case .감성타투: return "감성타투"
+        case .이레즈미: return "irezumi"
+        case .블랙그레이: return "blackAndGray"
+        case .라인워크: return "lineWork"
+        case .헤나: return "henna"
+        case .커버업: return "coverUp"
+        case .뉴스쿨: return "newSchool"
+        case .올드스쿨: return "oldSchool"
+        case .잉크스플래쉬: return "inkSplash"
+        case .치카노: return "chicano"
+        case .컬러: return "color"
+        case .캐릭터: return "charactor"
+        }
     }
 }
 
 class GenreViewModel {
 
     let disposeBag = DisposeBag()
-    var genre: Model.Category
+    var genre: GenreType
 
     // MARK: - Input
 
-    private let genreList = Observable<[String]>.just(["전체보기", "레터링", "미니타투", "감성 타투", "이레즈미", "블랙&그레이", "라인워크", "헤나", "커버업", "뉴스쿨", "올드스쿨", "잉크 스플래쉬", "치카노", "컬러", "캐릭터"])
+    private let genreList = Observable<[String]>.just(GenreType.allCases.map { $0.title })
     let viewWillAppear = PublishRelay<Void>()
     let filterViewDidDismiss = PublishRelay<Void>()
     let selectedDropDownItemRow = PublishRelay<Int>()
@@ -75,7 +95,7 @@ class GenreViewModel {
     let genreItems: Driver<[CommonFullImageCellViewModel]>
     let pushToTattooDetailVC: Driver<TattooDetailViewModel>
 
-    init(genre: Model.Category) {
+    init(genre: GenreType) {
         self.genre = genre
 
         let filteredTrigger = Observable.merge([
@@ -108,7 +128,7 @@ class GenreViewModel {
             .share()
 
         let defaultGenreId = viewWillAppear
-            .map { _ in genre.id }
+            .map { _ in genre.rawValue }
 
         let changedGenreId = selectedDropDownItemRow.asObservable()
 

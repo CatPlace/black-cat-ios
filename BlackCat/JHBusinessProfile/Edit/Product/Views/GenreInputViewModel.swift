@@ -18,7 +18,7 @@ class GenreInputViewModel {
     
     let updateIndexSetDriver: Driver<Set<Int>>
     let cellViewModelsDriver: Driver<[GenreInputCellViewModel]>
-    init(genres: Observable<[Model.Category]>, selectedGenres: [Int] = []) {
+    init(genres: Observable<[GenreType]>, selectedGenres: [Int] = []) {
         selectedGenresRelay = .init(value: Set(selectedGenres.map { $0 }))
             
         let newSelectedGenres = selectedIndexRelay
@@ -37,8 +37,8 @@ class GenreInputViewModel {
         
         cellViewModelsDriver = Observable.combineLatest(selectedGenresRelay, genres)
             .map { indexSet, genres in
-                genres.filter { $0.id != 0 }
-                    .map { GenreInputCellViewModel(genre: $0, isSelected: indexSet.contains($0.id)) }
+                genres.filter { $0.rawValue != 0 }
+                    .map { GenreInputCellViewModel(genre: $0, isSelected: indexSet.contains($0.rawValue)) }
             }.asDriver(onErrorJustReturn: [])
     }
 }

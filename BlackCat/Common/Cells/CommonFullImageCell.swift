@@ -47,6 +47,11 @@ class CommonFullImageCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - LifeCycle
+    override func prepareForReuse() {
+        thumbnailImageView.image = nil
+    }
+    
     // MARK: - UIComponents
 
     let thumbnailImageView = UIImageView()

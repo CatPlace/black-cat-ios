@@ -69,7 +69,7 @@ class GenreViewController: UIViewController {
 
         viewModel.dropDownItems
             .drive(with: self) { owner, items in
-                let title = owner.viewModel.genre.name
+                let title = owner.viewModel.genre.title
                 owner.dropDown.configure(with: items, title: title)
             }
             .disposed(by: disposeBag)

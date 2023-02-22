@@ -9,9 +9,9 @@ import Foundation
 import BlackCatSDK
 class GenreInputCellViewModel: HomeGenreCellViewModel {
     var isSelected: Bool
-    var genre: Model.Category
+    var genre: GenreType
     
-    init(genre: Model.Category, isSelected: Bool = false) {
+    init(genre: GenreType, isSelected: Bool = false) {
         self.genre = genre
         self.isSelected = isSelected
         super.init(with: genre)

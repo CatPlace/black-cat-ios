@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "heart.fill.png",
+      "filename" : "chevronRightPurple.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "heart.fill(2).png",
+      "filename" : "Vector1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "heart.fill(3).png",
+      "filename" : "Vector2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

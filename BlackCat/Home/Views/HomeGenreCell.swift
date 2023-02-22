@@ -21,7 +21,8 @@ class HomeGenreCell: UICollectionViewCell {
     // MARK: - Binding
 
     func bind(to viewModel: HomeGenreCellViewModel) {
-        categoryTitleLabel.text = viewModel.category.name
+        categoryTitleLabel.text = viewModel.category.title
+        categoryImageView.image = .init(named: viewModel.category.imageName)
     }
 
     // MARK: - Initializing
@@ -30,33 +31,50 @@ class HomeGenreCell: UICollectionViewCell {
         super.init(frame: frame)
 
         setUI()
+        configure()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - LifeCycle
+    override func prepareForReuse() {
+        categoryImageView.image = nil
+    }
+    
     // MARK: - UIComponents
-
     let categoryTitleLabel = UILabel()
+    let categoryImageView = UIImageView()
 }
 
 extension HomeGenreCell {
-    private func setUI() {
+    private func configure() {
         layer.cornerRadius = 12
         layer.masksToBounds = true
+        
+        contentView.backgroundColor = .black.withAlphaComponent(0.7)
+        
+        categoryTitleLabel.textAlignment = .center
+        categoryTitleLabel.numberOfLines = 0
+        categoryTitleLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 12)
+        categoryTitleLabel.textColor = .white
+    }
+    
+    private func setUI() {
 
+        addSubview(categoryImageView)
+        
+        categoryImageView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
         contentView.addSubview(categoryTitleLabel)
-        contentView.backgroundColor = .white
 
         categoryTitleLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(9)
             $0.trailing.equalToSuperview().inset(9)
             $0.centerX.centerY.equalToSuperview()
         }
-
-        categoryTitleLabel.textAlignment = .center
-        categoryTitleLabel.numberOfLines = 0
-        categoryTitleLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 12)
     }
 }
