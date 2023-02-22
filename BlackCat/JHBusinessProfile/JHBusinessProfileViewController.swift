@@ -153,7 +153,7 @@ final class JHBusinessProfileViewController: UIViewController {
     
     // MARK: function
     private func switchHeartButton(shouldFill: Bool) {
-        let heartImage = shouldFill ? UIImage(systemName: "heart.fill") : UIImage(named: "like")
+        let heartImage = shouldFill ? UIImage(named: "heart.fill") : UIImage(named: "like")
         heartImage?.withRenderingMode(.alwaysOriginal).withTintColor(.white)
         
         bottomView.heartButton.setImage(heartImage, for: .normal)
@@ -242,6 +242,7 @@ extension JHBusinessProfileViewController {
         collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        
         view.addSubview(bottomView)
         bottomView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)

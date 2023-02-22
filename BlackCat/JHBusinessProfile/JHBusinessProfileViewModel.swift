@@ -53,7 +53,6 @@ final class JHBusinessProfileViewModel {
             .map { _ in CatSDKTattooist.localTattooistInfo() }
         
         let fetchedTattooistInfo = viewDidLoad
-//            .filter { CatSDKTattooist.localTattooistInfo() == .empty || !isOwner}
             .flatMap { _ in
                 
                 let fetchedProfileData = CatSDKTattooist.profile(profileId: profileId).share()
@@ -86,7 +85,7 @@ final class JHBusinessProfileViewModel {
         sections = currentTattooistInfo
             .map { configurationSections(
                 imageUrlString: $0.introduce.imageUrlString ?? "",
-                profileDescription: $0.introduce.introduce,
+                profileDescription: $0.introduce,
                 products: $0.tattoos,
                 priceInformation: $0.estimate.description
             ) }
@@ -201,7 +200,7 @@ final class JHBusinessProfileViewModel {
             }.subscribe()
             .disposed(by: disposeBag)
         
-        func configurationSections(imageUrlString: String, profileDescription: String, products: [Model.TattooThumbnail], priceInformation: String) -> [JHBusinessProfileCellSection] {
+        func configurationSections(imageUrlString: String, profileDescription: Model.TattooistIntroduce, products: [Model.TattooThumbnail], priceInformation: String) -> [JHBusinessProfileCellSection] {
             
             let thumbnailCell: JHBusinessProfileItem = .thumbnailImageItem(.init(imageUrlString: imageUrlString))
             
@@ -209,13 +208,13 @@ final class JHBusinessProfileViewModel {
             
             let contentProfile: JHBusinessProfileItem = .contentItem(.init(contentModel: .init(order: 0), profile: profileDescription, products: [], priceInfo: ""))
             let contentProductCellViewModel: JHBPContentCellViewModel = .init(contentModel: .init(order: 1),
-                                                                              profile: "",
+                                                                              profile: .init(introduce: ""),
                                                                               products: products,
                                                                               priceInfo: "")
             
             let contentProduct: JHBusinessProfileItem = .contentItem(contentProductCellViewModel)
             
-            let contentPriceInfo: JHBusinessProfileItem = .contentItem(.init(contentModel: .init(order: 2), profile: "", products: [], priceInfo: priceInformation))
+            let contentPriceInfo: JHBusinessProfileItem = .contentItem(.init(contentModel: .init(order: 2), profile: .init(introduce: ""), products: [], priceInfo: priceInformation))
             
             let contentSection = JHBusinessProfileCellSection.contentCell([contentProfile, contentProduct, contentPriceInfo])
             
