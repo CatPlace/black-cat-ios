@@ -23,7 +23,7 @@ final class JHBPContentCellViewModel {
     var editMode: BehaviorRelay<EditMode>
     var productSelectIndexPath = PublishRelay<IndexPath>()
     
-    var profiles: Driver<[Introduce]>
+    var profiles: Driver<[BPProfileCellViewModel]>
     var products: Driver<[SelectableImageCellViewModel]>
     var priceInfos: Driver<[PriceInfo]>
     
@@ -37,13 +37,13 @@ final class JHBPContentCellViewModel {
     var countDownDriver: Driver<(UpdatedDeleteTattoIndexList, ShouldCountDownIndexPathList, ShouldToggleIndexPath)>
     var setCountDriver: Driver<(UpdatedDeleteTattoIndexList, ShouldToggleIndexPath)>
     
-    init(contentModel: BPContentModel, profile: Introduce, products: [Model.TattooThumbnail], priceInfo: PriceInfo, editMode: BehaviorRelay<EditMode> = .init(value: .normal)) {
+    init(contentModel: BPContentModel, profile: Model.TattooistIntroduce, products: [Model.TattooThumbnail], priceInfo: PriceInfo, editMode: BehaviorRelay<EditMode> = .init(value: .normal)) {
         self.editMode = editMode
         self.contentModel = .init(value: contentModel)
         
         self.profiles = self.contentModel
             .filter { $0.order == 0 }
-            .map { _ in [profile] }
+            .map { _ in [profile].map { .init(tattooistProfileImageUrlString: $0.userImageUrlString ?? "", tattooistName: $0.userName, address: Model.Area.clientValue(serverValue: $0.addressId)?.asString(), description: $0.introduce) }}
             .asDriver(onErrorJustReturn: [])
         
         self.products = self.contentModel

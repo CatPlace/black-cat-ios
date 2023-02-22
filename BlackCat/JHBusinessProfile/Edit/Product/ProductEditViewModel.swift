@@ -20,6 +20,13 @@ enum ProductInputType {
         case .modify: return "타투 수정"
         }
     }
+    
+    func completeAlertMessage() -> String {
+        switch self {
+        case .add: return "타투가 등록되었습니다."
+        case .modify: return "타투가 수정되었습니다."
+        }
+    }
 }
 
 struct TattooEditModel {
@@ -57,8 +64,7 @@ class ProductEditViewModel {
     
     init(tattoo: Model.Tattoo? = nil) {
         let tattooId = tattoo?.id
-        let fetcedGenreList = CatSDKNetworkCategory.rx.fetchCategories()
-            .share()
+        let fetcedGenreList = Observable.just(GenreType.allCases)
         let initialImageUrlStrings = tattoo?.imageURLStrings ?? []
         let type: ProductInputType = tattoo == nil ? .add : .modify
         pageTitleDriver = .just(type.title())
@@ -154,7 +160,7 @@ class ProductEditViewModel {
                 var localTattooist = CatSDKTattooist.localTattooistInfo()
                 localTattooist.tattoos = [tattooThumbnail] + localTattooist.tattoos
                 CatSDKTattooist.updateLocalTattooistInfo(tattooistInfo: localTattooist)
-            }.map { _ in "\(type.title()) 성공!" }
+            }.map { _ in type.completeAlertMessage() }
         
         let updateFailMessage = updateFail
             .map { _ in "잠시 후 다시 시도해주세요." }

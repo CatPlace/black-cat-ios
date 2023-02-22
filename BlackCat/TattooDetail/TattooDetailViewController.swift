@@ -192,7 +192,7 @@ final class TattooDetailViewController: UIViewController {
     }
     
     private func switchHeartButton(shouldFill: Bool) {
-        let heartImage = shouldFill ? UIImage(systemName: "heart.fill") : UIImage(named: "like")
+        let heartImage = shouldFill ? UIImage(named: "heart.fill") : UIImage(named: "like")
         heartImage?.withRenderingMode(.alwaysOriginal).withTintColor(.white)
         
         askBottomView.heartButton.setImage(heartImage, for: .normal)
