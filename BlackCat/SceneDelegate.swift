@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 import BlackCatSDK
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -23,11 +24,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         window?.backgroundColor = .systemBackground
+        
         window?.rootViewController = LoginViewController(viewModel: .init())
-        // TODO: - 통신 후 jwt 없으면 다시 로그인 화면
+        
+        
+        isLogined()
+            .subscribe { _ in
+                self.window?.rootViewController?.present(TabBarViewController(), animated: false)
+            } onError: { error in
+            }
+        
         window?.makeKeyAndVisible()
     }
-
+    
+    func isLogined() -> Observable<Void> {
+        CatSDKBookmark.bookmarkListInSpecificUser(postType: .tattoo)
+            .map { _ in () }
+    }
+    
     func sceneDidDisconnect(_ scene: UIScene) { }
 
     func sceneDidBecomeActive(_ scene: UIScene) { }
