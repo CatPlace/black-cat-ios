@@ -57,7 +57,7 @@ final class AskBottomView: UIView {
     func setAskButtonTag(_ tag: Int) {
         askButton.tag = tag
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -93,11 +93,12 @@ final class AskBottomView: UIView {
     }(UIButton())
 
     let bookmarkCountLabel: UILabel = {
-        $0.font = .systemFont(ofSize: 18)
+        $0.font = .appleSDGoithcFont(size: 18, style: .regular)
         $0.adjustsFontSizeToFitWidth = true
         $0.textColor = .white
         return $0
     }(UILabel())
+
 }
 
 extension AskBottomView {

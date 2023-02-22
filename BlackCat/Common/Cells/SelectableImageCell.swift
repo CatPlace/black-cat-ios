@@ -67,7 +67,6 @@ final class SelectableImageCell: BPBaseCollectionViewCell {
     }
     
     func updateEditCount(with text: String) {
-        editCountLabel.font = .appleSDGoithcFont(size: 16 / CGFloat(text.count), style: .bold)
         editCountLabel.text = text
     }
     func updateEditCountLabelUI(with isSelected: Bool) {
@@ -103,6 +102,7 @@ final class SelectableImageCell: BPBaseCollectionViewCell {
         $0.textColor = .init(hex: "#7210A0FF")
         $0.backgroundColor = .white
         $0.textAlignment = .center
+        $0.adjustsFontSizeToFitWidth = true
         return $0
     }(UILabel())
     
