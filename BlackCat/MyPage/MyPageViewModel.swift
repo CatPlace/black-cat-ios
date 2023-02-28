@@ -92,6 +92,7 @@ final class MyPageViewModel {
     let showTwoButtonAlertVCDrvier: Driver<TwoButtonAlertType>
     let popToLoginVCDriver: Driver<Void>
     let showTattooDetailDriver: Driver<Int>
+    let recentTattooIsEmptyDriver: Driver<Bool>
     
     init(useCase: MyPageUseCase = MyPageUseCase()) {
         let profileSectionDataObservable = viewWillAppear
@@ -192,6 +193,10 @@ final class MyPageViewModel {
         showBusinessProfileDriver = manageButtonTapped
             .map { _ in CatSDKUser.user().id }
             .asDriver(onErrorJustReturn: -1)
+        
+        recentTattooIsEmptyDriver = recentTattooSectionDataObservable
+            .map { $0.isEmpty }
+            .asDriver(onErrorJustReturn: true)
     }
     
     deinit {

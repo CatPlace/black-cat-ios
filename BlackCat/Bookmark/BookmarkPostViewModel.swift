@@ -44,6 +44,9 @@ class BookmarkPostViewModel {
     let postItems: Driver<[SelectableImageCellViewModel]>
     let showTattooistDetailVCDriver: Driver<Int>
     let showTattooDetailVCDriver: Driver<Int>
+    let isEmptyDriver: Driver<Bool>
+    let emptyLabelTextDriver: Driver<String>
+    
     init(bookmarkModel: BookmarkPostModel) {
         
         let postAtViewWillAppear = viewWillAppear
@@ -189,6 +192,13 @@ class BookmarkPostViewModel {
                 }
                 bookmarkModel.deleteIndexList.accept([])
             }.disposed(by: disposeBag)
+        
+        isEmptyDriver = postItems
+            .map { $0.isEmpty }
+            .asDriver(onErrorJustReturn: true)
+        
+        emptyLabelTextDriver = .just(bookmarkModel.postType.asKorean())
+            .asDriver(onErrorJustReturn: "error")
     }
     
     deinit {

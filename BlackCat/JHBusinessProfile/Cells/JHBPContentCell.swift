@@ -252,9 +252,15 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
     
     // MARK: - UIComponents
     let emptyLabel: UILabel = {
-        $0.text = "등록된 타투가 없습니다."
-        $0.font = .appleSDGoithcFont(size: 24, style: .bold)
         $0.textColor = .init(hex: "#666666FF")
+        
+        let fullText = "등록된 타투가 없습니다."
+        let attributeString = NSMutableAttributedString(string: fullText)
+        let range = (fullText as NSString).range(of: "등록된 타투")
+        attributeString.addAttributes([
+            .font: UIFont.appleSDGoithcFont(size: 24, style: .bold)
+        ], range: range)
+        $0.attributedText = attributeString
         return $0
     }(UILabel())
     

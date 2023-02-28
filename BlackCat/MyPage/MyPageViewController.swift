@@ -129,8 +129,18 @@ final class MyPageViewController: UIViewController {
                 let vc = TattooDetailViewController(viewModel: .init(tattooId: tattooId))
                 owner.navigationController?.pushViewController(vc, animated: true)
             }.disposed(by: disposeBag)
+        
+        viewModel.recentTattooIsEmptyDriver
+            .drive(with: self) { owner, isEmpty in
+                owner.updaterRecentTattooView(with: isEmpty)
+            }.disposed(by: disposeBag)
     }
 
+    // MARK: - Function
+    func updaterRecentTattooView(with isEmpty: Bool) {
+        emptyLabel.isHidden = !isEmpty
+    }
+    
     // MARK: - Initializer
     init(viewModel: MyPageViewModel) {
         self.viewModel = viewModel
@@ -154,6 +164,17 @@ final class MyPageViewController: UIViewController {
         v.register(Reusable.tattooHeaderView, kind: .header)
         return v
     }()
+    
+    let emptyLabel: UILabel = {
+        let fullText = "최근 본 타투가 없습니다."
+        let attributeString = NSMutableAttributedString(string: fullText)
+        let range = (fullText as NSString).range(of: "최근 본 타투")
+        attributeString.addAttributes([
+            .font: UIFont.appleSDGoithcFont(size: 24, style: .bold)
+        ], range: range)
+        $0.attributedText = attributeString
+        return $0
+    }(UILabel())
 }
 
 extension MyPageViewController {

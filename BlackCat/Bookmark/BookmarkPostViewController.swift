@@ -67,18 +67,38 @@ class BookmarkPostViewController: UIViewController {
             .drive(with: self) { owner, tattooId in
                 let vc = TattooDetailViewController(viewModel: .init(tattooId: tattooId))
                 owner.navigationController?.pushViewController(vc, animated: true)
-        }
+            }.disposed(by: disposeBag)
         
         viewModel.showTattooistDetailVCDriver
             .drive(with: self) { owner, tattooistId in
                 let vc = JHBusinessProfileViewController(viewModel: .init(tattooistId: tattooistId))
                 owner.navigationController?.pushViewController(vc, animated: true)
-        }
+        }.disposed(by: disposeBag)
+        
+        viewModel.isEmptyDriver
+            .drive(with: self) { owner, isEmpty in
+                owner.emptyLabel.isHidden = !isEmpty
+            }.disposed(by: disposeBag)
+        
+        viewModel.emptyLabelTextDriver
+            .drive(with: self) { owner, text in
+                owner.updateEmptyLabel(with: text)
+            }.disposed(by: disposeBag)
         
     }
 
     // MARK: - Function
-
+    func updateEmptyLabel(with text: String) {
+        let fullText = "찜한 \(text)가 없습니다."
+        let attributeString = NSMutableAttributedString(string: fullText)
+        let range = (fullText as NSString).range(of: "찜한 \(text)")
+        
+        attributeString.addAttributes([
+            .font: UIFont.appleSDGoithcFont(size: 24, style: .bold)
+        ], range: range)
+        emptyLabel.attributedText = attributeString
+        
+    }
     // MARK: - Initialize
 
     init(viewModel: BookmarkPostViewModel) {
@@ -124,13 +144,24 @@ class BookmarkPostViewController: UIViewController {
     }()
     
     private func setUI() {
-        view.addSubview(collectionView)
+        [collectionView, emptyLabel].forEach { view.addSubview($0) }
 
         collectionView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.bottom.equalToSuperview()
         }
+        
+        emptyLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
     }
+    
+    let emptyLabel: UILabel = {
+        $0.text = "empty"
+        $0.textColor = .init(hex: "#666666FF")
+        $0.font = .appleSDGoithcFont(size: 24, style: .regular)
+        return $0
+    }(UILabel())
 }
 
 extension BookmarkPostViewController: TwoButtonAlertViewDelegate {
@@ -147,7 +178,5 @@ extension BookmarkPostViewController: TwoButtonAlertViewDelegate {
     func didTapLeftButton(type: TwoButtonAlertType) {
         dismiss(animated: true)
     }
-    
-
 }
 
