@@ -29,7 +29,7 @@ struct TattooDetailViewModel {
     
     // MARK: - Output
     let shouldFillHeartButton: Driver<Bool>
-    let pushToTattooistDetailVC: Driver<(Int, Int)>
+    let pushToTattooistDetailVC: Driver<Int>
 
     let 문의하기Driver: Driver<Void>
     let 수정하기Driver: Driver<Model.Tattoo>
@@ -93,9 +93,9 @@ struct TattooDetailViewModel {
         pushToTattooistDetailVC = Observable.merge([
             didTapProfileImageView.asObservable(),
             didTapTattooistNameLabel.asObservable()
-        ]).withLatestFrom(tattooModelSuccess) { ($1.ownerId, $1.profileId) }
+        ]).withLatestFrom(tattooModelSuccess) { $1.ownerId }
             .debug("타투모델 정보들💡💡💡")
-        .asDriver(onErrorJustReturn: (-1, -1))
+        .asDriver(onErrorJustReturn: -1)
 
         let bookmarkCountWhenFirstLoad = tattooModelSuccess.map { $0.likeCount ?? 0 }
 

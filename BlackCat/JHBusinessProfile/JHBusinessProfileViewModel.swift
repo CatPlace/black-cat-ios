@@ -42,10 +42,11 @@ final class JHBusinessProfileViewModel {
     let bookmarkCountStringDriver: Driver<String>
     let serverErrorDriver: Driver<Void>
     
-    init(tattooistId: Int, profileId: Int) {
+    init(tattooistId: Int) {
         // TODO: - 유저 구분
         let isOwner = tattooistId == CatSDKUser.user().id
         self.isOwner = isOwner
+        
         let fetchTrigger = Observable.merge([viewWillAppear.asObservable(), deleteCompleteRelay.asObservable()])
         
         let localTattooistInfo = fetchTrigger
@@ -55,13 +56,17 @@ final class JHBusinessProfileViewModel {
         let fetchedTattooistInfo = viewDidLoad
             .flatMap { _ in
                 
-                let fetchedProfileData = CatSDKTattooist.profile(profileId: profileId).share()
+                let fetchedProfileData = CatSDKTattooist.profile(tattooistId: tattooistId).share().debug("타투이스트 프로필😎")
                 let fetchedProductsData = CatSDKTattooist.products(tattooistId: tattooistId).share()
                 let fetchedPriceInfoData = CatSDKTattooist.priceInfo(tattooistId: tattooistId).share()
                 return Observable.combineLatest(fetchedProfileData, fetchedProductsData, fetchedPriceInfoData) {
                     Model.TattooistInfo(introduce: $0, tattoos: $1, estimate: $2)
                 }
             }
+            .share()
+        
+        let profileId = fetchedTattooistInfo
+            .map { $0.introduce.profileId }
             .share()
         
         let fetchedTattooistInfoSuccess = fetchedTattooistInfo
@@ -135,7 +140,10 @@ final class JHBusinessProfileViewModel {
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
         
-        let isBookmarkedTattooWhenFirstLoad = CatSDKBookmark.isBookmarked(postId: profileId)
+        let isBookmarkedTattooWhenFirstLoad = profileId
+            .flatMap {  CatSDKBookmark.isBookmarked(postId: $0) }
+            .share()
+       
         
         let isBookmarkedTattooAfterTapBookmarkButton =
         didTapBookmarkButton
@@ -156,7 +164,10 @@ final class JHBusinessProfileViewModel {
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
         
-        let bookmarkCountWhenFirstLoad = CatSDKNetworkBookmark.rx.countOfBookmark(postId: profileId).map { $0.counts }
+        let bookmarkCountWhenFirstLoad =  profileId.flatMap { CatSDKNetworkBookmark.rx.countOfBookmark(postId: $0).map { $0.counts } }
+            .share()
+        
+        
         
         let changeBookmarkCount = isBookmarkedTattoo // 북마크 탭
             .withLatestFrom(isBookmarkedTattooWhenFirstLoad) { ($0, $1) }
@@ -190,14 +201,15 @@ final class JHBusinessProfileViewModel {
             .map { _ in () }
         
         bookmarkOnTrigger
-            .flatMap { CatSDKNetworkBookmark.rx.bookmarkPost(postId: profileId) }
+            .withLatestFrom(profileId)
+            .flatMap { CatSDKNetworkBookmark.rx.bookmarkPost(postId: $0) }
             .subscribe()
             .disposed(by: disposeBag)
         
         bookmarkOffTrigger
-            .flatMap {
-                CatSDKNetworkBookmark.rx.deleteBookmarkedPost(postId: profileId)
-            }.subscribe()
+            .withLatestFrom(profileId)
+            .flatMap { CatSDKNetworkBookmark.rx.deleteBookmarkedPost(postId: $0) }
+            .subscribe()
             .disposed(by: disposeBag)
         
         func configurationSections(imageUrlString: String, profileDescription: Model.TattooistIntroduce, products: [Model.TattooThumbnail], priceInformation: String) -> [JHBusinessProfileCellSection] {

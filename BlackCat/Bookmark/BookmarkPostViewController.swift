@@ -61,6 +61,20 @@ class BookmarkPostViewController: UIViewController {
                 let vc = OneButtonAlertViewController(viewModel: .init(content: "삭제에 실패했습니다\n잠시후 다시 시도해주세요.", buttonText: "확인"))
                 owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
+        
+        // TODO: - postType별 id로 상세페이지 들어가기
+        viewModel.showTattooDetailVCDriver
+            .drive(with: self) { owner, tattooId in
+                let vc = TattooDetailViewController(viewModel: .init(tattooId: tattooId))
+                owner.navigationController?.pushViewController(vc, animated: true)
+        }
+        
+        viewModel.showTattooistDetailVCDriver
+            .drive(with: self) { owner, tattooistId in
+                let vc = JHBusinessProfileViewController(viewModel: .init(tattooistId: tattooistId))
+                owner.navigationController?.pushViewController(vc, animated: true)
+        }
+        
     }
 
     // MARK: - Function

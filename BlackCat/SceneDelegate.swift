@@ -32,8 +32,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             .subscribe { _ in
                 self.window?.rootViewController?.present(TabBarViewController(), animated: false)
             } onError: { error in
+                CatSDKUser.updateUser(user: .init(id: -1))
             }
-        
+
         window?.makeKeyAndVisible()
     }
     

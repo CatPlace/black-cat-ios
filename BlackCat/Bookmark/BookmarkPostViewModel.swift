@@ -42,8 +42,8 @@ class BookmarkPostViewModel {
     let showDeleteSuccessAlertDriver: Driver<Void>
     let showDeleteFailAlertDriver: Driver<Void>
     let postItems: Driver<[SelectableImageCellViewModel]>
-    let showDetailVCDriver: Driver<PostType>
-    
+    let showTattooistDetailVCDriver: Driver<Int>
+    let showTattooDetailVCDriver: Driver<Int>
     init(bookmarkModel: BookmarkPostModel) {
         
         let postAtViewWillAppear = viewWillAppear
@@ -116,9 +116,20 @@ class BookmarkPostViewModel {
             .filter { $0.1 == .normal }
             .map { $0.0 }
         
-        showDetailVCDriver = selectedItemInNormalMode
-            .map { _ in bookmarkModel.postType }
-            .asDriver(onErrorJustReturn: .tattoo)
+        showTattooDetailVCDriver = selectedItemInNormalMode
+            .filter { _ in bookmarkModel.postType == .tattoo }
+            .withLatestFrom(postItemsObservable) { ($0, $1) }
+            .map { $1[$0].postId }
+            .asDriver(onErrorJustReturn: -1)
+        
+        // TODO: - 서버에서 어떡할껀지 의논
+        showTattooistDetailVCDriver = selectedItemInNormalMode
+            .filter { _ in bookmarkModel.postType == .tattooist }
+            .withLatestFrom(postItemsObservable) { ($0, $1) }
+            .map { _ in 4 }
+//            .map { $1[$0].profileId }
+            .asDriver(onErrorJustReturn: -1)
+
         
         let postIndexInfo = selectedItemInEditMode
             .withLatestFrom(bookmarkModel.deleteIndexList) { ($0, $1) }

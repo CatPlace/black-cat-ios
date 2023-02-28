@@ -17,18 +17,18 @@ final class JHBPContentCellViewModel {
     typealias ProductImageUrlString = String
     typealias PriceInfo = String
     
-    var deleteTattoIndexListRelay = BehaviorRelay<[Int]>(value: [])
+    let deleteTattoIndexListRelay = BehaviorRelay<[Int]>(value: [])
     
-    var contentModel: BehaviorRelay<BPContentModel> // 🐻‍❄️ NOTE: - 이거 enum으로 개선가능
-    var editMode: BehaviorRelay<EditMode>
-    var productSelectIndexPath = PublishRelay<IndexPath>()
+    let contentModel: BehaviorRelay<BPContentModel> // 🐻‍❄️ NOTE: - 이거 enum으로 개선가능
+    let editMode: BehaviorRelay<EditMode>
+    let productSelectIndexPath = PublishRelay<IndexPath>()
     
-    var profiles: Driver<[BPProfileCellViewModel]>
-    var products: Driver<[SelectableImageCellViewModel]>
-    var priceInfos: Driver<[PriceInfo]>
-    
-    var notifyToViewController: Driver<IndexPath>
-    var editModeDriver: Driver<EditMode>
+    let profiles: Driver<[BPProfileCellViewModel]>
+    let products: Driver<[SelectableImageCellViewModel]>
+    let priceInfos: Driver<[PriceInfo]>
+    let notifyToViewController: Driver<IndexPath>
+    let editModeDriver: Driver<EditMode>
+    let emptyLabelIsHiddenDriver: Driver<Bool>
     
     typealias UpdatedDeleteTattoIndexList = [Int]
     typealias ShouldCountDownIndexPathList = [Int]
@@ -93,6 +93,10 @@ final class JHBPContentCellViewModel {
         editModeDriver = editMode
             .filter { _ in contentModel.order == 1 }
             .asDriver(onErrorJustReturn: .normal)
+        
+        emptyLabelIsHiddenDriver = self.contentModel
+            .map { $0.order != 1 || !products.isEmpty }
+            .asDriver(onErrorJustReturn: false)
     }
 }
 
@@ -124,6 +128,7 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
             }.disposed(by: self.disposeBag)
         
         viewModel.products
+            .debug("타투 개수")
             .drive(productCollectionView.rx.items(Reusable.productCell)) { [weak self] index, item, cell in
                 guard let self = self else { return }
                 self.setCollectionViewHidden(forType: .product)
@@ -193,6 +198,13 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
                         delegate.notifyViewController(currentDeleteProductIndexList: indexList)
                     }
             }.disposed(by: disposeBag)
+        
+        viewModel.emptyLabelIsHiddenDriver
+            .debug("이즈 히던")
+            .drive(with: self) { owner, isHiddenEmptyLabel in
+                owner.emptyLabel.isHidden = isHiddenEmptyLabel
+                owner.productCollectionView.isHidden = !isHiddenEmptyLabel
+            }.disposed(by: disposeBag)
     }
     
     func updateTattooUI(countDownIndexList: [Int], cancelTattooIndexPath: IndexPath ) {
@@ -239,6 +251,13 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
     }
     
     // MARK: - UIComponents
+    let emptyLabel: UILabel = {
+        $0.text = "등록된 타투가 없습니다."
+        $0.font = .appleSDGoithcFont(size: 24, style: .bold)
+        $0.textColor = .init(hex: "#666666FF")
+        return $0
+    }(UILabel())
+    
     lazy var profileCollectionView: UICollectionView = {
         let layout = createLayout(forType: .profile)
         var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -290,7 +309,7 @@ extension JHBPContentCell: UIScrollViewDelegate {
 extension JHBPContentCell {
     func setUI() {
         // 🐻‍❄️ NOTE: - Pin + Flex로 추후에 넘어가기
-        
+
         contentView.addSubview(profileCollectionView)
         profileCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -304,6 +323,11 @@ extension JHBPContentCell {
         contentView.addSubview(priceInfoCollectionView)
         priceInfoCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+        
+        contentView.addSubview(emptyLabel)
+        emptyLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
     }
     

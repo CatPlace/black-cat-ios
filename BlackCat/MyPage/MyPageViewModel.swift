@@ -88,7 +88,7 @@ final class MyPageViewModel {
     let pushToWebViewDriver: Driver<String>
     let showLoginAlertVCDrvier: Driver<Void>
     let showUpgradeVCDriver: Driver<Void>
-    let showBusinessProfileDriver: Driver<(TattooistId, ProfileId)>
+    let showBusinessProfileDriver: Driver<TattooistId>
     let showTwoButtonAlertVCDrvier: Driver<TwoButtonAlertType>
     let popToLoginVCDriver: Driver<Void>
     let showTattooDetailDriver: Driver<Int>
@@ -190,8 +190,8 @@ final class MyPageViewModel {
             .asDriver(onErrorJustReturn: ())
         
         showBusinessProfileDriver = manageButtonTapped
-            .map { _ in (CatSDKUser.user().id, CatSDKUser.user().profileId ?? -1) }
-            .asDriver(onErrorJustReturn: (-1, -1))
+            .map { _ in CatSDKUser.user().id }
+            .asDriver(onErrorJustReturn: -1)
     }
     
     deinit {

@@ -106,10 +106,8 @@ final class MyPageViewController: UIViewController {
             }.disposed(by: disposeBag)
 
         viewModel.showBusinessProfileDriver
-            .drive(with: self) { owner, ids in
-                let tattooistId = ids.0
-                let profileId = ids.1
-                let vc = JHBusinessProfileViewController(viewModel: .init(tattooistId: tattooistId, profileId: profileId))
+            .drive(with: self) { owner, tattooistId in
+                let vc = JHBusinessProfileViewController(viewModel: .init(tattooistId: tattooistId))
                 owner.navigationController?.pushViewController(vc, animated: true)
             }.disposed(by: disposeBag)
 
