@@ -10,6 +10,7 @@ import RxSwift
 import RxRelay
 import RxCocoa
 import RxKeyboard
+import Photos
 
 class ProductEditViewController: VerticalScrollableViewController {
     // MARK: - Properties
@@ -74,14 +75,57 @@ class ProductEditViewController: VerticalScrollableViewController {
     //MARK: - Function
     func showImagePickerView() {
         let imagePickerManager = ImagePickerManager()
+        let status = PHPhotoLibrary.authorizationStatus()
         
-        presentImagePicker(imagePickerManager.imagePicker) { _ in
-        } deselect: { _ in
-        } cancel: { _ in
-        } finish: { [weak self] assets in
-            guard let self else { return }
-            self.viewModel.imageListInputRelay.accept(imagePickerManager.convertAssetToImage(assets))
+        switch status {
+        case .authorized, .limited:
+            presentImagePicker(imagePickerManager.imagePicker) { _ in
+            } deselect: { _ in
+            } cancel: { _ in
+            } finish: { [weak self] assets in
+                guard let self else { return }
+                self.viewModel.imageListInputRelay.accept(imagePickerManager.convertAssetToImage(assets))
+            }
+        default:
+            PHPhotoLibrary.requestAuthorization() { [weak self] afterStatus in
+                guard let self else { return }
+                DispatchQueue.main.async {
+                    switch afterStatus {
+                    case .authorized:
+                        self.presentImagePicker(imagePickerManager.imagePicker) { _ in
+                        } deselect: { _ in
+                        } cancel: { _ in
+                        } finish: { [weak self] assets in
+                            guard let self else { return }
+                            self.viewModel.imageListInputRelay.accept(imagePickerManager.convertAssetToImage(assets))
+                        }
+                    case .denied:
+                        self.moveToSetting()
+                    default:
+                        break
+                    }
+                }
+            }
         }
+    }
+    
+    func moveToSetting() {
+        let alertController = UIAlertController(title: "권한 거부됨", message: "앨범 접근이 거부 되었습니다.\n 사진을 등록하시려면 설정으로 이동하여 앨범 접근 권한을 허용해주세요.", preferredStyle: UIAlertController.Style.alert)
+        
+        let okAction = UIAlertAction(title: "설정으로 이동하기", style: .default) { action in
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: false, completion: nil)
     }
     
     func updateView(with height: CGFloat) {

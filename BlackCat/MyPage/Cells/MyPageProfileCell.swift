@@ -22,12 +22,18 @@ class MyPageProfileCellViewModel {
     let setupManageViewDriver: Driver<Void>
     let profileEditIsHiddenDriver: Driver<Bool>
     let showImageViewBorderDriver: Driver<Void>
+    let isEmptyProfileImage: Driver<Bool>
+    
     init(user: Model.User) {
         let userObservable: Observable<Model.User> = .just(user)
         
         profileImageUrlStringDriver = userObservable
             .compactMap { $0.imageUrl }
             .asDriver(onErrorJustReturn: "")
+        
+        isEmptyProfileImage = userObservable
+            .map { $0.imageUrl == nil }
+            .asDriver(onErrorJustReturn: false)
         
         userTypeStringDriver = userObservable
             .map { $0.userType.profileString() }
@@ -109,6 +115,12 @@ class MyPageProfileCell: MyPageBaseCell {
             .drive(with: self) { owner, _ in
                 owner.showImageViewBorder()
             }.disposed(by: disposeBag)
+        
+        viewModel.isEmptyProfileImage
+            .drive(with: self) { owner, _ in
+                owner.userImageView.image = UIImage(named: "guest")
+            }.disposed(by: disposeBag)
+        
     }
     
     // MARK: - Function

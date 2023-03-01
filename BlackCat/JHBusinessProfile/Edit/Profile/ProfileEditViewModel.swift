@@ -31,7 +31,6 @@ class ProfileEditViewModel {
         introduceDriver = .just(localTattooistInfo.introduce.introduce)
         imageDriver = imageRelay
             .flatMap(UIImage.convertToUIImage)
-            .filter { $0 != nil }
             .asDriver(onErrorJustReturn: UIImage(systemName: "trash"))
         
         let updatedResult = didTapCompleteButton
