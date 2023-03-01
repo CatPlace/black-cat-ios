@@ -129,8 +129,7 @@ class BookmarkPostViewModel {
         showTattooistDetailVCDriver = selectedItemInNormalMode
             .filter { _ in bookmarkModel.postType == .tattooist }
             .withLatestFrom(postItemsObservable) { ($0, $1) }
-            .map { _ in 4 }
-//            .map { $1[$0].profileId }
+            .map { $1[$0].userId }
             .asDriver(onErrorJustReturn: -1)
 
         

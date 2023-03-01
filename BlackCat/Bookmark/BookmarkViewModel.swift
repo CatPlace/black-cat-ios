@@ -28,6 +28,8 @@ class BookmarkViewModel {
     
     // MARK: - Output
     let updateModeDriver: Driver<EditMode>
+    let showTattooDetailVCDriver: Driver<Int>
+    let showTattooistDetailVCDriver: Driver<Int>
     
     init() {
         let bookmarkTypes = PostType.allCases
@@ -74,6 +76,10 @@ class BookmarkViewModel {
         toggledEditMode
                 .bind(to: editMode)
                 .disposed(by: disposeBag)
+        
+        showTattooDetailVCDriver = bookmarkPageViewModels[0].showTattooDetailVCDriver
+        
+        showTattooistDetailVCDriver = bookmarkPageViewModels[1].showTattooistDetailVCDriver
         
         didTapDeleteButton
             .withLatestFrom(currentPage)
