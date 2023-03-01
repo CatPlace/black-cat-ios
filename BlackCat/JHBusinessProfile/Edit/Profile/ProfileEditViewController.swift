@@ -108,7 +108,7 @@ class ProfileEditViewController: VerticalScrollableViewController {
     
     // MARK: - UIComponents
     let coverImageView: UIImageView = {
-        $0.image = .init(named: "DummyPict")
+        $0.image = .init(named: "defaultCover")
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
         return $0

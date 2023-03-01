@@ -42,7 +42,7 @@ final class JHBPThumbnailImageCell: BPBaseCollectionViewCell {
     }
     
     let thumnailImageView: UIImageView = {
-        $0.backgroundColor = .gray
+        $0.image = .init(named: "defaultCover")
         return $0
     }(UIImageView())
 }

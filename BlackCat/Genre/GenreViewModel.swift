@@ -59,7 +59,7 @@ enum GenreType: Int, CaseIterable {
         case .전체보기: return "all"
         case .레터링: return "lettering"
         case .미니타투: return "mini"
-        case .감성타투: return "감성타투"
+        case .감성타투: return "sentimental"
         case .이레즈미: return "irezumi"
         case .블랙그레이: return "blackAndGray"
         case .라인워크: return "lineWork"
