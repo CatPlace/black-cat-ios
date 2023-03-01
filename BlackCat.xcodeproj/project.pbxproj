@@ -145,13 +145,6 @@
 		B160DC0928FF523C00C0D682 /* FilterReactorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B160DC0828FF523C00C0D682 /* FilterReactorTests.swift */; };
 		B160DC1428FF535700C0D682 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = B160DC1328FF535700C0D682 /* Quick */; };
 		B160DC1728FF536C00C0D682 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = B160DC1628FF536C00C0D682 /* Nimble */; };
-		B160DC1A28FF53C400C0D682 /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = B160DC1928FF53C400C0D682 /* RxBlocking */; };
-		B160DC1C28FF53C400C0D682 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = B160DC1B28FF53C400C0D682 /* RxCocoa */; };
-		B160DC1E28FF53C400C0D682 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = B160DC1D28FF53C400C0D682 /* RxRelay */; };
-		B160DC2028FF53C400C0D682 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B160DC1F28FF53C400C0D682 /* RxSwift */; };
-		B160DC2228FF53C400C0D682 /* RxTest in Frameworks */ = {isa = PBXBuildFile; productRef = B160DC2128FF53C400C0D682 /* RxTest */; settings = {ATTRIBUTES = (Weak, ); }; };
-		B160DC2428FF56F500C0D682 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = B160DC2328FF56F500C0D682 /* RxCocoa */; };
-		B160DC2628FF570B00C0D682 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B160DC2528FF570B00C0D682 /* RxSwift */; settings = {ATTRIBUTES = (Weak, ); }; };
 		B160DC2828FF573E00C0D682 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B160DC2728FF573E00C0D682 /* RealmSwift */; };
 		B1CA040628F00CC1004A6027 /* MagazineDetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CA040528F00CC1004A6027 /* MagazineDetailImageCell.swift */; };
 		B1CDE90129169F8E00ACB9AC /* URLMatcher in Frameworks */ = {isa = PBXBuildFile; productRef = B1CDE90029169F8E00ACB9AC /* URLMatcher */; };
@@ -445,12 +438,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B160DC2628FF570B00C0D682 /* RxSwift in Frameworks */,
-				B160DC2228FF53C400C0D682 /* RxTest in Frameworks */,
 				B160DC2828FF573E00C0D682 /* RealmSwift in Frameworks */,
 				B160DC1428FF535700C0D682 /* Quick in Frameworks */,
-				B160DC2428FF56F500C0D682 /* RxCocoa in Frameworks */,
-				B160DC1A28FF53C400C0D682 /* RxBlocking in Frameworks */,
 				B160DC1728FF536C00C0D682 /* Nimble in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -462,7 +451,6 @@
 				B1E3F7CB290ECBBB00005F17 /* PinLayout in Frameworks */,
 				B1E4984828EE83BD00B469AC /* RealmSwift in Frameworks */,
 				B1E4984E28EE83E400B469AC /* Nuke in Frameworks */,
-				B160DC1C28FF53C400C0D682 /* RxCocoa in Frameworks */,
 				B1CDE90329169F8E00ACB9AC /* URLNavigator in Frameworks */,
 				B1D3363728F1CA2000826636 /* BlackCatSDK.framework in Frameworks */,
 				B1E3F7D3290ECC0500005F17 /* FlexLayoutYoga in Frameworks */,
@@ -472,14 +460,12 @@
 				B1E4984628EE83BD00B469AC /* Realm in Frameworks */,
 				B1E3F7D1290ECC0500005F17 /* FlexLayout in Frameworks */,
 				B1E87AF029195CD800EB28DE /* RxKeyboard in Frameworks */,
-				B160DC2028FF53C400C0D682 /* RxSwift in Frameworks */,
 				B1E4985B28EE873100B469AC /* Differentiator in Frameworks */,
 				B1E4984B28EE83D800B469AC /* ReactorKit in Frameworks */,
 				B1EABEC428FBE0400029B6BC /* RxGesture in Frameworks */,
 				78277E9529675982004CFDF4 /* VisualEffectView in Frameworks */,
 				B1E4983828EE838700B469AC /* SnapKit in Frameworks */,
 				B1CDE90129169F8E00ACB9AC /* URLMatcher in Frameworks */,
-				B160DC1E28FF53C400C0D682 /* RxRelay in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1283,10 +1269,6 @@
 			packageProductDependencies = (
 				B160DC1328FF535700C0D682 /* Quick */,
 				B160DC1628FF536C00C0D682 /* Nimble */,
-				B160DC1928FF53C400C0D682 /* RxBlocking */,
-				B160DC2128FF53C400C0D682 /* RxTest */,
-				B160DC2328FF56F500C0D682 /* RxCocoa */,
-				B160DC2528FF570B00C0D682 /* RxSwift */,
 				B160DC2728FF573E00C0D682 /* RealmSwift */,
 			);
 			productName = BlackCatTests;
@@ -1316,9 +1298,6 @@
 				B1E4985A28EE873100B469AC /* Differentiator */,
 				B1E4985C28EE873100B469AC /* RxDataSources */,
 				B1EABEC328FBE0400029B6BC /* RxGesture */,
-				B160DC1B28FF53C400C0D682 /* RxCocoa */,
-				B160DC1D28FF53C400C0D682 /* RxRelay */,
-				B160DC1F28FF53C400C0D682 /* RxSwift */,
 				B1E3F7CA290ECBBB00005F17 /* PinLayout */,
 				B1E3F7D0290ECC0500005F17 /* FlexLayout */,
 				B1E3F7D2290ECC0500005F17 /* FlexLayoutYoga */,
@@ -1370,7 +1349,6 @@
 				B1EABEC228FBE0400029B6BC /* XCRemoteSwiftPackageReference "RxGesture" */,
 				B160DC1228FF535600C0D682 /* XCRemoteSwiftPackageReference "Quick" */,
 				B160DC1528FF536C00C0D682 /* XCRemoteSwiftPackageReference "Nimble" */,
-				B160DC1828FF53C400C0D682 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				B1E3F7C9290ECBBB00005F17 /* XCRemoteSwiftPackageReference "PinLayout" */,
 				B1E3F7CF290ECC0500005F17 /* XCRemoteSwiftPackageReference "FlexLayout" */,
 				B1CDE8FF29169F8D00ACB9AC /* XCRemoteSwiftPackageReference "URLNavigator" */,
@@ -1896,14 +1874,6 @@
 				minimumVersion = 10.0.0;
 			};
 		};
-		B160DC1828FF53C400C0D682 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ReactiveX/RxSwift";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 6.5.0;
-			};
-		};
 		B1CDE8FF29169F8D00ACB9AC /* XCRemoteSwiftPackageReference "URLNavigator" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/devxoul/URLNavigator";
@@ -2006,41 +1976,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B160DC1528FF536C00C0D682 /* XCRemoteSwiftPackageReference "Nimble" */;
 			productName = Nimble;
-		};
-		B160DC1928FF53C400C0D682 /* RxBlocking */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B160DC1828FF53C400C0D682 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxBlocking;
-		};
-		B160DC1B28FF53C400C0D682 /* RxCocoa */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B160DC1828FF53C400C0D682 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxCocoa;
-		};
-		B160DC1D28FF53C400C0D682 /* RxRelay */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B160DC1828FF53C400C0D682 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxRelay;
-		};
-		B160DC1F28FF53C400C0D682 /* RxSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B160DC1828FF53C400C0D682 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxSwift;
-		};
-		B160DC2128FF53C400C0D682 /* RxTest */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B160DC1828FF53C400C0D682 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxTest;
-		};
-		B160DC2328FF56F500C0D682 /* RxCocoa */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B160DC1828FF53C400C0D682 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxCocoa;
-		};
-		B160DC2528FF570B00C0D682 /* RxSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B160DC1828FF53C400C0D682 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxSwift;
 		};
 		B160DC2728FF573E00C0D682 /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
