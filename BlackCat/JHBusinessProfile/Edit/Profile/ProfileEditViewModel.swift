@@ -31,6 +31,7 @@ class ProfileEditViewModel {
         introduceDriver = .just(localTattooistInfo.introduce.introduce)
         imageDriver = imageRelay
             .flatMap(UIImage.convertToUIImage)
+            .filter { $0 != nil }
             .asDriver(onErrorJustReturn: UIImage(systemName: "trash"))
         
         let updatedResult = didTapCompleteButton
@@ -55,7 +56,8 @@ class ProfileEditViewModel {
         updateSuccessDriver = updatedResult
             .filter { $0.introduce != "error" }
             .map { updatedTattooistIntroduce in
-                localTattooistInfo.introduce = updatedTattooistIntroduce
+                localTattooistInfo.introduce.imageUrlString = updatedTattooistIntroduce.imageUrlString
+                localTattooistInfo.introduce.introduce = updatedTattooistIntroduce.introduce
                 CatSDKTattooist.updateLocalTattooistInfo(tattooistInfo: localTattooistInfo)
                 return ()
             }.asDriver(onErrorJustReturn: ())

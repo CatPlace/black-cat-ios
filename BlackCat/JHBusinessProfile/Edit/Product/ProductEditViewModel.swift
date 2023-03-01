@@ -157,9 +157,11 @@ class ProductEditViewModel {
         
         let localUpdateSuccess = updateSuccess
             .do { tattooThumbnail in
-                var localTattooist = CatSDKTattooist.localTattooistInfo()
-                localTattooist.tattoos = [tattooThumbnail] + localTattooist.tattoos
-                CatSDKTattooist.updateLocalTattooistInfo(tattooistInfo: localTattooist)
+                if type == .add {
+                    var localTattooist = CatSDKTattooist.localTattooistInfo()
+                    localTattooist.tattoos = [tattooThumbnail] + localTattooist.tattoos
+                    CatSDKTattooist.updateLocalTattooistInfo(tattooistInfo: localTattooist)
+                }
             }.map { _ in type.completeAlertMessage() }
         
         let updateFailMessage = updateFail

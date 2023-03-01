@@ -339,7 +339,7 @@ extension TattooDetailViewController {
     private var cellHeight: CGFloat { (500 * UIScreen.main.bounds.width) / 375 }
     
     private func setNavigationBar() {
-        self.navigationController?.navigationBar.backgroundColor = .clear
+        setNavigationBackgroundColor(color: .clear)
         appendNavigationLeftBackButton()
         appendNavigationRightLabel(deleteLabel)
         appendNavigationLeftCustomView(titleLabel)
