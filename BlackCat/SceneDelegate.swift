@@ -25,22 +25,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.backgroundColor = .systemBackground
         
-        window?.rootViewController = LoginViewController(viewModel: .init())
-        
-        
-        isLogined()
-            .subscribe { _ in
-                self.window?.rootViewController?.present(TabBarViewController(), animated: false)
-            } onError: { error in
-                CatSDKUser.updateUser(user: .init(id: -1))
-            }
+        window?.rootViewController = SplashViewController()
 
         window?.makeKeyAndVisible()
-    }
-    
-    func isLogined() -> Observable<Void> {
-        CatSDKBookmark.bookmarkListInSpecificUser(postType: .tattoo)
-            .map { _ in () }
     }
     
     func sceneDidDisconnect(_ scene: UIScene) { }

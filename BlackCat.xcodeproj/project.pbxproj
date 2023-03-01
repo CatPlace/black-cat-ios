@@ -95,6 +95,7 @@
 		78D3E93D2977C84A0015BA75 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D3E93C2977C84A0015BA75 /* Constant.swift */; };
 		78D9EB5529A09EE300A9B452 /* JHBusinessProfileViewController.Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D9EB5429A09EE300A9B452 /* JHBusinessProfileViewController.Layout.swift */; };
 		78D9EB5729A09F1300A9B452 /* JHBusinessProfileViewController.Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D9EB5629A09F1300A9B452 /* JHBusinessProfileViewController.Delegate.swift */; };
+		78E28CC229AE933000AC8B08 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E28CC129AE933000AC8B08 /* SplashViewController.swift */; };
 		8E2D8C4828F2EC27004B514D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4728F2EC27004B514D /* HomeViewController.swift */; };
 		8E2D8C4A28F2ECD2004B514D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4928F2ECD2004B514D /* HomeViewModel.swift */; };
 		8E2D8C4C28F2ED03004B514D /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4B28F2ED03004B514D /* HomeModel.swift */; };
@@ -338,6 +339,7 @@
 		78D3E93C2977C84A0015BA75 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		78D9EB5429A09EE300A9B452 /* JHBusinessProfileViewController.Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBusinessProfileViewController.Layout.swift; sourceTree = "<group>"; };
 		78D9EB5629A09F1300A9B452 /* JHBusinessProfileViewController.Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBusinessProfileViewController.Delegate.swift; sourceTree = "<group>"; };
+		78E28CC129AE933000AC8B08 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SplashViewController.swift; path = BlackCat/Common/ProfileView/SplashViewController.swift; sourceTree = SOURCE_ROOT; };
 		8E2D8C4728F2EC27004B514D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8E2D8C4928F2ECD2004B514D /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		8E2D8C4B28F2ED03004B514D /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
@@ -903,6 +905,15 @@
 			path = InputViews;
 			sourceTree = "<group>";
 		};
+		78E28CC029AE931A00AC8B08 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				78E28CC129AE933000AC8B08 /* SplashViewController.swift */,
+			);
+			name = Splash;
+			path = "../../black-cat-ios-sdk/BlackCatSDK/Splash";
+			sourceTree = "<group>";
+		};
 		8E2D8C4628F2EBFA004B514D /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -1136,6 +1147,7 @@
 				B1D79CAA28EB0EF9008487D0 /* AppDelegate.swift */,
 				B1D79CAC28EB0EF9008487D0 /* SceneDelegate.swift */,
 				B1D127DC28F08DCA007E3667 /* TabBarViewController.swift */,
+				78E28CC029AE931A00AC8B08 /* Splash */,
 				784B023B29375949004ED20A /* Login */,
 				8E2D8C4628F2EBFA004B514D /* Home */,
 				8E7E9CD0291C8CAA00D09157 /* Bookmark */,
@@ -1547,6 +1559,7 @@
 				8E2D8C4C28F2ED03004B514D /* HomeModel.swift in Sources */,
 				7828DB54295B5D620053B0A0 /* AreaInputView.swift in Sources */,
 				8EBB614829274C0800F640F5 /* BookmarkViewModel.swift in Sources */,
+				78E28CC229AE933000AC8B08 /* SplashViewController.swift in Sources */,
 				78B00BBF28F5661000A9915D /* RecentMagazineFooterView.swift in Sources */,
 				784B02322937579E004ED20A /* MyPageBaseCell.swift in Sources */,
 				7867A63329374D0500FC1160 /* BottomSheetTransitioningDelegate.swift in Sources */,

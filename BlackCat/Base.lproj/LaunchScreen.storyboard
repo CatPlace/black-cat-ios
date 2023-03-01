@@ -22,18 +22,18 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchMent" translatesAutoresizingMaskIntoConstraints="NO" id="ArI-v2-nvM">
                                 <rect key="frame" x="95.666666666666686" y="486" width="202" height="17"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchImage" translatesAutoresizingMaskIntoConstraints="NO" id="ec0-Iz-cKn">
-                                <rect key="frame" x="134" y="369" width="125" height="97"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchImage" translatesAutoresizingMaskIntoConstraints="NO" id="JUc-sc-Ls6">
+                                <rect key="frame" x="134.33333333333334" y="369" width="124.66666666666666" height="97"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" red="0.20000001789999999" green="0.20000001789999999" blue="0.20000001789999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" white="0.15124542073353187" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="JHB-hm-tw7" secondAttribute="bottom" id="5EA-5u-YWb"/>
-                            <constraint firstItem="ec0-Iz-cKn" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="-21" id="Kfs-NS-drx"/>
                             <constraint firstItem="ArI-v2-nvM" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="S8h-7e-dGM"/>
-                            <constraint firstItem="ec0-Iz-cKn" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="dB6-wo-O5K"/>
-                            <constraint firstItem="ArI-v2-nvM" firstAttribute="top" secondItem="ec0-Iz-cKn" secondAttribute="bottom" constant="20" id="tty-04-MYe"/>
+                            <constraint firstItem="JUc-sc-Ls6" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Wq3-wx-Dk1"/>
+                            <constraint firstItem="JUc-sc-Ls6" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="-21" id="dPM-ZE-XB8"/>
+                            <constraint firstItem="ArI-v2-nvM" firstAttribute="top" secondItem="JUc-sc-Ls6" secondAttribute="bottom" constant="20" id="kAo-cx-QRn"/>
                             <constraint firstItem="JHB-hm-tw7" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="vQY-bf-OPJ"/>
                         </constraints>
                     </view>
@@ -44,8 +44,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchImage" width="124.66666412353516" height="97"/>
         <image name="catEar" width="237.33332824707031" height="60.333332061767578"/>
+        <image name="launchImage" width="124.66666412353516" height="97"/>
         <image name="launchMent" width="202" height="16.666666030883789"/>
     </resources>
 </document>
