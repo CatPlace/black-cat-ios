@@ -13,9 +13,18 @@ import Nuke
 
 final class JHBPThumbnailImageCellViewModel {
     let imageUrlStringDriver: Driver<String>
-    
-    init(imageUrlString: String) {
-        self.imageUrlStringDriver = .just(imageUrlString)
+    let isEmptyCoverImageDriver: Driver<Bool>
+    init(imageUrlString: String?) {
+        let imageUrlString = Observable.just(imageUrlString)
+        self.imageUrlStringDriver = imageUrlString
+            .compactMap { $0 }
+            .asDriver(onErrorJustReturn: "")
+        
+        self.isEmptyCoverImageDriver = imageUrlString
+            .debug("💡")
+            .map { $0 == nil }
+            .filter { $0 }
+            .asDriver(onErrorJustReturn: false)
     }
     
 }
@@ -25,6 +34,11 @@ final class JHBPThumbnailImageCell: BPBaseCollectionViewCell {
             .compactMap { URL(string: $0) }
             .drive(with: self) { owner, url in
                 Nuke.loadImage(with: url, into: owner.thumnailImageView)
+            }.disposed(by: disposeBag)
+        
+        viewModel.isEmptyCoverImageDriver
+            .drive(with: self) { owner, _ in
+                owner.thumnailImageView.image = .init(named: "defaultCover")
             }.disposed(by: disposeBag)
     }
     
@@ -39,6 +53,10 @@ final class JHBPThumbnailImageCell: BPBaseCollectionViewCell {
         thumnailImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+    }
+    
+    override func prepareForReuse() {
+        thumnailImageView.image = .init(named: "defaultCover")
     }
     
     let thumnailImageView: UIImageView = {

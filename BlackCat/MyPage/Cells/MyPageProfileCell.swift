@@ -33,6 +33,7 @@ class MyPageProfileCellViewModel {
         
         isEmptyProfileImage = userObservable
             .map { $0.imageUrl == nil }
+            .filter { $0 }
             .asDriver(onErrorJustReturn: false)
         
         userTypeStringDriver = userObservable
