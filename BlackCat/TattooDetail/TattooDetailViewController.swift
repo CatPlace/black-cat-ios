@@ -15,7 +15,6 @@ import SnapKit
 import Nuke
 
 final class TattooDetailViewController: UIViewController {
-    
     let disposeBag = DisposeBag()
     enum Reusable {
         static let tattooDetailCell = ReusableCell<TattooDetailCell>()
@@ -45,7 +44,7 @@ final class TattooDetailViewController: UIViewController {
                 .withUnretained(self)
                 .bind { owner, _ in
                     let vc = TwoButtonAlertViewController(viewModel: .init(type: .warningDelete([])))
-                    vc.delegate = self
+                    vc.delegate = owner
                     owner.present(vc, animated: true)
                 }
             
@@ -59,7 +58,7 @@ final class TattooDetailViewController: UIViewController {
                 .withUnretained(self)
                 .bind { owner, _ in
                     let vc = TwoButtonAlertViewController(viewModel: .init(type: .userReportwarning))
-                    vc.delegate = self
+                    vc.delegate = owner
                     owner.present(vc, animated: true)
                 }
             
@@ -70,7 +69,8 @@ final class TattooDetailViewController: UIViewController {
             
             askBottomView.bookmarkView.rx.tapGesture()
                 .when(.recognized)
-                .map { _ in  self.askBottomView.heartButton.tag }
+                .withUnretained(self)
+                .map { owner, _ in  owner.askBottomView.heartButton.tag }
                 .bind(to: viewModel.didTapBookmarkButton)
             
             askBottomView.askButton.rx.tap
@@ -112,8 +112,8 @@ final class TattooDetailViewController: UIViewController {
             
             viewModel.tattooistProfileImageUrlString
                 .compactMap { URL(string: $0) }
-                .drive { url in
-                    Nuke.loadImage(with: url, into: self.tattooistProfileView.tattooProfileImageView)
+                .drive(with: self) { owner, url in
+                    Nuke.loadImage(with: url, into: owner.tattooistProfileView.tattooProfileImageView)
                 }
             
             viewModel.imageCountDriver
@@ -125,9 +125,7 @@ final class TattooDetailViewController: UIViewController {
             viewModel.tattooTitleStringDriver
                 .drive(with: self) { owner, title in
                     owner.tattooTitle.text = title
-                    
                     owner.titleLabel.text = title
-                    print(owner.titleLabel.text)
                 }
             
             viewModel.genreCountDriver
@@ -147,8 +145,9 @@ final class TattooDetailViewController: UIViewController {
         }
         
         viewModel.문의하기Driver
-            .drive { _ in
-                print("문의하기 탭")
+            .drive(with: self) { owner, _ in
+                let vc = OneButtonAlertViewController(viewModel: .init(content: "준비중입니다.", buttonText: "확인"))
+                owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
         
         viewModel.수정하기Driver
@@ -240,7 +239,7 @@ final class TattooDetailViewController: UIViewController {
         $0.text = "타투 제목입니다."
         return $0
     }(UILabel())
-
+    
     private lazy var flowLayout: UICollectionViewLayout = {
         $0.minimumLineSpacing = 0.0
         $0.minimumInteritemSpacing = 0.0

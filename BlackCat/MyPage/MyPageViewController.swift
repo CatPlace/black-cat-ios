@@ -114,7 +114,7 @@ final class MyPageViewController: UIViewController {
         viewModel.showTwoButtonAlertVCDrvier
             .drive(with: self) { owner, type in
                 let vc = TwoButtonAlertViewController(viewModel: .init(type: type))
-                vc.delegate = self
+                vc.delegate = owner
                 owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
         

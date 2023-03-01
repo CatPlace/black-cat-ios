@@ -94,7 +94,7 @@ struct TattooDetailViewModel {
             didTapProfileImageView.asObservable(),
             didTapTattooistNameLabel.asObservable()
         ]).withLatestFrom(tattooModelSuccess) { $1.ownerId }
-            .debug("타투모델 정보들💡💡💡")
+            .share()
         .asDriver(onErrorJustReturn: -1)
 
         let bookmarkCountWhenFirstLoad = tattooModelSuccess.map { $0.likeCount ?? 0 }
@@ -200,10 +200,6 @@ struct TattooDetailViewModel {
                 CatSDKTattoo.updateRecentViewTattoos(deletedTattooId: tattooId)
             }
             .map { _ in "삭제에 성공했습니다." }
-        
-        func updateLocatData() {
-            
-        }
         
         let deleteFail = deleteResult
             .filter { $0.0 != $0.1}

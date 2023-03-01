@@ -30,8 +30,9 @@ class ProductEditViewController: VerticalScrollableViewController {
         viewModel.dismissDriver
             .drive(with: self) { owner, message in
                 let vc = OneButtonAlertViewController(viewModel: .init(content: message, buttonText: "확인"))
+                vc.delegate = owner
                 owner.present(vc, animated: true)
-                vc.delegate = self
+                
             }.disposed(by: disposeBag)
         
         viewModel.OneButtonAlertDriver
@@ -62,7 +63,7 @@ class ProductEditViewController: VerticalScrollableViewController {
                 var indexList: [Int]
                 if let index { indexList = [index] } else { indexList = [] }
                 let vc = TwoButtonAlertViewController(viewModel: .init(type: .warningDelete(indexList)))
-                vc.delegate = self
+                vc.delegate = owner
                 owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
         
