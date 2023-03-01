@@ -14,7 +14,7 @@ import RxSwift
 struct TattooDetailViewModel {
 
     // MARK: - Properties
-    private let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
 
     // MARK: - Input
     typealias ButtonTag = Int
@@ -50,6 +50,7 @@ struct TattooDetailViewModel {
     
     init(tattooId: Int) {
         let tattooModel = viewWillAppear
+            .debug("타투모델뭔데😡😡")
             .flatMap { _ in CatSDKTattoo.tattooDetail(tattooId: tattooId) }
             .share()
         

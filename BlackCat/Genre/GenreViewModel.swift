@@ -75,6 +75,12 @@ enum GenreType: Int, CaseIterable {
     }
 }
 
+struct FilterInfo: Equatable {
+    let genreId: Int
+    let tattooTypes: [String]
+    let addressIds: [Int]
+}
+
 class GenreViewModel {
 
     let disposeBag = DisposeBag()
@@ -121,37 +127,39 @@ class GenreViewModel {
                     .map {
                     $0.filter { $0.isSubscribe == true }
                             .compactMap { $0.type.index() }
+                            .map { $0 + 1 }
                 }
             }
 
         let filteredInfo = Observable.zip(filteredTask, filteredLocation)
             .share()
 
-        let defaultGenreId = viewWillAppear
-            .map { _ in genre.rawValue }
+        let defaultGenreId = Observable.just(genre.rawValue)
 
         let changedGenreId = selectedDropDownItemRow.asObservable()
 
         let currentGenreId = Observable.merge([
             defaultGenreId,
             changedGenreId
-        ]).share()
+        ]).distinctUntilChanged()
+            .share()
 
         let fetchedItems = Observable.merge([
-            viewWillAppear.asObservable(),
-            filterViewDidDismiss.asObservable(),
+            filteredTrigger,
             selectedDropDownItemRow.map { _ in () }.asObservable()
         ])
             .withLatestFrom(filteredInfo)
-            .withLatestFrom(currentGenreId) { (filterInfo: $0, genreId: $1) }
-            .flatMap { filterInfo, genreId in
-                let tattooTypes = filterInfo.0.isEmpty ? nil : filterInfo.0
-                let addressIds = filterInfo.1.isEmpty ? nil : filterInfo.1
-                return CatSDKTattoo.fetchedTattoo(categoryId: genreId == 0 ? nil : genreId, page: 0, size: 20, tattooTypes: tattooTypes, addressIds: addressIds)
+            .withLatestFrom(currentGenreId) { FilterInfo(genreId: $1, tattooTypes: $0.0, addressIds: $0.1) }
+            .distinctUntilChanged()
+            .debug("필터 정보들➡️➡️➡️")
+            .flatMap { filterInfo in
+                let tattooTypes = filterInfo.tattooTypes.isEmpty ? nil : filterInfo.tattooTypes
+                let addressIds = filterInfo.addressIds.isEmpty ? nil : filterInfo.addressIds
+                let genreId = filterInfo.genreId == 0 ? nil : filterInfo.genreId
+                return CatSDKTattoo.fetchedTattoo(categoryId: genreId, page: 0, size: 1000, tattooTypes: tattooTypes, addressIds: addressIds)
             }.share()
 
-        dropDownItems = viewWillAppear
-            .withLatestFrom(genreList)
+        dropDownItems = genreList
             .asDriver(onErrorJustReturn: [])
 
         genreItems = fetchedItems

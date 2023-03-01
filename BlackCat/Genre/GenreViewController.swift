@@ -46,6 +46,7 @@ class GenreViewController: UIViewController {
                 let filterViewController = FilterViewController(reactor: filterViewReactor)
                 
                 filterViewReactor.state.map { $0.isDismiss }
+                    .distinctUntilChanged()
                     .filter { $0 == true }
                     .map { _ in () }
                     .bind(to: owner.viewModel.filterViewDidDismiss)

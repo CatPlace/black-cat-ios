@@ -15,7 +15,11 @@ import SnapKit
 import Nuke
 
 final class TattooDetailViewController: UIViewController {
-    let disposeBag = DisposeBag()
+    deinit {
+        disposeBag = DisposeBag()
+        viewModel.disposeBag = DisposeBag()
+    }
+    var disposeBag = DisposeBag()
     enum Reusable {
         static let tattooDetailCell = ReusableCell<TattooDetailCell>()
         static let generCell = ReusableCell<GenreCell>()
@@ -23,16 +27,13 @@ final class TattooDetailViewController: UIViewController {
     
     // MARK: - Properties
     
-    let viewModel: TattooDetailViewModel
+    var viewModel: TattooDetailViewModel
     
     // MARK: - Binding
     
     private func bind(to viewModel: TattooDetailViewModel) {
         disposeBag.insert {
             rx.viewWillAppear
-                .bind(to: viewModel.viewWillAppear)
-            
-            rx.viewWillDisappear
                 .bind(to: viewModel.viewWillAppear)
             
             rx.viewWillDisappear
@@ -227,6 +228,10 @@ final class TattooDetailViewController: UIViewController {
         bind(to: viewModel)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        setNavigationBackgroundColor(color: .clear)
+    }
+    
     // MARK: - UIComponents
     
     private let scrollView = UIScrollView()
@@ -338,7 +343,6 @@ extension TattooDetailViewController {
     private var cellHeight: CGFloat { (500 * UIScreen.main.bounds.width) / 375 }
     
     private func setNavigationBar() {
-        setNavigationBackgroundColor(color: .clear)
         appendNavigationLeftBackButton()
         appendNavigationRightLabel(deleteLabel)
         appendNavigationLeftCustomView(titleLabel)
