@@ -118,7 +118,7 @@ final class FilterViewController: BottomSheetController, View {
     // 🐻‍❄️ NOTE: - 작업 종류 선택
     private lazy var taskSectionTitleLabel: UILabel = {
         sectionTitleModifier($0)
-        $0.text = "작업 종류를 선택해주세요."
+        $0.text = "작업 종류를 선택해주세요"
         return $0
     }(UILabel())
     
@@ -140,7 +140,7 @@ final class FilterViewController: BottomSheetController, View {
     // 🐻‍❄️ NOTE: - 지역 선택
     private lazy var locationSectionTitleLabel: UILabel = {
         sectionTitleModifier($0)
-        $0.text = "작업 종류를 선택해주세요."
+        $0.text = "방문 지역을 선택해주세요"
         return $0
     }(UILabel())
     

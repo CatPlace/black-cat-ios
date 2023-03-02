@@ -23,16 +23,16 @@ final class MyPageViewController: UIViewController {
     }
     
     // MARK: - Properties
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     var viewModel: MyPageViewModel
     
     lazy var dataSource = RxCollectionViewSectionedReloadDataSource<MyPageSection> (
-        configureCell: { _, collectionView, indexPath, item in
+        configureCell: { [weak self] _, collectionView, indexPath, item in
             switch item {
             case .profileSection(let viewModel):
                 let cell = collectionView.dequeue(Reusable.profileCell, for: indexPath)
                 
-                cell.bind(to: viewModel, with: self.viewModel)
+                cell.bind(to: viewModel, with: self?.viewModel)
                 
                 return cell
             case .recentTattooSection(let viewModel):
@@ -67,7 +67,6 @@ final class MyPageViewController: UIViewController {
     // MARK: - Binding
     func bind(to viewModel: MyPageViewModel) {
         rx.viewWillAppear
-            .do { _ in self.myPageCollectionView.collectionViewLayout.invalidateLayout() }
             .map { _ in () }
             .bind(to: viewModel.viewWillAppear)
             .disposed(by: disposeBag)
@@ -77,7 +76,6 @@ final class MyPageViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.dataSourceDriver
-            
             .drive(myPageCollectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
@@ -87,43 +85,60 @@ final class MyPageViewController: UIViewController {
                 vc.modalPresentationStyle = .fullScreen
                 owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
-        
+
         viewModel.pushToWebViewDriver
             .drive(with: self) { owner, linkString in
                 let vc = WebViewController(linkString: linkString)
                 owner.navigationController?.pushViewController(vc, animated: true)
             }.disposed(by: disposeBag)
-        
+
         viewModel.showLoginAlertVCDrvier
             .drive(with: self) { owner, _ in
                 let vc = LoginAlertViewController(viewModel: .init())
                 owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
-        
+
         viewModel.showUpgradeVCDriver
             .drive(with: self) { owner, _ in
                 let vc = UINavigationController(rootViewController: UpgradeBusinessViewController())
                 vc.modalPresentationStyle = .fullScreen
                 owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
-        
+
         viewModel.showBusinessProfileDriver
             .drive(with: self) { owner, tattooistId in
                 let vc = JHBusinessProfileViewController(viewModel: .init(tattooistId: tattooistId))
                 owner.navigationController?.pushViewController(vc, animated: true)
             }.disposed(by: disposeBag)
-        
+
         viewModel.showTwoButtonAlertVCDrvier
             .drive(with: self) { owner, type in
                 let vc = TwoButtonAlertViewController(viewModel: .init(type: type))
-                vc.delegate = self
+                vc.delegate = owner
                 owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
         
         viewModel.popToLoginVCDriver
             .drive(with: self) { owner, _ in
+                owner.disposeBag = DisposeBag()
                 owner.dismiss(animated: true)
             }.disposed(by: disposeBag)
+        
+        viewModel.showTattooDetailDriver
+            .drive(with: self) { owner, tattooId in
+                let vc = TattooDetailViewController(viewModel: .init(tattooId: tattooId))
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }.disposed(by: disposeBag)
+        
+        viewModel.recentTattooIsEmptyDriver
+            .drive(with: self) { owner, isEmpty in
+                owner.updaterRecentTattooView(with: isEmpty)
+            }.disposed(by: disposeBag)
+    }
+
+    // MARK: - Function
+    func updaterRecentTattooView(with isEmpty: Bool) {
+        emptyLabel.isHidden = !isEmpty
     }
     
     // MARK: - Initializer
@@ -149,6 +164,17 @@ final class MyPageViewController: UIViewController {
         v.register(Reusable.tattooHeaderView, kind: .header)
         return v
     }()
+    
+    let emptyLabel: UILabel = {
+        let fullText = "최근 본 타투가 없습니다."
+        let attributeString = NSMutableAttributedString(string: fullText)
+        let range = (fullText as NSString).range(of: "최근 본 타투")
+        attributeString.addAttributes([
+            .font: UIFont.appleSDGoithcFont(size: 24, style: .bold)
+        ], range: range)
+        $0.attributedText = attributeString
+        return $0
+    }(UILabel())
 }
 
 extension MyPageViewController {

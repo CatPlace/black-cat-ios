@@ -71,6 +71,8 @@ enum MyPageMenuType: Int, CaseIterable {
     }
 }
 final class MyPageViewModel {
+    typealias TattooistId = Int
+    typealias ProfileId = Int
     
     // MARK: - Input
     let viewWillAppear = PublishRelay<Void>()
@@ -86,9 +88,11 @@ final class MyPageViewModel {
     let pushToWebViewDriver: Driver<String>
     let showLoginAlertVCDrvier: Driver<Void>
     let showUpgradeVCDriver: Driver<Void>
-    let showBusinessProfileDriver: Driver<Int>
+    let showBusinessProfileDriver: Driver<TattooistId>
     let showTwoButtonAlertVCDrvier: Driver<TwoButtonAlertType>
     let popToLoginVCDriver: Driver<Void>
+    let showTattooDetailDriver: Driver<Int>
+    let recentTattooIsEmptyDriver: Driver<Bool>
     
     init(useCase: MyPageUseCase = MyPageUseCase()) {
         let profileSectionDataObservable = viewWillAppear
@@ -140,10 +144,10 @@ final class MyPageViewModel {
         let didTapWithdrawal = selectedMenu
             .filter { $0 == .withdrawal }
             .map { _ in () }
+        
         pushToWebViewDriver = selectedMenu
             .compactMap { $0.linkString() }
             .asDriver(onErrorJustReturn: "")
-        
         
         let logoutResult = logoutTrigger
             .map { _ in CatSDKUser.logout() }
@@ -155,15 +159,24 @@ final class MyPageViewModel {
         
         let logoutAlertType = didTapLogout.map { _ in TwoButtonAlertType.warningLogoutWriting }
         
-        let successWithdrawal = withdrawalResult
+        let withdrawalSuccess = withdrawalResult
             .filter { $0 }
             .map { _ in () }
         
-        let failWithdrawal = withdrawalResult
+        let withdrawalFail = withdrawalResult
             .filter { !$0 }
             .map { _ in () }
         
-        popToLoginVCDriver = Observable.merge([logoutResult, successWithdrawal])
+        let selectedTattoo = selectedItem
+            .filter { $0.section == 1 }
+            .withLatestFrom(recentTattooSectionDataObservable) { ($0, $1) }
+            .map { $1[$0.row].id }
+            .share()
+        
+        showTattooDetailDriver = selectedTattoo
+            .asDriver(onErrorJustReturn: -1)
+        
+        popToLoginVCDriver = Observable.merge([logoutResult, withdrawalSuccess])
             .asDriver(onErrorJustReturn: ())
         
         showTwoButtonAlertVCDrvier = Observable.merge([logoutAlertType, withdrawlAlertType])
@@ -179,7 +192,14 @@ final class MyPageViewModel {
         
         showBusinessProfileDriver = manageButtonTapped
             .map { _ in CatSDKUser.user().id }
-            .debug("타투이스트 비지니스 페이지로 이동 tattooistId:)")
             .asDriver(onErrorJustReturn: -1)
+        
+        recentTattooIsEmptyDriver = recentTattooSectionDataObservable
+            .map { $0.isEmpty }
+            .asDriver(onErrorJustReturn: true)
+    }
+    
+    deinit {
+        print("메모리 해제 잘되나 TEST, 마이페이지")
     }
 }

@@ -110,7 +110,7 @@ struct TextInputViewModel {
     
     // MARK: - Output
     let textCountLimitDriver: Driver<String>
-    
+    let contentDriver: Driver<String>
     
     // MARK: - Output
     let titleStringDriver: Driver<String>
@@ -122,6 +122,8 @@ struct TextInputViewModel {
         textCountLimitDriver = inputStringRelay
             .map { "(\($0.count)/\(textCountLimit))" }
             .asDriver(onErrorJustReturn: "")
+        
+        contentDriver = .just(content)
     }
 }
 
@@ -138,6 +140,10 @@ class TextInputView: UIView {
         
         viewModel.textCountLimitDriver
             .drive(textCountLimitLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.contentDriver
+            .drive(textView.rx.text)
             .disposed(by: disposeBag)
     }
     

@@ -22,12 +22,19 @@ class MyPageProfileCellViewModel {
     let setupManageViewDriver: Driver<Void>
     let profileEditIsHiddenDriver: Driver<Bool>
     let showImageViewBorderDriver: Driver<Void>
+    let isEmptyProfileImage: Driver<Bool>
+    
     init(user: Model.User) {
         let userObservable: Observable<Model.User> = .just(user)
         
         profileImageUrlStringDriver = userObservable
             .compactMap { $0.imageUrl }
             .asDriver(onErrorJustReturn: "")
+        
+        isEmptyProfileImage = userObservable
+            .map { $0.imageUrl == nil }
+            .filter { $0 }
+            .asDriver(onErrorJustReturn: false)
         
         userTypeStringDriver = userObservable
             .map { $0.userType.profileString() }
@@ -62,7 +69,9 @@ class MyPageProfileCell: MyPageBaseCell {
     var disposeBag = DisposeBag()
     
     // MARK: - Binding
-    func bind(to viewModel: MyPageProfileCellViewModel, with superViewModel: MyPageViewModel) {
+    func bind(to viewModel: MyPageProfileCellViewModel, with superViewModel: MyPageViewModel?) {
+        guard let superViewModel else { return }
+        
         profileEditButton.rx.tapGesture()
             .when(.recognized)
             .map { _ in () }
@@ -107,6 +116,12 @@ class MyPageProfileCell: MyPageBaseCell {
             .drive(with: self) { owner, _ in
                 owner.showImageViewBorder()
             }.disposed(by: disposeBag)
+        
+        viewModel.isEmptyProfileImage
+            .drive(with: self) { owner, _ in
+                owner.userImageView.image = UIImage(named: "guest")
+            }.disposed(by: disposeBag)
+        
     }
     
     // MARK: - Function
@@ -145,7 +160,7 @@ class MyPageProfileCell: MyPageBaseCell {
         return $0
     }(UILabel())
     let chevronRightImageView: UIImageView = {
-        $0.image = UIImage(systemName: "chevron.right")
+        $0.image = UIImage(named: "chevronRightPurple")
         $0.tintColor = .init(hex: "#7210A0FF")
         return $0
     }(UIImageView())
@@ -254,7 +269,7 @@ extension MyPageProfileCell {
             $0.leading.equalTo(manageLabel.snp.trailing).offset(10)
             $0.width.equalTo(7)
             $0.height.equalTo(14)
-            $0.centerY.equalToSuperview()
+            $0.centerY.equalTo(manageLabel).offset(-1)
         }
         
     }

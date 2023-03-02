@@ -10,7 +10,9 @@ import RxSwift
 import RxCocoa
 import RxRelay
 import RxGesture
+import RxKeyboard
 import BlackCatSDK
+import Photos
 
 class ProfileViewController: UIViewController {
     // MARK: - Properties
@@ -25,7 +27,7 @@ class ProfileViewController: UIViewController {
                 .when(.recognized)
                 .withUnretained(self)
                 .bind { owner, _ in
-                    owner.openImageLibrary()
+                    owner.activeActionSheet()
                 }
             
             completeButtonLabel.rx.tapGesture()
@@ -33,6 +35,12 @@ class ProfileViewController: UIViewController {
                 .map { _ in () }
                 .bind(to: viewModel.completeButtonTapped)
         }
+        
+        RxKeyboard.instance.visibleHeight
+            .skip(1)
+            .drive(with: self) { owner, keyboardVisibleHeight in
+                owner.updateView(with: keyboardVisibleHeight)
+            }.disposed(by: disposeBag)
         
         viewModel.completeAlertDriver
             .drive(with: self) { owner, _ in
@@ -47,16 +55,88 @@ class ProfileViewController: UIViewController {
             }.disposed(by: disposeBag)
         
         viewModel.profileImageDriver
-            .debug("프로필 이미지 업데이트 ~~")
             .drive(profileImageView.rx.image)
             .disposed(by: disposeBag)
     }
     
     // MARK: - Function
+    func updateView(with height: CGFloat) {
+         scrollView.snp.updateConstraints {
+             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(height)
+         }
+         
+         completeButtonLabel.snp.updateConstraints {
+             $0.bottom.equalToSuperview().inset(
+                 height == 0
+                 ? 0
+                 : height
+             )
+         }
+         UIView.animate(withDuration: 0.4) {
+             self.view.layoutIfNeeded()
+         }
+     }
+    
+    func activeActionSheet() {
+        let actionSheet = UIAlertController(title: "프로필 이미지 관리", message: nil, preferredStyle: .actionSheet)
+        let updateImageAction = UIAlertAction(title: "프로필 이미지 변경", style: .default) { [weak self] action in
+            guard let self else { return }
+            self.openImageLibrary()
+        }
+        let deleteImageAction = UIAlertAction(title: "프로필 이미지 삭제", style: .destructive) { [weak self] action in
+            guard let self else { return }
+            
+            self.viewModel.imageInputRelay.accept(nil)
+        }
+        let actionCancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        [updateImageAction, deleteImageAction, actionCancel].forEach { actionSheet.addAction($0) }
+        
+        self.present(actionSheet, animated: true)
+    }
+    
     func openImageLibrary() {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        present(imagePicker, animated: true)
+        
+        let status = PHPhotoLibrary.authorizationStatus()
+        
+        switch status {
+        case .authorized, .limited:
+            present(imagePicker, animated: true)
+        default:
+            PHPhotoLibrary.requestAuthorization() { [weak self] afterStatus in
+                guard let self else { return }
+                DispatchQueue.main.async {
+                    switch afterStatus {
+                    case .authorized:
+                        self.present(imagePicker, animated: true)
+                    case .denied:
+                        self.moveToSetting()
+                    default:
+                        break
+                    }
+                }
+            }
+        }
+    }
+    
+    func moveToSetting() {
+        let alertController = UIAlertController(title: "권한 거부됨", message: "앨범 접근이 거부 되었습니다.\n 사진을 변경하시려면 설정으로 이동하여 앨범 접근 권한을 허용해주세요.", preferredStyle: UIAlertController.Style.alert)
+        
+        let okAction = UIAlertAction(title: "설정으로 이동하기", style: .default) { action in
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: false, completion: nil)
     }
     
     func configure() {

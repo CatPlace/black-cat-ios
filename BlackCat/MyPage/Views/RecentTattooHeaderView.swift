@@ -36,6 +36,10 @@ class RecentTattooHeaderView: UICollectionReusableView {
             .disposed(by: disposeBag)
     }
     
+    override func prepareForReuse() {
+        disposeBag = DisposeBag()
+    }
+    
     // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)

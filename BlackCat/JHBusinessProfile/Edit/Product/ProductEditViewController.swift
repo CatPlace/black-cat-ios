@@ -10,6 +10,7 @@ import RxSwift
 import RxRelay
 import RxCocoa
 import RxKeyboard
+import Photos
 
 class ProductEditViewController: VerticalScrollableViewController {
     // MARK: - Properties
@@ -26,10 +27,18 @@ class ProductEditViewController: VerticalScrollableViewController {
             .bind(to: viewModel.didTapCompleteButton)
             .disposed(by: disposeBag)
         
-        viewModel.showCompleteAlertViewDriver
-            .drive(with: self) { owner, _ in
-                print("TODO: 업데이트 됐다고 Alert~")
-                owner.dismiss(animated: true)
+        viewModel.dismissDriver
+            .drive(with: self) { owner, message in
+                let vc = OneButtonAlertViewController(viewModel: .init(content: message, buttonText: "확인"))
+                vc.delegate = owner
+                owner.present(vc, animated: true)
+                
+            }.disposed(by: disposeBag)
+        
+        viewModel.OneButtonAlertDriver
+            .drive(with: self) { owner, message in
+                let vc = OneButtonAlertViewController(viewModel: .init(content: message, buttonText: "확인"))
+                owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
         
         RxKeyboard.instance.visibleHeight
@@ -38,11 +47,7 @@ class ProductEditViewController: VerticalScrollableViewController {
                 owner.updateView(with: keyboardVisibleHeight)
             }.disposed(by: disposeBag)
         
-        viewModel.limitExcessDriver
-            .drive { _ in
-                // TODO: - 알러트
-                print("개수 초과 !")
-            }.disposed(by: disposeBag)
+
         
         viewModel.imageListDrvier
             .drive(viewModel.tattooImageInputViewModel.imageDataListRelay)
@@ -58,22 +63,70 @@ class ProductEditViewController: VerticalScrollableViewController {
                 var indexList: [Int]
                 if let index { indexList = [index] } else { indexList = [] }
                 let vc = TwoButtonAlertViewController(viewModel: .init(type: .warningDelete(indexList)))
-                vc.delegate = self
+                vc.delegate = owner
                 owner.present(vc, animated: true)
+            }.disposed(by: disposeBag)
+        
+        viewModel.pageTitleDriver
+            .drive(with: self) { owner, title in
+                owner.configure(title: title)
             }.disposed(by: disposeBag)
     }
     
     //MARK: - Function
     func showImagePickerView() {
         let imagePickerManager = ImagePickerManager()
+        let status = PHPhotoLibrary.authorizationStatus()
         
-        presentImagePicker(imagePickerManager.imagePicker) { _ in
-        } deselect: { _ in
-        } cancel: { _ in
-        } finish: { [weak self] assets in
-            guard let self else { return }
-            self.viewModel.imageListInputRelay.accept(imagePickerManager.convertAssetToImage(assets))
+        switch status {
+        case .authorized, .limited:
+            presentImagePicker(imagePickerManager.imagePicker) { _ in
+            } deselect: { _ in
+            } cancel: { _ in
+            } finish: { [weak self] assets in
+                guard let self else { return }
+                self.viewModel.imageListInputRelay.accept(imagePickerManager.convertAssetToImage(assets))
+            }
+        default:
+            PHPhotoLibrary.requestAuthorization() { [weak self] afterStatus in
+                guard let self else { return }
+                DispatchQueue.main.async {
+                    switch afterStatus {
+                    case .authorized:
+                        self.presentImagePicker(imagePickerManager.imagePicker) { _ in
+                        } deselect: { _ in
+                        } cancel: { _ in
+                        } finish: { [weak self] assets in
+                            guard let self else { return }
+                            self.viewModel.imageListInputRelay.accept(imagePickerManager.convertAssetToImage(assets))
+                        }
+                    case .denied:
+                        self.moveToSetting()
+                    default:
+                        break
+                    }
+                }
+            }
         }
+    }
+    
+    func moveToSetting() {
+        let alertController = UIAlertController(title: "권한 거부됨", message: "앨범 접근이 거부 되었습니다.\n 사진을 등록하시려면 설정으로 이동하여 앨범 접근 권한을 허용해주세요.", preferredStyle: UIAlertController.Style.alert)
+        
+        let okAction = UIAlertAction(title: "설정으로 이동하기", style: .default) { action in
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: false, completion: nil)
     }
     
     func updateView(with height: CGFloat) {
@@ -93,10 +146,10 @@ class ProductEditViewController: VerticalScrollableViewController {
         }
     }
     
-    func configure() {
+    func configure(title: String) {
         view.backgroundColor = .init(hex: "#F4F4F4FF")
         appendNavigationLeftBackButton()
-        appendNavigationLeftLabel(title: viewModel.type.title())
+        appendNavigationLeftLabel(title: title)
     }
     
     // MARK: - Initializer
@@ -120,7 +173,6 @@ class ProductEditViewController: VerticalScrollableViewController {
         super.viewDidLoad()
         setUI()
         bind(to: viewModel)
-        configure()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -227,6 +279,10 @@ extension ProductEditViewController: TwoButtonAlertViewDelegate {
     func didTapLeftButton(type: TwoButtonAlertType) {
         dismiss(animated: true)
     }
-    
-    
+}
+
+extension ProductEditViewController: OneButtonAlertDelegate {
+    func didTapButton() {
+        didTapBackButton()
+    }
 }

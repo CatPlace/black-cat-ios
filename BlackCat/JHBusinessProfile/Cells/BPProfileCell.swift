@@ -8,20 +8,87 @@
 import UIKit
 
 // 🐻‍❄️ NOTE: - 다른 개발자님이 feature 이어 받으시도록 스타일로 맞춤.
-final class BPProfileCell: BPBaseCollectionViewCell {
+
+// TODO: -
+final class BPProfileCellViewModel {
+    let tattooistProfileImageUrlString: String
+    let tattooistName: String?
+    let address: String?
+    let description: String?
     
-    func configureCell(with description: String) {
+    init(
+        tattooistProfileImageUrlString: String,
+        tattooistName: String?,
+        address: String?,
+        description: String?
+    ) {
+        self.tattooistProfileImageUrlString = tattooistProfileImageUrlString
+        self.tattooistName = tattooistName
+        self.address = address
+        self.description = description
+    }
+}
+
+final class BPProfileCell: BPBaseCollectionViewCell {
+    override func initialize() {
+        self.setUI()
+    }
+    
+    let profileView = TattooistProfileView()
+    let addressLabel: UILabel = {
+        $0.text = "주소"
+        $0.font = .appleSDGoithcFont(size: 14, style: .regular)
+        return $0
+    }(UILabel())
+    let HLine: UIView = {
+        $0.backgroundColor = .init(hex: "#666666FF")
+        return $0
+    }(UIView())
+    private let profileTitleLabel: UILabel = {
+        $0.textColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
+        $0.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)
+        return $0
+    }(UILabel())
+    
+    private let profileDescriptionLabel: VerticalAlignLabel = {
+        $0.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        $0.font = .appleSDGoithcFont(size: 16, style: .medium)
+        $0.numberOfLines = 0
+        $0.lineBreakMode = .byWordWrapping
+        return $0
+    }(VerticalAlignLabel())
+    
+    func configureCell(with viewModel: BPProfileCellViewModel) {
+        loadImageUsingNuke(sender: profileView.tattooProfileImageView, urlString: viewModel.tattooistProfileImageUrlString)
+        profileView.tattooistNameLabel.text = viewModel.tattooistName
+        addressLabel.text = viewModel.address
         profileTitleLabel.text = "자기소개"
-        profileDescriptionLabel.text = description
+        profileDescriptionLabel.text = viewModel.description
     }
     
     func setUI() {
-        contentView.addSubview(profileTitleLabel)
-        profileTitleLabel.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview().inset(30)
+        [profileView, addressLabel, HLine, profileTitleLabel, profileDescriptionLabel].forEach { contentView.addSubview($0) }
+        
+        profileView.snp.makeConstraints {
+            $0.top.leading.equalToSuperview().inset(30)
         }
         
-        contentView.addSubview(profileDescriptionLabel)
+        addressLabel.snp.makeConstraints {
+            $0.top.equalTo(profileView.snp.bottom).offset(15)
+            $0.leading.equalTo(profileView)
+        }
+        
+        HLine.snp.makeConstraints {
+            $0.top.equalTo(addressLabel.snp.bottom).offset(30)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(1)
+        }
+        
+        profileTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(HLine).inset(30)
+            $0.leading.trailing.equalToSuperview().inset(30)
+        }
+        
         profileDescriptionLabel.snp.makeConstraints {
             $0.top.equalTo(profileTitleLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalTo(profileTitleLabel)
@@ -29,26 +96,6 @@ final class BPProfileCell: BPBaseCollectionViewCell {
         }
         
     }
-    
-    override func initialize() {
-        self.setUI()
-    }
-    
-    lazy var profileTitleLabel: UILabel = {
-        $0.textColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
-        $0.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)
-        $0.numberOfLines = 1
-        $0.sizeToFit()
-        return $0
-    }(UILabel())
-    
-    lazy var profileDescriptionLabel: VerticalAlignLabel = {
-        $0.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        $0.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 16)
-        $0.numberOfLines = 0
-        $0.lineBreakMode = .byWordWrapping
-        return $0
-    }(VerticalAlignLabel())
 }
 
 public class VerticalAlignLabel: UILabel {
@@ -57,16 +104,16 @@ public class VerticalAlignLabel: UILabel {
         case middle
         case bottom
     }
-
+    
     var verticalAlignment : VerticalAlignment = .top {
         didSet {
             setNeedsDisplay()
         }
     }
-
+    
     override public func textRect(forBounds bounds: CGRect, limitedToNumberOfLines: Int) -> CGRect {
         let rect = super.textRect(forBounds: bounds, limitedToNumberOfLines: limitedToNumberOfLines)
-
+        
         if UIView.userInterfaceLayoutDirection(for: .unspecified) == .rightToLeft {
             switch verticalAlignment {
             case .top:
@@ -87,7 +134,7 @@ public class VerticalAlignLabel: UILabel {
             }
         }
     }
-
+    
     override public func drawText(in rect: CGRect) {
         let r = self.textRect(forBounds: rect, limitedToNumberOfLines: self.numberOfLines)
         super.drawText(in: r)

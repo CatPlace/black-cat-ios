@@ -110,6 +110,12 @@ class HomeViewController: UIViewController {
                 owner.navigationController?.pushViewController(bookmarkViewController, animated: true)
             }
             .disposed(by: disposeBag)
+        
+        viewModel.pushToTattooDetailViewController
+            .drive(with: self) { owner, tattooId in
+                let vc = TattooDetailViewController(viewModel: .init(tattooId: tattooId))
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }.disposed(by: disposeBag)
     }
 
     // MARK: - Initializing
@@ -120,7 +126,6 @@ class HomeViewController: UIViewController {
         bind()
         setNavigationBar()
         setUI()
-
     }
 
     required init?(coder: NSCoder) {

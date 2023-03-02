@@ -39,14 +39,16 @@ enum TwoButtonAlertType {
         case .warningSecession:
             return "탈퇴 하시겠습니까?"
         case .warningDelete(let indexList):
-            return "\(indexList.count) 개를 삭제하시겠습니까?"
+            return indexList.count == 0
+            ? "삭제하시겠습니까?"
+            : "\(indexList.count) 개를 삭제하시겠습니까?"
         }
     }
     
-    func getLeftButtonColor() -> UIColor {
+    func getLeftButtonColor() -> UIColor? {
         switch self {
         default:
-            return .gray
+            return .init(hex: "#999999FF")
         }
     }
     
@@ -66,10 +68,10 @@ enum TwoButtonAlertType {
             return "확인"
         }
     }
-    func getRightButtonColor() -> UIColor {
+    func getRightButtonColor() -> UIColor? {
         switch self {
         default:
-            return .red
+            return .init(hex: "#7210A0FF")
         }
     }
 }
@@ -85,9 +87,9 @@ struct TwoButtonAlertViewModel {
     // MARK: Output
     let contentStringDriver: Driver<String>
     let leftButtonTextDriver: Driver<String>
-    let leftTextColorDriver: Driver<UIColor>
+    let leftTextColorDriver: Driver<UIColor?>
     let rightButtonTextDriver: Driver<String>
-    let rightTextColorDriver: Driver<UIColor>
+    let rightTextColorDriver: Driver<UIColor?>
     
     init(type: TwoButtonAlertType) {
         contentStringDriver = .just(type.alertMessage())
@@ -174,12 +176,16 @@ class TwoButtonAlertViewController: UIViewController {
     let contentLabel = UILabel()
     let leftLabel = UILabel()
     let rightLabel = UILabel()
-    
+    let HLine: UIView = {
+        $0.backgroundColor = .init(hex: "#C4C4C4FF")
+        return $0
+    }(UIView())
+    let VLine: UIView = {
+        $0.backgroundColor = .init(hex: "#C4C4C4FF")
+        return $0
+    }(UIView())
     func labelBuilder(_ sender: UILabel) {
-        sender.font = .pretendardFont(size: 15,
-                                      style: sender == leftLabel
-                                      ? .light
-                                      : .regular)
+        sender.font = .appleSDGoithcFont()
         sender.textAlignment = .center
     }
 }
@@ -196,28 +202,41 @@ extension TwoButtonAlertViewController {
         
         contentView.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.width.equalToSuperview().multipliedBy(343 / 375.0)
-            $0.height.equalToSuperview().multipliedBy(166 / 812.0)
+            $0.width.equalToSuperview().multipliedBy(300 / 375.0)
+            $0.height.equalToSuperview().multipliedBy(171 / 812.0)
         }
         
-        [contentLabel, leftLabel, rightLabel].forEach { contentView.addSubview($0) }
+        [contentLabel, leftLabel, rightLabel, HLine, VLine].forEach { contentView.addSubview($0) }
         
         contentLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview().multipliedBy(0.7)
+            $0.centerY.equalToSuperview().multipliedBy(121/171.0)
         }
         
         leftLabel.snp.makeConstraints {
             $0.leading.equalToSuperview()
             $0.width.equalToSuperview().dividedBy(2)
-            $0.centerY.equalToSuperview().multipliedBy(1.6)
-            $0.height.equalToSuperview().multipliedBy(0.4)
+            $0.bottom.equalToSuperview()
+            $0.height.equalToSuperview().multipliedBy(50/171.0)
         }
         rightLabel.snp.makeConstraints {
             $0.trailing.equalToSuperview()
             $0.width.equalToSuperview().dividedBy(2)
             $0.centerY.equalTo(leftLabel)
-            $0.height.equalToSuperview().multipliedBy(0.4)
+            $0.height.equalToSuperview().multipliedBy(50/171.0)
+        }
+        
+        HLine.snp.makeConstraints {
+            $0.bottom.equalTo(rightLabel.snp.top)
+            $0.leading.trailing.equalToSuperview().inset(15)
+            $0.height.equalTo(1)
+        }
+        
+        VLine.snp.makeConstraints {
+            $0.height.equalTo(rightLabel).multipliedBy(0.4)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(1)
+            $0.centerY.equalTo(rightLabel)
         }
     }
 }

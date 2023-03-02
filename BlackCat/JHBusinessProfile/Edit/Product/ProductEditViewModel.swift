@@ -20,6 +20,13 @@ enum ProductInputType {
         case .modify: return "타투 수정"
         }
     }
+    
+    func completeAlertMessage() -> String {
+        switch self {
+        case .add: return "타투가 등록되었습니다."
+        case .modify: return "타투가 수정되었습니다."
+        }
+    }
 }
 
 struct TattooEditModel {
@@ -34,9 +41,6 @@ struct TattooEditModel {
 }
 
 class ProductEditViewModel {
-    // MARK: - Property
-    let type: ProductInputType
-    
     // MARK: - SubViewModels
     let tattooTypeViewModel: TattooTypeInputViewModel
     let titleInputViewModel: SimpleInputViewModel
@@ -51,34 +55,24 @@ class ProductEditViewModel {
     let didTapCompleteButton = PublishRelay<Void>()
     
     // MARK: - Output
+    let pageTitleDriver: Driver<String>
     let imageListDrvier: Driver<[Any]>
-    let limitExcessDriver: Driver<Void>
     let showWarningRemoveViewDrvier: Driver<Int?>
     let showImagePickerViewDriver: Driver<Void>
-    let showCompleteAlertViewDriver: Driver<Void>
-    let showFailUpdateAlertViewDriver: Driver<String>
+    let OneButtonAlertDriver: Driver<String>
+    let dismissDriver: Driver<String>
+    
     init(tattoo: Model.Tattoo? = nil) {
         let tattooId = tattoo?.id
-        let fetcedGenreList = CatSDKNetworkCategory.rx.fetchCategories()
-            .debug("장르 ~")
-            .share()
-        
-        let initialUpdateTattooModel: Model.UpdateTattoo.Request
+        let fetcedGenreList = Observable.just(GenreType.allCases)
         let initialImageUrlStrings = tattoo?.imageURLStrings ?? []
-        
-        if let tattoo {
-            type = .modify
-            initialUpdateTattooModel = .init(tattooType: tattoo.tattooType, categoryId: tattoo.categoryId, title: tattoo.title, price: tattoo.price, description: tattoo.description, deleteImageUrls: [])
-        } else {
-            type = .add
-            initialUpdateTattooModel = .init()
-        }
-        
-        tattooTypeViewModel = .init(tattooType: initialUpdateTattooModel.tattooType)
-        titleInputViewModel = .init(type: .tattooTitle, content: initialUpdateTattooModel.description)
+        let type: ProductInputType = tattoo == nil ? .add : .modify
+        pageTitleDriver = .just(type.title())
+        tattooTypeViewModel = .init(tattooType: tattoo?.tattooType)
+        titleInputViewModel = .init(type: .tattooTitle, content: tattoo?.title)
         tattooImageInputViewModel = .init()
-        descriptionInputViewModel = .init(title: "내용", content: initialUpdateTattooModel.description)
-        genreInputViewModel = .init(genres: fetcedGenreList, selectedGenres: initialUpdateTattooModel.categoryId)
+        descriptionInputViewModel = .init(title: "내용", content: tattoo?.description ?? "")
+        genreInputViewModel = .init(genres: fetcedGenreList, selectedGenres: tattoo?.categoryIds ?? [])
         
         let addedResultImages = imageListInputRelay
             .withLatestFrom(tattooImageInputViewModel.imageDataListRelay) { inputImages, prevImages in
@@ -112,8 +106,10 @@ class ProductEditViewModel {
             titleInputViewModel.inputStringRelay,
             images,
             descriptionInputViewModel.inputStringRelay,
+            //TODO: - 가격 삽입
+            Observable.just("0"),
             genreInputViewModel.selectedGenresRelay
-        ).map { (type: $0, title: $1, images: $2, description: $3, categoryIdList: $4) }
+        ).map { (type: $0, title: $1, images: $2, description: $3, price: $4, categoryIdList: $5) }
         
         showWarningRemoveViewDrvier = shouldUpdateData
             .filter { indexPath, images in
@@ -127,44 +123,62 @@ class ProductEditViewModel {
             }.map { _ in () }
             .asDriver(onErrorJustReturn: ())
         
-        limitExcessDriver = addedResultImages
+        let limitExcess = addedResultImages
+            .delay(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
             .filter { $0.count > 5 }
-            .map { _ in () }
-            .asDriver(onErrorJustReturn: ())
+            .map { _ in "최대 5개까지만 등록 가능합니다 !" }
         
         // NOTE: - 서버에 보낼 때
         // fetchedImage가 inputs에 포함되어 있지 않으면 deletedImages
         // UIImage타입이면 addedImages
-        let updateResult = didTapCompleteButton
+        let inputsWhenDidTapCompleteButton = didTapCompleteButton
             .withLatestFrom(inputs)
-            .map { input -> (Model.UpdateTattoo.Request, [Data]) in
-                return (.init(tattooType: input.type, categoryId: input.categoryIdList.sorted(), title: input.title, price: 0, description: input.description, deleteImageUrls: shouldDeleteImages(inputImages: input.images)), shouldUpdateImages(inputImages: input.images))
-            }.flatMap { tattooInfo, imageDataList in
-                CatSDKTattooist.updateProduct(tattooistId: tattooId, tattooImageDatas: imageDataList, tattooInfo: tattooInfo)
-            }
+            .map { validCheckedInputs(type: $0.type, title: $0.title, images: $0.images, description: $0.description, price: $0.price, categoryIdList: $0.categoryIdList) }
+            .share()
         
-        let updateSuccess = updateResult.filter { $0.tattooId != -1 }
-        let updateFail = updateResult.filter { $0.tattooId == -1 }
+        let updateResult = inputsWhenDidTapCompleteButton
+            .filter { $0 != nil }
+            .flatMap { request in
+                guard let request else { return Observable.just(Model.TattooThumbnail(tattooId: -1, imageUrlString: "")) }
+                let tattooInfo = request.0
+                let imageDataList = request.1
+                return CatSDKTattooist.updateProduct(tattooId: tattooId, tattooImageDatas: imageDataList, tattooInfo: tattooInfo)
+            }.share()
         
+        let validCheckFail = inputsWhenDidTapCompleteButton
+            .filter { $0 == nil }
+            .map { _ in "내용 이외의 값은 필수입니다." }
         
-        showFailUpdateAlertViewDriver = updateFail
+        let updateSuccess = updateResult
+            .filter { $0.tattooId != -1 }
+        
+        let updateFail = updateResult
+            .filter { $0.tattooId == -1 }
+        
+        let localUpdateSuccess = updateSuccess
+            .do { tattooThumbnail in
+                if type == .add {
+                    var localTattooist = CatSDKTattooist.localTattooistInfo()
+                    localTattooist.tattoos = [tattooThumbnail] + localTattooist.tattoos
+                    CatSDKTattooist.updateLocalTattooistInfo(tattooistInfo: localTattooist)
+                }
+            }.map { _ in type.completeAlertMessage() }
+        
+        let updateFailMessage = updateFail
             .map { _ in "잠시 후 다시 시도해주세요." }
+        
+        OneButtonAlertDriver = Observable.merge([updateFailMessage, validCheckFail, limitExcess])
             .asDriver(onErrorJustReturn: "")
         
-        showCompleteAlertViewDriver = updateSuccess
-            .do { tattooThumbnail in
-                var localTattooist = CatSDKTattooist.localTattooistInfo()
-                localTattooist.tattoos = [tattooThumbnail] + localTattooist.tattoos
-                CatSDKTattooist.updateLocalTattooistInfo(tattooistInfo: localTattooist)
-            }.map { _ in () }
-            .asDriver(onErrorJustReturn: ())
+        dismissDriver = localUpdateSuccess
+            .asDriver(onErrorJustReturn: "")
         
         imageListDrvier = images
             .asDriver(onErrorJustReturn: [])
         
         func shouldDeleteImages(inputImages: [Any]) -> [String] {
             initialImageUrlStrings.filter { initialImageUrlString in
-                inputImages.contains(where: { inputImage in
+                !inputImages.contains(where: { inputImage in
                     guard let imageUrlString = inputImage as? String else { return false }
                     return imageUrlString == initialImageUrlString
                 })
@@ -174,7 +188,30 @@ class ProductEditViewModel {
         func shouldUpdateImages(inputImages: [Any]) -> [Data] {
             inputImages
                 .compactMap { $0 as? UIImage }
-                .compactMap { $0.resize(newWidth: 20).jpegData(compressionQuality: 0.1) }
+                .compactMap { $0.resize(newWidth: 5).jpegData(compressionQuality: 0.1) }
+        }
+        
+        func validCheckedInputs(
+            type: TattooType?,
+            title: String? = "",
+            images: [Any],
+            description: String,
+            price: String,
+            categoryIdList: Set<Int>
+        ) -> (Model.UpdateTattoo.Request, [Data])? {
+            guard let type else { return nil }
+            guard let title, title != "" else { return nil }
+            guard let priceInt = Int(price) else { return nil}
+            if images.isEmpty || categoryIdList.isEmpty {
+                return nil
+            }
+            
+            return (.init(tattooType: type,
+                          categoryId: categoryIdList.sorted(),
+                          title: title, price: priceInt,
+                          description: description,
+                          deleteImageUrls: shouldDeleteImages(inputImages: images)),
+                    shouldUpdateImages(inputImages: images))
         }
     }
 }

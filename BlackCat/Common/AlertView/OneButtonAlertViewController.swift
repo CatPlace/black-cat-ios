@@ -16,18 +16,23 @@ struct OneButtonAlertViewModel {
     // MARK: Output
     let contentStringDriver: Driver<String>
     let buttonTextDriver: Driver<String>
-    let textColorDriver: Driver<UIColor>
+    let textColorDriver: Driver<UIColor?>
     
-    init(content: String, buttonText: String, textColor: UIColor = .black) {
+    init(content: String, buttonText: String, textColor: UIColor? = .init(hex: "#7210A0FF")) {
         contentStringDriver = .just(content)
         buttonTextDriver = .just(buttonText)
         textColorDriver = .just(textColor)
     }
 }
 
+protocol OneButtonAlertDelegate: AnyObject {
+    func didTapButton()
+}
+
 class OneButtonAlertViewController: UIViewController {
     // MARK: - Properties
     var disposeBag = DisposeBag()
+    weak var delegate: OneButtonAlertDelegate?
     
     // MARK: - Binding
     func bind(to viewModel: OneButtonAlertViewModel) {
@@ -47,7 +52,8 @@ class OneButtonAlertViewController: UIViewController {
             .when(.recognized)
             .withUnretained(self)
             .bind { owner, _ in
-                owner.dismiss(animated: true)
+                    owner.dismiss(animated: true)
+                    owner.delegate?.didTapButton()
             }.disposed(by: disposeBag)
     }
     
@@ -81,7 +87,10 @@ class OneButtonAlertViewController: UIViewController {
     let contentView = UIView()
     let contentLabel = UILabel()
     let completeLabel = UILabel()
-    
+    let HLine: UIView = {
+        $0.backgroundColor = .init(hex: "#C4C4C4FF")
+        return $0
+    }(UIView())
     func labelBuilder(_ sender: UILabel) {
         sender.font = .pretendardFont(size: 15,
                                       style: .light)
@@ -99,22 +108,29 @@ extension OneButtonAlertViewController {
         view.addSubview(contentView)
         contentView.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.width.equalToSuperview().multipliedBy(343 / 375.0)
-            $0.height.equalToSuperview().multipliedBy(166 / 812.0)
+            $0.width.equalToSuperview().multipliedBy(300 / 375.0)
+            $0.height.equalToSuperview().multipliedBy(171 / 812.0)
         }
         
-        [contentLabel, completeLabel].forEach { contentView.addSubview($0) }
+        [contentLabel, completeLabel, HLine].forEach { contentView.addSubview($0) }
+        
         
         contentLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview().multipliedBy(0.7)
+            $0.centerY.equalToSuperview().multipliedBy(121/171.0)
         }
         
         completeLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview()
-            $0.centerY.equalToSuperview().multipliedBy(1.6)
-            $0.height.equalToSuperview().multipliedBy(0.4)
+            $0.bottom.equalToSuperview()
+            $0.height.equalToSuperview().multipliedBy(50/171.0)
+        }
+        
+        HLine.snp.makeConstraints {
+            $0.bottom.equalTo(completeLabel.snp.top)
+            $0.leading.trailing.equalToSuperview().inset(15)
+            $0.height.equalTo(1)
         }
     }
 }

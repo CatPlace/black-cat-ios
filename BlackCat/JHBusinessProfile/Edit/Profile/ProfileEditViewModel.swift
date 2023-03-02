@@ -42,7 +42,7 @@ class ProfileEditViewModel {
                 if let _ = finalImage as? String {
                     images = nil
                     deleteImageUrls = []
-                } else if let image = finalImage as? UIImage, let data = image.resize(newWidth: 20).jpegData(compressionQuality: 0.1) {
+                } else if let image = finalImage as? UIImage, let data = image.resize(newWidth: 5).jpegData(compressionQuality: 0.1) {
                     images = [data]
                     deleteImageUrls = [initialImageUrlString].compactMap { $0 }
                 } else {
@@ -55,14 +55,15 @@ class ProfileEditViewModel {
         updateSuccessDriver = updatedResult
             .filter { $0.introduce != "error" }
             .map { updatedTattooistIntroduce in
-                localTattooistInfo.introduce = updatedTattooistIntroduce
+                localTattooistInfo.introduce.imageUrlString = updatedTattooistIntroduce.imageUrlString
+                localTattooistInfo.introduce.introduce = updatedTattooistIntroduce.introduce
                 CatSDKTattooist.updateLocalTattooistInfo(tattooistInfo: localTattooistInfo)
                 return ()
             }.asDriver(onErrorJustReturn: ())
         
         updateFailDriver = updatedResult
             .filter { $0.introduce == "error" }
-            .map { $0.introduce }
+            .compactMap { $0.introduce }
             .asDriver(onErrorJustReturn: "")
     }
 }

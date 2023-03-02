@@ -13,7 +13,7 @@ extension Reactive where Base: UIScrollView {
     var nextFetchPage: Observable<Int> {
         return didScroll.map { _ in
             let offset = base.contentOffset.y
-            let screenHeight = UIScreen.main.bounds.height
+            let screenHeight = UIScreen.main.bounds.height * 0.5
             let nextFetchPage = Int(offset / (screenHeight / 2))
 
             return nextFetchPage

@@ -39,7 +39,7 @@ class BMTabMenuView: UIView {
 
     var barIndicatorHeight: CGFloat = 4.0
 
-    var barIndicatorWidth: CGFloat = 50
+    var barIndicatorWidth: CGFloat = UIScreen.main.bounds.width / 2
 
     weak var delegate: BMTabMenuDelegate?
 

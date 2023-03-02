@@ -49,20 +49,46 @@ enum GenreType: Int, CaseIterable {
         case .캐릭터: return "캐릭터"
         }
     }
+    
+//    static func id(_ title: String) -> Int {
+//        allGenre.firstIndex { $0.title == title } ?? 0
+//    }
 
-    static func id(_ title: String) -> Int {
-        allGenre.firstIndex { $0.title == title } ?? 0
+    var imageName: String {
+        switch self {
+        case .전체보기: return "all"
+        case .레터링: return "lettering"
+        case .미니타투: return "mini"
+        case .감성타투: return "sentimental"
+        case .이레즈미: return "irezumi"
+        case .블랙그레이: return "blackAndGray"
+        case .라인워크: return "lineWork"
+        case .헤나: return "henna"
+        case .커버업: return "coverUp"
+        case .뉴스쿨: return "newSchool"
+        case .올드스쿨: return "oldSchool"
+        case .잉크스플래쉬: return "inkSplash"
+        case .치카노: return "chicano"
+        case .컬러: return "color"
+        case .캐릭터: return "charactor"
+        }
     }
+}
+
+struct FilterInfo: Equatable {
+    let genreId: Int
+    let tattooTypes: [String]
+    let addressIds: [Int]
 }
 
 class GenreViewModel {
 
     let disposeBag = DisposeBag()
-    var genre: Model.Category
+    var genre: GenreType
 
     // MARK: - Input
 
-    private let genreList = Observable<[String]>.just(["전체보기", "레터링", "미니타투", "감성 타투", "이레즈미", "블랙&그레이", "라인워크", "헤나", "커버업", "뉴스쿨", "올드스쿨", "잉크 스플래쉬", "치카노", "컬러", "캐릭터"])
+    private let genreList = Observable<[String]>.just(GenreType.allCases.map { $0.title })
     let viewWillAppear = PublishRelay<Void>()
     let filterViewDidDismiss = PublishRelay<Void>()
     let selectedDropDownItemRow = PublishRelay<Int>()
@@ -75,63 +101,65 @@ class GenreViewModel {
     let genreItems: Driver<[CommonFullImageCellViewModel]>
     let pushToTattooDetailVC: Driver<TattooDetailViewModel>
 
-    init(genre: Model.Category) {
+    init(genre: GenreType) {
         self.genre = genre
+
+        let filteredTrigger = Observable.merge([
+            viewWillAppear.asObservable(),
+            filterViewDidDismiss.asObservable()
+        ]).share()
 
         let filterService = FilterService()
 
-        let filteredTask = Observable.merge([
-            viewWillAppear.asObservable(),
-            filterViewDidDismiss.asObservable()
-        ])
+        let filteredTask = filteredTrigger
             .flatMap {
-                filterService.taskService.fetch().map {
-                    $0.filter { $0.isSubscribe == true }.map { $0.type.serverString() }
+                filterService.taskService.fetch()
+                    .map {
+                    $0.filter { $0.isSubscribe == true }
+                            .map { $0.type.serverString() }
                 }
             }
+            
 
-        let filteredLocation = Observable.merge([
-            viewWillAppear.asObservable(),
-            filterViewDidDismiss.asObservable()
-        ])
+        let filteredLocation = filteredTrigger
             .flatMap {
-                filterService.locationService.fetch().map {
-                    $0.filter { $0.isSubscribe == true }.flatMap { $0.type.index() }
+                filterService.locationService.fetch()
+                    .map {
+                    $0.filter { $0.isSubscribe == true }
+                            .compactMap { $0.type.index() }
+                            .map { $0 + 1 }
                 }
             }
 
         let filteredInfo = Observable.zip(filteredTask, filteredLocation)
+            .share()
 
-        let defaultGenreTitle = viewWillAppear
-            .map { _ in genre.name }
+        let defaultGenreId = Observable.just(genre.rawValue)
 
-        let changedGenreTitle = selectedDropDownItemRow
-            .map { row in GenreType(rawValue: row)?.title ?? "전체보기" }
+        let changedGenreId = selectedDropDownItemRow.asObservable()
 
-        let currentGenreTitle = Observable.merge([
-            defaultGenreTitle,
-            changedGenreTitle
-        ])
+        let currentGenreId = Observable.merge([
+            defaultGenreId,
+            changedGenreId
+        ]).distinctUntilChanged()
+            .share()
 
         let fetchedItems = Observable.merge([
-            viewWillAppear.asObservable(),
-            filterViewDidDismiss.asObservable(),
+            filteredTrigger,
             selectedDropDownItemRow.map { _ in () }.asObservable()
         ])
             .withLatestFrom(filteredInfo)
+            .withLatestFrom(currentGenreId) { FilterInfo(genreId: $1, tattooTypes: $0.0, addressIds: $0.1) }
+            .distinctUntilChanged()
+            .debug("필터 정보들➡️➡️➡️")
             .flatMap { filterInfo in
-                // TODO: - 임시로 fist
-                let tattoType = filterInfo.0.first
-                let addressid = filterInfo.1.first
-                if genre.id == 0 {
-                    return CatSDKNetworkTattoo.rx.fetchTattoos(tattooType: tattoType, addressId: addressid)
-                } else {
-                    return CatSDKNetworkTattoo.rx.fetchTattosInSpecificCategory(categoryID: genre.id, tattooType: tattoType, addressId: addressid)
-                }
-            }
+                let tattooTypes = filterInfo.tattooTypes.isEmpty ? nil : filterInfo.tattooTypes
+                let addressIds = filterInfo.addressIds.isEmpty ? nil : filterInfo.addressIds
+                let genreId = filterInfo.genreId == 0 ? nil : filterInfo.genreId
+                return CatSDKTattoo.fetchedTattoo(categoryId: genreId, page: 0, size: 1000, tattooTypes: tattooTypes, addressIds: addressIds)
+            }.share()
 
-        dropDownItems = viewWillAppear
-            .withLatestFrom(genreList)
+        dropDownItems = genreList
             .asDriver(onErrorJustReturn: [])
 
         genreItems = fetchedItems

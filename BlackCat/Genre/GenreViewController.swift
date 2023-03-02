@@ -46,6 +46,7 @@ class GenreViewController: UIViewController {
                 let filterViewController = FilterViewController(reactor: filterViewReactor)
                 
                 filterViewReactor.state.map { $0.isDismiss }
+                    .distinctUntilChanged()
                     .filter { $0 == true }
                     .map { _ in () }
                     .bind(to: owner.viewModel.filterViewDidDismiss)
@@ -69,7 +70,7 @@ class GenreViewController: UIViewController {
 
         viewModel.dropDownItems
             .drive(with: self) { owner, items in
-                let title = owner.viewModel.genre.name
+                let title = owner.viewModel.genre.title
                 owner.dropDown.configure(with: items, title: title)
             }
             .disposed(by: disposeBag)
@@ -94,6 +95,7 @@ class GenreViewController: UIViewController {
         self.viewModel = viewModel
 
         super.init(nibName: nil, bundle: nil)
+        view.backgroundColor = .white
     }
 
     required init?(coder: NSCoder) {
@@ -164,6 +166,7 @@ extension GenreViewController {
         navigationController?.navigationBar.tintColor = .black
         appendNavigationLeftBackButton(color: .black)
         appendNavigationLeftCustomView(dropDown)
+        navigationItem.rightBarButtonItem = filterButtonItem
     }
 
     private func setUI() {

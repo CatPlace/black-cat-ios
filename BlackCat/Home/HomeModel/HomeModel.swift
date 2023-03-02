@@ -19,6 +19,7 @@ struct HomeModel {
     struct Empty {}
 
     struct TattooAlbum {
+        let tattooId: Int
         let imageURLString: String
     }
 }

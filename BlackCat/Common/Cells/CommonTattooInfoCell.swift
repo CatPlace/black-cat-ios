@@ -19,7 +19,7 @@ class CommonTattooInfoCellViewModel {
     
     init(tattoo: Model.Tattoo) {
         imageUrlStringDriver = .just(tattoo.imageURLStrings.first ?? "")
-        titleDrvier = .just(tattoo.description)
+        titleDrvier = .just(tattoo.title)
         userNameDriver = .just(tattoo.ownerName)
     }
 }

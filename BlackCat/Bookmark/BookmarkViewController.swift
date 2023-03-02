@@ -43,56 +43,65 @@ class BookmarkViewController: UIViewController {
     // MARK: - Properties
 
     let pages: [UIViewController]
-    let viewModel = BookmarkViewModel(bookmarkPageViewModels: [BookmarkTattooViewModel(), BookmarkTattooViewModel()])
-    var editMode: EditMode = .normal {
-        didSet {
-            updateEditButton(editMode: editMode)
-            updateCancelButton(editMode: editMode)
-        }
-    }
+    var viewModel: BookmarkViewModel
 
     // MARK: - Binding
 
     private func bind(to viewModel: BookmarkViewModel) {
-        cancelRightBarButtonItem.rx.tap
+        cancelRightBarLabel.rx.tapGesture()
+            .when(.recognized)
+            .map { _ in () }
             .bind(to: viewModel.didTapCancelBarButtonItem)
             .disposed(by: disposeBag)
 
-        editRightBarButtonItem.rx.tap
-            .bind(to: viewModel.didTapEditBarButtonItem)
+        editRightBarLabel.rx.tapGesture()
+            .when(.recognized)
+            .withUnretained(self)
+            .compactMap { owner, _ in
+                owner.editRightBarLabel.text
+            }.bind(to: viewModel.didTapEditBarButtonItem)
             .disposed(by: disposeBag)
 
         viewModel.updateModeDriver
             .drive(with: self) { owner, editMode in
-                owner.editMode = editMode
-            }
-            .disposed(by: disposeBag)
+                owner.updateEditButton(editMode: editMode)
+                owner.updateCancelButton(editMode: editMode)
+            }.disposed(by: disposeBag)
+        
+        // TODO: - postType별 id로 상세페이지 들어가기
+        viewModel.showTattooDetailVCDriver
+            .drive(with: self) { owner, tattooId in
+                let vc = TattooDetailViewController(viewModel: .init(tattooId: tattooId))
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }.disposed(by: disposeBag)
+        
+        viewModel.showTattooistDetailVCDriver
+            .drive(with: self) { owner, tattooistId in
+                let vc = JHBusinessProfileViewController(viewModel: .init(tattooistId: tattooistId))
+                owner.navigationController?.pushViewController(vc, animated: true)
+        }.disposed(by: disposeBag)
     }
 
     // MARK: - Functions
-
     private func updateEditButton(editMode: EditMode) {
-        editRightBarButtonItem.title = editMode.rawValue
-        editRightBarButtonItem.tintColor = editMode.tintColor
+        editRightBarLabel.text = editMode.rawValue
+        editRightBarLabel.textColor = editMode.tintColor
     }
 
     private func updateCancelButton(editMode: EditMode) {
         if editMode == .normal {
-            cancelRightBarButtonItem.title = ""
-            cancelRightBarButtonItem.isEnabled = false
+            cancelRightBarLabel.text = ""
+            cancelRightBarLabel.isUserInteractionEnabled = false
         } else {
-            cancelRightBarButtonItem.title = "취소"
-            cancelRightBarButtonItem.isEnabled = true
+            cancelRightBarLabel.text = "취소"
+            cancelRightBarLabel.isUserInteractionEnabled = true
         }
     }
 
     // MARK: - Initialize
-
-    init() {
-        self.pages = [
-            BookmarkTattooViewController(viewModel: viewModel.bookmarkPageViewModels[0]),
-            BookmarkMagazineViewController(viewModel: viewModel.bookmarkPageViewModels[1])
-        ]
+    init(viewModel: BookmarkViewModel = .init()) {
+        self.viewModel = viewModel
+        self.pages = viewModel.bookmarkPageViewModels.map { BookmarkPostViewController(viewModel: $0) }
 
         super.init(nibName: nil, bundle: nil)
         bind(to: viewModel)
@@ -124,7 +133,7 @@ class BookmarkViewController: UIViewController {
 
     private let magazineTabMenuButton: BMTabButton = {
         let button = BMTabButton()
-        button.title = "매거진"
+        button.title = "타투이스트"
         return button
     }()
 
@@ -139,26 +148,28 @@ class BookmarkViewController: UIViewController {
 
     private let contentView = UIView()
 
-    private let cancelRightBarButtonItem: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem()
-        barButtonItem.title = ""
-        barButtonItem.tintColor = EditMode.normal.tintColor
-        barButtonItem.isEnabled = false
-        return barButtonItem
+    private let cancelRightBarLabel: UILabel = {
+        let label = UILabel(frame: .init(origin: .zero, size: .init(width: 38, height: 20)))
+        label.text = ""
+        label.textColor = .init(hex: "#C4C4C4FF")
+        label.font = .appleSDGoithcFont(size: 16, style: .semiBold)
+        return label
     }()
 
-    private let editRightBarButtonItem: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem()
-        barButtonItem.title = EditMode.normal.rawValue
-        barButtonItem.tintColor = EditMode.normal.tintColor
-        return barButtonItem
+    private let editRightBarLabel: UILabel = {
+        let label = UILabel()
+        label.text = EditMode.normal.rawValue
+        label.textColor = EditMode.normal.tintColor
+        label.font = .appleSDGoithcFont(size: 16, style: .semiBold)
+        return label
     }()
 }
 
 extension BookmarkViewController {
     private func setNavigationBar() {
-        navigationItem.title = "🖤 찜한 컨텐츠"
-        navigationItem.rightBarButtonItems = [editRightBarButtonItem, cancelRightBarButtonItem]
+        appendNavigationLeftLabel(title: "찜 목록", color: .black)
+        appendNavigationRightLabel(editRightBarLabel)
+        appendNavigationRightLabel(cancelRightBarLabel)
     }
 
     private func setUI() {

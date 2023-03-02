@@ -80,7 +80,7 @@ class ProfileViewModel {
                 if let _ = finalImage as? String {
                     images = nil
                     deleteImageUrls = []
-                } else if let image = finalImage as? UIImage, let data = image.resize(newWidth: 10).jpegData(compressionQuality: 0.01) {
+                } else if let image = finalImage as? UIImage, let data = image.resize(newWidth: 5).jpegData(compressionQuality: 0.01) {
                     images = [data]
                     deleteImageUrls = [initialImageUrl].compactMap { $0 }
                 } else {
