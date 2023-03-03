@@ -70,6 +70,7 @@
 		787D5845293CD8CB00A3E610 /* FontExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787D5844293CD8CB00A3E610 /* FontExampleViewController.swift */; };
 		78840F3929A1C56200593AEA /* GenreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEDE7FB299BCC3500668DA3 /* GenreCell.swift */; };
 		78858BEC28F6F4E400EC7BF7 /* MagazineSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78858BEB28F6F4E300EC7BF7 /* MagazineSection.swift */; };
+		7897190D29B25169000B8EFC /* BlackCatSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7897190C29B25169000B8EFC /* BlackCatSDK.framework */; };
 		789D65BA2978043000156FBD /* VerticalScrollableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D65B92978043000156FBD /* VerticalScrollableViewController.swift */; };
 		789D65BC2978219400156FBD /* TattooImageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D65BB2978219300156FBD /* TattooImageInputView.swift */; };
 		789D65BF2978675300156FBD /* GenreInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D65BE2978675300156FBD /* GenreInputView.swift */; };
@@ -159,8 +160,6 @@
 		B1D3362528F142A400826636 /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3362428F142A400826636 /* CALayer+.swift */; };
 		B1D3362728F1457700826636 /* UITabBar+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3362628F1457700826636 /* UITabBar+.swift */; };
 		B1D3362928F1AC1200826636 /* MagazineDetailEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3362828F1AC1200826636 /* MagazineDetailEmptyCell.swift */; };
-		B1D3363728F1CA2000826636 /* BlackCatSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1D3363628F1CA2000826636 /* BlackCatSDK.framework */; };
-		B1D3363828F1CA2000826636 /* BlackCatSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B1D3363628F1CA2000826636 /* BlackCatSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B1D3364128F1CCFA00826636 /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3364028F1CCFA00826636 /* UICollectionView+.swift */; };
 		B1D3364328F1CD1B00826636 /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D3364228F1CD1B00826636 /* UITableView+.swift */; };
 		B1D5BD2429174EEC00A85D4A /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D5BD2329174EEC00A85D4A /* UIViewController+.swift */; };
@@ -221,7 +220,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B1D3363828F1CA2000826636 /* BlackCatSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -307,6 +305,7 @@
 		787D5848293CDF5B00A3E610 /* Didot Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Didot Italic.otf"; sourceTree = "<group>"; };
 		787D5849293CDF5B00A3E610 /* Didot Title.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Didot Title.otf"; sourceTree = "<group>"; };
 		78858BEB28F6F4E300EC7BF7 /* MagazineSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineSection.swift; sourceTree = "<group>"; };
+		7897190C29B25169000B8EFC /* BlackCatSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BlackCatSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		789D65B92978043000156FBD /* VerticalScrollableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalScrollableViewController.swift; sourceTree = "<group>"; };
 		789D65BB2978219300156FBD /* TattooImageInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooImageInputView.swift; sourceTree = "<group>"; };
 		789D65BE2978675300156FBD /* GenreInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreInputView.swift; sourceTree = "<group>"; };
@@ -448,11 +447,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7897190D29B25169000B8EFC /* BlackCatSDK.framework in Frameworks */,
 				B1E3F7CB290ECBBB00005F17 /* PinLayout in Frameworks */,
 				B1E4984828EE83BD00B469AC /* RealmSwift in Frameworks */,
 				B1E4984E28EE83E400B469AC /* Nuke in Frameworks */,
 				B1CDE90329169F8E00ACB9AC /* URLNavigator in Frameworks */,
-				B1D3363728F1CA2000826636 /* BlackCatSDK.framework in Frameworks */,
 				B1E3F7D3290ECC0500005F17 /* FlexLayoutYoga in Frameworks */,
 				78431C96297A91660002F1E7 /* BSImagePicker in Frameworks */,
 				B1E3F7D5290ECC0500005F17 /* FlexLayoutYogaKit in Frameworks */,
@@ -1232,6 +1231,7 @@
 		B1EDD51728EB1CA400FBB722 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7897190C29B25169000B8EFC /* BlackCatSDK.framework */,
 				B1D3363628F1CA2000826636 /* BlackCatSDK.framework */,
 			);
 			name = Frameworks;
@@ -1633,6 +1633,7 @@
 		B1D79CB928EB0EFB008487D0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1694,6 +1695,7 @@
 		B1D79CBA28EB0EFB008487D0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1749,11 +1751,12 @@
 		B1D79CBC28EB0EFB008487D0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = BlackCat/BlackCat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = Z54MHCPF6U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BlackCat/Info.plist;
@@ -1781,11 +1784,12 @@
 		B1D79CBD28EB0EFB008487D0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = BlackCat/BlackCat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = Z54MHCPF6U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BlackCat/Info.plist;

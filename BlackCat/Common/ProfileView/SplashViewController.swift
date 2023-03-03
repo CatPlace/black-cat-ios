@@ -20,7 +20,10 @@ class SplashViewModel {
         let isLogin = viewWillAppear
             .flatMap { CatSDKBookmark.bookmarkListInSpecificUser(postType: .tattoo)
                     .map { _ in true }
-                    .catch { _ in .just(false) }
+                    .catch { _ in
+                        CatSDKUser.updateUser(user: .init(id: -1))
+                        return .just(false)
+                    }
             }.share()
             
         showLoginVC = isLogin
