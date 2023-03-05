@@ -28,6 +28,9 @@
 		7828DB63295C99410053B0A0 /* JHBPThumbnailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB62295C99410053B0A0 /* JHBPThumbnailImageCell.swift */; };
 		7828DB65295C9D500053B0A0 /* JHBPContentSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB64295C9D500053B0A0 /* JHBPContentSectionHeaderView.swift */; };
 		7828DB69295CB7110053B0A0 /* JHBPMulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7828DB68295CB7110053B0A0 /* JHBPMulticastDelegate.swift */; };
+		782A9C1129B3BA990072A333 /* BlackCatSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 78E9F4C629B3BA1900BE3045 /* BlackCatSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		782A9C1429B474A30072A333 /* BlackCatKEY.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 782A9C1329B474A30072A333 /* BlackCatKEY.framework */; };
+		782A9C1529B474AC0072A333 /* BlackCatKEY.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 782A9C1329B474A30072A333 /* BlackCatKEY.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		78431C96297A91660002F1E7 /* BSImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 78431C95297A91660002F1E7 /* BSImagePicker */; };
 		78431C98297A918D0002F1E7 /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78431C97297A918D0002F1E7 /* ImagePickerManager.swift */; };
 		78431C9A297B13770002F1E7 /* ProductEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78431C99297B13770002F1E7 /* ProductEditViewModel.swift */; };
@@ -70,7 +73,6 @@
 		787D5845293CD8CB00A3E610 /* FontExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787D5844293CD8CB00A3E610 /* FontExampleViewController.swift */; };
 		78840F3929A1C56200593AEA /* GenreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEDE7FB299BCC3500668DA3 /* GenreCell.swift */; };
 		78858BEC28F6F4E400EC7BF7 /* MagazineSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78858BEB28F6F4E300EC7BF7 /* MagazineSection.swift */; };
-		7897190D29B25169000B8EFC /* BlackCatSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7897190C29B25169000B8EFC /* BlackCatSDK.framework */; };
 		789D65BA2978043000156FBD /* VerticalScrollableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D65B92978043000156FBD /* VerticalScrollableViewController.swift */; };
 		789D65BC2978219400156FBD /* TattooImageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D65BB2978219300156FBD /* TattooImageInputView.swift */; };
 		789D65BF2978675300156FBD /* GenreInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D65BE2978675300156FBD /* GenreInputView.swift */; };
@@ -97,6 +99,7 @@
 		78D9EB5529A09EE300A9B452 /* JHBusinessProfileViewController.Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D9EB5429A09EE300A9B452 /* JHBusinessProfileViewController.Layout.swift */; };
 		78D9EB5729A09F1300A9B452 /* JHBusinessProfileViewController.Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D9EB5629A09F1300A9B452 /* JHBusinessProfileViewController.Delegate.swift */; };
 		78E28CC229AE933000AC8B08 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E28CC129AE933000AC8B08 /* SplashViewController.swift */; };
+		78E9F4C729B3BA1900BE3045 /* BlackCatSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78E9F4C629B3BA1900BE3045 /* BlackCatSDK.framework */; };
 		8E2D8C4828F2EC27004B514D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4728F2EC27004B514D /* HomeViewController.swift */; };
 		8E2D8C4A28F2ECD2004B514D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4928F2ECD2004B514D /* HomeViewModel.swift */; };
 		8E2D8C4C28F2ED03004B514D /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D8C4B28F2ED03004B514D /* HomeModel.swift */; };
@@ -220,6 +223,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				782A9C1529B474AC0072A333 /* BlackCatKEY.framework in Embed Frameworks */,
+				782A9C1129B3BA990072A333 /* BlackCatSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -247,6 +252,7 @@
 		7828DB62295C99410053B0A0 /* JHBPThumbnailImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBPThumbnailImageCell.swift; sourceTree = "<group>"; };
 		7828DB64295C9D500053B0A0 /* JHBPContentSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBPContentSectionHeaderView.swift; sourceTree = "<group>"; };
 		7828DB68295CB7110053B0A0 /* JHBPMulticastDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBPMulticastDelegate.swift; sourceTree = "<group>"; };
+		782A9C1329B474A30072A333 /* BlackCatKEY.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BlackCatKEY.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		78431C97297A918D0002F1E7 /* ImagePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerManager.swift; sourceTree = "<group>"; };
 		78431C99297B13770002F1E7 /* ProductEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductEditViewModel.swift; sourceTree = "<group>"; };
 		78431C9B297B18B10002F1E7 /* TattooImageInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooImageInputViewModel.swift; sourceTree = "<group>"; };
@@ -305,7 +311,6 @@
 		787D5848293CDF5B00A3E610 /* Didot Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Didot Italic.otf"; sourceTree = "<group>"; };
 		787D5849293CDF5B00A3E610 /* Didot Title.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Didot Title.otf"; sourceTree = "<group>"; };
 		78858BEB28F6F4E300EC7BF7 /* MagazineSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineSection.swift; sourceTree = "<group>"; };
-		7897190C29B25169000B8EFC /* BlackCatSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BlackCatSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		789D65B92978043000156FBD /* VerticalScrollableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalScrollableViewController.swift; sourceTree = "<group>"; };
 		789D65BB2978219300156FBD /* TattooImageInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooImageInputView.swift; sourceTree = "<group>"; };
 		789D65BE2978675300156FBD /* GenreInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreInputView.swift; sourceTree = "<group>"; };
@@ -332,6 +337,7 @@
 		78D9EB5429A09EE300A9B452 /* JHBusinessProfileViewController.Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBusinessProfileViewController.Layout.swift; sourceTree = "<group>"; };
 		78D9EB5629A09F1300A9B452 /* JHBusinessProfileViewController.Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBusinessProfileViewController.Delegate.swift; sourceTree = "<group>"; };
 		78E28CC129AE933000AC8B08 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SplashViewController.swift; path = BlackCat/Common/ProfileView/SplashViewController.swift; sourceTree = SOURCE_ROOT; };
+		78E9F4C629B3BA1900BE3045 /* BlackCatSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BlackCatSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E2D8C4728F2EC27004B514D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8E2D8C4928F2ECD2004B514D /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		8E2D8C4B28F2ED03004B514D /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
@@ -394,7 +400,6 @@
 		B1D3362428F142A400826636 /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
 		B1D3362628F1457700826636 /* UITabBar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBar+.swift"; sourceTree = "<group>"; };
 		B1D3362828F1AC1200826636 /* MagazineDetailEmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagazineDetailEmptyCell.swift; sourceTree = "<group>"; };
-		B1D3363628F1CA2000826636 /* BlackCatSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BlackCatSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1D3364028F1CCFA00826636 /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		B1D3364228F1CD1B00826636 /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
 		B1D5BD2329174EEC00A85D4A /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
@@ -447,7 +452,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7897190D29B25169000B8EFC /* BlackCatSDK.framework in Frameworks */,
+				782A9C1429B474A30072A333 /* BlackCatKEY.framework in Frameworks */,
+				78E9F4C729B3BA1900BE3045 /* BlackCatSDK.framework in Frameworks */,
 				B1E3F7CB290ECBBB00005F17 /* PinLayout in Frameworks */,
 				B1E4984828EE83BD00B469AC /* RealmSwift in Frameworks */,
 				B1E4984E28EE83E400B469AC /* Nuke in Frameworks */,
@@ -1231,8 +1237,8 @@
 		B1EDD51728EB1CA400FBB722 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7897190C29B25169000B8EFC /* BlackCatSDK.framework */,
-				B1D3363628F1CA2000826636 /* BlackCatSDK.framework */,
+				782A9C1329B474A30072A333 /* BlackCatKEY.framework */,
+				78E9F4C629B3BA1900BE3045 /* BlackCatSDK.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1756,7 +1762,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = BlackCat/BlackCat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = Z54MHCPF6U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BlackCat/Info.plist;
@@ -1770,7 +1776,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				"OTHER_LDFLAGS[arch=*]" = "";
 				"OTHER_LDFLAGS[sdk=iphonesimulator*]" = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cat.blackCat;
@@ -1789,7 +1795,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = BlackCat/BlackCat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = Z54MHCPF6U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BlackCat/Info.plist;
@@ -1803,7 +1809,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				"OTHER_LDFLAGS[sdk=iphonesimulator*]" = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cat.blackCat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
