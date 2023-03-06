@@ -90,6 +90,7 @@
 		78B194DE2981215A0092244B /* GenreInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B194DD2981215A0092244B /* GenreInputCell.swift */; };
 		78B194E029812D590092244B /* TattooTypeInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B194DF29812D590092244B /* TattooTypeInputView.swift */; };
 		78B194E2298135570092244B /* TattooTypeInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B194E1298135570092244B /* TattooTypeInputViewModel.swift */; };
+		78B602CE29B627F5004678A2 /* RecentTattooEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B602CD29B627F5004678A2 /* RecentTattooEmptyView.swift */; };
 		78B9D5F929A49CAD00ACD735 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9D5F829A49CAD00ACD735 /* String+.swift */; };
 		78B9D5FB29A49D8E00ACD735 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9D5FA29A49D8E00ACD735 /* Date+.swift */; };
 		78B9D5FE29A4A0E300ACD735 /* TattooistProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9D5FD29A4A0E300ACD735 /* TattooistProfileView.swift */; };
@@ -328,6 +329,7 @@
 		78B194DD2981215A0092244B /* GenreInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreInputCell.swift; sourceTree = "<group>"; };
 		78B194DF29812D590092244B /* TattooTypeInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooTypeInputView.swift; sourceTree = "<group>"; };
 		78B194E1298135570092244B /* TattooTypeInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooTypeInputViewModel.swift; sourceTree = "<group>"; };
+		78B602CD29B627F5004678A2 /* RecentTattooEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTattooEmptyView.swift; sourceTree = "<group>"; };
 		78B9D5F829A49CAD00ACD735 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		78B9D5FA29A49D8E00ACD735 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		78B9D5FD29A4A0E300ACD735 /* TattooistProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooistProfileView.swift; sourceTree = "<group>"; };
@@ -638,6 +640,7 @@
 			isa = PBXGroup;
 			children = (
 				784B022E2937579E004ED20A /* RecentTattooHeaderView.swift */,
+				78B602CD29B627F5004678A2 /* RecentTattooEmptyView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1428,6 +1431,7 @@
 				8E88488A2949C4600039F99A /* MagazineDetailViewReactor.swift in Sources */,
 				8E99DFF4295A91AF00B8CF6A /* TattooDetailViewModel.swift in Sources */,
 				7828DB61295C951A0053B0A0 /* JHBPContentCell.swift in Sources */,
+				78B602CE29B627F5004678A2 /* RecentTattooEmptyView.swift in Sources */,
 				8EBB614A29274D9300F640F5 /* BookmarkPostViewModel.swift in Sources */,
 				B1D89C98290E879B00C8B7F1 /* BPBaseCollectionViewCell.swift in Sources */,
 				B1E361E428F28C3100A29CC8 /* MagazineDetailStroyShareButtonCell.swift in Sources */,

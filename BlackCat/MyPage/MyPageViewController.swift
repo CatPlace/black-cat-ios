@@ -56,6 +56,7 @@ final class MyPageViewController: UIViewController {
             
             if section == .recentTattoo {
                 let v = collectionView.dequeue(Reusable.tattooHeaderView, kind: .header, for: indexPath)
+                
                 v.bind(to: .init(text: "최근 본 타투", backgroundColor: .clear))
                 return v
             } else {
@@ -131,14 +132,10 @@ final class MyPageViewController: UIViewController {
             }.disposed(by: disposeBag)
         
         viewModel.recentTattooIsEmptyDriver
-            .drive(with: self) { owner, isEmpty in
-                owner.updaterRecentTattooView(with: isEmpty)
+            .delay(.microseconds(100))
+            .drive { isEmpty in
+                RecentTattooEmptyView.emptyLabelIsHidden.accept(!isEmpty)
             }.disposed(by: disposeBag)
-    }
-
-    // MARK: - Function
-    func updaterRecentTattooView(with isEmpty: Bool) {
-        emptyLabel.isHidden = !isEmpty
     }
     
     // MARK: - Initializer
@@ -156,6 +153,8 @@ final class MyPageViewController: UIViewController {
     // MARK: - UIComponents
     lazy var myPageCollectionView: UICollectionView = {
         let layout = createLayout()
+        layout.register(RecentTattooEmptyView.self, forDecorationViewOfKind: "empty")
+        
         let v = UICollectionView(frame: .zero, collectionViewLayout: layout)
         v.backgroundColor = .init(hex: "#F4F4F4FF")
         v.register(Reusable.profileCell)
@@ -164,17 +163,6 @@ final class MyPageViewController: UIViewController {
         v.register(Reusable.tattooHeaderView, kind: .header)
         return v
     }()
-    
-    let emptyLabel: UILabel = {
-        let fullText = "최근 본 타투가 없습니다."
-        let attributeString = NSMutableAttributedString(string: fullText)
-        let range = (fullText as NSString).range(of: "최근 본 타투")
-        attributeString.addAttributes([
-            .font: UIFont.appleSDGoithcFont(size: 24, style: .bold)
-        ], range: range)
-        $0.attributedText = attributeString
-        return $0
-    }(UILabel())
 }
 
 extension MyPageViewController {

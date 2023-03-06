@@ -81,9 +81,9 @@ extension MyPageViewController {
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top
         )
-        
-
-        
+        section.decorationItems = [
+            NSCollectionLayoutDecorationItem.background(elementKind: "empty")
+        ]
         section.boundarySupplementaryItems = [header]
         
         return section
