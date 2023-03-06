@@ -86,7 +86,7 @@ class UpgradeBusinessViewController: UIViewController {
 extension UpgradeBusinessViewController {
     func setUI() {
         view.addSubview(upgradeButton)
-        [firstUpgradeMentImageView, secondUpgradeMentImageView, thirdUpgradeMentImageView, warnninLabel].forEach { view.addSubview($0) }
+        [firstUpgradeMentImageView, secondUpgradeMentImageView, thirdUpgradeMentImageView].forEach { view.addSubview($0) }
         firstUpgradeMentImageView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(30)
             $0.centerX.equalToSuperview()

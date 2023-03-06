@@ -168,6 +168,7 @@ class ProfileViewController: UIViewController {
         configure()
         setUI()
         bind(to: viewModel)
+        phoneNumberInputView.profileTextField.keyboardType = .numberPad
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -42,6 +42,7 @@ class PriceInputView: UIView {
         self.viewModel = viewModel
         super.init(frame: .zero)
         textField.backgroundColor = .white
+        textField.keyboardType = .numberPad
         setUI()
         bind(to: viewModel)
     }
