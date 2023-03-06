@@ -161,6 +161,7 @@ final class MyPageViewModel {
         
         let withdrawalSuccess = withdrawalResult
             .filter { $0 }
+            .do { _ in CatSDKUser.updateUser(user: .init(id: -1)) }
             .map { _ in () }
         
         let withdrawalFail = withdrawalResult
