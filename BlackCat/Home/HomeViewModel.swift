@@ -49,7 +49,6 @@ class HomeViewModel {
             .share()
         
         let fetchedTattooAlbumItems = nextPageInfo
-            .debug("🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️")
             .scan([HomeModel.TattooAlbum]()) { previousItems, nextPageInfo in
                 let page = nextPageInfo.1
                 let items = nextPageInfo.0

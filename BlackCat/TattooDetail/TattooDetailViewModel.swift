@@ -50,7 +50,6 @@ struct TattooDetailViewModel {
     
     init(tattooId: Int) {
         let tattooModel = viewWillAppear
-            .debug("타투모델뭔데😡😡")
             .flatMap { _ in CatSDKTattoo.tattooDetail(tattooId: tattooId) }
             .share()
         
@@ -151,7 +150,6 @@ struct TattooDetailViewModel {
         수정하기Driver = didTapAskButton
             .filter { $0 == 0 }
             .withLatestFrom(tattooModelSuccess)
-            .debug("이전 타투값")
             .asDriver(onErrorJustReturn: .empty)
 
         tattooimageUrls = tattooModelSuccess.map { $0.imageURLStrings }

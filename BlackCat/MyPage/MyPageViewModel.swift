@@ -199,8 +199,5 @@ final class MyPageViewModel {
             .map { $0.isEmpty }
             .asDriver(onErrorJustReturn: true)
     }
-    
-    deinit {
-        print("메모리 해제 잘되나 TEST, 마이페이지")
-    }
+
 }

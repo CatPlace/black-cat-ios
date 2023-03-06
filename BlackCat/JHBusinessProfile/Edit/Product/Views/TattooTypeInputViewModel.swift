@@ -11,10 +11,6 @@ import RxCocoa
 import RxRelay
 import BlackCatSDK
 
-//enum TattooType: String, CaseIterable {
-//
-//}
-
 class TattooTypeInputViewModel {
     let tattooTypeRelay: BehaviorRelay<TattooType?>
     
