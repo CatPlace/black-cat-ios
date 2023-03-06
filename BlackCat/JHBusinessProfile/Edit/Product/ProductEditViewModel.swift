@@ -44,6 +44,7 @@ class ProductEditViewModel {
     // MARK: - SubViewModels
     let tattooTypeViewModel: TattooTypeInputViewModel
     let titleInputViewModel: SimpleInputViewModel
+    let priceInputViewModel: PriceInputViewModel
     let tattooImageInputViewModel: TattooImageInputViewModel
     let descriptionInputViewModel: TextInputViewModel
     let genreInputViewModel: GenreInputViewModel
@@ -70,6 +71,7 @@ class ProductEditViewModel {
         pageTitleDriver = .just(type.title())
         tattooTypeViewModel = .init(tattooType: tattoo?.tattooType)
         titleInputViewModel = .init(type: .tattooTitle, content: tattoo?.title)
+        priceInputViewModel = .init(content: tattoo == nil ? "" : String(tattoo!.price))
         tattooImageInputViewModel = .init()
         descriptionInputViewModel = .init(title: "내용", content: tattoo?.description ?? "")
         genreInputViewModel = .init(genres: fetcedGenreList, selectedGenres: tattoo?.categoryIds ?? [])
@@ -107,7 +109,7 @@ class ProductEditViewModel {
             images,
             descriptionInputViewModel.inputStringRelay,
             //TODO: - 가격 삽입
-            Observable.just("0"),
+            priceInputViewModel.inputStringRelay,
             genreInputViewModel.selectedGenresRelay
         ).map { (type: $0, title: $1, images: $2, description: $3, price: $4, categoryIdList: $5) }
         
@@ -188,7 +190,7 @@ class ProductEditViewModel {
         func shouldUpdateImages(inputImages: [Any]) -> [Data] {
             inputImages
                 .compactMap { $0 as? UIImage }
-                .compactMap { $0.resize(newWidth: 5).jpegData(compressionQuality: 0.1) }
+                .compactMap { $0.resize(newWidth: 600).jpegData(compressionQuality: 0.1) }
         }
         
         func validCheckedInputs(

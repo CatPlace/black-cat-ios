@@ -166,7 +166,7 @@ extension SimpleInputView {
         profileTextField.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(48)
+            $0.height.equalTo(36)
             $0.bottom.equalToSuperview()
         }
         

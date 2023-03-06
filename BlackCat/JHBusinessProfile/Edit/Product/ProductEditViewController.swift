@@ -157,10 +157,11 @@ class ProductEditViewController: VerticalScrollableViewController {
         self.viewModel = viewModel
         tattooTypeInputView = .init(viewModel: viewModel.tattooTypeViewModel)
         titleInputView = .init(viewModel: viewModel.titleInputViewModel)
+        priceInputView = .init(viewModel: viewModel.priceInputViewModel)
         tattooImageInputView = .init(viewModel: viewModel.tattooImageInputViewModel)
         descriptionInputView = .init(viewModel: viewModel.descriptionInputViewModel)
         genreInputView = .init(viewModel: viewModel.genreInputViewModel)
-    
+        
         super.init()
     }
     
@@ -189,6 +190,7 @@ class ProductEditViewController: VerticalScrollableViewController {
         return $0
     }(UILabel())
     let titleInputView: SimpleInputView
+    let priceInputView: PriceInputView
     let tattooImageInputView: TattooImageInputView
     let descriptionInputView: TextInputView
     let genreInputView: GenreInputView
@@ -208,7 +210,7 @@ class ProductEditViewController: VerticalScrollableViewController {
 
 extension ProductEditViewController {
     func setUI() {
-        [tattooTypeInputView, firstHLine, warningLabel, titleInputView, tattooImageInputView, descriptionInputView, secondHLine, genreInputView, firstHLine].forEach { contentView.addSubview($0) }
+        [tattooTypeInputView, firstHLine, warningLabel, titleInputView, priceInputView, tattooImageInputView, descriptionInputView, secondHLine, genreInputView, firstHLine].forEach { contentView.addSubview($0) }
         
         tattooTypeInputView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(30)
@@ -231,8 +233,13 @@ extension ProductEditViewController {
             $0.leading.trailing.equalToSuperview().inset(20)
         }
         
-        tattooImageInputView.snp.makeConstraints {
+        priceInputView.snp.makeConstraints {
             $0.top.equalTo(titleInputView.snp.bottom).offset(30)
+            $0.leading.trailing.equalToSuperview().inset(20)
+        }
+        
+        tattooImageInputView.snp.makeConstraints {
+            $0.top.equalTo(priceInputView.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview().inset(20)
         }
         
@@ -284,5 +291,133 @@ extension ProductEditViewController: TwoButtonAlertViewDelegate {
 extension ProductEditViewController: OneButtonAlertDelegate {
     func didTapButton() {
         didTapBackButton()
+    }
+}
+
+class PriceInputViewModel {
+    // MARK: - Input
+    let inputStringRelay: BehaviorRelay<String>
+    let viewWillAppearRelay = PublishRelay<Void>()
+    
+    // MARK: - Output
+    let titleDriver: Driver<String>
+    let contentDriver: Driver<String>
+    let placeholderDriver: Driver<String>
+    let placeholderNSAttributedString: Driver<NSAttributedString>
+    
+    init(title: String = "가격", content: String? = nil, placeholder: String = "가격을 입력해주세요") {
+        
+        inputStringRelay = .init(value: content ?? "")
+        
+        titleDriver = .just(title)
+        
+        contentDriver = .just(content ?? "")
+        
+        placeholderDriver = .just(placeholder)
+        
+        placeholderNSAttributedString = placeholderDriver
+            .map {
+                NSAttributedString(string: $0,
+                                      attributes: [
+                                        .foregroundColor: UIColor.init(hex: "#999999FF"),
+                                        .font: UIFont.appleSDGoithcFont(size: 12, style: .regular)
+                                      ])
+            }
+    }
+}
+
+class PriceInputView: UIView {
+    // MARK: - Properties
+    var disposeBag = DisposeBag()
+    var viewModel: PriceInputViewModel
+    
+    // MARK: - Binding
+    func bind(to viewModel: PriceInputViewModel) {
+        disposeBag.insert {
+            
+            textField.rx.text.orEmpty
+                .skip(1)
+                .bind(to: viewModel.inputStringRelay)
+            
+            viewModel.titleDriver
+                .drive(titleLabel.rx.text)
+            
+            viewModel.contentDriver
+                .drive(textField.rx.text)
+            
+            viewModel.placeholderDriver
+                .drive(textField.rx.placeholder)
+            
+            viewModel.placeholderNSAttributedString
+                .drive(textField.rx.attributedPlaceholder)
+        }
+    }
+    
+    // MARK: - Initializer
+    init(viewModel: PriceInputViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
+        textField.backgroundColor = .white
+        setUI()
+        bind(to: viewModel)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: Life Cycle
+    override func layoutSubviews() {
+        layoutIfNeeded()
+    }
+    
+    // MARK: - UIComponents
+    let titleLabel: UILabel = {
+        $0.textColor = .init(hex: "#666666FF")
+        $0.font = .appleSDGoithcFont(size: 16, style: .bold)
+        return $0
+    }(UILabel())
+    lazy var textField: UITextField = {
+        $0.setLeftPaddingPoints(10)
+        $0.delegate = self
+        $0.font = .appleSDGoithcFont(size: 16, style: .regular)
+        return $0
+    }(UITextField())
+    let priceUnitLabel: UILabel = {
+        $0.text = "원"
+        $0.font = .appleSDGoithcFont(size: 16, style: .semiBold)
+        return $0
+    }(UILabel())
+}
+
+extension PriceInputView {
+    func setUI() {
+        [titleLabel, textField, priceUnitLabel].forEach { addSubview($0) }
+        
+        titleLabel.snp.makeConstraints {
+            $0.leading.centerY.equalToSuperview()
+            $0.width.equalTo(28)
+        }
+        
+        textField.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalTo(titleLabel.snp.trailing).offset(31).priority(.required)
+            $0.trailing.equalToSuperview()
+            $0.height.equalTo(36)
+            $0.bottom.equalToSuperview()
+        }
+        
+        priceUnitLabel.snp.makeConstraints {
+            $0.centerY.equalTo(textField)
+            $0.trailing.equalTo(textField).inset(11)
+        }
+    }
+}
+
+
+extension PriceInputView: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text else { return false }
+        return text.count < 10 || range.length == 1
     }
 }

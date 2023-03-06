@@ -42,7 +42,7 @@ class ProfileEditViewModel {
                 if let _ = finalImage as? String {
                     images = nil
                     deleteImageUrls = []
-                } else if let image = finalImage as? UIImage, let data = image.resize(newWidth: 5).jpegData(compressionQuality: 0.1) {
+                } else if let image = finalImage as? UIImage, let data = image.resize(newWidth: 600).jpegData(compressionQuality: 0.1) {
                     images = [data]
                     deleteImageUrls = [initialImageUrlString].compactMap { $0 }
                 } else {
