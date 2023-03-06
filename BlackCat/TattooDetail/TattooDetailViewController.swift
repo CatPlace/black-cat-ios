@@ -143,6 +143,9 @@ final class TattooDetailViewController: UIViewController {
                 .drive(with: self) { owner, _ in
                     owner.navigationController?.popViewController(animated: true)
                 }
+            
+            viewModel.priceDriver
+                .drive(priceLabel.rx.text)
         }
         
         viewModel.문의하기Driver
@@ -245,6 +248,12 @@ final class TattooDetailViewController: UIViewController {
         return $0
     }(UILabel())
     
+    let priceLabel: UILabel = {
+        $0.font = .appleSDGoithcFont(size: 24, style: .bold)
+        $0.textColor = .init(hex: "#7210A0FF")
+        return $0
+    }(UILabel())
+    
     private lazy var flowLayout: UICollectionViewLayout = {
         $0.minimumLineSpacing = 0.0
         $0.minimumInteritemSpacing = 0.0
@@ -334,8 +343,6 @@ final class TattooDetailViewController: UIViewController {
         return $0
     }(UILabel())
     
-    
-    
     private let askBottomView = AskBottomView()
 }
 
@@ -366,7 +373,7 @@ extension TattooDetailViewController {
             $0.width.equalToSuperview()
         }
         
-        [imageCollectionView, navigationBarDividerView, genreCollectionView, pageControl, tattooTitle, tattooistProfileView, dividerView, descriptionLabel, dateLabel].forEach { contentView.addSubview($0) }
+        [imageCollectionView, navigationBarDividerView, genreCollectionView, pageControl, tattooTitle, priceLabel, tattooistProfileView, dividerView, descriptionLabel, dateLabel].forEach { contentView.addSubview($0) }
         
         imageCollectionView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
@@ -381,7 +388,6 @@ extension TattooDetailViewController {
         
         genreCollectionView.snp.makeConstraints {
             $0.top.equalTo(navigationBarDividerView.snp.bottom).offset(15)
-            //            $0.leading.trailing.equalToSuperview()
             $0.width.equalTo(196)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(60)
@@ -396,6 +402,11 @@ extension TattooDetailViewController {
         tattooTitle.snp.makeConstraints {
             $0.top.equalTo(imageCollectionView.snp.bottom).offset(30)
             $0.leading.equalToSuperview().inset(30)
+        }
+        
+        priceLabel.snp.makeConstraints {
+            $0.centerY.equalTo(tattooTitle)
+            $0.trailing.equalToSuperview().inset(20)
         }
         
         tattooistProfileView.snp.makeConstraints {

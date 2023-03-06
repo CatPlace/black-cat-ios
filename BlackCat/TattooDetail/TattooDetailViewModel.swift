@@ -47,6 +47,7 @@ struct TattooDetailViewModel {
     let alertMessageDriver: Driver<String>
     let popViewDriver: Driver<Void>
     let genreCountDriver: Driver<Int>
+    let priceDriver: Driver<String>
     
     init(tattooId: Int) {
         let tattooModel = viewWillAppear
@@ -210,6 +211,9 @@ struct TattooDetailViewModel {
         popViewDriver = Observable.merge([deleteSuccess, tattooModelFail])
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
+        
+        priceDriver = tattooModel
+            .map { $0.price.numberStringWithComma() + " 원" }
+            .asDriver(onErrorJustReturn: "")
     }
-
 }

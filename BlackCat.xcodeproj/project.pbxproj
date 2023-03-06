@@ -93,6 +93,7 @@
 		78B602CE29B627F5004678A2 /* RecentTattooEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B602CD29B627F5004678A2 /* RecentTattooEmptyView.swift */; };
 		78B602D029B6693F004678A2 /* PriceInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B602CF29B6693F004678A2 /* PriceInputView.swift */; };
 		78B602D229B6694B004678A2 /* PriceInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B602D129B6694B004678A2 /* PriceInputViewModel.swift */; };
+		78B602D429B66B78004678A2 /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B602D329B66B78004678A2 /* Int+.swift */; };
 		78B9D5F929A49CAD00ACD735 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9D5F829A49CAD00ACD735 /* String+.swift */; };
 		78B9D5FB29A49D8E00ACD735 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9D5FA29A49D8E00ACD735 /* Date+.swift */; };
 		78B9D5FE29A4A0E300ACD735 /* TattooistProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9D5FD29A4A0E300ACD735 /* TattooistProfileView.swift */; };
@@ -334,6 +335,7 @@
 		78B602CD29B627F5004678A2 /* RecentTattooEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTattooEmptyView.swift; sourceTree = "<group>"; };
 		78B602CF29B6693F004678A2 /* PriceInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceInputView.swift; sourceTree = "<group>"; };
 		78B602D129B6694B004678A2 /* PriceInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceInputViewModel.swift; sourceTree = "<group>"; };
+		78B602D329B66B78004678A2 /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
 		78B9D5F829A49CAD00ACD735 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		78B9D5FA29A49D8E00ACD735 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		78B9D5FD29A4A0E300ACD735 /* TattooistProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooistProfileView.swift; sourceTree = "<group>"; };
@@ -1089,6 +1091,7 @@
 				78B194D4298058480092244B /* CGPoint+.swift */,
 				78B9D5F829A49CAD00ACD735 /* String+.swift */,
 				78B9D5FA29A49D8E00ACD735 /* Date+.swift */,
+				78B602D329B66B78004678A2 /* Int+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1474,6 +1477,7 @@
 				B1E986B328FE9E0B00962F5B /* FilterLoactionService.swift in Sources */,
 				B1D5BD2429174EEC00A85D4A /* UIViewController+.swift in Sources */,
 				8E88487C2949C3F80039F99A /* CommonFullImageCell.swift in Sources */,
+				78B602D429B66B78004678A2 /* Int+.swift in Sources */,
 				78B00BB928F5661000A9915D /* MagazineTestUseCase.swift in Sources */,
 				78431C98297A918D0002F1E7 /* ImagePickerManager.swift in Sources */,
 				78B194E2298135570092244B /* TattooTypeInputViewModel.swift in Sources */,
