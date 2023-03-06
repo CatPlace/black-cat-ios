@@ -59,6 +59,21 @@ class UpgradeBusinessViewController: UIViewController {
     }
     
     // MARK: - UIComponents
+    let firstUpgradeMentImageView: UIImageView = {
+        $0.image = .init(named: "upgradeMent_1")
+        return $0
+    }(UIImageView())
+    
+    let secondUpgradeMentImageView: UIImageView = {
+        $0.image = .init(named: "upgradeMent_2")
+        return $0
+    }(UIImageView())
+    
+    let thirdUpgradeMentImageView: UIImageView = {
+        $0.image = .init(named: "upgradeMent_3")
+        return $0
+    }(UIImageView())
+
     let upgradeButton: UIButton = {
         $0.setTitle("구독 결제하기", for: .normal)
         $0.titleLabel?.font = .appleSDGoithcFont(size: 24, style: .bold)
@@ -71,6 +86,22 @@ class UpgradeBusinessViewController: UIViewController {
 extension UpgradeBusinessViewController {
     func setUI() {
         view.addSubview(upgradeButton)
+        [firstUpgradeMentImageView, secondUpgradeMentImageView, thirdUpgradeMentImageView, warnninLabel].forEach { view.addSubview($0) }
+        firstUpgradeMentImageView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(30)
+            $0.centerX.equalToSuperview()
+        }
+        
+        secondUpgradeMentImageView.snp.makeConstraints {
+            $0.top.equalTo(firstUpgradeMentImageView.snp.bottom).offset(40)
+            $0.centerX.equalToSuperview()
+        }
+        
+        thirdUpgradeMentImageView.snp.makeConstraints {
+            $0.top.equalTo(secondUpgradeMentImageView.snp.bottom).offset(40)
+            $0.centerX.equalToSuperview()
+        }
+
         upgradeButton.snp.makeConstraints {
             $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(90)
