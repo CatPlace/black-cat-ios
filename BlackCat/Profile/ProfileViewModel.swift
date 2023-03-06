@@ -42,7 +42,7 @@ class ProfileViewModel {
         
         imageInputRelay = .init(value: initialImageUrl)
         self.nameInputViewModel = .init(type: .profileName, content: user.name)
-        self.emailInputViewModel = .init(type: .profileEmail, content: user.email)
+        self.emailInputViewModel = .init(type: .profileEmail, content: user.email, textCountLimit: 30)
         self.phoneNumberInputViewModel = .init(type: .profliePhoneNumber, content: user.phoneNumber)
         self.genderInputViewModel = .init(gender: user.gender)
         self.areaInputViewModel = .init(area: user.area)
