@@ -16,39 +16,52 @@ class HomeViewModel {
     private let disposeBag = DisposeBag()
 
     // MARK: - Input
-
     let viewDidLoad = PublishRelay<Void>()
     let viewWillAppear = PublishRelay<Void>()
     let didTapSearchBarButtonItem = PublishRelay<Void>()
     let didTapHeartBarButtonItem = PublishRelay<Void>()
     let didTapCollectionViewItem = PublishRelay<IndexPath>()
     let nextFetchPage = PublishSubject<Int>()
-
+    let refreshTrigger = PublishRelay<Void>()
+    
     // MARK: - Output
-
     let homeItems: Driver<[HomeSection]>
     let pushToBookmarkViewController: Driver<Void>
     let pushToGenreViewController: Driver<GenreType>
     let pushToTattooDetailViewController: Driver<Int>
+    let refreshEndDriver: Driver<Void>
     
     init() {
         let fetchedRecommendItems = viewWillAppear
             .flatMap { _ in CatSDKTattoo.recommendTattoos()}
             .share()
         
-        let startFetchItems = viewDidLoad.share()
         let didTapGenreItem = PublishRelay<Int>()
         let didTapRecommendItem = PublishRelay<Int>()
         let didTapTattooAlbumItem = PublishRelay<Int>()
         let fetchedGenreList = Observable.just(GenreType.allCases)
         
-        let fetchedTattooAlbumItems = nextFetchPage
+        let nextPageInfo = Observable.merge([refreshTrigger.map { _ in -1 }, nextFetchPage])
             .distinct()
+            .filter { $0 != -1 }
             .flatMap { nextFetchPage in fetchTattoAlbumItems(at: nextFetchPage) }
-            .scan([HomeModel.TattooAlbum]()) { previousItems, nextFetchPageItems in
-                previousItems + nextFetchPageItems
+            .withLatestFrom(nextFetchPage) { ($0, $1) }
+            .share()
+        
+        let fetchedTattooAlbumItems = nextPageInfo
+            .debug("🏴‍☠️🏴‍☠️🏴‍☠️🏴‍☠️")
+            .scan([HomeModel.TattooAlbum]()) { previousItems, nextPageInfo in
+                let page = nextPageInfo.1
+                let items = nextPageInfo.0
+                return page == 0
+                ? items
+                : previousItems + items
             }.share()
-
+        
+        refreshEndDriver = refreshTrigger
+            .delay(.seconds(1), scheduler: MainScheduler.instance)
+            .asDriver(onErrorJustReturn: ())
+        
         homeItems = Observable
             .combineLatest(
                 fetchedGenreList, fetchedRecommendItems, fetchedTattooAlbumItems

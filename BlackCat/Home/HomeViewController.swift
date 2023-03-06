@@ -96,6 +96,15 @@ class HomeViewController: UIViewController {
             .drive(collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
+        refreshControl.rx.controlEvent(.valueChanged)
+            .bind(to: viewModel.refreshTrigger)
+            .disposed(by: disposeBag)
+            
+        viewModel.refreshEndDriver
+            .drive { _ in
+                self.refreshControl.endRefreshing()
+            }.disposed(by: disposeBag)
+        
         viewModel.pushToGenreViewController
             .drive(with: self) { owner, genre in
                 let genreViewController = GenreViewController(viewModel: .init(genre: genre))
@@ -133,7 +142,7 @@ class HomeViewController: UIViewController {
     }
 
     // MARK: - UIComponents
-
+    let refreshControl = UIRefreshControl()
     let leftTitleBarButtonItem: UIBarButtonItem = {
         let label = UILabel()
         label.text = "Black Cat"
@@ -153,6 +162,8 @@ class HomeViewController: UIViewController {
         cv.register(Reusable.headerView, kind: .header)
 
         cv.showsVerticalScrollIndicator = false
+        refreshControl.endRefreshing()
+        cv.refreshControl = refreshControl
         return  cv
     }()
 

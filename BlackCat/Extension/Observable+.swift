@@ -13,6 +13,9 @@ extension Observable where Element: Hashable {
     func distinct() -> Observable<Element> {
         var cache = Set<Element>()
         return flatMap { element -> Observable<Element> in
+            if let temp = element as? Int, temp == -1 {
+                cache = Set<Element>()
+            }
             if cache.contains(element) {
                 return Observable<Element>.empty()
             } else {
