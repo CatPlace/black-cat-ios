@@ -48,7 +48,11 @@ class HomeTattooAlbumCell: UICollectionViewCell {
 
     // MARK: - UIComponents
 
-    let thumbnailImageView = UIImageView()
+    let thumbnailImageView: UIImageView = {
+        $0.contentMode = .scaleAspectFit
+        $0.backgroundColor = .black
+        return $0
+    }(UIImageView())
 }
 
 extension HomeTattooAlbumCell {

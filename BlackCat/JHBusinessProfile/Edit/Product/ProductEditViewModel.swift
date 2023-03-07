@@ -116,7 +116,6 @@ class ProductEditViewModel {
             titleInputViewModel.inputStringRelay,
             images,
             descriptionInputViewModel.inputStringRelay,
-            //TODO: - 가격 삽입
             priceInputViewModel.inputStringRelay,
             genreInputViewModel.selectedGenresRelay
         ).map { (type: $0, title: $1, images: $2, description: $3, price: $4, categoryIdList: $5) }

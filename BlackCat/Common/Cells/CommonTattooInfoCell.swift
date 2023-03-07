@@ -68,7 +68,7 @@ class CommonTattooInfoCell: MyPageBaseCell {
     }()
     let tattooImageView: UIImageView = {
         let v = UIImageView()
-        v.contentMode = .scaleAspectFill
+        v.contentMode = .scaleAspectFit
         v.clipsToBounds = true
         v.layer.cornerRadius = 16
         v.backgroundColor = .init(hex: "#D9D9D9FF")

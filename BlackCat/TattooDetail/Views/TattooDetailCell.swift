@@ -35,7 +35,11 @@ final class TattooDetailCell: UICollectionViewCell {
 
     // MARK: - UIComponents
 
-    private let thumbnailImageView = UIImageView()
+    private let thumbnailImageView: UIImageView = {
+        $0.contentMode = .scaleAspectFit
+        $0.backgroundColor = .black
+        return $0
+    }(UIImageView())
 }
 
 extension TattooDetailCell {

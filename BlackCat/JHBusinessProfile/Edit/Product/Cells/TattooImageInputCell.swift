@@ -43,7 +43,12 @@ class TattooImageInputCell: UICollectionViewCell {
         controlImageView.transform = CGAffineTransformIdentity
     }
     
-    let imageView = UIImageView()
+    let imageView: UIImageView = {
+        $0.contentMode = .scaleAspectFit
+        $0.backgroundColor = .black
+        return $0
+    }(UIImageView())
+    
     let controlImageView = UIImageView()
     
     func setUI() {
