@@ -147,6 +147,16 @@ final class TattooDetailViewController: UIViewController {
                 .drive(priceLabel.rx.text)
         }
         
+        imageCollectionView.rx.contentOffset
+            .map { $0.x }
+            .withUnretained(self)
+            .map { owner, x in Int(round(x / owner.view.frame.width)) }
+            .distinctUntilChanged()
+            .withUnretained(self)
+            .bind { owner, offsetX in
+                owner.pageControl.set(progress: offsetX, animated: true)
+            }.disposed(by: disposeBag)
+        
         viewModel.문의하기Driver
             .drive(with: self) { owner, _ in
                 let vc = OneButtonAlertViewController(viewModel: .init(content: "준비중입니다.", buttonText: "확인"))
@@ -267,7 +277,6 @@ final class TattooDetailViewController: UIViewController {
     private lazy var imageCollectionView: UICollectionView = {
         $0.register(Reusable.tattooDetailCell)
         $0.isPagingEnabled = true
-        $0.delegate = self
         $0.showsHorizontalScrollIndicator = false
         return $0
     }(UICollectionView(frame: .zero, collectionViewLayout: flowLayout))
@@ -441,16 +450,6 @@ extension TattooDetailViewController {
             $0.bottom.equalToSuperview()
             $0.height.equalTo(90)
         }
-    }
-}
-
-extension TattooDetailViewController: UICollectionViewDelegate {
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let offset = scrollView.contentOffset.x
-        let width = UIScreen.main.bounds.width
-        let currentPage = Int(offset / width)
-        
-        pageControl.set(progress: currentPage, animated: true)
     }
 }
 
