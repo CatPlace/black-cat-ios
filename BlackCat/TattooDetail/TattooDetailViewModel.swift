@@ -15,7 +15,8 @@ struct TattooDetailViewModel {
 
     // MARK: - Properties
     var disposeBag = DisposeBag()
-
+    let askBottomViewModel: AskBottomViewModel = .init()
+    
     // MARK: - Input
     typealias ButtonTag = Int
     
@@ -70,11 +71,21 @@ struct TattooDetailViewModel {
         let isGuest = viewWillAppear
             .map { _ in CatSDKUser.userType() == .guest }
         
+        let isOwner = tattooModelSuccess
+            .map { $0.ownerId == CatSDKUser.user().id }
+        
         let isBookmarkedTattooAfterTapBookmarkButton =
         didTapBookmarkButton
             .withLatestFrom(isGuest) { ($0, $1) }
             .filter { !$0.1 }
+            .withLatestFrom(isOwner) { ($0.0, $1)}
+            .filter { !$0.1 }
             .map { $0.0 == 1 ? false : true }
+        
+        let warningOwnerTapMessage = didTapBookmarkButton
+            .withLatestFrom(isOwner)
+            .filter { $0 }
+            .map { _ in "본인 게시물은 찜할 수 없습니다." }
         
         loginNeedAlertDriver = didTapBookmarkButton
             .withLatestFrom(isGuest) { ($0, $1) }
@@ -175,8 +186,7 @@ struct TattooDetailViewModel {
             .compactMap { $0.profileImageUrls }
             .asDriver(onErrorJustReturn: "")
 
-        isOwnerDriver = tattooModelSuccess
-            .map { $0.ownerId == CatSDKUser.user().id }
+        isOwnerDriver = isOwner
             .asDriver(onErrorJustReturn: false)
 
         imageCountDriver = tattooimageUrls.map { $0.count }
@@ -205,7 +215,7 @@ struct TattooDetailViewModel {
             .filter { $0.0 != $0.1}
             .map { _ in "삭제에 실패했습니다." }
         
-        alertMessageDriver = Observable.merge([deleteSuccess, deleteFail])
+        alertMessageDriver = Observable.merge([deleteSuccess, deleteFail, warningOwnerTapMessage])
             .asDriver(onErrorJustReturn: "오류가 발생했습니다.")
         
         popViewDriver = Observable.merge([deleteSuccess, tattooModelFail])

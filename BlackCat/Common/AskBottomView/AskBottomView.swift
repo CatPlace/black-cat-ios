@@ -17,50 +17,43 @@ struct AskBottomViewModel {
 
     let didTapAskButton = PublishRelay<Void>()
     let didTapBookmarkButton = PublishRelay<Void>()
-    
-    init() {
-        didTapAskButton
-            .subscribe { _ in print("Did Tap Ask Button") }
-            .disposed(by: disposeBag)
-
-        didTapBookmarkButton
-            .subscribe { _ in print("Did Tap Bookmark Button") }
-            .disposed(by: disposeBag)
-    }
 }
 
 final class AskBottomView: UIView {
 
     let disposeBag = DisposeBag()
-    let viewModel = AskBottomViewModel()
 
     private func bind(to viewModel: AskBottomViewModel) {
         disposeBag.insert {
-            askButton.rx.tap
+            askLabel.rx.tapGesture()
+                .when(.recognized)
+                .map { _ in () }
+                .debug("문의하기 탭")
                 .bind(to: viewModel.didTapAskButton)
-
+            
             bookmarkView.rx.tapGesture()
                 .when(.recognized)
                 .map { _ in () }
+                .debug("북마크 탭")
                 .bind(to: viewModel.didTapBookmarkButton)
         }
     }
     
     func setAskingText(_ text: String) {
-        askButton.setTitle(text, for: .normal)
+        askLabel.text = text
     }
 
     func askButtonTag() -> Int {
-        askButton.tag
+        askLabel.tag
     }
     
     func setAskButtonTag(_ tag: Int) {
-        askButton.tag = tag
+        askLabel.tag = tag
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
+    init(viewModel: AskBottomViewModel) {
+        super.init(frame: .zero)
+        
         setUI()
         bind(to: viewModel)
     }
@@ -69,20 +62,16 @@ final class AskBottomView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    let askButton: UIButton = {
-        $0.setTitle("문의하기", for: .normal)
-        $0.backgroundColor = .init(hex: "#333333FF")
-        $0.layer.cornerRadius = 20
+    let askLabel: UILabel = {
+        $0.text = "문의하기"
         $0.tag = -1
-        $0.titleLabel?.font = .appleSDGoithcFont(size: 24, style: .bold)
+        $0.textColor = .white
+        $0.font = .appleSDGoithcFont(size: 24, style: .bold)
+        $0.textAlignment = .center
         return $0
-    }(UIButton())
+    }(UILabel())
 
-    let bookmarkView: UIView = {
-        $0.backgroundColor = .init(hex: "#333333FF")
-        $0.layer.cornerRadius = 20
-        return $0
-    }(UIView())
+    let bookmarkView = UIView()
 
     let heartButton: UIButton = {
         let heartImage = UIImage(named: "like")
@@ -103,33 +92,31 @@ final class AskBottomView: UIView {
 
 extension AskBottomView {
     private func setUI() {
-        self.backgroundColor = .clear
+        backgroundColor = .init(hex: "#333333FF")
+        
+        [askLabel, bookmarkView].forEach { addSubview($0) }
 
-        [askButton, bookmarkView].forEach { addSubview($0) }
-
-        askButton.snp.makeConstraints {
-            $0.top.leading.bottom.equalToSuperview()
-            $0.width.equalTo(Constant.width * 251)
+        askLabel.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
         
         bookmarkView.snp.makeConstraints {
-            $0.top.trailing.bottom.equalToSuperview()
-            $0.leading.equalTo(askButton.snp.trailing).offset(12)
+            $0.top.bottom.equalToSuperview()
+            $0.trailing.equalToSuperview()
         }
 
         [heartButton, bookmarkCountLabel].forEach { bookmarkView.addSubview($0) }
 
         heartButton.snp.makeConstraints {
-            $0.leading.equalTo(14)
-            $0.centerY.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(32)
             $0.width.equalTo(20)
             $0.height.equalTo(18)
+            $0.centerY.equalToSuperview().offset(-10)
         }
 
         bookmarkCountLabel.snp.makeConstraints {
-            $0.leading.equalTo(heartButton.snp.trailing).offset(5)
-            $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(14)
+            $0.centerX.equalTo(heartButton)
+            $0.centerY.equalToSuperview().offset(10)
         }
     }
 }

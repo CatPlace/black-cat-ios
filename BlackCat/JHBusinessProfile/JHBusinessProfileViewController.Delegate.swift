@@ -10,27 +10,9 @@ import UIKit
 extension JHBusinessProfileViewController: JHBPMulticastDelegate {
     func notifyViewController(editMode: EditMode) {
         editLabel.text = editMode.asStringInTattooEdit()
-        bottomView.bookmarkView.isHidden = editMode == .edit
         if editMode == .edit {
             bottomView.setAskingText("삭제")
             bottomView.setAskButtonTag(3)
-            bottomView.layoutIfNeeded()
-            bottomView.askButton.snp.remakeConstraints {
-                $0.top.bottom.equalToSuperview()
-                $0.width.equalTo(Constant.width * 100)
-                $0.centerX.equalToSuperview()
-            }
-        } else {
-
-            bottomView.askButton.snp.remakeConstraints {
-                $0.top.leading.bottom.equalToSuperview()
-                $0.width.equalTo(Constant.width * 251)
-            }
-        }
-
-        UIView.animate(withDuration: 0.2) { [weak self] in
-            guard let self else { return }
-            self.bottomView.layoutIfNeeded()
         }
     }
 

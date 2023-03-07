@@ -17,6 +17,7 @@ final class JHBusinessProfileViewModel {
     let isOwner: Bool
     var currentDeleteProductIndexList: [Int] = []
     let headerViewModel: JHBPContentSectionHeaderViewModel = .init()
+    let askBottomViewModel: AskBottomViewModel = .init()
     
     // MARK: - Inputs
     let viewDidLoad = PublishRelay<Void>()
@@ -42,7 +43,8 @@ final class JHBusinessProfileViewModel {
     let bookmarkCountStringDriver: Driver<String>
     let serverErrorDriver: Driver<Void>
     let navigationTitleDriver: Driver<String>
-
+    let alertMessageDriver: Driver<String>
+    
     init(tattooistId: Int) {
         // TODO: - 유저 구분
         let isOwner = tattooistId == CatSDKUser.user().id
@@ -108,7 +110,6 @@ final class JHBusinessProfileViewModel {
             .asDriver(onErrorJustReturn: 0)
         
         // TODO: - 에러 처리
-        
         showTattooDetail = selectedTattooIndex
             .map { CatSDKTattooist.localTattooistInfo().tattoos[$0].tattooId }
             .asDriver(onErrorJustReturn: -1)
@@ -149,16 +150,28 @@ final class JHBusinessProfileViewModel {
         let isBookmarkedTattooWhenFirstLoad = profileId
             .flatMap {  CatSDKBookmark.isBookmarked(postId: $0) }
             .share()
-       
+        
+        let isGuest = viewWillAppear
+            .map { _ in CatSDKUser.userType() == .guest }
         
         let isBookmarkedTattooAfterTapBookmarkButton =
         didTapBookmarkButton
-            .map { $0 == 1 ? false : true }
+            .withLatestFrom(isGuest) { ($0, $1) }
+            .filter { !$0.1 }
+            .filter { _ in !isOwner }
+            .map { $0.0 == 1 ? false : true }
         
         let isBookmarkedTattoo = Observable.merge([
             isBookmarkedTattooWhenFirstLoad,
             isBookmarkedTattooAfterTapBookmarkButton
         ]).share()
+        
+        let warningOwnerTapMessage = didTapBookmarkButton
+            .filter { _ in isOwner }
+            .map { _ in "본인 게시물은 찜할 수 없습니다." }
+        
+        alertMessageDriver = warningOwnerTapMessage
+            .asDriver(onErrorJustReturn: "오류가 발생했습니다.")
         
         shouldFillHeartButton = isBookmarkedTattoo
             .map { $0 }
@@ -172,8 +185,6 @@ final class JHBusinessProfileViewModel {
         
         let bookmarkCountWhenFirstLoad =  profileId.flatMap { CatSDKNetworkBookmark.rx.countOfBookmark(postId: $0).map { $0.counts } }
             .share()
-        
-        
         
         let changeBookmarkCount = isBookmarkedTattoo // 북마크 탭
             .withLatestFrom(isBookmarkedTattooWhenFirstLoad) { ($0, $1) }

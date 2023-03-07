@@ -68,13 +68,12 @@ final class TattooDetailViewController: UIViewController {
                 .map { _ in () }
                 .bind(to: viewModel.didTapTattooistNameLabel)
             
-            askBottomView.bookmarkView.rx.tapGesture()
-                .when(.recognized)
+            viewModel.askBottomViewModel.didTapBookmarkButton
                 .withUnretained(self)
                 .map { owner, _ in  owner.askBottomView.heartButton.tag }
                 .bind(to: viewModel.didTapBookmarkButton)
             
-            askBottomView.askButton.rx.tap
+            viewModel.askBottomViewModel.didTapAskButton
                 .withUnretained(self)
                 .map { owner, _ in owner.askBottomView.askButtonTag()}
                 .bind(to: viewModel.didTapAskButton)
@@ -211,6 +210,7 @@ final class TattooDetailViewController: UIViewController {
     
     init(viewModel: TattooDetailViewModel) {
         self.viewModel = viewModel
+        askBottomView = .init(viewModel: viewModel.askBottomViewModel)
         
         super.init(nibName: nil, bundle: nil)
         view.backgroundColor = .white
@@ -343,7 +343,7 @@ final class TattooDetailViewController: UIViewController {
         return $0
     }(UILabel())
     
-    private let askBottomView = AskBottomView()
+    private let askBottomView: AskBottomView
 }
 
 extension TattooDetailViewController {
@@ -437,9 +437,9 @@ extension TattooDetailViewController {
         view.addSubview(askBottomView)
         
         askBottomView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.bottom.equalToSuperview().inset(28)
-            $0.height.equalTo(60)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
+            $0.height.equalTo(90)
         }
     }
 }

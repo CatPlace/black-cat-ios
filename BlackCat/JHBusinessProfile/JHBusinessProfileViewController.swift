@@ -88,7 +88,7 @@ final class JHBusinessProfileViewController: UIViewController {
                     }
                 }
             
-            bottomView.askButton.rx.tap
+            viewModel.askBottomViewModel.didTapAskButton
                 .bind(with: self) { owner, _ in
                     owner.pushToEditVC()
                 }
@@ -152,10 +152,19 @@ final class JHBusinessProfileViewController: UIViewController {
         viewModel.navigationTitleDriver
             .drive(titleLabel.rx.text)
             .disposed(by: disposeBag)
+        
+        viewModel.alertMessageDriver
+            .drive(with: self) { owner, message in
+                owner.alertOneButtonVC(message: message)
+        }.disposed(by: disposeBag)
     }
     
     
     // MARK: function
+    private func alertOneButtonVC(message: String) {
+        let vc = OneButtonAlertViewController(viewModel: .init(content: message, buttonText: "확인"))
+        present(vc, animated: true)
+    }
     private func switchHeartButton(shouldFill: Bool) {
         let heartImage = shouldFill ? UIImage(named: "heart.fill") : UIImage(named: "like")
         heartImage?.withRenderingMode(.alwaysOriginal).withTintColor(.white)
@@ -191,6 +200,7 @@ final class JHBusinessProfileViewController: UIViewController {
     // MARK: Initialize
     init(viewModel: JHBusinessProfileViewModel) {
         self.viewModel = viewModel
+        bottomView = AskBottomView(viewModel: viewModel.askBottomViewModel)
         super.init(nibName: nil, bundle: nil)
         bind(viewModel: viewModel)
         if !viewModel.isOwner {
@@ -219,8 +229,9 @@ final class JHBusinessProfileViewController: UIViewController {
     // MARK: - UIComponents
     let titleLabel: UILabel = {
         $0.font = .appleSDGoithcFont(size: 20, style: .bold)
-        $0.text = "타투이스트 이름이 길수도 있습니다."
+        $0.text = "타투이스트 이름이 길수도"
         $0.textColor = .white
+        $0.adjustsFontSizeToFitWidth = true
         return $0
     }(UILabel())
     lazy var collectionView: UICollectionView = {
@@ -235,7 +246,7 @@ final class JHBusinessProfileViewController: UIViewController {
         
         return cv
     }()
-    let bottomView = AskBottomView()
+    let bottomView: AskBottomView
     let editLabel: UILabel = {
         $0.text = "편집"
         $0.textColor = .white
@@ -259,9 +270,9 @@ extension JHBusinessProfileViewController {
         
         view.addSubview(bottomView)
         bottomView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.bottom.equalToSuperview().inset(28)
-            $0.height.equalTo(60)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
+            $0.height.equalTo(90)
         }
     }
 }
