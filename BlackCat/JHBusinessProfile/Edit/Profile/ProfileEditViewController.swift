@@ -194,6 +194,10 @@ class ProfileEditViewController: VerticalScrollableViewController {
 }
 
 extension ProfileEditViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     func setUI() {
         [coverImageView, coverImageChangeButton, introduceEditView].forEach { contentView.addSubview($0) }
         

@@ -119,6 +119,12 @@ class PriceInfoEditViewController: VerticalScrollableViewController {
         $0.layer.cornerRadius = 20
         return $0
     }(UIButton())
+}
+
+extension PriceInfoEditViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     func setUI() {
         

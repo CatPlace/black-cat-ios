@@ -84,6 +84,10 @@ class UpgradeBusinessViewController: UIViewController {
 }
 
 extension UpgradeBusinessViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     func setUI() {
         view.addSubview(upgradeButton)
         [firstUpgradeMentImageView, secondUpgradeMentImageView, thirdUpgradeMentImageView].forEach { view.addSubview($0) }

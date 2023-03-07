@@ -216,6 +216,10 @@ class ProductEditViewController: VerticalScrollableViewController {
 }
 
 extension ProductEditViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     func setUI() {
         [tattooTypeInputView, firstHLine, warningLabel, titleInputView, priceInputView, tattooImageInputView, descriptionInputView, secondHLine, genreInputView, firstHLine].forEach { contentView.addSubview($0) }
         

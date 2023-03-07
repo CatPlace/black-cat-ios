@@ -82,7 +82,7 @@ final class MyPageViewController: UIViewController {
         
         viewModel.pushToProfileEditViewDriver
             .drive(with: self) { owner, _ in
-                let vc = UINavigationController(rootViewController: ProfileViewController(viewModel: .init()))
+                let vc = NavigationController(rootViewController: ProfileViewController(viewModel: .init()))
                 vc.modalPresentationStyle = .fullScreen
                 owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
@@ -101,7 +101,7 @@ final class MyPageViewController: UIViewController {
 
         viewModel.showUpgradeVCDriver
             .drive(with: self) { owner, _ in
-                let vc = UINavigationController(rootViewController: UpgradeBusinessViewController())
+                let vc = NavigationController(rootViewController: UpgradeBusinessViewController())
                 vc.modalPresentationStyle = .fullScreen
                 owner.present(vc, animated: true)
             }.disposed(by: disposeBag)

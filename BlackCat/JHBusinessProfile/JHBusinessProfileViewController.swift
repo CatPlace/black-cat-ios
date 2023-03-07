@@ -179,7 +179,7 @@ final class JHBusinessProfileViewController: UIViewController {
             vc.delegate = self
             present(vc, animated: true)
         } else if let type = JHBPContentHeaderButtonType(rawValue: bottomView.askButtonTag()) {
-            let nextVCWithNavi = UINavigationController(rootViewController: type.editVC())
+            let nextVCWithNavi = NavigationController(rootViewController: type.editVC())
             nextVCWithNavi.modalPresentationStyle = .fullScreen
             present(nextVCWithNavi, animated: true)
         } else { // TODO: - 문의하기
@@ -214,7 +214,6 @@ final class JHBusinessProfileViewController: UIViewController {
         appendNavigationLeftBackButton(color: .white)
         appendNavigationLeftCustomView(titleLabel)
         appendNavigationRightLabel(editLabel)
-        
     }
     
     // MARK: - UIComponents
@@ -248,6 +247,10 @@ final class JHBusinessProfileViewController: UIViewController {
 }
 
 extension JHBusinessProfileViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     func setUI() {
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints {

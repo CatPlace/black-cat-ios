@@ -348,6 +348,9 @@ final class TattooDetailViewController: UIViewController {
 
 extension TattooDetailViewController {
     private var cellHeight: CGFloat { (500 * UIScreen.main.bounds.width) / 375 }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     private func setNavigationBar() {
         appendNavigationLeftBackButton()

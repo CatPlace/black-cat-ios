@@ -92,18 +92,18 @@ struct TabBarFactory {
     static func create(viewController: UIViewController,
                        title: String,
                        image: Asset,
-                       selectedImage: Asset) -> UINavigationController {
+                       selectedImage: Asset) -> NavigationController {
         viewController.tabBarItem = UITabBarItem(title: title,
                                                  image: UIImage(image)?.resize(newWidth: 24) ?? UIImage(),
                                                  selectedImage: UIImage(selectedImage)?.resize(newWidth: 24) ?? UIImage())
         
-        return UINavigationController(rootViewController: viewController)
+        return NavigationController(rootViewController: viewController)
     }
 }
 
 extension TabBarViewController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        if let navigationController = viewController as? UINavigationController, let nextVC = navigationController.viewControllers.first {
+        if let navigationController = viewController as? NavigationController, let nextVC = navigationController.viewControllers.first {
             if nextVC is BookmarkViewController && CatSDKUser.userType() == .guest {
                 let vc = LoginAlertViewController()
                 present(vc, animated: true)

@@ -216,6 +216,10 @@ class ProfileViewController: UIViewController {
 }
 
 extension ProfileViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     func setUI() {
         view.addSubview(scrollView)
         

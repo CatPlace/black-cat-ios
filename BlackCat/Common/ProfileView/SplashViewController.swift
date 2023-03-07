@@ -12,6 +12,7 @@ import RxRelay
 import BlackCatSDK
 
 class SplashViewModel {
+    
     let viewWillAppear = PublishRelay<Void>()
     let showLoginVC: Driver<Void>
     let showHomeVC: Driver<Void>
@@ -41,7 +42,9 @@ class SplashViewModel {
 class SplashViewController: UIViewController {
     // MARK: - Properties
     var disposeBag = DisposeBag()
-    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     // MARK: - Binding
     func bind(to viewModel: SplashViewModel) {
         rx.viewWillAppear
