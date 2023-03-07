@@ -141,9 +141,6 @@ class GenrePaperView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        genreTitleView.snp.updateConstraints {
-            $0.width.equalTo(width)
-        }
         tableViewFrame = self.globalFrame ?? .zero
     }
 
@@ -181,7 +178,6 @@ extension GenrePaperView {
         addSubview(genreTitleView)
         genreTitleView.snp.makeConstraints {
             $0.top.bottom.leading.equalToSuperview()
-            $0.width.equalTo(width)
             $0.trailing.equalToSuperview()
         }
 
@@ -193,7 +189,7 @@ extension GenrePaperView {
 
         arrowImageView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(18)
-            $0.trailing.equalToSuperview().inset(10)
+            $0.leading.equalTo(genreTitleView.snp.trailing).offset(10)
             $0.width.equalTo(10)
             $0.height.equalTo(10)
         }
