@@ -94,6 +94,7 @@
 		78B602D029B6693F004678A2 /* PriceInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B602CF29B6693F004678A2 /* PriceInputView.swift */; };
 		78B602D229B6694B004678A2 /* PriceInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B602D129B6694B004678A2 /* PriceInputViewModel.swift */; };
 		78B602D429B66B78004678A2 /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B602D329B66B78004678A2 /* Int+.swift */; };
+		78B602D629B798E7004678A2 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B602D529B798E7004678A2 /* NavigationController.swift */; };
 		78B9D5F929A49CAD00ACD735 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9D5F829A49CAD00ACD735 /* String+.swift */; };
 		78B9D5FB29A49D8E00ACD735 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9D5FA29A49D8E00ACD735 /* Date+.swift */; };
 		78B9D5FE29A4A0E300ACD735 /* TattooistProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9D5FD29A4A0E300ACD735 /* TattooistProfileView.swift */; };
@@ -336,6 +337,7 @@
 		78B602CF29B6693F004678A2 /* PriceInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceInputView.swift; sourceTree = "<group>"; };
 		78B602D129B6694B004678A2 /* PriceInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceInputViewModel.swift; sourceTree = "<group>"; };
 		78B602D329B66B78004678A2 /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
+		78B602D529B798E7004678A2 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		78B9D5F829A49CAD00ACD735 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		78B9D5FA29A49D8E00ACD735 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		78B9D5FD29A4A0E300ACD735 /* TattooistProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooistProfileView.swift; sourceTree = "<group>"; };
@@ -1172,6 +1174,7 @@
 				7867A62629374D0500FC1160 /* Common */,
 				787D584E293CE00400A3E610 /* Example */,
 				786B57F02949C8B100E2C4A5 /* Resources */,
+				78B602D529B798E7004678A2 /* NavigationController.swift */,
 			);
 			path = BlackCat;
 			sourceTree = "<group>";
@@ -1491,6 +1494,7 @@
 				B1E4986728EE9BE800B469AC /* MagazineDetailBaseCell.swift in Sources */,
 				8E2D8C5928F2EE69004B514D /* HomeEmptyCell.swift in Sources */,
 				784B02372937579F004ED20A /* MyPageViewController.swift in Sources */,
+				78B602D629B798E7004678A2 /* NavigationController.swift in Sources */,
 				78280146299CBC0B00DC1509 /* TwoButtonAlertViewController.swift in Sources */,
 				7867A63829374D0500FC1160 /* AlertService.swift in Sources */,
 				B1E986AB28FE888800962F5B /* FilterTaskService.swift in Sources */,
