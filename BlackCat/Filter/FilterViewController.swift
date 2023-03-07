@@ -59,13 +59,13 @@ final class FilterViewController: BottomSheetController, View {
     private func render(reactor: Reactor) {
         reactor.state.map { $0.tasks }
             .bind(to: taskCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
-                cell.viewModel = .init(typeString: item.type.rawValue,
+                cell.viewModel = .init(color: .init(hex: "#F4F4F4FF"), typeString: item.type.rawValue,
                                        isSubscribe: item.isSubscribe)
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.locations }
             .bind(to: locationCollectionView.rx.items(Reuable.filterCell)) { row, item, cell in
-                cell.viewModel = .init(typeString: item.type.rawValue,
+                cell.viewModel = .init(color: .init(hex: "#F4F4F4FF"), typeString: item.type.rawValue,
                                        isSubscribe: item.isSubscribe)
             }.disposed(by: disposeBag)
         
@@ -91,21 +91,21 @@ final class FilterViewController: BottomSheetController, View {
     // MARK: - function
     // 구분선 Modifier
     func divierViewModifier(_ sender: UIView) {
-        sender.backgroundColor = .darkGray
+        sender.backgroundColor = .init(hex: "#666666FF")
     }
     
     // 섹션 타이틀 Modifier
     func sectionTitleModifier(_ sender: UILabel) {
         sender.textAlignment = .center
-        sender.textColor = .gray
-        sender.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 14)
+        sender.textColor = .init(hex: "#666666FF")
+        sender.font = .appleSDGoithcFont(size: 14, style: .regular)
     }
     
     // MARK: - Properties
     private lazy var titleLabel: UILabel = {
         $0.text = "필터 검색"
         $0.textAlignment = .center
-        $0.font = .systemFont(ofSize: 28, weight: .semibold)
+        $0.font = .systemFont(ofSize: 20, weight: .bold)
         return $0
     }(UILabel())
     
@@ -157,7 +157,7 @@ final class FilterViewController: BottomSheetController, View {
         $0.text = "필터 적용"
         $0.textAlignment = .center
         $0.contentMode = .top
-        $0.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 24)
+        $0.font = .appleSDGoithcFont(size: 20, style: .semiBold)
         $0.textColor = .white
         $0.backgroundColor = .black
         
@@ -175,6 +175,7 @@ extension FilterViewController: UICollectionViewDelegateFlowLayout {
 extension FilterViewController {
     func setUI() {
         view.backgroundColor = .white
+        preferredSheetCornerRadius = 30
         // 🐻‍❄️ NOTE: - UI에 그려지는 상태대로 정렬
         [titleLabel,
          dividerView01,
@@ -203,7 +204,8 @@ extension FilterViewController {
         
         taskCollectionView.snp.makeConstraints {
             $0.top.equalTo(taskSectionTitleLabel.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(26)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(100 * 2 + 12)
             $0.height.equalTo(40 * 1 + 10)
         }
 

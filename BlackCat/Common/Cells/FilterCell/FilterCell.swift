@@ -24,7 +24,7 @@ final class FilterCell: FilterBaseCell {
             
             viewModel.isSubscribeDriver
                 .drive(with: self) { owner, isSubscribe in
-                    owner.configureAttributes(owner.titleLabel, isSubscribe)
+                    owner.configureAttributes(color: viewModel.color, owner.titleLabel, isSubscribe)
                 }.disposed(by: self.disposeBag)
         }
     }
@@ -45,7 +45,7 @@ final class FilterCell: FilterBaseCell {
     // MARK: - UIComponents
     private lazy var titleLabel: UILabel = {
         $0.textAlignment = .center
-        $0.font = .systemFont(ofSize: 16, weight: .semibold)
+        $0.font = .appleSDGoithcFont(size: 16, style: .bold)
         return $0
     }(UILabel())
 }

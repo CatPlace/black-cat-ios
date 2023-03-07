@@ -20,7 +20,7 @@ class TattooTypeInputViewModel {
         tattooTypeRelay = .init(value: tattooType)
         
         cellViewModelsDriver = tattooTypeRelay.map { type in
-            TattooType.allCases.map { FilterCellViewModel(typeString: $0.title(), isSubscribe: type == $0) }
+            TattooType.allCases.map { FilterCellViewModel(color: .white, typeString: $0.title(), isSubscribe: type == $0) }
         }
         .asDriver(onErrorJustReturn: [])
     }

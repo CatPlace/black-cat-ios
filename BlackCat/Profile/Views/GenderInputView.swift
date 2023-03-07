@@ -37,7 +37,7 @@ class GenderInputViewModel {
         cellViewModelsDriver = Observable.combineLatest(Observable.just(Model.Gender.allCases),
                                                              genderInputRelay)
         .map { genders, selectedGender in
-            genders.map { FilterCellViewModel(typeString: $0.asString(), isSubscribe: $0 == selectedGender) }
+            genders.map { FilterCellViewModel(color: .white, typeString: $0.asString(), isSubscribe: $0 == selectedGender) }
         }.asDriver(onErrorJustReturn: [])
     }
 }

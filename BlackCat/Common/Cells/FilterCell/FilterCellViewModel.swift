@@ -5,16 +5,19 @@
 //  Created by Hamlit Jason on 2022/11/09.
 //
 
-import Foundation
+import UIKit
 import RxSwift
 import RxCocoa
 
 // MARK: - FilterCellViewModel
 final class FilterCellViewModel {
+    let color: UIColor?
     let typeStringDriver: Driver<String>
     let isSubscribeDriver: Driver<Bool>
 
-    init(typeString: String, isSubscribe: Bool) {
+    init(color: UIColor?, typeString: String, isSubscribe: Bool) {
+        self.color = color
+        
         typeStringDriver = Observable.just(typeString)
             .map { $0 }
             .asDriver(onErrorJustReturn: "")

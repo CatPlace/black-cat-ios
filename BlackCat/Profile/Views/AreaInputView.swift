@@ -35,7 +35,7 @@ class AreaInputViewModel {
         cellViewModelsDriver = Observable.combineLatest(Observable.just(Model.Area.allCases),
                                                              areaInputRelay)
         .map { areas, selectedArea in
-            areas.map { FilterCellViewModel(typeString: $0.asString(), isSubscribe: $0 == selectedArea) }
+            areas.map { FilterCellViewModel(color: .white, typeString: $0.asString(), isSubscribe: $0 == selectedArea) }
         }.asDriver(onErrorJustReturn: [])
     }
 }
