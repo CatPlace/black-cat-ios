@@ -29,7 +29,7 @@ class ProfileViewModel {
     let upgradeTrigger = PublishRelay<Void>()
     
     // MARK: - Output
-    let completeAlertDriver: Driver<Void>
+    let dismissAfterAlertDriver: Driver<String>
     let alertMassageDriver: Driver<String>
     let profileImageDriver: Driver<UIImage?>
     
@@ -63,11 +63,8 @@ class ProfileViewModel {
             .withLatestFrom(combinedInputs)
             .share()
         
-        
-        
-        let alertMessage = inputs
+        let validCheck = inputs
             .filter { !isRequiredInputs(inputs: $0, mode: $1) }
-            .map { _ in "업그레이드 계정은 모든 항목 필수 값입니다!" }
         
         let shouldUpdateProfile = inputs
             .filter { isRequiredInputs(inputs: $0, mode: $1) }
@@ -116,11 +113,15 @@ class ProfileViewModel {
             .filter { !$0 }
             .map { _ in () }
         
-        completeAlertDriver = Observable.merge([editSuccess, upgradeSuccess])
-            .asDriver(onErrorJustReturn: ())
+        dismissAfterAlertDriver = Observable.merge([editSuccess, upgradeSuccess])
+            .map { _ in "프로필 수정을 완료했습니다." }
+            .asDriver(onErrorJustReturn: "오류가 발생했습니다.")
         
-        alertMassageDriver = Observable.merge([alertMessage, updateFail.map { _ in "업데이트 실패" }, upgradeFail.map { _ in "업그레이드 실패"}])
-            .asDriver(onErrorJustReturn: "일시적인 오류입니다. 문의 해주시면 감사드리곘습니다.")
+        alertMassageDriver = Observable.merge([
+            validCheck.map { _ in "업그레이드 계정은 모든 항목 필수 값입니다!" },
+            updateFail.map { _ in "업데이트 실패" },
+            upgradeFail.map { _ in "업그레이드 실패"}])
+            .asDriver(onErrorJustReturn: "오류가 발생했습니다.")
         
         profileImageDriver = imageInputRelay
             .flatMap(UIImage.convertToUIImage)

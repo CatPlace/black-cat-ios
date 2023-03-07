@@ -42,10 +42,11 @@ class ProfileViewController: UIViewController {
                 owner.updateView(with: keyboardVisibleHeight)
             }.disposed(by: disposeBag)
         
-        viewModel.completeAlertDriver
-            .drive(with: self) { owner, _ in
-                // TODO: Alert
-                owner.dismiss(animated: true)
+        viewModel.dismissAfterAlertDriver
+            .drive(with: self) { owner, message in
+                let vc = OneButtonAlertViewController(viewModel: .init(content: message, buttonText: "확인"))
+                vc.delegate = self
+                owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
         
         viewModel.alertMassageDriver
@@ -293,5 +294,11 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         let selectedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage
         viewModel.imageInputRelay.accept(selectedImage)
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ProfileViewController: OneButtonAlertDelegate {
+    func didTapButton() {
+        dismiss(animated: true)
     }
 }
