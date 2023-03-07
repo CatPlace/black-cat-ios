@@ -27,6 +27,13 @@ enum ProductInputType {
         case .modify: return "타투가 수정되었습니다."
         }
     }
+    
+    func completeButtonText() -> String {
+        switch self {
+        case .add: return "타투업로드"
+        case .modify: return "수정 완료"
+        }
+    }
 }
 
 struct TattooEditModel {
@@ -62,6 +69,7 @@ class ProductEditViewModel {
     let showImagePickerViewDriver: Driver<Void>
     let OneButtonAlertDriver: Driver<String>
     let dismissDriver: Driver<String>
+    let completeButtonTextDriver: Driver<String>
     
     init(tattoo: Model.Tattoo? = nil) {
         let tattooId = tattoo?.id
@@ -177,6 +185,8 @@ class ProductEditViewModel {
         
         imageListDrvier = images
             .asDriver(onErrorJustReturn: [])
+        
+        completeButtonTextDriver = .just(type.completeButtonText())
         
         func shouldDeleteImages(inputImages: [Any]) -> [String] {
             initialImageUrlStrings.filter { initialImageUrlString in

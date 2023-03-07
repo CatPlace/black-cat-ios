@@ -24,6 +24,7 @@ class ProductEditViewController: VerticalScrollableViewController {
             .disposed(by: disposeBag)
         
         completeButton.rx.tap
+            .do { [weak self] _ in self?.completeButton.isUserInteractionEnabled = false }
             .bind(to: viewModel.didTapCompleteButton)
             .disposed(by: disposeBag)
         
@@ -37,6 +38,7 @@ class ProductEditViewController: VerticalScrollableViewController {
         
         viewModel.OneButtonAlertDriver
             .drive(with: self) { owner, message in
+                owner.completeButton.isUserInteractionEnabled = true
                 let vc = OneButtonAlertViewController(viewModel: .init(content: message, buttonText: "확인"))
                 owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
@@ -70,6 +72,11 @@ class ProductEditViewController: VerticalScrollableViewController {
         viewModel.pageTitleDriver
             .drive(with: self) { owner, title in
                 owner.configure(title: title)
+            }.disposed(by: disposeBag)
+        
+        viewModel.completeButtonTextDriver
+            .drive(with: self) { owner, text in
+                owner.completeButton.setTitle(text, for: .normal)
             }.disposed(by: disposeBag)
     }
     
