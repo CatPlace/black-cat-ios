@@ -41,7 +41,8 @@ final class JHBusinessProfileViewModel {
     let shouldFillHeartButton: Driver<Bool>
     let bookmarkCountStringDriver: Driver<String>
     let serverErrorDriver: Driver<Void>
-    
+    let navigationTitleDriver: Driver<String>
+
     init(tattooistId: Int) {
         // TODO: - 유저 구분
         let isOwner = tattooistId == CatSDKUser.user().id
@@ -56,7 +57,7 @@ final class JHBusinessProfileViewModel {
         let fetchedTattooistInfo = viewDidLoad
             .flatMap { _ in
                 
-                let fetchedProfileData = CatSDKTattooist.profile(tattooistId: tattooistId).share().debug("타투이스트 프로필😎")
+                let fetchedProfileData = CatSDKTattooist.profile(tattooistId: tattooistId).share()
                 let fetchedProductsData = CatSDKTattooist.products(tattooistId: tattooistId).share()
                 let fetchedPriceInfoData = CatSDKTattooist.priceInfo(tattooistId: tattooistId).share()
                 return Observable.combineLatest(fetchedProfileData, fetchedProductsData, fetchedPriceInfoData) {
@@ -95,6 +96,11 @@ final class JHBusinessProfileViewModel {
                 priceInformation: $0.estimate.description
             ) }
             .asDriver(onErrorJustReturn: [])
+        
+        navigationTitleDriver = currentTattooistInfo
+            .compactMap { $0.introduce.userName }
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: "")
         
         visibleCellIndexPath = cellWillAppear
             .map { Int($0) }

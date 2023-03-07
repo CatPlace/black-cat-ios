@@ -148,6 +148,10 @@ final class JHBusinessProfileViewController: UIViewController {
                 let vc = OneButtonAlertViewController(viewModel: .init(content: "삭제에 실패했습니다.", buttonText: "확인"))
                 owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
+        
+        viewModel.navigationTitleDriver
+            .drive(titleLabel.rx.text)
+            .disposed(by: disposeBag)
     }
     
     
@@ -208,11 +212,18 @@ final class JHBusinessProfileViewController: UIViewController {
         JHBPDispatchSystem.dispatch.multicastDelegate.addDelegate(self)
         setNavigationBackgroundColor(color: .white.withAlphaComponent(0))
         appendNavigationLeftBackButton(color: .white)
-        appendNavigationLeftLabel(title: "TEST", color: .white)
+        appendNavigationLeftCustomView(titleLabel)
         appendNavigationRightLabel(editLabel)
+        
     }
     
     // MARK: - UIComponents
+    let titleLabel: UILabel = {
+        $0.font = .appleSDGoithcFont(size: 20, style: .bold)
+        $0.text = "타투이스트 이름이 길수도 있습니다."
+        $0.textColor = .white
+        return $0
+    }(UILabel())
     lazy var collectionView: UICollectionView = {
         let layout = createLayout()
         var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
