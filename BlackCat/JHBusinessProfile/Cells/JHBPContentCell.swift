@@ -128,7 +128,6 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
             }.disposed(by: self.disposeBag)
         
         viewModel.products
-            .debug("타투 개수")
             .drive(productCollectionView.rx.items(Reusable.productCell)) { [weak self] index, item, cell in
                 guard let self = self else { return }
                 self.setCollectionViewHidden(forType: .product)
@@ -200,7 +199,6 @@ final class JHBPContentCell: BPBaseCollectionViewCell {
             }.disposed(by: disposeBag)
         
         viewModel.emptyLabelIsHiddenDriver
-            .debug("이즈 히던")
             .drive(with: self) { owner, isHiddenEmptyLabel in
                 owner.emptyLabel.isHidden = isHiddenEmptyLabel
                 owner.productCollectionView.isHidden = !isHiddenEmptyLabel

@@ -21,7 +21,6 @@ final class JHBPThumbnailImageCellViewModel {
             .asDriver(onErrorJustReturn: "")
         
         self.isEmptyCoverImageDriver = imageUrlString
-            .debug("💡")
             .map { $0 == nil }
             .filter { $0 }
             .asDriver(onErrorJustReturn: false)
