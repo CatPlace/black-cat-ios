@@ -180,11 +180,19 @@ extension MyPageViewController: TwoButtonAlertViewDelegate {
         switch type {
         case .warningLogoutWriting:
             viewModel.logoutTrigger.accept(())
+            dismiss(animated: true)
         case .warningSecession:
+            dismiss(animated: true) { [weak self] in
+                let vc = TwoButtonAlertViewController(viewModel: .init(type: .warningSecession2))
+                vc.delegate = self
+                self?.present(vc, animated: true)
+            }
+        case .warningSecession2:
             viewModel.withdrawalTriggier.accept(())
+            dismiss(animated: true)
         default: return
         }
-        dismiss(animated: true)
+        
     }
     
     func didTapLeftButton(type: TwoButtonAlertType) {

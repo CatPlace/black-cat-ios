@@ -161,7 +161,7 @@ final class MyPageViewModel {
         
         let withdrawalSuccess = withdrawalResult
             .filter { $0 }
-            .do { _ in CatSDKUser.updateUser(user: .init(id: -1)) }
+            .do { _ in CatSDKUser.initLocalData() }
             .map { _ in () }
         
         let withdrawalFail = withdrawalResult
@@ -199,5 +199,4 @@ final class MyPageViewModel {
             .map { $0.isEmpty }
             .asDriver(onErrorJustReturn: true)
     }
-
 }

@@ -17,6 +17,7 @@ enum TwoButtonAlertType {
     case warningCancelWriting
     case warningLogoutWriting
     case warningSecession
+    case warningSecession2
     case warningDelete([Int])
     
     func getLeftButtonString() -> String {
@@ -38,6 +39,8 @@ enum TwoButtonAlertType {
             return "로그아웃하시겠습니까?"
         case .warningSecession:
             return "탈퇴 하시겠습니까?"
+        case .warningSecession2:
+            return "정말 탈퇴를 진행하시겠습니까?\n지금까지의 사용기록이 전부 초기화됩니다."
         case .warningDelete(let indexList):
             return indexList.count == 0
             ? "삭제하시겠습니까?"
