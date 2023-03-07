@@ -792,6 +792,7 @@
 		787D584E293CE00400A3E610 /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				B1EE64F728FA4ABE0055A4F1 /* FilterExampleViewController.swift */,
 				787D5844293CD8CB00A3E610 /* FontExampleViewController.swift */,
 			);
 			path = Example;
@@ -1258,7 +1259,6 @@
 		B1EE64F428FA48170055A4F1 /* Filter */ = {
 			isa = PBXGroup;
 			children = (
-				B1EE64F728FA4ABE0055A4F1 /* FilterExampleViewController.swift */,
 				B1EE651128FA872B0055A4F1 /* FilterViewController.swift */,
 				B1EABEBE28FBA8E10029B6BC /* FilterReactor.swift */,
 				B1E986AC28FE889200962F5B /* FilterServices */,
@@ -1778,7 +1778,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = BlackCat/BlackCat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = Z54MHCPF6U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BlackCat/Info.plist;
@@ -1811,7 +1811,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = BlackCat/BlackCat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = Z54MHCPF6U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BlackCat/Info.plist;
