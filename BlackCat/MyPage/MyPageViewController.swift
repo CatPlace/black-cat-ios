@@ -150,7 +150,22 @@ final class MyPageViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Life Cycle
+    override func viewDidLoad() {
+        appendNavigationLeftLabel(title: "마이페이지", color: .black)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setNavigationBackgroundColor(color: .clear)
+    }
+    
     // MARK: - UIComponents
+    let topView: UIView = {
+        $0.backgroundColor = .white
+        $0.layer.applyShadow(color: .black, alpha: 0.15, x: 0, y: 2, blur: 40)
+        return $0
+    }(UIView())
+    
     lazy var myPageCollectionView: UICollectionView = {
         let layout = createLayout()
         layout.register(RecentTattooEmptyView.self, forDecorationViewOfKind: "empty")
@@ -167,10 +182,16 @@ final class MyPageViewController: UIViewController {
 
 extension MyPageViewController {
     func setUI() {
-        view.addSubview(myPageCollectionView)
         
+        [myPageCollectionView, topView].forEach { view.addSubview($0) }
         myPageCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+        
+        topView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(100)
         }
     }
 }

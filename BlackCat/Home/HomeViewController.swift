@@ -140,9 +140,19 @@ class HomeViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
+    // MARK: - Life Cycle
+    override func viewWillAppear(_ animated: Bool) {
+        setNavigationBackgroundColor(color: .clear)
+    }
+    
     // MARK: - UIComponents
     let refreshControl = UIRefreshControl()
+    let topView: UIView = {
+        $0.backgroundColor = .white
+        $0.layer.applyShadow(color: .black, alpha: 0.15, x: 0, y: 2, blur: 40)
+        return $0
+    }(UIView())
     let leftTitleBarButtonItem: UIBarButtonItem = {
         let label = UILabel()
         label.text = "Black Cat"
@@ -191,12 +201,17 @@ extension HomeViewController {
 
     private func setUI() {
         view.addSubview(collectionView)
-
+        [collectionView, topView].forEach { view.addSubview($0) }
+        
         collectionView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.bottom.equalToSuperview()
         }
+        
+        topView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(100)
+        }
     }
 }
-
-
