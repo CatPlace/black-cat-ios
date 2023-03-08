@@ -38,6 +38,14 @@ extension UIView {
         shape.fillColor = UIColor.clear.cgColor
         gradient.mask = shape
         layer.addSublayer(gradient)
-
+    }
+    
+    func setGradient(startColor: UIColor, endColor: UIColor, startPoint: CGPoint, endPoint: CGPoint) {
+        let gradient = CAGradientLayer()
+        gradient.frame = bounds
+        gradient.colors = [startColor.cgColor, endColor.cgColor]
+        gradient.startPoint = startPoint
+        gradient.endPoint = endPoint
+        layer.addSublayer(gradient)
     }
 }
