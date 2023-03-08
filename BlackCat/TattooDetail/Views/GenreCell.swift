@@ -38,7 +38,7 @@ final class GenreCell: UICollectionViewCell {
     let blurEffectView: VisualEffectView = {
         let v = VisualEffectView()
         v.colorTintAlpha = 1
-        v.backgroundColor = .white.withAlphaComponent(0.4)
+        v.backgroundColor = .init(hex: "#333333FF")?.withAlphaComponent(0.55)
         v.blurRadius = 5
         return v
     }()

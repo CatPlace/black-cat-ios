@@ -47,7 +47,6 @@ struct TattooDetailViewModel {
     let loginNeedAlertDriver: Driver<Void>
     let alertMessageDriver: Driver<String>
     let popViewDriver: Driver<Void>
-    let genreCountDriver: Driver<Int>
     let priceDriver: Driver<String>
     
     init(tattooId: Int) {
@@ -194,10 +193,6 @@ struct TattooDetailViewModel {
         tattooTitleStringDriver = tattooModelSuccess
             .map { $0.title }
             .asDriver(onErrorJustReturn: "error")
-        
-        genreCountDriver = tattooModelSuccess
-            .map { $0.categoryIds.count }
-            .asDriver(onErrorJustReturn: 0)
         
         let deleteResult = deleteTrigger
             .flatMap { CatSDKTattooist.deleteTattoo(tattooIds: [tattooId]) }

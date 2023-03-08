@@ -15,18 +15,14 @@ import SnapKit
 import Nuke
 
 final class TattooDetailViewController: UIViewController {
-    deinit {
-        disposeBag = DisposeBag()
-        viewModel.disposeBag = DisposeBag()
-    }
+    // MARK: - Properties
     var disposeBag = DisposeBag()
     enum Reusable {
         static let tattooDetailCell = ReusableCell<TattooDetailCell>()
         static let generCell = ReusableCell<GenreCell>()
         static let clearCell = ReusableCell<UICollectionViewCell>()
     }
-    
-    // MARK: - Properties
+    var cellWidths: [CGFloat] = []
     
     var viewModel: TattooDetailViewModel
     
@@ -138,11 +134,6 @@ final class TattooDetailViewController: UIViewController {
                     owner.titleLabel.text = title
                 }
             
-            viewModel.genreCountDriver
-                .drive(with: self) { owner, count in
-                    owner.resizeGenreCollectionView(with: count)
-                }
-            
             viewModel.alertMessageDriver
                 .drive(with: self) { owner, message in
                     owner.showOneButtonAlert(with: message)
@@ -200,13 +191,18 @@ final class TattooDetailViewController: UIViewController {
                 cell.configure(with: data)
                 return cell
             }.disposed(by: disposeBag)
-    }
-    
-    // function
-    func resizeGenreCollectionView(with count: Int) {
-        genreCollectionView.snp.updateConstraints {
-            $0.width.equalTo(8 * (count - 1) + 60 * count)
-        }
+        
+        viewModel.tattooCategories
+            .filter { $0.count > 0 }
+            .drive(with: self) { owner, genres in
+                var width: CGFloat = 0
+                owner.cellWidths = genres.map { CGFloat($0.count) * 13 + 28 }
+                width = owner.cellWidths.reduce(0) { $0 + $1 }
+                width += CGFloat(genres.count - 1) * 8
+                owner.genreCollectionView.snp.updateConstraints {
+                    $0.width.equalTo(width)
+                }
+            }.disposed(by: disposeBag)
     }
     
     func showOneButtonAlert(with message: String) {
@@ -277,13 +273,15 @@ final class TattooDetailViewController: UIViewController {
     let titleLabel: UILabel = {
         $0.textColor = .white
         $0.font = .appleSDGoithcFont(size: 20, style: .bold)
-        $0.text = "타투 제목입니다."
+        $0.adjustsFontSizeToFitWidth = true
         return $0
-    }(UILabel())
+    }(UILabel(frame: .init(x: 0, y: 0, width: 200, height: 30)))
     
     let priceLabel: UILabel = {
         $0.font = .appleSDGoithcFont(size: 24, style: .bold)
+        $0.adjustsFontSizeToFitWidth = true
         $0.textColor = .init(hex: "#7210A0FF")
+        $0.textAlignment = .right
         return $0
     }(UILabel())
     
@@ -293,6 +291,7 @@ final class TattooDetailViewController: UIViewController {
         $0.scrollDirection = .horizontal
         let width = UIScreen.main.bounds.width
         let height: CGFloat = cellHeight
+        
         $0.itemSize = .init(width: width, height: height)
         return $0
     }(UICollectionViewFlowLayout())
@@ -315,16 +314,16 @@ final class TattooDetailViewController: UIViewController {
     private lazy var genreFlowLayout: UICollectionViewLayout = {
         $0.minimumLineSpacing = 8.0
         $0.scrollDirection = .horizontal
-        let width: CGFloat = 60
+        let width: CGFloat = 150
         let height: CGFloat = 28
-        $0.itemSize = .init(width: width, height: height)
+        $0.estimatedItemSize = .init(width: width, height: height)
         return $0
     }(UICollectionViewFlowLayout())
     
     private lazy var genreCollectionView: UICollectionView = {
         $0.register(Reusable.generCell)
         $0.backgroundColor = .clear
-        
+        $0.delegate = self
         return $0
     }(UICollectionView(frame: .zero, collectionViewLayout: genreFlowLayout))
     
@@ -347,6 +346,7 @@ final class TattooDetailViewController: UIViewController {
     
     private let tattooTitle: UILabel = {
         $0.text = "타투 제목"
+        $0.adjustsFontSizeToFitWidth = true
         $0.font = .appleSDGoithcFont(size: 24, style: .bold)
         return $0
     }(UILabel())
@@ -419,10 +419,11 @@ extension TattooDetailViewController {
         
         genreCollectionView.snp.makeConstraints {
             $0.top.equalTo(navigationBarDividerView.snp.bottom).offset(15)
-            $0.width.equalTo(196)
+            $0.width.equalTo(300)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(60)
         }
+        
         view.addSubview(scrollView)
         
         scrollView.snp.makeConstraints {
@@ -465,11 +466,13 @@ extension TattooDetailViewController {
         tattooTitle.snp.makeConstraints {
             $0.top.equalTo(clearCollectionView.snp.bottom).offset(30)
             $0.leading.equalToSuperview().inset(30)
+            $0.width.equalToSuperview().multipliedBy(5/12.0)
         }
         
         priceLabel.snp.makeConstraints {
             $0.centerY.equalTo(tattooTitle)
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(30)
+            $0.width.equalToSuperview().multipliedBy(4/12.0)
         }
         
         tattooistProfileView.snp.makeConstraints {
@@ -527,6 +530,10 @@ extension TattooDetailViewController: TwoButtonAlertViewDelegate {
     func didTapLeftButton(type: TwoButtonAlertType) {
         dismiss(animated: true)
     }
-    
-    
+}
+
+extension TattooDetailViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return .init(width: cellWidths[indexPath.row], height: 28)
+    }
 }
