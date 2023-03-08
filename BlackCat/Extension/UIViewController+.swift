@@ -11,7 +11,7 @@ extension UIViewController {
     
     func setNavigationBackgroundColor(color: UIColor?) {
         guard let frame = navigationController?.navigationBar.frame else { return }
-        let v = UIView(frame: .init(x: 0, y: 0, width: frame.width, height: frame.minY + frame.height))
+        let v = UIView(frame: .init(x: 0, y: 0, width: frame.width, height: Constant.height * 100))
         v.backgroundColor = color
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
