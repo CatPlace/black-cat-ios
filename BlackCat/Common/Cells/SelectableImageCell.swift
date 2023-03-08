@@ -89,6 +89,7 @@ final class SelectableImageCell: BPBaseCollectionViewCell {
     // MARK: - UIComponents
     lazy var productImageView: UIImageView = {
         $0.layer.backgroundColor = UIColor.gray.cgColor
+        $0.contentMode = .scaleAspectFill
         return $0
     }(UIImageView())
     

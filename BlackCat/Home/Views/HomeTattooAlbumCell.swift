@@ -49,7 +49,7 @@ class HomeTattooAlbumCell: UICollectionViewCell {
     // MARK: - UIComponents
 
     let thumbnailImageView: UIImageView = {
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleAspectFill
         $0.backgroundColor = .black
         return $0
     }(UIImageView())
