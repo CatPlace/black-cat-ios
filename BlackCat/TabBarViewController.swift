@@ -39,11 +39,20 @@ final class TabBarViewController: UITabBarController {
     }
     
     func bind() {
-        Observable.merge([.just(CatSDKUser.user().imageUrl), CatSDKUser.imageUrlString()])
+        Observable.merge([.just(CatSDKUser.user().imageUrl), CatSDKUser.imageUrlStringObservable()])
             .flatMap(UIImage.convertToUIImage)
             .asDriver(onErrorJustReturn: nil)
             .drive(with: self) { owner, image in
                 owner.updateMyPageButtonImage(image)
+            }.disposed(by: disposeBag)
+        
+        CatSDKUser.userIdObservable()
+            .filter { $0 == -2 }
+            .delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance)
+            .bind(with: self) { owner, id in
+                let vc = OneButtonAlertViewController(viewModel: .init(content: "로그인 시간이 만료되었습니다.\n로그인 페이지로 이동합니다.", buttonText: "확인"))
+                vc.delegate = self
+                owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
     }
     
@@ -111,5 +120,11 @@ extension TabBarViewController: UITabBarControllerDelegate {
             }
         }
         return true
+    }
+}
+
+extension TabBarViewController: OneButtonAlertDelegate {
+    func didTapButton() {
+        dismiss(animated: true)
     }
 }

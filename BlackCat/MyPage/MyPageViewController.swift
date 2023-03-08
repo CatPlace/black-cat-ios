@@ -120,10 +120,8 @@ final class MyPageViewController: UIViewController {
             }.disposed(by: disposeBag)
         
         viewModel.popToLoginVCDriver
-            .drive(with: self) { owner, _ in
-                owner.disposeBag = DisposeBag()
-                owner.dismiss(animated: true)
-            }.disposed(by: disposeBag)
+            .drive()
+            .disposed(by: disposeBag)
         
         viewModel.showTattooDetailDriver
             .drive(with: self) { owner, tattooId in

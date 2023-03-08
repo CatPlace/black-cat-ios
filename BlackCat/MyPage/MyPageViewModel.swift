@@ -178,6 +178,7 @@ final class MyPageViewModel {
             .asDriver(onErrorJustReturn: -1)
         
         popToLoginVCDriver = Observable.merge([logoutResult, withdrawalSuccess])
+            .do { _ in CatSDKUser.updateUser(user: .init(id: -2))}
             .asDriver(onErrorJustReturn: ())
         
         showTwoButtonAlertVCDrvier = Observable.merge([logoutAlertType, withdrawlAlertType])
