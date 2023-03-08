@@ -113,8 +113,9 @@ class ProfileViewModel {
             .filter { !$0 }
             .map { _ in () }
         
-        dismissAfterAlertDriver = Observable.merge([editSuccess, upgradeSuccess])
-            .map { _ in "프로필 수정을 완료했습니다." }
+        dismissAfterAlertDriver = Observable.merge([
+            editSuccess.map { _ in "프로필 수정을 완료했습니다." },
+            upgradeSuccess.map { _ in "타투이스트로 계정으로 전환했습니다."}])
             .asDriver(onErrorJustReturn: "오류가 발생했습니다.")
         
         alertMassageDriver = Observable.merge([
