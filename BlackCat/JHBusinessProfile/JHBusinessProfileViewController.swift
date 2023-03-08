@@ -229,11 +229,10 @@ final class JHBusinessProfileViewController: UIViewController {
     // MARK: - UIComponents
     let titleLabel: UILabel = {
         $0.font = .appleSDGoithcFont(size: 20, style: .bold)
-        $0.text = "타투이스트 이름이 길수도"
         $0.textColor = .white
         $0.adjustsFontSizeToFitWidth = true
         return $0
-    }(UILabel())
+    }(UILabel(frame: .init(x: 0, y: 0, width: 200, height: 30)))
     lazy var collectionView: UICollectionView = {
         let layout = createLayout()
         var cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
