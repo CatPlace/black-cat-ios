@@ -23,6 +23,7 @@ final class TattooDetailViewController: UIViewController {
     enum Reusable {
         static let tattooDetailCell = ReusableCell<TattooDetailCell>()
         static let generCell = ReusableCell<GenreCell>()
+        static let clearCell = ReusableCell<UICollectionViewCell>()
     }
     
     // MARK: - Properties
@@ -67,6 +68,15 @@ final class TattooDetailViewController: UIViewController {
                 .when(.recognized)
                 .map { _ in () }
                 .bind(to: viewModel.didTapTattooistNameLabel)
+            
+            clearCollectionView.rx.contentOffset
+                .bind(to: imageCollectionView.rx.contentOffset)
+            
+            scrollView.rx.contentOffset
+                .map { $0.y }
+                .bind(with: self) { owner, offsetY in
+                    owner.scrollView.bounces = offsetY > 0
+                }
             
             viewModel.askBottomViewModel.didTapBookmarkButton
                 .withUnretained(self)
@@ -156,6 +166,7 @@ final class TattooDetailViewController: UIViewController {
             .bind { owner, offsetX in
                 owner.pageControl.set(progress: offsetX, animated: true)
             }.disposed(by: disposeBag)
+
         
         viewModel.문의하기Driver
             .drive(with: self) { owner, _ in
@@ -174,6 +185,12 @@ final class TattooDetailViewController: UIViewController {
                 
                 cell.configure(with: data)
                 
+                return cell
+            }.disposed(by: disposeBag)
+        
+        viewModel.tattooimageUrls
+            .drive(clearCollectionView.rx.items) { cv, row, data in
+                let cell = cv.dequeue(Reusable.clearCell, for: IndexPath(row: row, section: 0))
                 return cell
             }.disposed(by: disposeBag)
         
@@ -196,6 +213,7 @@ final class TattooDetailViewController: UIViewController {
         let vc = OneButtonAlertViewController(viewModel: .init(content: message, buttonText: "확인"))
         present(vc, animated: true)
     }
+    
     func updateAskBottomview(with isOwner: Bool) {
         askBottomView.setAskingText(isOwner ? "수정하기" : "문의하기")
         askBottomView.setAskButtonTag(isOwner ? 0 : 1)
@@ -251,6 +269,11 @@ final class TattooDetailViewController: UIViewController {
     
     private let contentView = UIView()
     
+    private let gradientView: UIView = {
+        $0.setGradient(startColor: .black, endColor: .clear, startPoint: .topCenter, endPoint: .bottomCenter)
+        return $0
+    }(UIView(frame: .init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 120)))
+    
     let titleLabel: UILabel = {
         $0.textColor = .white
         $0.font = .appleSDGoithcFont(size: 20, style: .bold)
@@ -278,6 +301,14 @@ final class TattooDetailViewController: UIViewController {
         $0.register(Reusable.tattooDetailCell)
         $0.isPagingEnabled = true
         $0.showsHorizontalScrollIndicator = false
+        return $0
+    }(UICollectionView(frame: .zero, collectionViewLayout: flowLayout))
+    
+    private lazy var clearCollectionView: UICollectionView = {
+        $0.register(Reusable.clearCell)
+        $0.isPagingEnabled = true
+        $0.showsHorizontalScrollIndicator = false
+        $0.backgroundColor = .clear
         return $0
     }(UICollectionView(frame: .zero, collectionViewLayout: flowLayout))
     
@@ -353,6 +384,10 @@ final class TattooDetailViewController: UIViewController {
     }(UILabel())
     
     private let askBottomView: AskBottomView
+    let infoView: UIView = {
+        $0.backgroundColor = .white
+        return $0
+    }(UIView())
 }
 
 extension TattooDetailViewController {
@@ -369,29 +404,13 @@ extension TattooDetailViewController {
     
     private func setUI() {
         view.backgroundColor = .clear
-        view.addSubview(scrollView)
-        
-        scrollView.contentInsetAdjustmentBehavior = .never
-        
-        scrollView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.trailing.bottom.equalToSuperview()
-        }
-        
-        scrollView.addSubview(contentView)
-        
-        contentView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-            $0.width.equalToSuperview()
-        }
-        
-        [imageCollectionView, navigationBarDividerView, genreCollectionView, pageControl, tattooTitle, priceLabel, tattooistProfileView, dividerView, descriptionLabel, dateLabel].forEach { contentView.addSubview($0) }
+        [imageCollectionView, navigationBarDividerView, genreCollectionView].forEach { view.addSubview($0) }
         
         imageCollectionView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(cellHeight)
         }
-        
+
         navigationBarDividerView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(94)
             $0.leading.trailing.equalToSuperview().inset(20)
@@ -404,15 +423,47 @@ extension TattooDetailViewController {
             $0.centerX.equalToSuperview()
             $0.height.equalTo(60)
         }
+        view.addSubview(scrollView)
+        
+        scrollView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(94)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        scrollView.contentInsetAdjustmentBehavior = .never
+        imageCollectionView.contentInsetAdjustmentBehavior = .never
+        
+        scrollView.addSubview(contentView)
+        
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.equalToSuperview()
+        }
+        
+        [clearCollectionView, infoView].forEach { contentView.addSubview($0) }
+        
+        clearCollectionView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(-94)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(cellHeight)
+        }
+        
+        infoView.snp.makeConstraints {
+            $0.top.equalTo(clearCollectionView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        [pageControl, tattooTitle, priceLabel, tattooistProfileView, dividerView, descriptionLabel, dateLabel].forEach { infoView.addSubview($0) }
+        
         
         pageControl.snp.makeConstraints {
             $0.height.equalTo(6)
             $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(imageCollectionView.snp.bottom).offset(-10)
+            $0.bottom.equalTo(clearCollectionView.snp.bottom).offset(-10)
         }
         
         tattooTitle.snp.makeConstraints {
-            $0.top.equalTo(imageCollectionView.snp.bottom).offset(30)
+            $0.top.equalTo(clearCollectionView.snp.bottom).offset(30)
             $0.leading.equalToSuperview().inset(30)
         }
         
@@ -443,7 +494,12 @@ extension TattooDetailViewController {
             $0.bottom.equalToSuperview().inset(150)
         }
         
-        view.addSubview(askBottomView)
+        [gradientView, askBottomView].forEach { view.addSubview($0) }
+        
+        gradientView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(120)
+        }
         
         askBottomView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
