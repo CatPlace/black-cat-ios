@@ -21,7 +21,7 @@ class HomeViewModel {
     let didTapSearchBarButtonItem = PublishRelay<Void>()
     let didTapHeartBarButtonItem = PublishRelay<Void>()
     let didTapCollectionViewItem = PublishRelay<IndexPath>()
-    let nextFetchPage = PublishSubject<Int>()
+    let nextFetchPage = BehaviorRelay<Int>(value: 0)
     let refreshTrigger = PublishRelay<Void>()
     
     // MARK: - Output
@@ -41,7 +41,7 @@ class HomeViewModel {
         let didTapTattooAlbumItem = PublishRelay<Int>()
         let fetchedGenreList = Observable.just(GenreType.allCases)
         
-        let nextPageInfo = Observable.merge([refreshTrigger.map { _ in -1 }, nextFetchPage])
+        let nextPageInfo = Observable.merge([refreshTrigger.map { _ in -1 }, nextFetchPage.asObservable()])
             .distinct()
             .filter { $0 != -1 }
             .flatMap { nextFetchPage in fetchTattoAlbumItems(at: nextFetchPage) }
