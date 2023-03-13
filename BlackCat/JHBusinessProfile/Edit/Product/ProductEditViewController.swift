@@ -10,9 +10,8 @@ import RxSwift
 import RxRelay
 import RxCocoa
 import RxKeyboard
-import Photos
 
-class ProductEditViewController: VerticalScrollableViewController {
+class ProductEditViewController: ImageCropableViewController {
     // MARK: - Properties
     var disposeBag = DisposeBag()
     var viewModel: ProductEditViewModel
@@ -26,6 +25,12 @@ class ProductEditViewController: VerticalScrollableViewController {
         completeButton.rx.tap
             .do { [weak self] _ in self?.completeButton.isUserInteractionEnabled = false }
             .bind(to: viewModel.didTapCompleteButton)
+            .disposed(by: disposeBag)
+        
+        selectedImage
+            .compactMap { $0 }
+            .map { [$0] }
+            .bind(to: viewModel.imageListInputRelay)
             .disposed(by: disposeBag)
         
         viewModel.dismissDriver
@@ -49,15 +54,13 @@ class ProductEditViewController: VerticalScrollableViewController {
                 owner.updateView(with: keyboardVisibleHeight)
             }.disposed(by: disposeBag)
         
-
-        
         viewModel.imageListDrvier
             .drive(viewModel.tattooImageInputViewModel.imageDataListRelay)
             .disposed(by: disposeBag)
         
         viewModel.showImagePickerViewDriver
             .drive(with: self) { owner, _ in
-                owner.showImagePickerView()
+                owner.openImageLibrary()
             }.disposed(by: disposeBag)
         
         viewModel.showWarningRemoveViewDrvier
@@ -81,61 +84,6 @@ class ProductEditViewController: VerticalScrollableViewController {
     }
     
     //MARK: - Function
-    func showImagePickerView() {
-        let imagePickerManager = ImagePickerManager()
-        let status = PHPhotoLibrary.authorizationStatus()
-        
-        switch status {
-        case .authorized, .limited:
-            presentImagePicker(imagePickerManager.imagePicker) { _ in
-            } deselect: { _ in
-            } cancel: { _ in
-            } finish: { [weak self] assets in
-                guard let self else { return }
-                self.viewModel.imageListInputRelay.accept(imagePickerManager.convertAssetToImage(assets))
-            }
-        default:
-            PHPhotoLibrary.requestAuthorization() { [weak self] afterStatus in
-                guard let self else { return }
-                DispatchQueue.main.async {
-                    switch afterStatus {
-                    case .authorized:
-                        self.presentImagePicker(imagePickerManager.imagePicker) { _ in
-                        } deselect: { _ in
-                        } cancel: { _ in
-                        } finish: { [weak self] assets in
-                            guard let self else { return }
-                            self.viewModel.imageListInputRelay.accept(imagePickerManager.convertAssetToImage(assets))
-                        }
-                    case .denied:
-                        self.moveToSetting()
-                    default:
-                        break
-                    }
-                }
-            }
-        }
-    }
-    
-    func moveToSetting() {
-        let alertController = UIAlertController(title: "권한 거부됨", message: "앨범 접근이 거부 되었습니다.\n 사진을 등록하시려면 설정으로 이동하여 앨범 접근 권한을 허용해주세요.", preferredStyle: UIAlertController.Style.alert)
-        
-        let okAction = UIAlertAction(title: "설정으로 이동하기", style: .default) { action in
-            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
-                return
-            }
-            if UIApplication.shared.canOpenURL(settingsUrl) {
-                UIApplication.shared.open(settingsUrl)
-            }
-        }
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        
-        alertController.addAction(okAction)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: false, completion: nil)
-    }
-    
     func updateView(with height: CGFloat) {
         scrollView.snp.updateConstraints {
             $0.bottom.equalToSuperview().inset(height)
@@ -169,7 +117,7 @@ class ProductEditViewController: VerticalScrollableViewController {
         descriptionInputView = .init(viewModel: viewModel.descriptionInputViewModel)
         genreInputView = .init(viewModel: viewModel.genreInputViewModel)
         
-        super.init()
+        super.init(cropShapeType: .rect)
     }
     
     required init?(coder: NSCoder) {
@@ -188,6 +136,9 @@ class ProductEditViewController: VerticalScrollableViewController {
     }
     
     // MARK: - UIComponents
+    let scrollView = UIScrollView()
+    let contentView = UIView()
+    
     let tattooTypeInputView: TattooTypeInputView
     let warningLabel: UILabel = {
         $0.numberOfLines = 0
@@ -227,6 +178,18 @@ extension ProductEditViewController {
     }
     
     func setUI() {
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        scrollView.addSubview(contentView)
+        
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.equalToSuperview()
+        }
+        
         [tattooTypeInputView, firstHLine, warningLabel, titleInputView, tattooSizeRequestLabel, priceInputView, tattooImageInputView, descriptionInputView, secondHLine, genreInputView, firstHLine].forEach { contentView.addSubview($0) }
         
         tattooTypeInputView.snp.makeConstraints {

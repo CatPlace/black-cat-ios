@@ -12,9 +12,8 @@ import RxRelay
 import RxGesture
 import RxKeyboard
 import BlackCatSDK
-import Photos
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: ImageCropableViewController {
     // MARK: - Properties
     var disposeBag = DisposeBag()
     var viewModel: ProfileViewModel
@@ -27,13 +26,17 @@ class ProfileViewController: UIViewController {
                 .when(.recognized)
                 .withUnretained(self)
                 .bind { owner, _ in
-                    owner.activeActionSheet()
+                    owner.activeActionSheet(with: "프로필")
                 }
             
             completeButtonLabel.rx.tapGesture()
                 .when(.recognized)
                 .map { _ in () }
                 .bind(to: viewModel.completeButtonTapped)
+            
+            selectedImage
+                .map { $0 as Any}
+                .bind(to: viewModel.imageInputRelay)
         }
         
         RxKeyboard.instance.visibleHeight
@@ -78,68 +81,6 @@ class ProfileViewController: UIViewController {
          }
      }
     
-    func activeActionSheet() {
-        let actionSheet = UIAlertController(title: "프로필 이미지 관리", message: nil, preferredStyle: .actionSheet)
-        let updateImageAction = UIAlertAction(title: "프로필 이미지 변경", style: .default) { [weak self] action in
-            guard let self else { return }
-            self.openImageLibrary()
-        }
-        let deleteImageAction = UIAlertAction(title: "프로필 이미지 삭제", style: .destructive) { [weak self] action in
-            guard let self else { return }
-            
-            self.viewModel.imageInputRelay.accept(nil)
-        }
-        let actionCancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        [updateImageAction, deleteImageAction, actionCancel].forEach { actionSheet.addAction($0) }
-        
-        self.present(actionSheet, animated: true)
-    }
-    
-    func openImageLibrary() {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        
-        let status = PHPhotoLibrary.authorizationStatus()
-        
-        switch status {
-        case .authorized, .limited:
-            present(imagePicker, animated: true)
-        default:
-            PHPhotoLibrary.requestAuthorization() { [weak self] afterStatus in
-                guard let self else { return }
-                DispatchQueue.main.async {
-                    switch afterStatus {
-                    case .authorized:
-                        self.present(imagePicker, animated: true)
-                    case .denied:
-                        self.moveToSetting()
-                    default:
-                        break
-                    }
-                }
-            }
-        }
-    }
-    
-    func moveToSetting() {
-        let alertController = UIAlertController(title: "권한 거부됨", message: "앨범 접근이 거부 되었습니다.\n 사진을 변경하시려면 설정으로 이동하여 앨범 접근 권한을 허용해주세요.", preferredStyle: UIAlertController.Style.alert)
-        
-        let okAction = UIAlertAction(title: "설정으로 이동하기", style: .default) { action in
-            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
-                return
-            }
-            if UIApplication.shared.canOpenURL(settingsUrl) {
-                UIApplication.shared.open(settingsUrl)
-            }
-        }
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        
-        alertController.addAction(okAction)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: false, completion: nil)
-    }
-    
     func configure() {
         view.backgroundColor = .init(red: 0.89, green: 0.89, blue: 0.89, alpha: 1)
         appendNavigationLeftBackButton()
@@ -156,7 +97,7 @@ class ProfileViewController: UIViewController {
         genderInputView = GenderInputView(viewModel: viewModel.genderInputViewModel)
         areaInputView = AreaInputView(viewModel: viewModel.areaInputViewModel)
         
-        super.init(nibName: nil, bundle: nil)
+        super.init(cropShapeType: .circle)
     }
     
     required init?(coder: NSCoder) {
@@ -242,12 +183,15 @@ extension ProfileViewController {
             $0.top.equalToSuperview().inset(30)
             $0.centerX.equalToSuperview()
         }
+        
         uploadCoverView.snp.makeConstraints {
             $0.edges.equalTo(profileImageView)
         }
+        
         uploadImageView.snp.makeConstraints {
             $0.center.equalTo(uploadCoverView)
         }
+        
         nameInputView.snp.makeConstraints {
             $0.top.equalTo(profileImageView.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview().inset(20)
@@ -289,16 +233,9 @@ extension ProfileViewController {
     }
 }
 
-extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let selectedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage
-        viewModel.imageInputRelay.accept(selectedImage)
-        picker.dismiss(animated: true, completion: nil)
-    }
-}
-
 extension ProfileViewController: OneButtonAlertDelegate {
     func didTapButton() {
         dismiss(animated: true)
     }
 }
+
