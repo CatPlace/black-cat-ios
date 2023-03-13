@@ -95,6 +95,8 @@
 		78B602D229B6694B004678A2 /* PriceInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B602D129B6694B004678A2 /* PriceInputViewModel.swift */; };
 		78B602D429B66B78004678A2 /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B602D329B66B78004678A2 /* Int+.swift */; };
 		78B602D629B798E7004678A2 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B602D529B798E7004678A2 /* NavigationController.swift */; };
+		78B602DB29BF9642004678A2 /* Mantis in Frameworks */ = {isa = PBXBuildFile; productRef = 78B602DA29BF9642004678A2 /* Mantis */; };
+		78B602DE29BFA1F0004678A2 /* ImageCropableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B602DD29BFA1F0004678A2 /* ImageCropableViewController.swift */; };
 		78B9D5F929A49CAD00ACD735 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9D5F829A49CAD00ACD735 /* String+.swift */; };
 		78B9D5FB29A49D8E00ACD735 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9D5FA29A49D8E00ACD735 /* Date+.swift */; };
 		78B9D5FE29A4A0E300ACD735 /* TattooistProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9D5FD29A4A0E300ACD735 /* TattooistProfileView.swift */; };
@@ -338,6 +340,7 @@
 		78B602D129B6694B004678A2 /* PriceInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceInputViewModel.swift; sourceTree = "<group>"; };
 		78B602D329B66B78004678A2 /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
 		78B602D529B798E7004678A2 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		78B602DD29BFA1F0004678A2 /* ImageCropableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCropableViewController.swift; sourceTree = "<group>"; };
 		78B9D5F829A49CAD00ACD735 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		78B9D5FA29A49D8E00ACD735 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		78B9D5FD29A4A0E300ACD735 /* TattooistProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooistProfileView.swift; sourceTree = "<group>"; };
@@ -472,6 +475,7 @@
 				78431C96297A91660002F1E7 /* BSImagePicker in Frameworks */,
 				B1E3F7D5290ECC0500005F17 /* FlexLayoutYogaKit in Frameworks */,
 				B1E4985D28EE873100B469AC /* RxDataSources in Frameworks */,
+				78B602DB29BF9642004678A2 /* Mantis in Frameworks */,
 				B1E4984628EE83BD00B469AC /* Realm in Frameworks */,
 				B1E3F7D1290ECC0500005F17 /* FlexLayout in Frameworks */,
 				B1E87AF029195CD800EB28DE /* RxKeyboard in Frameworks */,
@@ -705,6 +709,7 @@
 		7867A62629374D0500FC1160 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				78B602DC29BFA19A004678A2 /* ImageCropableViewController */,
 				78B9D5FC29A4A0D300ACD735 /* ProfileView */,
 				7847DA6E29A2281100944F4B /* Constant */,
 				78280144299CBBF300DC1509 /* AlertView */,
@@ -862,6 +867,14 @@
 				78B00BB528F5661000A9915D /* RecentMagazineFooterView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		78B602DC29BFA19A004678A2 /* ImageCropableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				78B602DD29BFA1F0004678A2 /* ImageCropableViewController.swift */,
+			);
+			path = ImageCropableViewController;
 			sourceTree = "<group>";
 		};
 		78B9D5FC29A4A0D300ACD735 /* ProfileView */ = {
@@ -1328,6 +1341,7 @@
 				B1E87AEF29195CD800EB28DE /* RxKeyboard */,
 				78277E9429675982004CFDF4 /* VisualEffectView */,
 				78431C95297A91660002F1E7 /* BSImagePicker */,
+				78B602DA29BF9642004678A2 /* Mantis */,
 			);
 			productName = BlackCat;
 			productReference = B1D79CA728EB0EF9008487D0 /* BlackCat.app */;
@@ -1376,6 +1390,7 @@
 				B1E87AEE29195CD800EB28DE /* XCRemoteSwiftPackageReference "RxKeyboard" */,
 				78277E9329675982004CFDF4 /* XCRemoteSwiftPackageReference "VisualEffectView" */,
 				78431C94297A91660002F1E7 /* XCRemoteSwiftPackageReference "BSImagePicker" */,
+				78B602D929BF9641004678A2 /* XCRemoteSwiftPackageReference "Mantis" */,
 			);
 			productRefGroup = B1D79CA828EB0EF9008487D0 /* Products */;
 			projectDirPath = "";
@@ -1545,6 +1560,7 @@
 				78B00BBC28F5661000A9915D /* MagazineViewController.Layout.swift in Sources */,
 				784A449529858E1300567450 /* UITabBarAppearance+.swift in Sources */,
 				7828DB65295C9D500053B0A0 /* JHBPContentSectionHeaderView.swift in Sources */,
+				78B602DE29BFA1F0004678A2 /* ImageCropableViewController.swift in Sources */,
 				B1D127DF28F09200007E3667 /* UIImage+.swift in Sources */,
 				8E8848802949C3F80039F99A /* CategoryPaperView.UITableView.swift in Sources */,
 				8E7E9CE2291C927200D09157 /* BookmarkPostViewController.swift in Sources */,
@@ -1888,6 +1904,14 @@
 				minimumVersion = 3.3.0;
 			};
 		};
+		78B602D929BF9641004678A2 /* XCRemoteSwiftPackageReference "Mantis" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/guoyingtao/Mantis";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.7.0;
+			};
+		};
 		B160DC1228FF535600C0D682 /* XCRemoteSwiftPackageReference "Quick" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Quick/Quick.git";
@@ -1996,6 +2020,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 78431C94297A91660002F1E7 /* XCRemoteSwiftPackageReference "BSImagePicker" */;
 			productName = BSImagePicker;
+		};
+		78B602DA29BF9642004678A2 /* Mantis */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 78B602D929BF9641004678A2 /* XCRemoteSwiftPackageReference "Mantis" */;
+			productName = Mantis;
 		};
 		B160DC1328FF535700C0D682 /* Quick */ = {
 			isa = XCSwiftPackageProductDependency;
