@@ -12,7 +12,6 @@ class CompleteButton: UIButton {
         super.init(frame: .zero)
         titleLabel?.font = .appleSDGoithcFont(size: 24, style: .semiBold)
         backgroundColor = .init(hex: "#333333FF")
-        layer.cornerRadius = 20
     }
     
     required init?(coder: NSCoder) {

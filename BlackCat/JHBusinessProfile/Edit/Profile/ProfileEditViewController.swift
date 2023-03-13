@@ -129,8 +129,8 @@ class ProfileEditViewController: VerticalScrollableViewController {
         completeButton.snp.updateConstraints {
             $0.bottom.equalToSuperview().inset(
                 height == 0
-                ? 30
-                : height + 15
+                ? 0
+                : height
             )
         }
         UIView.animate(withDuration: 0.4) {
@@ -222,10 +222,9 @@ extension ProfileEditViewController {
         
         view.addSubview(completeButton)
         completeButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(30)
-            $0.width.equalTo(Constant.width * 251)
-            $0.height.equalTo(Constant.height * 60)
-            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(90)
         }
     }
 }

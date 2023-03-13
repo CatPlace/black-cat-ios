@@ -144,8 +144,8 @@ class ProductEditViewController: VerticalScrollableViewController {
         completeButton.snp.updateConstraints {
             $0.bottom.equalToSuperview().inset(
                 height == 0
-                ? 30
-                : height + 15
+                ? 0
+                : height
             )
         }
         UIView.animate(withDuration: 0.4) {
@@ -201,6 +201,12 @@ class ProductEditViewController: VerticalScrollableViewController {
     let tattooImageInputView: TattooImageInputView
     let descriptionInputView: TextInputView
     let genreInputView: GenreInputView
+    let tattooSizeRequestLabel: UILabel = {
+        $0.text = "1:1 비율을 권장합니다."
+        $0.textColor = .init(hex: "#999999FF")
+        $0.font = .appleSDGoithcFont(size: 12, style: .regular)
+        return $0
+    }(UILabel())
     let firstHLine: UIView = {
         $0.backgroundColor = .init(hex: "#666666FF")
         return $0
@@ -221,7 +227,7 @@ extension ProductEditViewController {
     }
     
     func setUI() {
-        [tattooTypeInputView, firstHLine, warningLabel, titleInputView, priceInputView, tattooImageInputView, descriptionInputView, secondHLine, genreInputView, firstHLine].forEach { contentView.addSubview($0) }
+        [tattooTypeInputView, firstHLine, warningLabel, titleInputView, tattooSizeRequestLabel, priceInputView, tattooImageInputView, descriptionInputView, secondHLine, genreInputView, firstHLine].forEach { contentView.addSubview($0) }
         
         tattooTypeInputView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(30)
@@ -254,6 +260,12 @@ extension ProductEditViewController {
             $0.leading.trailing.equalToSuperview().inset(20)
         }
         
+        tattooSizeRequestLabel.snp.makeConstraints {
+            $0.centerY.equalTo(tattooImageInputView.titleLabel)
+            $0.leading.equalTo(tattooImageInputView.titleLabel.snp.trailing).offset(20)
+            $0.trailing.equalTo(tattooImageInputView.limitLabel.snp.leading).offset(20)
+        }
+        
         descriptionInputView.snp.makeConstraints {
             $0.top.equalTo(tattooImageInputView.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview().inset(20)
@@ -275,10 +287,9 @@ extension ProductEditViewController {
         view.addSubview(completeButton)
         
         completeButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(30)
-            $0.width.equalTo(Constant.width * 251)
-            $0.height.equalTo(Constant.height * 60)
-            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(90)
         }
     }
 }
