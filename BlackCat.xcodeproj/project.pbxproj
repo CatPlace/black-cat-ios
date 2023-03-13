@@ -31,8 +31,6 @@
 		782A9C1129B3BA990072A333 /* BlackCatSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 78E9F4C629B3BA1900BE3045 /* BlackCatSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		782A9C1429B474A30072A333 /* BlackCatKEY.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 782A9C1329B474A30072A333 /* BlackCatKEY.framework */; };
 		782A9C1529B474AC0072A333 /* BlackCatKEY.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 782A9C1329B474A30072A333 /* BlackCatKEY.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		78431C96297A91660002F1E7 /* BSImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 78431C95297A91660002F1E7 /* BSImagePicker */; };
-		78431C98297A918D0002F1E7 /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78431C97297A918D0002F1E7 /* ImagePickerManager.swift */; };
 		78431C9A297B13770002F1E7 /* ProductEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78431C99297B13770002F1E7 /* ProductEditViewModel.swift */; };
 		78431C9C297B18B10002F1E7 /* TattooImageInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78431C9B297B18B10002F1E7 /* TattooImageInputViewModel.swift */; };
 		78431C9F297B190B0002F1E7 /* TattooImageInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78431C9E297B190B0002F1E7 /* TattooImageInputCell.swift */; };
@@ -260,7 +258,6 @@
 		7828DB64295C9D500053B0A0 /* JHBPContentSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBPContentSectionHeaderView.swift; sourceTree = "<group>"; };
 		7828DB68295CB7110053B0A0 /* JHBPMulticastDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHBPMulticastDelegate.swift; sourceTree = "<group>"; };
 		782A9C1329B474A30072A333 /* BlackCatKEY.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BlackCatKEY.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		78431C97297A918D0002F1E7 /* ImagePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerManager.swift; sourceTree = "<group>"; };
 		78431C99297B13770002F1E7 /* ProductEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductEditViewModel.swift; sourceTree = "<group>"; };
 		78431C9B297B18B10002F1E7 /* TattooImageInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooImageInputViewModel.swift; sourceTree = "<group>"; };
 		78431C9E297B190B0002F1E7 /* TattooImageInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TattooImageInputCell.swift; sourceTree = "<group>"; };
@@ -472,7 +469,6 @@
 				B1E4984E28EE83E400B469AC /* Nuke in Frameworks */,
 				B1CDE90329169F8E00ACB9AC /* URLNavigator in Frameworks */,
 				B1E3F7D3290ECC0500005F17 /* FlexLayoutYoga in Frameworks */,
-				78431C96297A91660002F1E7 /* BSImagePicker in Frameworks */,
 				B1E3F7D5290ECC0500005F17 /* FlexLayoutYogaKit in Frameworks */,
 				B1E4985D28EE873100B469AC /* RxDataSources in Frameworks */,
 				78B602DB29BF9642004678A2 /* Mantis in Frameworks */,
@@ -1133,7 +1129,6 @@
 			children = (
 				7867A62729374D0500FC1160 /* MulticastDelegate.swift */,
 				7867A63129374D0500FC1160 /* AlertService.swift */,
-				78431C97297A918D0002F1E7 /* ImagePickerManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1340,7 +1335,6 @@
 				B1CDE90229169F8E00ACB9AC /* URLNavigator */,
 				B1E87AEF29195CD800EB28DE /* RxKeyboard */,
 				78277E9429675982004CFDF4 /* VisualEffectView */,
-				78431C95297A91660002F1E7 /* BSImagePicker */,
 				78B602DA29BF9642004678A2 /* Mantis */,
 			);
 			productName = BlackCat;
@@ -1389,7 +1383,6 @@
 				B1CDE8FF29169F8D00ACB9AC /* XCRemoteSwiftPackageReference "URLNavigator" */,
 				B1E87AEE29195CD800EB28DE /* XCRemoteSwiftPackageReference "RxKeyboard" */,
 				78277E9329675982004CFDF4 /* XCRemoteSwiftPackageReference "VisualEffectView" */,
-				78431C94297A91660002F1E7 /* XCRemoteSwiftPackageReference "BSImagePicker" */,
 				78B602D929BF9641004678A2 /* XCRemoteSwiftPackageReference "Mantis" */,
 			);
 			productRefGroup = B1D79CA828EB0EF9008487D0 /* Products */;
@@ -1497,7 +1490,6 @@
 				8E88487C2949C3F80039F99A /* CommonFullImageCell.swift in Sources */,
 				78B602D429B66B78004678A2 /* Int+.swift in Sources */,
 				78B00BB928F5661000A9915D /* MagazineTestUseCase.swift in Sources */,
-				78431C98297A918D0002F1E7 /* ImagePickerManager.swift in Sources */,
 				78B194E2298135570092244B /* TattooTypeInputViewModel.swift in Sources */,
 				B160DBFB28FF3D8E00C0D682 /* BaseTableViewCell.swift in Sources */,
 				B1E3F7BA290EBAB100005F17 /* SelectableImageCell.swift in Sources */,
@@ -1896,14 +1888,6 @@
 				minimumVersion = 4.1.0;
 			};
 		};
-		78431C94297A91660002F1E7 /* XCRemoteSwiftPackageReference "BSImagePicker" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mikaoj/BSImagePicker";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 3.3.0;
-			};
-		};
 		78B602D929BF9641004678A2 /* XCRemoteSwiftPackageReference "Mantis" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/guoyingtao/Mantis";
@@ -2015,11 +1999,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 78277E9329675982004CFDF4 /* XCRemoteSwiftPackageReference "VisualEffectView" */;
 			productName = VisualEffectView;
-		};
-		78431C95297A91660002F1E7 /* BSImagePicker */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 78431C94297A91660002F1E7 /* XCRemoteSwiftPackageReference "BSImagePicker" */;
-			productName = BSImagePicker;
 		};
 		78B602DA29BF9642004678A2 /* Mantis */ = {
 			isa = XCSwiftPackageProductDependency;
