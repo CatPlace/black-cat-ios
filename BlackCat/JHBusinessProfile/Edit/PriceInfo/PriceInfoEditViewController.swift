@@ -112,13 +112,10 @@ class PriceInfoEditViewController: VerticalScrollableViewController {
     
     // MARK: - UIComponents
     let priceInfoInputView: TextInputView
-    let completeButton: UIButton = {
+    let completeButton: CompleteButton = {
         $0.setTitle("수정 완료", for: .normal)
-        $0.titleLabel?.font = .appleSDGoithcFont(size: 24, style: .bold)
-        $0.backgroundColor = .init(hex: "#333333FF")
-        $0.layer.cornerRadius = 20
         return $0
-    }(UIButton())
+    }(CompleteButton())
 }
 
 extension PriceInfoEditViewController {
