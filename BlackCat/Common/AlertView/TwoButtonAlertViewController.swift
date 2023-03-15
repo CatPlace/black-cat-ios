@@ -136,6 +136,7 @@ class TwoButtonAlertViewController: UIViewController {
             .withUnretained(self)
             .bind { owner, _ in
                 owner.contentLabel.text = "처리중..."
+                owner.leftLabel.isUserInteractionEnabled = false
                 owner.delegate?.didTapLeftButton(type: viewModel.type)
             }.disposed(by: disposeBag)
         
@@ -144,6 +145,7 @@ class TwoButtonAlertViewController: UIViewController {
             .withUnretained(self)
             .bind { owner, _ in
                 owner.contentLabel.text = "처리중..."
+                owner.rightLabel.isUserInteractionEnabled = false
                 owner.delegate?.didTapRightButton(type: viewModel.type)
             }.disposed(by: disposeBag)
     }

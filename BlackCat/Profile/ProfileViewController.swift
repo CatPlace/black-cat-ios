@@ -31,7 +31,11 @@ class ProfileViewController: ImageCropableViewController {
             
             completeButtonLabel.rx.tapGesture()
                 .when(.recognized)
-                .map { _ in () }
+                .withUnretained(self)
+                .map { owner, _ in
+                    owner.completeButtonLabel.isUserInteractionEnabled = false
+                    return ()
+                }
                 .bind(to: viewModel.completeButtonTapped)
             
             selectedImage
@@ -54,6 +58,7 @@ class ProfileViewController: ImageCropableViewController {
         
         viewModel.alertMassageDriver
             .drive(with: self) { owner, message in
+                owner.completeButtonLabel.isUserInteractionEnabled = true
                 let vc = OneButtonAlertViewController(viewModel: .init(content: message, buttonText: "확인"))
                 owner.present(vc, animated: true)
             }.disposed(by: disposeBag)
