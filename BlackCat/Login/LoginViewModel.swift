@@ -36,7 +36,7 @@ class LoginViewModel {
             .map { _ in () }
         
         let lookAroundTriggerResult = lookAroundTrigger
-            .do { _ in CatSDKUser.updateUser(user: .init(id: -2))}
+            .do { _ in CatSDKUser.updateUser(user: .init(id: -1))}
         
         showHomeViewControllerDriver = Observable.merge([lookAroundTriggerResult, loginSuccessResult])
             .do { _ in CatSDKTattooist.updateLocalTattooistInfo(tattooistInfo: .init()) }
