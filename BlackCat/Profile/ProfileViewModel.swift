@@ -94,7 +94,6 @@ class ProfileViewModel {
             .filter { _ in type == .edit }
             .map { _ in () }
         
-        // TODO: - 서버통신 (role을 tattooist로 변경)
         let upgradeReulst = updateSuccess
             .filter { _ in type == .upgrade }
             .flatMap { _ in CatSDKUser.updateRole() }

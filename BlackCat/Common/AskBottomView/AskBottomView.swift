@@ -28,13 +28,11 @@ final class AskBottomView: UIView {
             askLabel.rx.tapGesture()
                 .when(.recognized)
                 .map { _ in () }
-                .debug("문의하기 탭")
                 .bind(to: viewModel.didTapAskButton)
             
             bookmarkView.rx.tapGesture()
                 .when(.recognized)
                 .map { _ in () }
-                .debug("북마크 탭")
                 .bind(to: viewModel.didTapBookmarkButton)
         }
     }
