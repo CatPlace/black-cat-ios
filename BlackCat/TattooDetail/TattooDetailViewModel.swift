@@ -210,7 +210,11 @@ struct TattooDetailViewModel {
             .filter { $0.0 != $0.1}
             .map { _ in "삭제에 실패했습니다." }
         
-        alertMessageDriver = Observable.merge([deleteSuccess, deleteFail, warningOwnerTapMessage])
+        let tattooModelFailMessage = tattooModelFail
+            .do { _ in CatSDKTattoo.updateRecentViewTattoos(deletedTattooId: tattooId) }
+            .map { _ in "정보를 불러오지 못했습니다."}
+        
+        alertMessageDriver = Observable.merge([deleteSuccess, deleteFail, warningOwnerTapMessage, tattooModelFailMessage])
             .asDriver(onErrorJustReturn: "오류가 발생했습니다.")
         
         popViewDriver = Observable.merge([deleteSuccess, tattooModelFail])
