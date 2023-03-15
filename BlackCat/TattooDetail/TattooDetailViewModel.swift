@@ -62,14 +62,18 @@ struct TattooDetailViewModel {
             .filter { $0 == .empty }
             .map { _ in "오류가 발생했습니다." }
         
-        let isBookmarkedTattooWhenFirstLoad = tattooModelSuccess
+        let isGuest = viewWillAppear
+            .map { _ in CatSDKUser.userType() == .guest }
+        
+        let isBookmarkedTattooWhenFirstLoad = viewWillAppear
+            .flatMap { _ in tattooModelSuccess }
+            .withLatestFrom(isGuest) { ($0, $1) }
+            .filter { !$0.1 }
+            .map { $0.0 }
             .flatMap { CatSDKNetworkBookmark.rx.statusOfBookmark(postId: $0.id) }
             .map { $0.liked }
             .share()
 
-        let isGuest = viewWillAppear
-            .map { _ in CatSDKUser.userType() == .guest }
-        
         let isOwner = tattooModelSuccess
             .map { $0.ownerId == CatSDKUser.user().id }
         

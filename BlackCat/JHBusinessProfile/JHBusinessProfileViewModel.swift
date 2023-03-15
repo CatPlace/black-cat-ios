@@ -44,6 +44,7 @@ final class JHBusinessProfileViewModel {
     let serverErrorDriver: Driver<Void>
     let navigationTitleDriver: Driver<String>
     let alertMessageDriver: Driver<String>
+    let loginNeedAlertDriver: Driver<Void>
     
     init(tattooistId: Int) {
         // TODO: - 유저 구분
@@ -147,12 +148,22 @@ final class JHBusinessProfileViewModel {
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
         
-        let isBookmarkedTattooWhenFirstLoad = profileId
+        let isGuest = viewWillAppear
+            .map { _ in CatSDKUser.userType() == .guest }
+        
+        let isBookmarkedTattooWhenFirstLoad = viewWillAppear
+            .flatMap { _ in profileId }
+            .withLatestFrom(isGuest) { ($0, $1) }
+            .filter { !$0.1 }
+            .map { $0.0 }
             .flatMap {  CatSDKBookmark.isBookmarked(postId: $0) }
             .share()
         
-        let isGuest = viewWillAppear
-            .map { _ in CatSDKUser.userType() == .guest }
+        loginNeedAlertDriver = didTapBookmarkButton
+            .withLatestFrom(isGuest) { ($0, $1) }
+            .filter { $0.1 }
+            .map { _ in () }
+            .asDriver(onErrorJustReturn: ())
         
         let isBookmarkedTattooAfterTapBookmarkButton =
         didTapBookmarkButton

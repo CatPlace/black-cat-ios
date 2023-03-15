@@ -157,6 +157,12 @@ final class JHBusinessProfileViewController: UIViewController {
             .drive(with: self) { owner, message in
                 owner.alertOneButtonVC(message: message)
         }.disposed(by: disposeBag)
+        
+        viewModel.loginNeedAlertDriver
+            .drive(with: self) { owner, _ in
+                let vc = LoginAlertViewController()
+                owner.present(vc, animated: true)
+            }.disposed(by: disposeBag)
     }
     
     
@@ -192,7 +198,8 @@ final class JHBusinessProfileViewController: UIViewController {
             nextVCWithNavi.modalPresentationStyle = .fullScreen
             present(nextVCWithNavi, animated: true)
         } else { // TODO: - 문의하기
-            print("문의하기 TODO")
+            let vc = OneButtonAlertViewController(viewModel: .init(content: "준비중입니다.", buttonText: "확인"))
+            present(vc, animated: true)
         }
         
     }

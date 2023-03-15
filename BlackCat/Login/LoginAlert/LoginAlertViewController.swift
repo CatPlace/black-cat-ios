@@ -28,9 +28,21 @@ class LoginAlertViewController: UIViewController {
             .drive(with: self) { owner, _ in
                 owner.dismiss(animated: true) {
                     if viewModel.isLogin() {
-                        if let vc = UIApplication.getMostTopViewController() as? MyPageViewController  {
-                            vc.viewModel.viewWillAppear.accept(())
+                        let topVC = UIApplication.getMostTopViewController()
+                        if let myPageVC = topVC  as? MyPageViewController  {
+                            myPageVC.viewModel.viewWillAppear.accept(())
                         }
+                        
+                        if let tattooDetailVC = topVC as? TattooDetailViewController {
+                            tattooDetailVC.viewModel.viewWillAppear.accept(false)
+                        }
+                        
+                        if let tattooDetailVC = topVC as? JHBusinessProfileViewController {
+                            tattooDetailVC.viewModel.viewWillAppear.accept(())
+                        }
+                        
+                        let vc = OneButtonAlertViewController(viewModel: .init(content: "로그인 되었습니다.", buttonText: "확인"))
+                        topVC?.present(vc, animated: true)
                     }
                 }
             }.disposed(by: disposeBag)
