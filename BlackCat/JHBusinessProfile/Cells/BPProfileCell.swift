@@ -25,7 +25,11 @@ final class BPProfileCellViewModel {
         self.tattooistProfileImageUrlString = tattooistProfileImageUrlString
         self.tattooistName = tattooistName
         self.address = address
-        self.description = description
+        if let description, description != "" {
+            self.description = description
+        } else {
+            self.description = "자기소개가 없습니다."
+        }
     }
 }
 

@@ -10,7 +10,7 @@ import SnapKit
 
 final class JHBPPriceInfoCell: BPBaseCollectionViewCell {
     func configureCell(with description: String) {
-        priceInfoDescriptionLabel.text = description
+        priceInfoDescriptionLabel.text = description == "" ? "견적서가 없습니다.": description
     }
     
     func setUI() {
